@@ -1,0 +1,30 @@
+# scratch and research downloads (not part of the product)
+tmp/
+
+# dependencies and builds
+node_modules/
+dist/
+build/
+.gradle/
+android/**/build/
+android/local.properties
+.firebase/
+functions/lib/
+
+# secrets: never commit these (App Check debug tokens, service accounts, env files)
+.env
+.env.*
+!.env.example
+*.keystore
+service-account*.json
+*-adminsdk-*.json
+google-services.json
+GoogleService-Info.plist
+debug-token*.txt
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+
