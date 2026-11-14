@@ -1,0 +1,22 @@
+{
+  "name": "keep-until-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "node scripts/vitest.mjs run"
+  },
+  "dependencies": {
+    "@zxing/browser": "^0.2.1",
+    "firebase": "^13.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^4.1.12"
+  }
+}

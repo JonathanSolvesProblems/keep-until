@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keep Until</title>
+    <style>
+      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+      body { margin: 0 auto; max-width: 1100px; padding: 16px; }
+      header { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+      h1 { margin: 0; font-size: 1.4rem; }
+      #status { font-size: 0.9rem; opacity: 0.8; }
+      .row { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0; }
+      video, canvas.preview { width: 100%; max-width: 480px; border-radius: 8px; background: #111; }
+      button, select, input { font: inherit; padding: 8px 12px; }
+      #log { display: grid; gap: 8px; }
+      .item { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 8px; border: 1px solid #8884; border-radius: 8px; }
+      .item img { width: 96px; height: 96px; object-fit: cover; border-radius: 6px; }
+      .decision { font-weight: 700; }
+      .KEEP { color: #1a7f37; } .DISCARD { color: #c62828; } .SET_ASIDE { color: #b26a00; }
+      .badge { font-size: 0.75rem; padding: 2px 6px; border-radius: 999px; border: 1px solid currentColor; margin-left: 6px; }
+      .small { font-size: 0.85rem; opacity: 0.85; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Keep Until</h1>
+      <span id="status">loading</span>
+    </header>
+    <div class="row">
+      <button id="start">Start shift</button>
+      <label>Inference
+        <select id="mode">
+          <option value="prefer_on_device" selected>Prefer on-device (the product)</option>
+          <option value="only_on_device">On-device only</option>
+          <option value="only_in_cloud">Cloud only</option>
+        </select>
+      </label>
+      <label>Sort date <input id="today" type="date" /></label>
+    </div>
+    <div class="row">
+      <div>
+        <video id="video" autoplay playsinline muted></video>
+        <div class="row">
+          <button id="read" disabled>Read item</button>
+          <span id="prompt" class="small"></span>
+        </div>
+      </div>
+      <div>
+        <p class="small">Or run saved photos (the ablation harness):</p>
+        <input id="files" type="file" accept="image/jpeg,image/png" multiple />
+        <div class="row">
+          <button id="batch" disabled>Run batch</button>
+          <button id="export">Export results JSON</button>
+        </div>
+      </div>
+    </div>
+    <div id="log"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
