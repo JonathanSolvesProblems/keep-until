@@ -2,8 +2,9 @@ import { InferenceMode } from "firebase/ai";
 import { makeModel, type Mode } from "./ai/reader";
 import { processItem, type LoopModels, type Step } from "./ai/loop";
 
-// Defaults until Remote Config is wired: the cloud fallback reads worn stamps, a vision task.
-const CLOUD_MODEL = "gemini-3.8-flash";
+// Default until Remote Config is wired. gemini-3.8-flash took minutes per read with this
+// schema and rejects minimal thinking; 3.5-flash-lite reads the same label in about 2 s.
+const CLOUD_MODEL = "gemini-3.5-flash-lite";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const status = $("status");

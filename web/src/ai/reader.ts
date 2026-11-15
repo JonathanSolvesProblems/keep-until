@@ -2,7 +2,7 @@
 // PREFER_ON_DEVICE the SDK runs Gemini Nano in Chrome when it is available and falls back
 // to the cloud model when it is not; every result records which one answered.
 
-import { getGenerativeModel, InferenceMode, type GenerativeModel } from "firebase/ai";
+import { getGenerativeModel, InferenceMode, ThinkingLevel, type GenerativeModel } from "firebase/ai";
 import { ai } from "../firebase";
 import { CATEGORY_IDS } from "../chart/chart";
 import { CONFIDENCE, DAMAGE, DATE_KINDS, NEXT_ACTIONS, READ_SCHEMA, readPrompt, type ItemRead } from "./schema";
@@ -28,7 +28,14 @@ export function makeModel(mode: Mode, cloudModel: string): GenerativeModel {
     },
     inCloudParams: {
       model: cloudModel,
-      generationConfig: { responseMimeType: "application/json", responseJsonSchema: READ_SCHEMA, temperature: 0 },
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseJsonSchema: READ_SCHEMA,
+        temperature: 0,
+        // Reading a label is perception, not reasoning. Minimal thinking took the cloud
+        // read from minutes to about two seconds (devpost/build-log.md, 2026-11-15).
+        thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL as never },
+      },
     },
   });
 }
