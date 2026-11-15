@@ -47,6 +47,36 @@ export const READ_SCHEMA = {
   required: ["product", "brand", "category", "date_text", "date_kind", "damage", "confidence", "next_action", "why"],
 } as const;
 
+/**
+ * The on-device job, chosen by measurement (results/ondevice-experiment-2026-11-15.md): on
+ * real Gemini Nano the full read handled 4 of 15 photos, triage 10 of 15. So the laptop
+ * decides only whether a photo is worth a cloud call; the cloud reads the date.
+ */
+export const TRIAGE_SCHEMA = {
+  type: "object",
+  properties: {
+    package_in_view: { type: "boolean", description: "A food or grocery package is in the photo." },
+    date_in_view: { type: "boolean", description: "Printed or stamped date characters are visible in this photo." },
+    needs_refrigeration: { type: "boolean", description: "The product is kept in a fridge or freezer (yogurt, cheese, milk, meat, frozen food)." },
+    product: { type: "string", description: "Product name as printed, or empty." },
+  },
+  required: ["package_in_view", "date_in_view", "needs_refrigeration", "product"],
+} as const;
+
+export interface Triage {
+  package_in_view: boolean;
+  date_in_view: boolean;
+  needs_refrigeration: boolean;
+  product: string;
+}
+
+export const TRIAGE_PROMPT =
+  "Look at this photo from a food bank sort table. Answer only what you can see. " +
+  "package_in_view: is a food or grocery package in the photo? " +
+  "date_in_view: can you see printed or stamped date characters (a best before or expiry date)? Nutrition panels, barcodes and lot codes are not dates. " +
+  "needs_refrigeration: is this a product kept in a fridge or freezer? " +
+  "product: the product name as printed.";
+
 const CATEGORY_LINES = CHART.categories.map((c) => `${c.id}: ${c.label} (e.g. ${c.examples})`).join("\n");
 
 export function readPrompt(context: { barcodeProduct?: string; secondLook?: boolean } = {}): string {

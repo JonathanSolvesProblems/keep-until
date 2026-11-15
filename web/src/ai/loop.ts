@@ -5,7 +5,7 @@
 import type { GenerativeModel } from "firebase/ai";
 import { gate, type Policy, type Verdict } from "../chart/chart";
 import { parseDateText, type ParsedDate } from "../chart/dates";
-import { readItem, type Mode, type ReadResult } from "./reader";
+import { readItem, triageItem, type Mode, type ReadResult, type TriageResult } from "./reader";
 
 export type Step =
   | { kind: "verdict"; reads: ReadResult[]; parsed: ParsedDate | null; verdict: Verdict; route: string }
@@ -16,6 +16,11 @@ export interface LoopModels {
   hybrid: { model: GenerativeModel; mode: Mode };
   /** The model a hard read is handed to. Null in the on-device-only ablation: nothing leaves the laptop. */
   cloud: { model: GenerativeModel; mode: Mode } | null;
+  /**
+   * On-device triage (Gemini Nano). When present, the laptop answers "no item" and "turn it"
+   * itself, and only photos with a date in view, or that may need the fridge, go to the cloud.
+   */
+  triage?: { model: GenerativeModel } | null;
 }
 
 export interface ItemContext {
@@ -38,6 +43,29 @@ function settle(reads: ReadResult[], today: string, policy: Policy | undefined, 
     policy,
   });
   return { kind: "verdict", reads, parsed, verdict, route };
+}
+
+/** Keeps the on-device triage decision in the item's record, next to the reads it led to. */
+function triageAsRead(tr: TriageResult): ReadResult {
+  const t = tr.triage;
+  const next = !t.package_in_view ? "no_item" : !t.date_in_view && !t.needs_refrigeration ? "show_me_the_date" : "ask_cloud";
+  return {
+    read: {
+      product: t.product,
+      brand: "",
+      category: "unclear",
+      date_text: "",
+      date_kind: "none_visible",
+      damage: "none",
+      confidence: "low",
+      next_action: next,
+      why: `triage: package ${t.package_in_view ? "yes" : "no"}, date in view ${t.date_in_view ? "yes" : "no"}, fridge ${t.needs_refrigeration ? "yes" : "no"}`,
+    },
+    source: "on_device",
+    ms: tr.ms,
+    mode: "only_on_device",
+    valid: true,
+  };
 }
 
 function dateKey(p: ParsedDate | null): string {
@@ -104,21 +132,43 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
   const secondLook = reads.length > 0;
   const readContext = { barcodeProduct: ctx.barcodeProduct, secondLook };
 
+  // Triage first, on the laptop, when this browser can do it. Measured on real Gemini Nano,
+  // triage is the job it does well (10 of 15) and the full read is not (4 of 15), so with
+  // triage the full read goes to the cloud, and only for photos worth reading.
+  const useTriage = Boolean(models.triage && models.cloud);
+  let fallback = "";
+  if (useTriage && !secondLook) {
+    try {
+      const tr = await triageItem(models.triage!.model, jpegBase64);
+      const tread = triageAsRead(tr);
+      if (!tr.triage.package_in_view) {
+        return { kind: "no_item", reads: [...reads, tread], route: "on_device triage: no package in view; no cloud call" };
+      }
+      if (!tr.triage.date_in_view && !tr.triage.needs_refrigeration) {
+        return { kind: "need_date_photo", reads: [...reads, tread], route: "on_device triage: no date in view; no cloud call" };
+      }
+      reads.push(tread);
+      fallback = `on_device triage: ${tr.triage.date_in_view ? "date in view" : "may need the fridge"} → `;
+    } catch (e) {
+      fallback = `on-device triage failed (${(e as Error).message}) → `;
+    }
+  }
+  const primary = useTriage ? models.cloud! : models.hybrid;
+
   // The SDK falls back to the cloud only when the on-device model is unavailable, not when an
   // on-device call fails (a context-window overflow, a crash) or returns something that is not
   // the schema's JSON. A hybrid read must never fail for that, so it hands the photo up here.
   let first: ReadResult;
-  let fallback = "";
   try {
-    first = await readItem(models.hybrid.model, models.hybrid.mode, jpegBase64, readContext);
+    first = await readItem(primary.model, primary.mode, jpegBase64, readContext);
   } catch (e) {
     if (!models.cloud) throw e;
-    fallback = `on-device failed (${(e as Error).message}) → `;
+    fallback += `on-device failed (${(e as Error).message}) → `;
     first = await readItem(models.cloud.model, models.cloud.mode, jpegBase64, readContext);
   }
   if (!first.valid && first.source === "on_device" && models.cloud) {
     reads.push(first);
-    fallback = "on-device answer was not valid JSON → ";
+    fallback += "on-device answer was not valid JSON → ";
     first = await readItem(models.cloud.model, models.cloud.mode, jpegBase64, readContext);
   }
   reads.push(first);

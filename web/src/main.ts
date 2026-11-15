@@ -1,5 +1,5 @@
 import { InferenceMode } from "firebase/ai";
-import { browserHasOnDeviceModel, makeModel, setRateLimitListener, type Mode } from "./ai/reader";
+import { browserHasOnDeviceModel, makeModel, makeTriageModel, setRateLimitListener, type Mode } from "./ai/reader";
 import { processItem, type LoopModels, type Step } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
@@ -43,6 +43,8 @@ function buildModels(mode: Mode, cloudModel: string): LoopModels {
       mode === InferenceMode.ONLY_ON_DEVICE
         ? null
         : { model: makeModel(InferenceMode.ONLY_IN_CLOUD, cloudModel), mode: InferenceMode.ONLY_IN_CLOUD },
+    // The product's hybrid: Gemini Nano triages every photo on the laptop, the cloud reads dates.
+    triage: mode === InferenceMode.PREFER_ON_DEVICE && browserHasOnDeviceModel() ? { model: makeTriageModel() } : null,
   };
 }
 

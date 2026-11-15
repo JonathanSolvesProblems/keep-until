@@ -86,3 +86,14 @@ marked as such and never feed `results/`.
   shelf-stable grated parmesan row. The example date is gone from the prompt. Next: a one-click
   experiment testing three narrower on-device jobs (the full read without the example, triage
   only, date only) to decide what Gemini Nano does in this app, by measurement.
+- The experiment (`results/ondevice-experiment-2026-11-15.md`), real Gemini Nano: the full read
+  without the example date still handled 4 of 15 (8.6 s); triage (package? date in view?
+  fridge?) handled 10 of 15 (5.2 s); date-only read 3 of the 4 real dates right but invented a
+  "date" for 10 of the 11 photos showing none ("10/2018", "11/25/23", "450 g"). Combining the
+  measured triage answers with the measured cloud reads of the same photos gave 11 of 15 with 1
+  cloud call in 16, against 14 of 15 with 16 calls for cloud only. Decision: Gemini Nano
+  triages every photo on the laptop and answers "no item" and "turn it" itself; only photos with
+  a date in view, or that may need the fridge, go to the cloud for the full read. Fridge
+  detection was wrong both ways on-device (broth called chilled, parmesan not), so a "fridge"
+  answer sends the photo to the cloud rather than setting it aside. The full on-device read stays
+  as the "on-device only" mode so the comparison keeps measuring it.

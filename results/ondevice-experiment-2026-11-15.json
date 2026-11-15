@@ -1,0 +1,358 @@
+{
+ "exported": "2026-11-15T17:48:38.935Z",
+ "set": "pantry-2026-11-15",
+ "onDevice": "on-device: available",
+ "variants": [
+  {
+   "id": "A_full_read_no_example",
+   "prompt": "You are reading one donated food item held up to a camera at a food bank sort table in Canada.\nRead only what is printed on the package. Never invent a date.\nCanadian date stamps put the year first, then a two-letter bilingual month code, then the day.\nMonth codes: JA FE MR AL MA JN JL AU SE OC NO DE.\n'BB/MA' means best before. 'EXP' means expiry (infant formula, Ensure, Boost and other meal replacements).\nCopy the date characters exactly into date_text; do not convert them. Lot codes are not dates.\nChoose next_action:\n- log: you can read the product, its category and the full date (or the product has no date by design, like vinegar or honey).\n- show_me_the_date: no date is in view (for a can it is usually on the top or bottom). The volunteer will turn the item.\n- ask_cloud: a date is visible but you cannot read every character, the label is in a language you cannot read, or the product is unfamiliar.\n- set_aside: the package is dented, bulging, rusted, leaking or open, or it needs refrigeration.\n- no_item: there is no food package in view at all (an empty table, a wall, a hand with nothing in it).\nPick category from this list of Food Banks Canada chart rows (id: label):\ncanned_fruit_veg: Canned fruits and vegetables (e.g. canned corn, peas, chickpeas, beans in water, peaches)\ndried_fruit: Dried fruit (e.g. raisins, dried apricots, cranberries)\ncanned_prepared_meals: Mixed commercially canned prepared foods (e.g. baked beans, soups, stews, canned spaghetti and sauce, chili)\ncanned_meat_fish: Cooked meats, fish, shellfish in tins or commercial pouches (e.g. tuna, salmon, sardines, mackerel, canned chicken, canned beef)\npasta_sauce_tomato: Tomato based pasta sauce (e.g. jarred marinara, canned pasta sauce)\npasta_sauce_cream: Cream based pasta sauce (e.g. jarred alfredo)\nsalsa_chili_taco_sauce: Tomato based chili sauce, salsa, taco sauce (e.g. salsa jar, taco sauce)\nketchup_bbq: Ketchup, BBQ sauce, shelf-stable horseradish, cocktail or seafood sauce (e.g. ketchup, barbecue sauce)\nmustard_relish_pickles_bouillon: Mustard, relish, pickles, bouillon cubes or granules (e.g. mustard, relish, pickles, OXO cubes)\nsoy_worcestershire_steak_sauce: Soy, steak and Worcestershire sauce (e.g. soy sauce, Worcestershire)\nhot_pepper_sauce: Hot pepper sauce (e.g. hot sauce)\nasian_sauces_other: Various sauces (hoisin, fish, black bean, oyster, plum) (e.g. hoisin, oyster sauce, fish sauce)\ndry_sauce_mix: Dry packaged sauce mixes (e.g. gravy mix, taco seasoning packet)\nmac_cheese_dinner: Macaroni and cheese dinner mixes (dry boxed) (e.g. Kraft Dinner)\nvinegar: White, cider, rice, malt vinegars (e.g. vinegar)\ndry_pasta_noodles: Dry pasta and noodles (e.g. spaghetti, macaroni, rice noodles, ramen)\nwhite_rice_barley: Other grains and cereals: white rice, whole barley, low fat grains (e.g. white rice, barley)\nbrown_rice: Brown rice (e.g. brown rice)\nwhole_grain_flour: Whole grain flours with germ or fat content, grain flakes (except oats) (e.g. whole wheat flour)\nwhite_flour: White and rice flour (e.g. all-purpose flour)\ncorn_flour: Corn flour (e.g. corn flour)\ncornmeal: Cornmeal (e.g. cornmeal)\ndried_legumes: Dried beans, peas and lentils (e.g. dry lentils, dry chickpeas)\noatmeal_instant_plain: Instant oatmeal (plain) (e.g. instant oats)\noatmeal_flavoured: Flavoured instant oatmeal (e.g. maple brown sugar oatmeal packets)\noats_other: 1 to 5 minute oatmeals (e.g. quick oats, large flake oats)\nboxed_cereal: Boxed or packaged breakfast cereals (e.g. Cheerios, corn flakes)\nflour_based_mixes: Cake, cookie, brownie, muffin, biscuit, pancake or waffle mixes (e.g. pancake mix, cake mix)\ncrackers_cookies: Dry crackers and cookies, rice cakes (e.g. crackers, cookies)\nbread_commercial: Commercially packaged loaves, rolls, bagels, muffins (e.g. sliced bread)\ncooking_oil: Cooking oil (canola, corn, safflower, vegetable) (e.g. canola oil)\nolive_oil: Olive oil (e.g. olive oil)\nsesame_oil: Sesame oil (e.g. sesame oil)\nnut_oil: Walnut or hazelnut oil (e.g. walnut oil)\nghee_coconut_oil: Ghee, coconut oil (e.g. ghee, coconut oil)\nshortening_lard: Shortening, lard (e.g. Crisco)\nmayonnaise: Mayonnaise (e.g. mayonnaise)\ncreamy_dressing: Creamy dressings (e.g. ranch, caesar)\nvinaigrette: Vinaigrette dressings (e.g. Italian dressing)\ndessert_topping_mix_dry: Dessert topping mix, dry powdered (e.g. Dream Whip)\nshelf_stable_milk: Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch) (e.g. UHT milk, shelf-stable soy or almond beverage)\npowdered_milk_nonfat_bag: Non-fat milk powder in a bag (e.g. skim milk powder bag)\npowdered_milk_nonfat_can: Non-fat milk powder in a can (e.g. skim milk powder can)\npowdered_milk_whole: Whole milk powder (e.g. whole milk powder)\nevaporated_milk: Evaporated milk, commercially canned (e.g. Carnation evaporated milk)\nevaporated_milk_lowfat: Low fat or skimmed evaporated milk (e.g. 2% evaporated milk)\npowdered_coffee_whitener: Non-dairy powdered coffee whitener (e.g. Coffee-mate powder)\njuice_boxes: Juice boxes, shelf stable (e.g. juice boxes)\njuice_cans: Juice cans, shelf stable (e.g. canned tomato juice, canned apple juice)\ninstant_coffee: Instant coffee (e.g. instant coffee jar)\nground_coffee_vacuum: Ground coffee, vacuum packed (e.g. ground coffee brick or can)\ncoffee_pods: Coffee pods (e.g. K-Cups)\ntea: Tea bags (e.g. tea)\nhot_chocolate: Hot chocolate, Ovaltine (e.g. hot chocolate mix)\ncold_drink_mixes: Powdered dry drink mixes (e.g. iced tea mix, flavoured crystals)\nsoft_drinks: Canned and bottled soda, vitamin water, energy drinks (e.g. pop)\nbottled_water: Bottled water, plain (e.g. water bottles)\ngrated_parmesan: Grated parmesan or romano sold unrefrigerated (e.g. shaker parmesan)\ndry_hard_meats: Dry, hard meats (dry salami, pepperoni, jerky) (e.g. beef jerky, pepperoni sticks)\ninfant_formula: Infant formula (all) (e.g. Similac, Enfamil, any formula)\nbaby_cereal: Baby and toddler cereal mix (dry) (e.g. Pablum)\nbaby_puree: Baby and toddler vegetable or fruit puree, mixed foods (jars, pouches) (e.g. baby food jars, pouches)\nmeal_replacement_liquid: Complete meal replacement liquid (e.g. Ensure, Boost)\nmeal_replacement_powder: Complete meal replacement powders (e.g. meal replacement powder)\nbreakfast_drinks: Meal substitutes or supplements (breakfast drinks) (e.g. Carnation Breakfast Essentials)\nenergy_bars: Breakfast, lunch or energy bars (e.g. Clif bars)\ngranola_bars: Dry or chewy granola and cereal bars (e.g. Quaker, Nature Valley)\npudding_cups: Pudding cups (non-refrigerated) (e.g. Snack Pack)\ndry_pudding_mix: Dry pudding mix (e.g. Jell-O pudding mix)\njam_jelly: Fruit jams and jellies, marmalade (e.g. strawberry jam)\nsweet_spreads: Sweet spreads (Nutella) (e.g. Nutella)\nsugar_honey: Sugar and honey (e.g. white sugar, honey)\npeanut_butter: Peanut butter and nut butters (e.g. Kraft peanut butter)\nnatural_peanut_butter: Natural peanut butter (no hydrogenated oils) (e.g. natural peanut butter)\nnuts_seeds: Shelled nuts and seeds (e.g. almonds, sunflower seeds)\nchips: Potato chips, corn chips, nachos (e.g. chips)\npretzels_popcorn: Pretzels, prepared popcorn (e.g. pretzels)\npopcorn_kernels: Popcorn kernels, unpopped (e.g. popcorn kernels)\nmicrowave_popcorn: Popcorn kernels in microwaveable packets (e.g. microwave popcorn)\ngeneral_grocery_canned: General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits) (e.g. canned pasta, condiments)\ngeneral_grocery_boxed: General grocery, shelf stable, boxed or bagged (fallback when no specific row fits) (e.g. boxed side dishes)\nnon_food: Non-food (laundry detergent, deodorant, body wash, diapers, infant wipes) (e.g. diapers, detergent)\nchilled_or_frozen: Anything that needs refrigeration or freezing (e.g. milk, yogurt, cheese, meat, frozen vegetables)\nfresh_produce: Fresh whole fruit and vegetables (e.g. apples, potatoes, carrots)"
+  },
+  {
+   "id": "B_triage",
+   "prompt": "Look at this photo from a food bank sort table. Answer only what you can see. package_in_view: is a food or grocery package in the photo? date_in_view: can you see printed or stamped date characters (a best before or expiry date)? Nutrition panels, barcodes and lot codes are not dates. needs_refrigeration: is this a product kept in a fridge or freezer? product: the product name as printed."
+  },
+  {
+   "id": "C_date_only",
+   "prompt": "Copy the best before or expiry date printed on this package exactly as it appears, character for character. Canadian stamps put the year first, then a two-letter month code (JA FE MR AL MA JN JL AU SE OC NO DE), then the day. If no date characters are visible, return an empty date_text and none_visible. Never guess."
+  }
+ ],
+ "rows": [
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112242.jpg",
+   "ms": 441528,
+   "source": "on_device",
+   "text": "{\"product\":\"None\",\"brand\": \"\", \"category\":\"general_grocery_canned\",\"date_text\": \"\", \"date_kind\":\"none_visible\",\"damage\":\"none\",\"confidence\":\"high\",\"next_action\":\"log\",\"why\":\"There is no food package visible to read.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112247.jpg",
+   "ms": 6765,
+   "source": "on_device",
+   "text": "{\"product\":\"Geant Vert.\",\"brand\":\"Geant\",\"category\":\"canned_fruit_veg\",\"date_text\":\"\",\"date_kind\":\"none_visible\",\"damage\":\"none\",\"confidence\":\"high\",\"next_action\":\"log\",\"why\":\"The product is identifiable, and no date is visible on the package.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112303.jpg",
+   "ms": 7389,
+   "source": "on_device",
+   "text": "{\"product\": \"Nutrition Facts\", \"brand\": \"\", \"category\": \"unclear\", \"date_text\": \"\", \"date_kind\": \"none_visible\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The package contains nutrition facts and no date information is visible, so I will log the item.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112311.jpg",
+   "ms": 8468,
+   "source": "on_device",
+   "text": "{\"product\": \"Gallo Extra Virgin Olive Oil\", \"brand\": \"Gallo\", \"category\": \"olive_oil\", \"date_text\": \"none\", \"date_kind\": \"none_visible\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The product is a bottle of olive oil and no date is visible on the packaging.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112323.jpg",
+   "ms": 9681,
+   "source": "on_device",
+   "text": "{\"product\": \"Simple Check\u2122 symbol\", \"brand\": \"Simple Check\", \"category\": \"general_grocery_canned\", \"date_text\": \"\", \"date_kind\": \"none_visible\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The product label is visible, but contains no discernible date characters, so I will log the item as general grocery canned.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112326.jpg",
+   "ms": 8868,
+   "source": "on_device",
+   "text": "{\"product\":\"baking powder poudre \u00e0 p\u00e2te\",\"brand\":\"no name\",\"category\":\"flour_based_mixes\",\"date_text\":\"\",\"date_kind\":\"none_visible\",\"damage\":\"none\",\"confidence\":\"high\",\"next_action\":\"log\",\"why\":\"The product has no visible date information, so I will log the product details.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112402.jpg",
+   "ms": 8538,
+   "source": "on_device",
+   "text": "{\"product\": \"Nutrition Facts\", \"brand\": \"THE ARM & HAMMER\", \"category\": \"general_grocery_canned\", \"date_text\": \"none\", \"date_kind\": \"none_visible\" , \"damage\": \"none\" ,\"confidence\": \"high\" , \"next_action\": \"log\" , \"why\": \"The product name and packaging are visible, but no date is present on the label.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112406.jpg",
+   "ms": 6421,
+   "source": "on_device",
+   "text": "{\"product\": \"Herley Canada Inc.\", \"brand\": \"Herley Canada Inc.\", \"category\": \"general_grocery_canned\", \"date_text\": \"5666009287\", \"date_kind\": \"none_visible\", \"damage\": \"none\", \"confidence\": \"medium\", \"next_action\": \"log\", \"why\": \"The product is a canned food item, and the date is visible on the packaging.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112410.jpg",
+   "ms": 9462,
+   "source": "on_device",
+   "text": "{\"product\":\"Chips\",\"brand\":\"\" , \"category\":\"chips\",\"date_text\":\"BB/MA\",\"date_kind\":\"best_before\",\"damage\":\"none\",\"confidence\":\"high\",\"next_action\":\"log\",\"why\":\"The packaging shows a best before date.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112419.jpg",
+   "ms": 14557,
+   "source": "on_device",
+   "text": "{\"product\":\"CAMPBELL'S CHICKEN \u00b7 POULET BROTH \u00b7 BOUILLON\",\"brand\":\"Campbell's\",\"category\":\"canned_prepared_meals\",\"date_text\":\"\",\"date_kind\":\"none_visible\",\"damage\":\"none\",\"confidence\":\"high\",\"next_action\":\"log\",\"why\":\"The product name and type are readable, and no date is visible to log the item as a canned prepared meal.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112421.jpg",
+   "ms": 8471,
+   "source": "on_device",
+   "text": "{\"product\": \"Nutrition Facts\", \"brand\": \"\", \"category\": \"unclear\", \"date_text\": \"\", \"date_kind\": \"none_visible\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The package contains a nutrition facts label and no date is visible on the front.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112427.jpg",
+   "ms": 20462,
+   "source": "on_device",
+   "text": "{\"product\":\"202_FE 14 02146\",\"brand\": \"\", \"category\": \"salsa_chili_taco_sauce\",\"date_text\":\"207FE14202146\",\"date_kind\":\"best_before\",\"damage\":\"none\",\"confidence\":\"high\",\"next_action\":\"log\",\"why\":\"The package contains a best before date, so I will log the product information.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112441.jpg",
+   "ms": 9343,
+   "source": "on_device",
+   "text": "{\"product\": \"Valeur nutritive\", \"brand\": \"\", \"category\": \"general_grocery_canned\", \"date_text\": \"\", \"date_kind\": \"none_visible\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The product is food with nutritional information, and no date is visible.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112446.jpg",
+   "ms": 8709,
+   "source": "on_device",
+   "text": "{\"product\": \"LIBERT\u00c9 GREC-GREEK\", \"brand\": \"GREC-GREEK\", \"category\": \"unclear\", \"date_text\": \"20730\", \"date_kind\": \"best_before\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The 'best before 207' date is visible on the package.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112452.jpg",
+   "ms": 8429,
+   "source": "on_device",
+   "text": "{\"product\": \"Parmesan Romesco\", \"brand\": \"empty\", \"category\": \"grated_parmesan\", \"date_text\": \"12471\", \"date_kind\": \"expiry\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The package contains a date that I can read.\"}"
+  },
+  {
+   "variant": "A_full_read_no_example",
+   "file": "20261115_112458.jpg",
+   "ms": 6728,
+   "source": "on_device",
+   "text": "{\"product\": \"PARMESAN SHREDDED CHEESE FROMAGE\", \"brand\": \"\", \"category\": \"grated_parmesan\", \"date_text\": \"\", \"date_kind\": \"none_visible\", \"damage\": \"none\", \"confidence\": \"high\", \"next_action\": \"log\", \"why\": \"The product package is visible and the product is a grated parmesan.\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112242.jpg",
+   "ms": 4474,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":true,\"needs_refrigeration\":true,\"product\":\"Unknown\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112247.jpg",
+   "ms": 5145,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"G\u00e9ant Vert Ma\u00efs cr\u00e9me\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112303.jpg",
+   "ms": 5075,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"Nutrition Facts Couleur nutritive\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112311.jpg",
+   "ms": 4287,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"Gallo Extra Virgin Olive Oil\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112323.jpg",
+   "ms": 3976,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":true,\"needs_refrigeration\":false,\"product\":\"Simple Check\u2122\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112326.jpg",
+   "ms": 4486,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"baking powder poudre \u00e0 p\u00e2te\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112402.jpg",
+   "ms": 5542,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"The Arm & Hammer Money Back Guarantee\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112406.jpg",
+   "ms": 6006,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"HERSHEY'S CANADA INC.\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112410.jpg",
+   "ms": 5685,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"Chips\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112419.jpg",
+   "ms": 4779,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"Campbell's Chicken \u00b7 Poulet Broth \u00b7 Bouillon\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112421.jpg",
+   "ms": 4258,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"N/A\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112427.jpg",
+   "ms": 6110,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":true,\"needs_refrigeration\":true,\"product\":\"TWISTING CAP BREAKS FOIL SEAL. TURNER LE COUVERCLE BRISE LE SCEAU M\u00c9TALLIQUE.\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112441.jpg",
+   "ms": 5179,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":true,\"product\":\"Valeur nutritive nutrition facts\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112446.jpg",
+   "ms": 5395,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":true,\"needs_refrigeration\":true,\"product\":\"LIBERT\u00c9 GREC-GREEK\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112452.jpg",
+   "ms": 5630,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\":\"Parmesan Roasted Broccoli\"}"
+  },
+  {
+   "variant": "B_triage",
+   "file": "20261115_112458.jpg",
+   "ms": 14360,
+   "source": "on_device",
+   "text": "{\"package_in_view\":true,\"date_in_view\":false,\"needs_refrigeration\":false,\"product\": \"PARMESAN SHREDDED CHEESE FROMAGE R\u00c2P\u00c9\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112242.jpg",
+   "ms": 1410,
+   "source": "on_device",
+   "text": "{\"date_text\":\"2020 F\",\"date_kind\":\"best_before\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112247.jpg",
+   "ms": 5210,
+   "source": "on_device",
+   "text": "{\"date_text\": \"308\", \"date_kind\": \"expiry\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112303.jpg",
+   "ms": 12845,
+   "source": "on_device",
+   "text": "{\"date_text\":\"1\\n6780000206\\n1\",\"date_kind\":\"packaged_on\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112311.jpg",
+   "ms": 7745,
+   "source": "on_device",
+   "text": "{\"date_text\": \"10/2018\", \"date_kind\": \"expiry\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112323.jpg",
+   "ms": 8532,
+   "source": "on_device",
+   "text": "{\"date_text\": \"BEST BEFORE DATE ON BOTTOM OF 2024\", \"date_kind\": \"best_before\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112326.jpg",
+   "ms": 5866,
+   "source": "on_device",
+   "text": "{\"date_text\": \"450 g\", \"date_kind\": \"packaged_on\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112402.jpg",
+   "ms": 7623,
+   "source": "on_device",
+   "text": "{\"date_text\": \"11/25/23\", \"date_kind\": \"expiry\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112406.jpg",
+   "ms": 5208,
+   "source": "on_device",
+   "text": "{\"date_text\":\"N/A\",\"date_kind\":\"none_visible\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112410.jpg",
+   "ms": 5151,
+   "source": "on_device",
+   "text": "{\"date_text\":\"30/12/25\",\"date_kind\":\"best_before\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112419.jpg",
+   "ms": 4710,
+   "source": "on_device",
+   "text": "{\"date_text\": \"N/A\", \"date_kind\": \"none_visible\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112421.jpg",
+   "ms": 4298,
+   "source": "on_device",
+   "text": "{\"date_text\":\"N/A\", \"date_kind\":\"none_visible\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112427.jpg",
+   "ms": 5036,
+   "source": "on_device",
+   "text": "{\"date_text\":\"2027 FE 14 02148\\nYF DJ 72D\\n013408 10:37\",\"date_kind\":\"best_before\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112441.jpg",
+   "ms": 5180,
+   "source": "on_device",
+   "text": "{\"date_text\": \"N/A\", \"date_kind\": \"none_visible\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112446.jpg",
+   "ms": 4125,
+   "source": "on_device",
+   "text": "{\"date_text\":\"2026 DE 07\",\"date_kind\":\"best_before\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112452.jpg",
+   "ms": 1643,
+   "source": "on_device",
+   "text": "{\"date_text\":\"\",\"date_kind\":\"none_visible\"}"
+  },
+  {
+   "variant": "C_date_only",
+   "file": "20261115_112458.jpg",
+   "ms": 1759,
+   "source": "on_device",
+   "text": "{\"date_text\":\"2026 NO 30 Rey 511\",\"date_kind\":\"best_before\"}"
+  }
+ ],
+ "note": "Three narrower on-device jobs on real Gemini Nano (Chrome 157, Gemma 4 for Built-in AI), Jonathan's laptop, 2026-11-15. Graded by scripts/grade_ondevice_experiment.py."
+}

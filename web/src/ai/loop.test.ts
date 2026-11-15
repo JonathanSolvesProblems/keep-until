@@ -139,6 +139,54 @@ describe("processItem: the hybrid hand-off", () => {
     expect(h.calls).toBe(0);
   });
 
+  describe("on-device triage first", () => {
+    const triageReply = (t: Record<string, unknown>): Reply => ({
+      text: JSON.stringify({ package_in_view: true, date_in_view: false, needs_refrigeration: false, product: "Corn", ...t }),
+      source: "on_device",
+    });
+    const withLanguageModel = async <T>(fn: () => Promise<T>) => {
+      const g = globalThis as { LanguageModel?: unknown };
+      g.LanguageModel = {};
+      try {
+        return await fn();
+      } finally {
+        delete g.LanguageModel;
+      }
+    };
+
+    it("answers 'turn it' on the laptop when no date is in view, with no cloud call", async () => {
+      const t = fakeModel([triageReply({})]);
+      const { m, c } = models([], [{ text: read({}), source: "in_cloud" }]);
+      m.triage = { model: t };
+      const step = await withLanguageModel(() => processItem(m, "img", { today: TODAY }));
+      expect(step.kind).toBe("need_date_photo");
+      expect(step.route).toBe("on_device triage: no date in view; no cloud call");
+      expect(c!.calls).toBe(0);
+    });
+
+    it("sends the photo to the cloud for the date when triage sees one", async () => {
+      const t = fakeModel([triageReply({ date_in_view: true })]);
+      const { m, h, c } = models([], [{ text: read({}), source: "in_cloud" }]);
+      m.triage = { model: t };
+      const step = await withLanguageModel(() => processItem(m, "img", { today: TODAY }));
+      expect(step.kind === "verdict" && step.verdict.decision).toBe("KEEP");
+      expect(step.route).toBe("on_device triage: date in view → in_cloud: model chose log");
+      expect(step.reads.map((r) => r.source)).toEqual(["on_device", "in_cloud"]);
+      expect(h.calls).toBe(0);
+      expect(c!.calls).toBe(1);
+    });
+
+    it("reads in the cloud when triage fails, so no item is lost", async () => {
+      const t = fakeModel([new Error("model crashed")]);
+      const { m, c } = models([], [{ text: read({}), source: "in_cloud" }]);
+      m.triage = { model: t };
+      const step = await withLanguageModel(() => processItem(m, "img", { today: TODAY }));
+      expect(step.kind).toBe("verdict");
+      expect(step.route.startsWith("on-device triage failed (model crashed) → ")).toBe(true);
+      expect(c!.calls).toBe(1);
+    });
+  });
+
   it("treats an empty frame as no item, so the next item starts fresh", async () => {
     const { m } = models([{ text: read({ next_action: "no_item", product: "", category: "unclear", date_text: "", date_kind: "none_visible" }), source: "on_device" }], []);
     const step = await processItem(m, "img", { today: TODAY });

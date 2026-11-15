@@ -6,7 +6,7 @@ import { getGenerativeModel, InferenceMode, ThinkingLevel, type GenerativeModel 
 import { trace } from "firebase/performance";
 import { ai, perf } from "../firebase";
 import { CATEGORY_IDS } from "../chart/chart";
-import { CONFIDENCE, DAMAGE, DATE_KINDS, NEXT_ACTIONS, READ_SCHEMA, readPrompt, type ItemRead } from "./schema";
+import { CONFIDENCE, DAMAGE, DATE_KINDS, NEXT_ACTIONS, READ_SCHEMA, readPrompt, TRIAGE_PROMPT, TRIAGE_SCHEMA, type ItemRead, type Triage } from "./schema";
 
 export type Mode = (typeof InferenceMode)[keyof typeof InferenceMode];
 
@@ -41,6 +41,54 @@ export function makeModel(mode: Mode, cloudModel: string): GenerativeModel {
       },
     },
   });
+}
+
+/** The on-device triage model: Gemini Nano only, small schema, nothing leaves the laptop. */
+export function makeTriageModel(): GenerativeModel {
+  return getGenerativeModel(ai, {
+    mode: InferenceMode.ONLY_ON_DEVICE,
+    onDeviceParams: {
+      createOptions: {
+        expectedInputs: [{ type: "image" }, { type: "text", languages: ["en"] }],
+        expectedOutputs: [{ type: "text", languages: ["en"] }],
+      },
+      promptOptions: { responseConstraint: TRIAGE_SCHEMA },
+    },
+    inCloudParams: { model: "unused-on-device-only" },
+  });
+}
+
+export interface TriageResult {
+  triage: Triage;
+  ms: number;
+}
+
+/** Triage one photo on-device. Throws on any failure or malformed answer, so the caller falls back to the cloud read. */
+export async function triageItem(model: GenerativeModel, jpegBase64: string): Promise<TriageResult> {
+  if (!browserHasOnDeviceModel()) throw new Error("no on-device model in this browser");
+  const t = trace(perf, "item_triage");
+  t.start();
+  const t0 = performance.now();
+  try {
+    const result = await model.generateContent([
+      { type: "inlineData", inlineData: { mimeType: "image/jpeg", data: jpegBase64 } },
+      { type: "text", text: TRIAGE_PROMPT },
+    ]);
+    if (result.response.inferenceSource !== "on_device") throw new Error("triage did not run on-device");
+    const raw = JSON.parse(result.response.text()) as Partial<Triage>;
+    if (typeof raw.package_in_view !== "boolean" || typeof raw.date_in_view !== "boolean" || typeof raw.needs_refrigeration !== "boolean") {
+      throw new Error("triage answer is missing its yes/no fields");
+    }
+    const ms = Math.round(performance.now() - t0);
+    t.putAttribute("source", "on_device");
+    t.putMetric("ms", ms);
+    return { triage: { package_in_view: raw.package_in_view, date_in_view: raw.date_in_view, needs_refrigeration: raw.needs_refrigeration, product: String(raw.product ?? "") }, ms };
+  } catch (e) {
+    t.putAttribute("source", "error");
+    throw e;
+  } finally {
+    t.stop();
+  }
 }
 
 function oneOf<T extends string>(value: unknown, allowed: readonly T[], fallback: T): T {
