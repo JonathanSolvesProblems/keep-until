@@ -28,3 +28,8 @@ Thumbs.db
 .idea/
 *.iml
 
+
+# private working notes: the Phase 0 card names other entrants and holds strategy; outreach drafts are personal email
+PHASE0.md
+outreach/
+firebase-debug.log
