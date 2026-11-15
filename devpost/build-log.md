@@ -71,3 +71,18 @@ marked as such and never feed `results/`.
   it (429) after about 30 calls. Cloud reads now wait out a 429 for the time it states and the
   sort screen says why it is waiting. This is also the plainest case for on-device: one sort table
   reading an item every 4 seconds already uses the whole free cloud quota.
+- A comparison run in Edge (my default browser) came back all cloud, even the on-device-only
+  pass: with no `LanguageModel` in the browser the SDK builds no on-device adapter and sends
+  every request to the cloud whatever the mode. On-device-only reads are now refused in code
+  before any request in such a browser, and the page says to open Chrome. The same run was a
+  repeatability test: one Chipits photo read as "turn it", "26MR14" (a wrong DISCARD) and
+  "BB/MA 2027 MA 17" across three cloud passes. A DISCARD now needs a second read that finds
+  the same date, otherwise the item goes to a person. The grader now counts a logged item only
+  when its date is right.
+- First real Gemini Nano run, in Chrome on this laptop: on-device only 4 of 15 (median 7.5 s),
+  hybrid 4 of 15, cloud only 14 of 15 (median 1.7 s). The prompt fits the on-device context, but
+  the small model chose "log" for 14 of 16 photos, copied the prompt's example date "26MR14" into
+  answers for packages that carry no such date, and filed refrigerated parmesan under the
+  shelf-stable grated parmesan row. The example date is gone from the prompt. Next: a one-click
+  experiment testing three narrower on-device jobs (the full read without the example, triage
+  only, date only) to decide what Gemini Nano does in this app, by measurement.

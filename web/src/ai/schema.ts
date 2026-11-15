@@ -54,8 +54,10 @@ export function readPrompt(context: { barcodeProduct?: string; secondLook?: bool
     "You are reading one donated food item held up to a camera at a food bank sort table in Canada.",
     "Read only what is printed on the package. Never invent a date.",
     "",
-    "Canadian date stamps put the year first, then a two-letter bilingual month, then the day:",
-    "'2026 MR 14' or '26MR14' is March 14, 2026. Months: JA FE MR AL MA JN JL AU SE OC NO DE.",
+    // No concrete example date here: the on-device model copied one into its answers for
+    // packages that carry no such date (devpost/build-log.md, 2026-11-15).
+    "Canadian date stamps put the year first, then a two-letter bilingual month code, then the day.",
+    "Month codes: JA FE MR AL MA JN JL AU SE OC NO DE.",
     "'BB/MA' means best before. 'EXP' means expiry (infant formula, Ensure, Boost and other meal replacements).",
     "Copy the date characters exactly into date_text; do not convert them. Lot codes are not dates.",
     "",

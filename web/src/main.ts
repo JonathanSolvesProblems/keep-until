@@ -150,6 +150,30 @@ compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = false;
 });
 
+// Dev server only: three narrower on-device jobs over the sample photos, to decide what
+// Gemini Nano should do in this app (see src/dev/ondevice-experiment.ts).
+const experimentBtn = $<HTMLButtonElement>("experiment");
+if (import.meta.env.DEV && browserHasOnDeviceModel()) {
+  experimentBtn.hidden = false;
+  experimentBtn.addEventListener("click", async () => {
+    experimentBtn.disabled = true;
+    const { runExperiment, VARIANTS } = await import("./dev/ondevice-experiment");
+    const set = "pantry-2026-11-15";
+    const manifest = (await (await fetch(`/testset/${set}/manifest.json`)).json()) as { files: string[] };
+    const rows = await runExperiment(set, manifest.files, (s) => (status.textContent = s));
+    status.textContent = `on-device experiment done: ${rows.length} reads`;
+    const blob = new Blob(
+      [JSON.stringify({ exported: new Date().toISOString(), set, onDevice: await describeOnDevice(), variants: VARIANTS.map((v) => ({ id: v.id, prompt: v.prompt })), rows }, null, 2)],
+      { type: "application/json" },
+    );
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `keep-until-ondevice-experiment-${set}.json`;
+    a.click();
+    experimentBtn.disabled = false;
+  });
+}
+
 const cameraSel = $<HTMLSelectElement>("camera");
 
 function localStorageGet(key: string): string | undefined {
