@@ -44,6 +44,15 @@ The tests need nothing else. Reading items needs a Firebase project of your own,
 3. Create a reCAPTCHA Enterprise key for `localhost`, register it for the web app under App Check,
    and register a debug token for local use (Firebase AI Logic requires App Check).
 
+To check the reads yourself: after **Start shift**, click **Run comparison**. It runs the 16
+sample photos from my pantry (`web/public/testset/pantry-2026-11-15/`) on-device only, hybrid,
+and cloud only, and downloads one results file. Grade it against the hand labels (Python 3, no
+packages needed):
+
+```bash
+python scripts/grade_run.py keep-until-comparison-pantry-2026-11-15.json results/labels/pantry-2026-11-15.json
+```
+
 To run on-device, turn these on in `chrome://flags` and relaunch Chrome: **Gemma 4 for Built-in
 AI**, **Prompt API for Gemini Nano**, and **Prompt API for Gemini Nano with Multimodal Input**.
 Without them the app still works and says so: every read is marked CLOUD.

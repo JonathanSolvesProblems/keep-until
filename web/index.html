@@ -11,7 +11,7 @@
       h1 { margin: 0; font-size: 1.4rem; }
       #status { font-size: 0.9rem; opacity: 0.8; }
       .row { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0; }
-      video, canvas.preview { width: 100%; max-width: 480px; border-radius: 8px; background: #111; }
+      video, canvas.preview { width: 100%; max-width: 480px; max-height: 45vh; object-fit: cover; border-radius: 8px; background: #111; }
       button, select, input { font: inherit; padding: 8px 12px; }
       #log { display: grid; gap: 8px; }
       .item { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 8px; border: 1px solid #8884; border-radius: 8px; }
@@ -48,11 +48,15 @@
         </div>
       </div>
       <div>
-        <p class="small">Or run saved photos (the ablation harness):</p>
+        <p class="small">Or run saved photos:</p>
         <input id="files" type="file" accept="image/jpeg,image/png" multiple />
         <div class="row">
           <button id="batch" disabled>Run batch</button>
-          <button id="export">Export results JSON</button>
+          <button id="export">Export results</button>
+        </div>
+        <p class="small">Compare on-device, hybrid and cloud on the 16 sample pantry photos:</p>
+        <div class="row">
+          <button id="compare" disabled>Run comparison</button>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export const CONFIDENCE = ["high", "medium", "low"] as const;
  * log it, ask the volunteer to turn the package, hand it to the cloud model, or set it
  * aside for the sort lead.
  */
-export const NEXT_ACTIONS = ["log", "show_me_the_date", "ask_cloud", "set_aside"] as const;
+export const NEXT_ACTIONS = ["log", "show_me_the_date", "ask_cloud", "set_aside", "no_item"] as const;
 
 export type NextAction = (typeof NEXT_ACTIONS)[number];
 
@@ -64,6 +64,7 @@ export function readPrompt(context: { barcodeProduct?: string; secondLook?: bool
     "- show_me_the_date: no date is in view (for a can it is usually on the top or bottom). The volunteer will turn the item.",
     "- ask_cloud: a date is visible but you cannot read every character, the label is in a language you cannot read, or the product is unfamiliar.",
     "- set_aside: the package is dented, bulging, rusted, leaking or open, or it needs refrigeration.",
+    "- no_item: there is no food package in view at all (an empty table, a wall, a hand with nothing in it).",
     context.secondLook
       ? "This is the second photo of the same item, taken after you asked to see the date."
       : "",

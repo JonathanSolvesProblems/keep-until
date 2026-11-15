@@ -15,6 +15,8 @@ export interface ReadResult {
   source: "on_device" | "in_cloud";
   ms: number;
   mode: Mode;
+  /** False when the model's answer was not the JSON the schema asks for. */
+  valid: boolean;
 }
 
 export function makeModel(mode: Mode, cloudModel: string): GenerativeModel {
@@ -45,6 +47,14 @@ function oneOf<T extends string>(value: unknown, allowed: readonly T[], fallback
   return allowed.includes(value as T) ? (value as T) : fallback;
 }
 
+function isJson(text: string): boolean {
+  try {
+    return typeof JSON.parse(text) === "object";
+  } catch {
+    return false;
+  }
+}
+
 /** Validates the model's JSON. Anything malformed becomes a set-aside, never a guess. */
 export function toItemRead(text: string): ItemRead {
   let raw: Record<string, unknown> = {};
@@ -69,11 +79,47 @@ export function toItemRead(text: string): ItemRead {
   };
 }
 
+/**
+ * The Gemini Developer API free tier allows 15 requests a minute for this model, and a 429
+ * says how long to wait ("Please retry in 26.8s"). One sort table can hit that, so a cloud
+ * read waits it out (up to a minute, twice) instead of failing the item.
+ */
+export function retryDelayMs(err: unknown): number | undefined {
+  const msg = String((err as Error)?.message ?? err);
+  if (!msg.includes("429")) return undefined;
+  const m = msg.match(/retry in ([\d.]+)s/i);
+  const s = m ? Number(m[1]) : 20;
+  return Math.min(60_000, Math.ceil(s * 1000) + 250);
+}
+
+export let onRateLimitWait: ((ms: number) => void) | null = null;
+export function setRateLimitListener(fn: ((ms: number) => void) | null): void {
+  onRateLimitWait = fn;
+}
+
 export async function readItem(
   model: GenerativeModel,
   mode: Mode,
   jpegBase64: string,
   context: Parameters<typeof readPrompt>[0] = {},
+): Promise<ReadResult> {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await readOnce(model, mode, jpegBase64, context);
+    } catch (e) {
+      const wait = retryDelayMs(e);
+      if (wait === undefined || attempt >= 2) throw e;
+      onRateLimitWait?.(wait);
+      await new Promise((r) => setTimeout(r, wait));
+    }
+  }
+}
+
+async function readOnce(
+  model: GenerativeModel,
+  mode: Mode,
+  jpegBase64: string,
+  context: Parameters<typeof readPrompt>[0],
 ): Promise<ReadResult> {
   // A Performance Monitoring trace per read, tagged with where it ran, so real-world
   // on-device and cloud latency show up side by side in the Firebase console.
@@ -88,11 +134,13 @@ export async function readItem(
     ]);
     const ms = Math.round(performance.now() - t0);
     const source = result.response.inferenceSource === "on_device" ? "on_device" : "in_cloud";
-    const read = toItemRead(result.response.text());
+    const text = result.response.text();
+    const read = toItemRead(text);
+    const valid = isJson(text);
     t.putAttribute("source", source);
     t.putAttribute("next_action", read.next_action);
     t.putMetric("ms", ms);
-    return { read, source, ms, mode };
+    return { read, source, ms, mode, valid };
   } catch (e) {
     t.putAttribute("source", "error");
     throw e;

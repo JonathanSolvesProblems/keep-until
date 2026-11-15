@@ -51,3 +51,23 @@ marked as such and never feed `results/`.
   the server, read in 2,138 ms in the cloud, KEEP until 2027-03-14 (chart p.4), item and shift
   documents written and accepted by the rules, then deleted so no test row sits in a food bank's
   log.
+- First real data: 16 photos of 8 products from my own pantry (Galaxy S24), saved without EXIF in
+  `web/public/testset/pantry-2026-11-15/`, hand-labelled before any model run in
+  `results/labels/pantry-2026-11-15.json`, graded by `scripts/grade_run.py`. Cloud path: 14 of 15
+  scored photos handled the way a careful volunteer would (median 2.2 s); the broth carton's
+  "2027 FE 14" read exactly; all four chilled photos set aside. The miss: a "BB/MA 2027 MA" stamp
+  cut off at the photo's edge, where it asked to turn the bag.
+- Validation pass on the phone over USB (`adb reverse tcp:5173 tcp:5173`) found and fixed:
+  the dev server listened on IPv6 only, so the phone got an empty response; phones opened the
+  selfie camera; the camera view pushed Read item off screen; an empty frame said "turn it" and
+  merged the next item into it (the model now has a `no_item` choice).
+- Found and fixed the most important gap so far: PREFER_ON_DEVICE falls back to the cloud only
+  when the on-device model is unavailable. When an on-device call fails or returns something that
+  is not the schema's JSON, the read failed. The loop now hands the photo to the cloud and the
+  route records why. Found through headless Chromium, whose stand-in on-device API (1,000-token
+  quota, it echoes input) rejected the prompt with "The input is too large."; whether the full
+  prompt fits real Gemini Nano in Chrome is still to be measured on the laptop.
+- The free cloud tier allows 15 requests a minute for gemini-3.5-flash-lite; a comparison run hit
+  it (429) after about 30 calls. Cloud reads now wait out a 429 for the time it states and the
+  sort screen says why it is waiting. This is also the plainest case for on-device: one sort table
+  reading an item every 4 seconds already uses the whole free cloud quota.

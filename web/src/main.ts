@@ -1,5 +1,5 @@
 import { InferenceMode } from "firebase/ai";
-import { makeModel, type Mode } from "./ai/reader";
+import { makeModel, setRateLimitListener, type Mode } from "./ai/reader";
 import { processItem, type LoopModels, type Step } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
@@ -17,6 +17,11 @@ const log = $("log");
 
 todayInput.value = new Date().toISOString().slice(0, 10);
 
+// Said plainly on screen, so a volunteer knows the pause is the cloud quota, not a crash.
+setRateLimitListener((ms) => {
+  promptEl.textContent = `Cloud limit reached (the free tier allows 15 reads a minute). Waiting ${Math.round(ms / 1000)} s, then retrying.`;
+});
+
 interface Logged {
   file?: string;
   at: string;
@@ -27,12 +32,17 @@ const results: Logged[] = [];
 let models: LoopModels | null = null;
 let settings: Settings | null = null;
 let shift: { id: string; uid: string } | null = null;
+let shiftInfo: Parameters<typeof startShift>[0] | null = null;
 let pendingTurn: Step | null = null;
 
 function buildModels(mode: Mode, cloudModel: string): LoopModels {
   return {
     hybrid: { model: makeModel(mode, cloudModel), mode },
-    cloud: { model: makeModel(InferenceMode.ONLY_IN_CLOUD, cloudModel), mode: InferenceMode.ONLY_IN_CLOUD },
+    // On-device only means nothing leaves the laptop, including the hand-off for hard reads.
+    cloud:
+      mode === InferenceMode.ONLY_ON_DEVICE
+        ? null
+        : { model: makeModel(InferenceMode.ONLY_IN_CLOUD, cloudModel), mode: InferenceMode.ONLY_IN_CLOUD },
   };
 }
 
@@ -63,12 +73,64 @@ $("start").addEventListener("click", async () => {
     }
   }
   const onDevice = await describeOnDevice();
-  shift = { id: startShift({ foodBankId: settings.foodBankId, uid, mode, onDevice, cloudModel: settings.cloudModel }), uid };
+  // The shift record is written with the first logged item, so a measurement batch that
+  // never logs anything leaves no empty shift in the food bank's data.
+  shiftInfo = { foodBankId: settings.foodBankId, uid, mode, onDevice, cloudModel: settings.cloudModel };
+  shift = null;
   status.textContent = `${settings.foodBankName} · ${onDevice} · mode ${mode} · cloud ${settings.cloudModel} (${settings.from} config)`;
   await openCamera(localStorageGet("camera"));
   await listCameras();
   readBtn.disabled = false;
   batchBtn.disabled = false;
+  compareBtn.disabled = false;
+});
+
+const compareBtn = $<HTMLButtonElement>("compare");
+
+// The ablation in one click: the same sample photos through on-device only (nothing leaves the
+// laptop), prefer on-device (the product) and cloud only. Downloads one results file that
+// scripts/grade_run.py grades against results/labels/.
+compareBtn.addEventListener("click", async () => {
+  if (!settings) return;
+  compareBtn.disabled = true;
+  const set = "pantry-2026-11-15";
+  const manifest = (await (await fetch(`/testset/${set}/manifest.json`)).json()) as { files: string[] };
+  const modes: Mode[] = [InferenceMode.ONLY_ON_DEVICE, InferenceMode.PREFER_ON_DEVICE, InferenceMode.ONLY_IN_CLOUD];
+  const runs: Logged[] = [];
+  for (const mode of modes) {
+    const m = buildModels(mode, settings.cloudModel);
+    if (mode !== InferenceMode.ONLY_IN_CLOUD) {
+      try {
+        await m.hybrid.model.initializeDeviceModel();
+      } catch {
+        // On a browser without Gemini Nano the on-device-only run records the failure per photo.
+      }
+    }
+    for (const [i, file] of manifest.files.entries()) {
+      status.textContent = `comparison · ${mode} · ${i + 1}/${manifest.files.length}`;
+      const img = new Image();
+      img.src = `/testset/${set}/${file}`;
+      await img.decode();
+      const frame = toJpegBase64(img, img.naturalWidth, img.naturalHeight);
+      try {
+        const step = await processItem(m, frame.b64, { today: todayInput.value, policy: settings.policy });
+        runs.push({ file, at: new Date().toISOString(), mode, step });
+        render(step, frame.url, `${mode} · ${file}`);
+      } catch (e) {
+        runs.push({ file, at: new Date().toISOString(), mode, step: { kind: "no_item", reads: [], route: "error: " + (e as Error).message } });
+      }
+    }
+  }
+  status.textContent = `comparison done: ${manifest.files.length} photos × ${modes.length} modes`;
+  const blob = new Blob(
+    [JSON.stringify({ exported: new Date().toISOString(), set, sortDate: todayInput.value, cloudModel: settings.cloudModel, onDevice: await describeOnDevice(), results: runs }, null, 2)],
+    { type: "application/json" },
+  );
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `keep-until-comparison-${set}.json`;
+  a.click();
+  compareBtn.disabled = false;
 });
 
 const cameraSel = $<HTMLSelectElement>("camera");
@@ -93,8 +155,13 @@ async function openCamera(deviceId?: string): Promise<void> {
   (video.srcObject as MediaStream | null)?.getTracks().forEach((t) => t.stop());
   try {
     // Date stamps are small print, so ask for full HD; the browser falls back if it cannot.
+    // With no saved choice, ask for the back camera: phones otherwise open the selfie camera.
     video.srcObject = await navigator.mediaDevices.getUserMedia({
-      video: { ...(deviceId ? { deviceId: { exact: deviceId } } : {}), width: { ideal: 1920 }, height: { ideal: 1080 } },
+      video: {
+        ...(deviceId ? { deviceId: { exact: deviceId } } : { facingMode: { ideal: "environment" } }),
+        width: { ideal: 1920 },
+        height: { ideal: 1080 },
+      },
     });
     promptEl.textContent = "";
     // A phone used as a webcam (Windows Phone Link) sends no picture while the phone is locked.
@@ -145,7 +212,7 @@ function render(step: Step, thumb: string, label: string): void {
   const last = step.reads[step.reads.length - 1];
   const div = document.createElement("div");
   div.className = "item";
-  const decision = step.kind === "verdict" ? step.verdict.decision : "TURN IT";
+  const decision = step.kind === "verdict" ? step.verdict.decision : step.kind === "no_item" ? "NO ITEM" : "TURN IT";
   const until = step.kind === "verdict" && step.verdict.keepUntil ? ` until ${step.verdict.keepUntil}` : "";
   const reason = step.kind === "verdict" ? step.verdict.reason : last.read.why;
   const page = step.kind === "verdict" && step.verdict.chart ? ` · chart p.${step.verdict.chart.page}` : "";
@@ -159,14 +226,18 @@ function render(step: Step, thumb: string, label: string): void {
   d.textContent = decision + until;
   d.classList.add(step.kind === "verdict" ? step.verdict.decision : "SET_ASIDE");
   div.querySelector(".badge")!.textContent = step.reads.map((r) => `${r.source === "on_device" ? "ON-DEVICE" : "CLOUD"} ${r.ms} ms`).join(" → ");
-  div.querySelector(".product")!.textContent = `${last.read.brand} ${last.read.product} · ${last.read.category} · "${last.read.date_text}" (${last.read.date_kind})`;
+  const what = [`${last.read.brand} ${last.read.product}`.trim(), last.read.category !== "unclear" ? last.read.category : ""]
+    .filter(Boolean)
+    .join(" · ");
+  const date = last.read.date_text ? `date "${last.read.date_text}"` : "no date in view";
+  div.querySelector(".product")!.textContent = step.kind === "no_item" ? "nothing in view" : `${what || "unrecognised item"} · ${date}`;
   div.querySelector(".reason")!.textContent = reason + page;
   div.querySelector(".route")!.textContent = `${label} · ${step.route}`;
   log.prepend(div);
 }
 
 readBtn.addEventListener("click", async () => {
-  if (!models || !settings || !shift || !video.videoWidth) return;
+  if (!models || !settings || !shiftInfo || !video.videoWidth) return;
   readBtn.disabled = true;
   const frame = toJpegBase64(video, video.videoWidth, video.videoHeight);
   try {
@@ -178,7 +249,10 @@ readBtn.addEventListener("click", async () => {
     pendingTurn = step.kind === "need_date_photo" ? step : null;
     promptEl.textContent = pendingTurn ? "Turn the item so the date faces the camera, then Read item again." : "";
     results.push({ at: new Date().toISOString(), mode: models.hybrid.mode, step });
-    if (step.kind === "verdict") logItem(settings.foodBankId, shift.id, shift.uid, step, settings.policy);
+    if (step.kind === "verdict") {
+      shift ??= { id: startShift(shiftInfo), uid: shiftInfo.uid };
+      logItem(settings.foodBankId, shift.id, shift.uid, step, settings.policy);
+    }
     render(step, frame.url, "camera");
   } catch (e) {
     promptEl.textContent = "error: " + (e as Error).message;

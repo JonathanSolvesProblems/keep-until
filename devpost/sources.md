@@ -14,6 +14,8 @@ published source, or the measurement in `results/` that produced it.
 | Recall notices (34,383 notices, 4,280 in the Food category, last updated 2026-11-13 at download) | Government of Canada, Recalls and Safety Alerts open data (JSON): https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.json | 2026-11-14 |
 | On-device limits (single turn, one image, 9,216 tokens on web, 4,000 on Android, no tools on-device) | Firebase AI Logic hybrid docs: https://firebase.google.com/docs/ai-logic/hybrid | 2026-11-14 |
 | Galaxy S24 not on the on-device list (Samsung support starts at the S25) | ML Kit GenAI device support: https://developers.google.com/ml-kit/genai | 2026-11-14 |
+| The cloud free tier allows 15 requests a minute for gemini-3.5-flash-lite | The API's own 429 response on this project, 2026-11-15: "Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite"; limits documented at https://aistudio.google.com/docs/rate-limits | 2026-11-15 |
+| Canadian date stamps: year first, bilingual month symbols, year optional when clear; expiry dates required on formula and meal replacements | CFIA, "Date markings and storage instructions": https://inspection.canada.ca/en/food-labels/labelling/industry/date-markings-and-storage-instructions | 2026-11-14 |
 
 ## Measurements
 

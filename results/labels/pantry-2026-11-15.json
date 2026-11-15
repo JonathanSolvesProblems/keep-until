@@ -1,0 +1,23 @@
+{
+  "set": "pantry-2026-11-15",
+  "about": "Hand labels for 16 photos of 8 real products from Jonathan's pantry, taken 2026-11-15 on a Galaxy S24. Read by hand from the full-resolution originals before any model run. 'expected' is what a careful volunteer should do with this one photo: log it (date readable), turn it (no date in frame), or set it aside (chilled, or a stamp no one can read). Grader for keep-until dates: Food Banks Canada, Guidelines for Food Shelf Life (July 2018).",
+  "sort_date": "2026-11-15",
+  "items": [
+    { "file": "20261115_112242.jpg", "product": "Green Giant cream style corn, two can tops", "date_on_package": null, "label_note": "dot-matrix stamps on both lids, upside down and partly smudged; not reliably readable by hand from this photo", "expected": "unverified", "category": "canned_fruit_veg" },
+    { "file": "20261115_112247.jpg", "product": "Green Giant cream style corn, front of both cans", "date_on_package": null, "expected": "turn_it", "category": "canned_fruit_veg" },
+    { "file": "20261115_112303.jpg", "product": "Gallo extra virgin olive oil, back label", "date_on_package": null, "expected": "turn_it", "category": "olive_oil" },
+    { "file": "20261115_112311.jpg", "product": "Gallo extra virgin olive oil, front", "date_on_package": null, "expected": "turn_it", "category": "olive_oil" },
+    { "file": "20261115_112323.jpg", "product": "No Name baking powder, back", "date_on_package": null, "label_note": "label says 'BEST BEFORE DATE ON BOTTOM OF CAN'", "expected": "turn_it", "category": "general_grocery_canned" },
+    { "file": "20261115_112326.jpg", "product": "No Name baking powder, front", "date_on_package": null, "expected": "turn_it", "category": "general_grocery_canned" },
+    { "file": "20261115_112402.jpg", "product": "Arm & Hammer baking soda, side panel", "date_on_package": null, "expected": "turn_it", "category": "general_grocery_boxed" },
+    { "file": "20261115_112406.jpg", "product": "Hershey's Chipits milk chocolate chips, back", "date_on_package": "BB/MA 2027 MA (day cut off at the top edge)", "best_before": "2027-05", "expected": "log", "category": "general_grocery_boxed", "label_note": "MA here is May 2027, the month symbol, not the 'meilleur avant' prefix" },
+    { "file": "20261115_112410.jpg", "product": "Hershey's Chipits milk chocolate chips, front", "date_on_package": null, "expected": "turn_it", "category": "general_grocery_boxed" },
+    { "file": "20261115_112419.jpg", "product": "Campbell's chicken broth 900 mL carton, front", "date_on_package": null, "expected": "turn_it", "category": "canned_prepared_meals" },
+    { "file": "20261115_112421.jpg", "product": "Campbell's chicken broth 900 mL carton, side", "date_on_package": null, "expected": "turn_it", "category": "canned_prepared_meals" },
+    { "file": "20261115_112427.jpg", "product": "Campbell's chicken broth 900 mL carton, top", "date_on_package": "BEST BEFORE / MEILLEUR AVANT 2027 FE 14 02146", "best_before": "2027-02-14", "expected": "log", "category": "canned_prepared_meals" },
+    { "file": "20261115_112441.jpg", "product": "Liberte Greek yogurt tub, side", "date_on_package": null, "expected": "set_aside", "category": "chilled_or_frozen" },
+    { "file": "20261115_112446.jpg", "product": "Liberte Greek yogurt tub, lid", "date_on_package": "MEILLEUR AVANT / BEST BEFORE 2026 DE 07", "best_before": "2026-12-07", "expected": "set_aside", "category": "chilled_or_frozen" },
+    { "file": "20261115_112452.jpg", "product": "PC shredded parmesan, back", "date_on_package": null, "expected": "set_aside", "category": "chilled_or_frozen" },
+    { "file": "20261115_112458.jpg", "product": "PC shredded parmesan, front", "date_on_package": "BEST BEFORE / MEILLEUR AVANT 2026 NO 30", "best_before": "2026-11-30", "expected": "set_aside", "category": "chilled_or_frozen", "label_note": "bag says KEEP REFRIGERATED" }
+  ]
+}
