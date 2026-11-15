@@ -1,5 +1,5 @@
 import { InferenceMode } from "firebase/ai";
-import { makeModel, setRateLimitListener, type Mode } from "./ai/reader";
+import { browserHasOnDeviceModel, makeModel, setRateLimitListener, type Mode } from "./ai/reader";
 import { processItem, type LoopModels, type Step } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
@@ -58,6 +58,20 @@ async function describeOnDevice(): Promise<string> {
 
 describeOnDevice().then((s) => (status.textContent = s));
 
+// Without Chrome's on-device model the SDK sends every read to the cloud, whatever the mode.
+// Say so where a volunteer will see it, and take "On-device only" off the menu.
+if (!browserHasOnDeviceModel()) {
+  const note = $("browserNote");
+  note.textContent =
+    "This browser has no on-device model, so every read here goes to the cloud. To read on this laptop instead, open this page in Chrome with Gemini Nano turned on.";
+  note.hidden = false;
+  const onlyOnDevice = modeSel.querySelector<HTMLOptionElement>('option[value="only_on_device"]');
+  if (onlyOnDevice) {
+    onlyOnDevice.disabled = true;
+    onlyOnDevice.textContent += " (not in this browser)";
+  }
+}
+
 $("start").addEventListener("click", async () => {
   const mode = modeSel.value as Mode;
   status.textContent = "signing in";
@@ -95,7 +109,10 @@ compareBtn.addEventListener("click", async () => {
   compareBtn.disabled = true;
   const set = "pantry-2026-11-15";
   const manifest = (await (await fetch(`/testset/${set}/manifest.json`)).json()) as { files: string[] };
-  const modes: Mode[] = [InferenceMode.ONLY_ON_DEVICE, InferenceMode.PREFER_ON_DEVICE, InferenceMode.ONLY_IN_CLOUD];
+  // On-device only is skipped (and recorded as skipped) in a browser that cannot run it.
+  const modes: Mode[] = browserHasOnDeviceModel()
+    ? [InferenceMode.ONLY_ON_DEVICE, InferenceMode.PREFER_ON_DEVICE, InferenceMode.ONLY_IN_CLOUD]
+    : [InferenceMode.PREFER_ON_DEVICE, InferenceMode.ONLY_IN_CLOUD];
   const runs: Logged[] = [];
   for (const mode of modes) {
     const m = buildModels(mode, settings.cloudModel);

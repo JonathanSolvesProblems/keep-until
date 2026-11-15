@@ -40,6 +40,50 @@ function settle(reads: ReadResult[], today: string, policy: Policy | undefined, 
   return { kind: "verdict", reads, parsed, verdict, route };
 }
 
+function dateKey(p: ParsedDate | null): string {
+  if (!p) return "no date";
+  if (p.kind === "exact") return p.iso;
+  if (p.kind === "ambiguous") return p.candidates.join(" or ");
+  return "unreadable";
+}
+
+/**
+ * Binning edible food is the failure this app exists to prevent, and one read can misread a
+ * stamp (the same photo has come back as "2027 MA 17" and as "26MA14"). So a DISCARD is never
+ * decided on one read: a second read must find the same date, or the item goes to a person.
+ */
+async function confirmDiscard(step: Step, models: LoopModels, jpegBase64: string, readContext: Parameters<typeof readItem>[3], today: string): Promise<Step> {
+  if (step.kind !== "verdict" || step.verdict.decision !== "DISCARD") return step;
+  const checker = models.cloud ?? models.hybrid;
+  let check: ReadResult;
+  try {
+    check = await readItem(checker.model, checker.mode, jpegBase64, readContext);
+  } catch (e) {
+    return {
+      ...step,
+      verdict: { ...step.verdict, decision: "SET_ASIDE", reason: `would discard, but the confirming read failed (${(e as Error).message}); a person checks it` },
+      route: step.route + " → confirming read failed → set aside",
+    };
+  }
+  const reads = [...step.reads, check];
+  const second = check.read.date_text ? parseDateText(check.read.date_text, today) : null;
+  if (dateKey(second) === dateKey(step.parsed) && step.parsed?.kind === "exact") {
+    return { ...step, reads, route: step.route + ` → discard confirmed by a second read (${check.source})` };
+  }
+  return {
+    kind: "verdict",
+    reads,
+    parsed: step.parsed,
+    verdict: {
+      decision: "SET_ASIDE",
+      pastPrintedDate: false,
+      chart: step.verdict.chart,
+      reason: `two reads disagree on the date (${dateKey(step.parsed)} vs ${dateKey(second)}), so a person checks it before anything is binned`,
+    },
+    route: step.route + ` → second read (${check.source}) disagreed → set aside`,
+  };
+}
+
 function setAside(reads: ReadResult[], route: string, reason: string): Step {
   return { kind: "verdict", reads, parsed: null, verdict: { decision: "SET_ASIDE", pastPrintedDate: false, reason }, route };
 }
@@ -87,7 +131,7 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
     reads.push(second);
     const problem = second.read.next_action === "log" ? objectiveProblem(second, ctx.today) : second.read.why || second.read.next_action;
     if (problem) return setAside(reads, routed(`on_device → cloud (${why}) → set aside`), `cloud read did not settle it: ${problem}`);
-    return settle(reads, ctx.today, ctx.policy, routed(`on_device chose ask_cloud (${why}) → cloud read`));
+    return confirmDiscard(settle(reads, ctx.today, ctx.policy, routed(`on_device chose ask_cloud (${why}) → cloud read`)), models, jpegBase64, readContext, ctx.today);
   };
 
   switch (first.read.next_action) {
@@ -104,7 +148,7 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
     case "log": {
       const problem = objectiveProblem(first, ctx.today);
       if (problem) return escalate(problem);
-      return settle(reads, ctx.today, ctx.policy, routed(`${first.source}: model chose log`));
+      return confirmDiscard(settle(reads, ctx.today, ctx.policy, routed(`${first.source}: model chose log`)), models, jpegBase64, readContext, ctx.today);
     }
   }
 }

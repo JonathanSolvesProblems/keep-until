@@ -112,6 +112,33 @@ describe("processItem: the hybrid hand-off", () => {
     expect(c!.calls).toBe(2);
   });
 
+  it("keeps a discard only when a second read finds the same date", async () => {
+    const cereal = { category: "boxed_cereal", product: "Corn flakes", date_text: "2026 FE 01" };
+    const { m, c } = models([{ text: read(cereal), source: "on_device" }], [{ text: read(cereal), source: "in_cloud" }]);
+    const step = await processItem(m, "img", { today: TODAY });
+    expect(c!.calls).toBe(1);
+    expect(step.kind === "verdict" && step.verdict.decision).toBe("DISCARD");
+    expect(step.route).toMatch(/discard confirmed by a second read \(in_cloud\)$/);
+  });
+
+  it("sets an item aside instead of binning it when the two reads disagree on the date", async () => {
+    // The real case: one read of a Chipits bag gave "26MA14" (May 2026), another "BB/MA 2027 MA 17".
+    const { m } = models(
+      [{ text: read({ category: "general_grocery_boxed", date_text: "26MA14" }), source: "on_device" }],
+      [{ text: read({ category: "general_grocery_boxed", date_text: "BB/MA 2027 MA 17" }), source: "in_cloud" }],
+    );
+    const step = await processItem(m, "img", { today: TODAY });
+    expect(step.kind === "verdict" && step.verdict.decision).toBe("SET_ASIDE");
+    if (step.kind === "verdict") expect(step.verdict.reason).toMatch(/2026-05-14 vs 2027-05-17/);
+  });
+
+  it("refuses an on-device-only read in a browser with no on-device model, before any request", async () => {
+    const h = fakeModel([{ text: read({}), source: "in_cloud" }]);
+    const m: LoopModels = { hybrid: { model: h, mode: "only_on_device" }, cloud: null };
+    await expect(processItem(m, "img", { today: TODAY })).rejects.toThrow(/photo was not sent anywhere/);
+    expect(h.calls).toBe(0);
+  });
+
   it("treats an empty frame as no item, so the next item starts fresh", async () => {
     const { m } = models([{ text: read({ next_action: "no_item", product: "", category: "unclear", date_text: "", date_kind: "none_visible" }), source: "on_device" }], []);
     const step = await processItem(m, "img", { today: TODAY });

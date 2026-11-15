@@ -20,6 +20,7 @@
       .KEEP { color: #1a7f37; } .DISCARD { color: #c62828; } .SET_ASIDE { color: #b26a00; }
       .badge { font-size: 0.75rem; padding: 2px 6px; border-radius: 999px; border: 1px solid currentColor; margin-left: 6px; }
       .small { font-size: 0.85rem; opacity: 0.85; }
+      .note { margin: 12px 0; padding: 10px 12px; border-radius: 8px; border: 1px solid #b26a00; }
     </style>
   </head>
   <body>
@@ -27,6 +28,7 @@
       <h1>Keep Until</h1>
       <span id="status">loading</span>
     </header>
+    <p id="browserNote" class="note" hidden></p>
     <div class="row">
       <button id="start">Start shift</button>
       <label>Inference

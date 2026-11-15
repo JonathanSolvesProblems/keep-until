@@ -115,12 +115,24 @@ export async function readItem(
   }
 }
 
+/** True when this browser has Chrome's built-in on-device model API at all. */
+export function browserHasOnDeviceModel(): boolean {
+  return typeof (globalThis as { LanguageModel?: unknown }).LanguageModel !== "undefined";
+}
+
 async function readOnce(
   model: GenerativeModel,
   mode: Mode,
   jpegBase64: string,
   context: Parameters<typeof readPrompt>[0],
 ): Promise<ReadResult> {
+  // The SDK only builds its on-device adapter when the browser has LanguageModel; without it,
+  // every call goes to the cloud whatever the mode, including ONLY_ON_DEVICE. "On-device
+  // only" is a promise that the photo stays on this machine, so it is kept here, before any
+  // request is made.
+  if (mode === InferenceMode.ONLY_ON_DEVICE && !browserHasOnDeviceModel()) {
+    throw new Error("on-device only, but this browser has no on-device model; the photo was not sent anywhere");
+  }
   // A Performance Monitoring trace per read, tagged with where it ran, so real-world
   // on-device and cloud latency show up side by side in the Firebase console.
   const t = trace(perf, "item_read");
@@ -134,6 +146,9 @@ async function readOnce(
     ]);
     const ms = Math.round(performance.now() - t0);
     const source = result.response.inferenceSource === "on_device" ? "on_device" : "in_cloud";
+    if (mode === InferenceMode.ONLY_ON_DEVICE && source !== "on_device") {
+      throw new Error("on-device only, but the read came back from the cloud; result discarded");
+    }
     const text = result.response.text();
     const read = toItemRead(text);
     const valid = isJson(text);

@@ -52,18 +52,20 @@ def grade_mode(results_path, run, labels, mode, results):
         got, decision, date = outcome(r["step"])
         read = r["step"]["reads"][-1]["read"]
         exp = lab["expected"]
+        dcheck, date_good = "", True
+        if lab.get("best_before") and date:
+            date_checks += 1
+            date_good = date.startswith(lab["best_before"]) or (len(lab["best_before"]) == 7 and date[:7] == lab["best_before"])
+            date_ok += date_good
+            dcheck = "date ok" if date_good else f"date WRONG (label {lab['best_before']})"
         ok = ""
         if exp != "unverified":
             scored += 1
-            hit = got == exp
+            # A logged item only counts when its date is right: a misread date is a wrong
+            # keep or discard, however confident the log looks.
+            hit = got == exp and (exp != "log" or date_good)
             correct += hit
             ok = "yes" if hit else "NO"
-        dcheck = ""
-        if lab.get("best_before") and date:
-            date_checks += 1
-            good = date.startswith(lab["best_before"]) or lab["best_before"].startswith(date[:7]) and len(lab["best_before"]) == 7
-            date_ok += good
-            dcheck = "date ok" if good else f"date WRONG (label {lab['best_before']})"
         sources = " > ".join(f"{x['source']} {x['ms']} ms" for x in r["step"]["reads"])
         rows.append((r["file"], exp, f"{got} {decision or ''}".strip(), read.get("date_text", ""), date or "", sources, f"{ok} {dcheck}".strip()))
 
