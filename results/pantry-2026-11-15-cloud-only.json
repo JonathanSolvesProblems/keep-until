@@ -1,0 +1,504 @@
+{
+ "exported": "2026-11-15T16:48:19.332Z",
+ "set": "pantry-2026-11-15",
+ "sortDate": "2026-11-15",
+ "cloudModel": "gemini-3.5-flash-lite",
+ "onDevice": "on-device: available",
+ "results": [
+  {
+   "file": "20261115_112242.jpg",
+   "at": "2026-11-15T16:47:13.892Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "verdict",
+    "reads": [
+     {
+      "read": {
+       "product": "Canned Goods",
+       "brand": "",
+       "category": "canned_fruit_veg",
+       "date_text": "25 OC 2029",
+       "date_kind": "best_before",
+       "damage": "none",
+       "confidence": "high",
+       "next_action": "log",
+       "why": "The best before date is clearly visible on the top of the can."
+      },
+      "source": "in_cloud",
+      "ms": 1249,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "parsed": null,
+    "verdict": {
+     "decision": "SET_ASIDE",
+     "pastPrintedDate": false,
+     "reason": "the cloud model could not settle it: date \"25 OC 2029\" does not parse (no valid calendar date in CFIA year-month-day)"
+    },
+    "route": "in_cloud: date \"25 OC 2029\" does not parse (no valid calendar date in CFIA year-month-day); already in the cloud"
+   }
+  },
+  {
+   "file": "20261115_112247.jpg",
+   "at": "2026-11-15T16:47:15.596Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Green Giant Cream Style Corn",
+       "brand": "Green Giant",
+       "category": "canned_fruit_veg",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "show_me_the_date",
+       "why": "The top and bottom of the cans are not visible where date stamps are normally located."
+      },
+      "source": "in_cloud",
+      "ms": 1654,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112303.jpg",
+   "at": "2026-11-15T16:47:16.885Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Olive Oil",
+       "brand": "Unico",
+       "category": "olive_oil",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "show_me_the_date",
+       "why": "The nutrition facts and barcode are visible, but the best before date is not in view on this side of the bottle."
+      },
+      "source": "in_cloud",
+      "ms": 1245,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112311.jpg",
+   "at": "2026-11-15T16:47:17.964Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Extra Virgin Olive Oil 1L",
+       "brand": "Gallo",
+       "category": "olive_oil",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "high",
+       "next_action": "show_me_the_date",
+       "why": "The product and brand are clear, but the date is not visible on the front label."
+      },
+      "source": "in_cloud",
+      "ms": 1023,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112323.jpg",
+   "at": "2026-11-15T16:48:00.527Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Baking Powder",
+       "brand": "Simple",
+       "category": "flour_based_mixes",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "high",
+       "next_action": "show_me_the_date",
+       "why": "The label says 'BEST BEFORE DATE ON BOTTOM OF CAN', but the bottom is not visible in this view."
+      },
+      "source": "in_cloud",
+      "ms": 1181,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112326.jpg",
+   "at": "2026-11-15T16:48:02.301Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "baking powder 450 g",
+       "brand": "no name",
+       "category": "flour_based_mixes",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "high",
+       "next_action": "show_me_the_date",
+       "why": "The product and brand are clearly visible, but no date stamp is shown on this side of the container."
+      },
+      "source": "in_cloud",
+      "ms": 1404,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112402.jpg",
+   "at": "2026-11-15T16:48:04.490Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Baking Soda",
+       "brand": "Arm & Hammer",
+       "category": "general_grocery_boxed",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "show_me_the_date",
+       "why": "The nutrition facts and ingredients are visible, but the date stamp is not in view."
+      },
+      "source": "in_cloud",
+      "ms": 2133,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112406.jpg",
+   "at": "2026-11-15T16:48:06.007Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Milk Chocolate Chips",
+       "brand": "Hershey's",
+       "category": "flour_based_mixes",
+       "date_text": "66EBGW16SK",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "show_me_the_date",
+       "why": "The visible text is a lot code, not a valid date stamp, so the actual date needs to be found."
+      },
+      "source": "in_cloud",
+      "ms": 1465,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112410.jpg",
+   "at": "2026-11-15T16:48:07.360Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Hershey's Chipits milk chocolate chips 250 g",
+       "brand": "Hershey's",
+       "category": "flour_based_mixes",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "show_me_the_date",
+       "why": "The product is clearly visible, but no best before date is shown in the image."
+      },
+      "source": "in_cloud",
+      "ms": 1288,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112419.jpg",
+   "at": "2026-11-15T16:48:08.445Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Campbell's Chicken Broth 900 mL",
+       "brand": "Campbell's",
+       "category": "canned_prepared_meals",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "show_me_the_date",
+       "why": "The product is clearly visible, but the date is not shown on the front of the carton."
+      },
+      "source": "in_cloud",
+      "ms": 1026,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112421.jpg",
+   "at": "2026-11-15T16:48:10.139Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "need_date_photo",
+    "reads": [
+     {
+      "read": {
+       "product": "Chicken broth",
+       "brand": "",
+       "category": "canned_prepared_meals",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "show_me_the_date",
+       "why": "The nutrition facts and ingredients are visible, but the date stamp is not in view on this side of the carton."
+      },
+      "source": "in_cloud",
+      "ms": 1639,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "route": "in_cloud: model asked to see the date"
+   }
+  },
+  {
+   "file": "20261115_112427.jpg",
+   "at": "2026-11-15T16:48:11.645Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "verdict",
+    "reads": [
+     {
+      "read": {
+       "product": "Broccoli Soup Tetra Pak",
+       "brand": "",
+       "category": "canned_prepared_meals",
+       "date_text": "2027 FE 14",
+       "date_kind": "best_before",
+       "damage": "none",
+       "confidence": "high",
+       "next_action": "log",
+       "why": "The product, category, and best before date are clearly visible on the package top."
+      },
+      "source": "in_cloud",
+      "ms": 1469,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "parsed": {
+     "kind": "exact",
+     "iso": "2027-02-14",
+     "precision": "day"
+    },
+    "verdict": {
+     "decision": "KEEP",
+     "keepUntil": "2029-02-14",
+     "pastPrintedDate": false,
+     "chart": {
+      "id": "canned_prepared_meals",
+      "label": "Mixed commercially canned prepared foods",
+      "page": 8
+     },
+     "reason": "Mixed commercially canned prepared foods: 24 months past best before (chart p.8)"
+    },
+    "route": "in_cloud: model chose log"
+   }
+  },
+  {
+   "file": "20261115_112441.jpg",
+   "at": "2026-11-15T16:48:12.782Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "verdict",
+    "reads": [
+     {
+      "read": {
+       "product": "Greek Yogurt 2% M.F.",
+       "brand": "Libert\u00e9",
+       "category": "chilled_or_frozen",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "set_aside",
+       "why": "This yogurt requires refrigeration and should be set aside accordingly."
+      },
+      "source": "in_cloud",
+      "ms": 1081,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "parsed": null,
+    "verdict": {
+     "decision": "SET_ASIDE",
+     "pastPrintedDate": false,
+     "reason": "This yogurt requires refrigeration and should be set aside accordingly."
+    },
+    "route": "in_cloud: model chose set_aside"
+   }
+  },
+  {
+   "file": "20261115_112446.jpg",
+   "at": "2026-11-15T16:48:13.998Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "verdict",
+    "reads": [
+     {
+      "read": {
+       "product": "Libert\u00e9 Grec Greek Yogurt",
+       "brand": "Libert\u00e9",
+       "category": "chilled_or_frozen",
+       "date_text": "2026 DE 07",
+       "date_kind": "best_before",
+       "damage": "none",
+       "confidence": "high",
+       "next_action": "set_aside",
+       "why": "This is yogurt, which requires refrigeration and must be set aside."
+      },
+      "source": "in_cloud",
+      "ms": 1166,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "parsed": null,
+    "verdict": {
+     "decision": "SET_ASIDE",
+     "pastPrintedDate": false,
+     "reason": "This is yogurt, which requires refrigeration and must be set aside."
+    },
+    "route": "in_cloud: model chose set_aside"
+   }
+  },
+  {
+   "file": "20261115_112452.jpg",
+   "at": "2026-11-15T16:48:15.179Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "verdict",
+    "reads": [
+     {
+      "read": {
+       "product": "Parmesan Shredded Cheese",
+       "brand": "PC",
+       "category": "chilled_or_frozen",
+       "date_text": "",
+       "date_kind": "none_visible",
+       "damage": "none",
+       "confidence": "low",
+       "next_action": "set_aside",
+       "why": "This cheese product requires refrigeration."
+      },
+      "source": "in_cloud",
+      "ms": 1118,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "parsed": null,
+    "verdict": {
+     "decision": "SET_ASIDE",
+     "pastPrintedDate": false,
+     "reason": "This cheese product requires refrigeration."
+    },
+    "route": "in_cloud: model chose set_aside"
+   }
+  },
+  {
+   "file": "20261115_112458.jpg",
+   "at": "2026-11-15T16:48:19.332Z",
+   "mode": "only_in_cloud",
+   "step": {
+    "kind": "verdict",
+    "reads": [
+     {
+      "read": {
+       "product": "Parmesan Shredded Cheese",
+       "brand": "PC",
+       "category": "chilled_or_frozen",
+       "date_text": "2026 NO 30",
+       "date_kind": "best_before",
+       "damage": "none",
+       "confidence": "high",
+       "next_action": "set_aside",
+       "why": "This product is shredded cheese and requires refrigeration."
+      },
+      "source": "in_cloud",
+      "ms": 4106,
+      "mode": "only_in_cloud",
+      "valid": true
+     }
+    ],
+    "parsed": null,
+    "verdict": {
+     "decision": "SET_ASIDE",
+     "pastPrintedDate": false,
+     "reason": "This product is shredded cheese and requires refrigeration."
+    },
+    "route": "in_cloud: model chose set_aside"
+   }
+  }
+ ],
+ "note": "Cloud-only pass of the comparison, run 2026-11-15 in headless Chromium on the dev server. The on-device and hybrid passes of that run are not kept: headless Chromium's on-device API is a stand-in that echoes its input, so they measure nothing about Gemini Nano."
+}
