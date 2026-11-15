@@ -2,7 +2,7 @@
 // Writes are not awaited: with the persistent cache they land on the laptop at once and sync
 // when the network is back.
 
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import type { Step } from "./ai/loop";
 import type { Policy } from "./chart/chart";
@@ -35,10 +35,10 @@ function describePolicy(policy: Policy | undefined, categoryId: string): string 
   return `chart ${policy?.bound ?? "min"} bound`;
 }
 
-export function logItem(foodBankId: string, shiftId: string, uid: string, step: Extract<Step, { kind: "verdict" }>, policy?: Policy): void {
+export function logItem(foodBankId: string, shiftId: string, uid: string, step: Extract<Step, { kind: "verdict" }>, policy?: Policy): { id: string; sheetRow: string[] } {
   const last = step.reads[step.reads.length - 1]?.read;
   const parsed = step.parsed;
-  const doc = {
+  const record = {
     createdBy: uid,
     createdAt: serverTimestamp(),
     shiftId,
@@ -69,5 +69,24 @@ export function logItem(foodBankId: string, shiftId: string, uid: string, step: 
     })),
     barcode: null,
   };
-  addDoc(collection(db, "foodBanks", foodBankId, "items"), doc).catch((e) => console.error("item log failed", e));
+  const ref = doc(collection(db, "foodBanks", foodBankId, "items"));
+  setDoc(ref, record).catch((e) => console.error("item log failed", e));
+  return {
+    id: ref.id,
+    // The same item as a row for the food bank's own sheet.
+    sheetRow: [
+      new Date().toLocaleString("en-CA"),
+      record.product,
+      record.brand,
+      step.verdict.chart?.label ?? record.category,
+      record.dateText,
+      record.dateKind,
+      record.decision,
+      record.keepUntil ?? "",
+      record.reason,
+      record.chartPage === null ? "" : String(record.chartPage),
+      step.reads.map((r) => (r.source === "on_device" ? "on-device" : "cloud")).join(" > "),
+      ref.id,
+    ],
+  };
 }

@@ -3,6 +3,7 @@ import { browserHasOnDeviceModel, makeModel, makeTriageModel, setRateLimitListen
 import { processItem, type LoopModels, type Step } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
+import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const status = $("status");
@@ -99,6 +100,47 @@ $("start").addEventListener("click", async () => {
   readBtn.disabled = false;
   batchBtn.disabled = false;
   compareBtn.disabled = false;
+  sheetBtn.disabled = false;
+  showSheetStatus();
+});
+
+const sheetBtn = $<HTMLButtonElement>("sheet");
+const sheetStatus = $("sheetStatus");
+
+function showSheetStatus(note = ""): void {
+  const url = sheetUrl();
+  const waiting = pendingRows();
+  sheetStatus.replaceChildren();
+  if (url) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "open the sheet";
+    sheetStatus.append("Stock sheet connected · ", a);
+  }
+  const extra = [waiting ? `${waiting} row${waiting > 1 ? "s" : ""} waiting to be sent` : "", note].filter(Boolean).join(" · ");
+  if (extra) sheetStatus.append((url ? " · " : "") + extra);
+}
+
+sheetBtn.addEventListener("click", async () => {
+  if (!settings) return;
+  sheetBtn.disabled = true;
+  try {
+    const { uid } = await connectSheet(settings.foodBankName);
+    // Signing in with Google can change the user id when that Google account already had
+    // one; later items are logged under the id Firestore now sees.
+    if (shiftInfo && shiftInfo.uid !== uid) {
+      shiftInfo = { ...shiftInfo, uid };
+      shift = null;
+    }
+    sheetBtn.textContent = "Reconnect the sheet";
+    showSheetStatus();
+  } catch (e) {
+    showSheetStatus("could not connect: " + (e as Error).message);
+  } finally {
+    sheetBtn.disabled = false;
+  }
 });
 
 const compareBtn = $<HTMLButtonElement>("compare");
@@ -294,7 +336,9 @@ readBtn.addEventListener("click", async () => {
     results.push({ at: new Date().toISOString(), mode: models.hybrid.mode, step });
     if (step.kind === "verdict") {
       shift ??= { id: startShift(shiftInfo), uid: shiftInfo.uid };
-      logItem(settings.foodBankId, shift.id, shift.uid, step, settings.policy);
+      const logged = logItem(settings.foodBankId, shift.id, shift.uid, step, settings.policy);
+      // The item also lands in the food bank's own sheet; if it cannot yet, it waits.
+      if (sheetUrl()) appendRow(logged.sheetRow).then((waiting) => showSheetStatus(waiting ? "" : "row added"));
     }
     render(step, frame.url, "camera");
   } catch (e) {

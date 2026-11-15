@@ -12,7 +12,15 @@
   },
   "auth": {
     "providers": {
-      "anonymous": true
+      "anonymous": true,
+      "googleSignIn": {
+        "oAuthBrandDisplayName": "Keep Until",
+        "supportEmail": "jon.knight.andrei@gmail.com",
+        "authorizedRedirectUris": [
+          "https://keep-until-hybrid.firebaseapp.com/__/auth/handler",
+          "http://localhost"
+        ]
+      }
     }
   }
 }
