@@ -14,7 +14,10 @@ with cloud fallback), on Web (Chrome) and Android.
 In development (started November 14, 2026). Working today: the Food Banks Canada chart gate and
 the Canadian date-stamp parser (with tests), and a sort-table page that reads an item through
 Firebase AI Logic, on-device in Chrome when Gemini Nano is available and in the cloud when it is
-not. Coming: the food bank's stock sheet, the recall watch, the Android app, and a hosted URL.
+not. Every camera read is logged to Firestore (works offline, append-only), the food bank's
+policy and the cloud model come from Remote Config, and every read is a Performance Monitoring
+trace tagged on-device or cloud. Coming: the food bank's stock sheet, the recall watch, the
+Android app, and a hosted URL.
 
 ## How to run it
 

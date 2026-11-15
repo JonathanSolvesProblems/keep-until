@@ -1,10 +1,8 @@
 import { InferenceMode } from "firebase/ai";
 import { makeModel, type Mode } from "./ai/reader";
 import { processItem, type LoopModels, type Step } from "./ai/loop";
-
-// Default until Remote Config is wired. gemini-3.8-flash took minutes per read with this
-// schema and rejects minimal thinking; 3.5-flash-lite reads the same label in about 2 s.
-const CLOUD_MODEL = "gemini-3.5-flash-lite";
+import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
+import { logItem, startShift } from "./store";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const status = $("status");
@@ -27,12 +25,14 @@ interface Logged {
 }
 const results: Logged[] = [];
 let models: LoopModels | null = null;
+let settings: Settings | null = null;
+let shift: { id: string; uid: string } | null = null;
 let pendingTurn: Step | null = null;
 
-function buildModels(mode: Mode): LoopModels {
+function buildModels(mode: Mode, cloudModel: string): LoopModels {
   return {
-    hybrid: { model: makeModel(mode, CLOUD_MODEL), mode },
-    cloud: { model: makeModel(InferenceMode.ONLY_IN_CLOUD, CLOUD_MODEL), mode: InferenceMode.ONLY_IN_CLOUD },
+    hybrid: { model: makeModel(mode, cloudModel), mode },
+    cloud: { model: makeModel(InferenceMode.ONLY_IN_CLOUD, cloudModel), mode: InferenceMode.ONLY_IN_CLOUD },
   };
 }
 
@@ -50,7 +50,10 @@ describeOnDevice().then((s) => (status.textContent = s));
 
 $("start").addEventListener("click", async () => {
   const mode = modeSel.value as Mode;
-  models = buildModels(mode);
+  status.textContent = "signing in";
+  const uid = await ensureSignedIn();
+  settings = await loadSettings();
+  models = buildModels(mode, settings.cloudModel);
   if (mode !== InferenceMode.ONLY_IN_CLOUD) {
     status.textContent = "preparing on-device model";
     try {
@@ -59,7 +62,9 @@ $("start").addEventListener("click", async () => {
       status.textContent = "on-device unavailable: " + (e as Error).message;
     }
   }
-  status.textContent = (await describeOnDevice()) + ` · mode ${mode}`;
+  const onDevice = await describeOnDevice();
+  shift = { id: startShift({ foodBankId: settings.foodBankId, uid, mode, onDevice, cloudModel: settings.cloudModel }), uid };
+  status.textContent = `${settings.foodBankName} · ${onDevice} · mode ${mode} · cloud ${settings.cloudModel} (${settings.from} config)`;
   try {
     video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } });
   } catch {
@@ -70,7 +75,7 @@ $("start").addEventListener("click", async () => {
 });
 
 modeSel.addEventListener("change", () => {
-  if (models) models = buildModels(modeSel.value as Mode);
+  if (models && settings) models = buildModels(modeSel.value as Mode, settings.cloudModel);
 });
 
 function toJpegBase64(source: CanvasImageSource, w: number, h: number): { b64: string; url: string } {
@@ -108,17 +113,19 @@ function render(step: Step, thumb: string, label: string): void {
 }
 
 readBtn.addEventListener("click", async () => {
-  if (!models || !video.videoWidth) return;
+  if (!models || !settings || !shift || !video.videoWidth) return;
   readBtn.disabled = true;
   const frame = toJpegBase64(video, video.videoWidth, video.videoHeight);
   try {
     const step = await processItem(models, frame.b64, {
       today: todayInput.value,
+      policy: settings.policy,
       previous: pendingTurn ? pendingTurn.reads : undefined,
     });
     pendingTurn = step.kind === "need_date_photo" ? step : null;
     promptEl.textContent = pendingTurn ? "Turn the item so the date faces the camera, then Read item again." : "";
     results.push({ at: new Date().toISOString(), mode: models.hybrid.mode, step });
+    if (step.kind === "verdict") logItem(settings.foodBankId, shift.id, shift.uid, step, settings.policy);
     render(step, frame.url, "camera");
   } catch (e) {
     promptEl.textContent = "error: " + (e as Error).message;
@@ -134,8 +141,10 @@ async function loadImage(file: File): Promise<HTMLImageElement> {
   return img;
 }
 
+// The batch run is the measurement harness. Its results go to the exported file only, never
+// into a food bank's live item log.
 batchBtn.addEventListener("click", async () => {
-  if (!models || !files.files?.length) return;
+  if (!models || !settings || !files.files?.length) return;
   batchBtn.disabled = true;
   const list = [...files.files];
   for (const [i, file] of list.entries()) {
@@ -143,7 +152,7 @@ batchBtn.addEventListener("click", async () => {
     const img = await loadImage(file);
     const frame = toJpegBase64(img, img.naturalWidth, img.naturalHeight);
     try {
-      const step = await processItem(models, frame.b64, { today: todayInput.value });
+      const step = await processItem(models, frame.b64, { today: todayInput.value, policy: settings.policy });
       results.push({ file: file.name, at: new Date().toISOString(), mode: models.hybrid.mode, step });
       render(step, frame.url, file.name);
     } catch (e) {
@@ -155,7 +164,10 @@ batchBtn.addEventListener("click", async () => {
 });
 
 $("export").addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), cloudModel: CLOUD_MODEL, results }, null, 2)], { type: "application/json" });
+  const blob = new Blob(
+    [JSON.stringify({ exported: new Date().toISOString(), cloudModel: settings?.cloudModel, policy: settings?.policy, results }, null, 2)],
+    { type: "application/json" },
+  );
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = `keep-until-results-${Date.now()}.json`;

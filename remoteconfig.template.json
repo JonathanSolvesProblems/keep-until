@@ -1,0 +1,29 @@
+{
+  "parameters": {
+    "cloud_model": {
+      "defaultValue": { "value": "gemini-3.5-flash-lite" },
+      "description": "Cloud model for reads the on-device model hands up, and the hybrid fallback. Change it here, not in a release.",
+      "valueType": "STRING"
+    },
+    "chart_bound": {
+      "defaultValue": { "value": "min" },
+      "description": "Which end of the Food Banks Canada chart's printed range this food bank uses: min (cautious) or max.",
+      "valueType": "STRING"
+    },
+    "chart_overrides": {
+      "defaultValue": { "value": "{}" },
+      "description": "Per-category limits that replace the chart's, e.g. {\"canned_fruit_veg\":{\"rule\":\"months\",\"value\":18}} for a food bank that shares canned goods to 18 months.",
+      "valueType": "JSON"
+    },
+    "food_bank_id": {
+      "defaultValue": { "value": "demo" },
+      "description": "Firestore document id of the food bank this deployment logs to.",
+      "valueType": "STRING"
+    },
+    "food_bank_name": {
+      "defaultValue": { "value": "Demo food bank" },
+      "description": "Shown at the top of the sort screen.",
+      "valueType": "STRING"
+    }
+  }
+}

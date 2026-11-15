@@ -3,7 +3,8 @@
 // to the cloud model when it is not; every result records which one answered.
 
 import { getGenerativeModel, InferenceMode, ThinkingLevel, type GenerativeModel } from "firebase/ai";
-import { ai } from "../firebase";
+import { trace } from "firebase/performance";
+import { ai, perf } from "../firebase";
 import { CATEGORY_IDS } from "../chart/chart";
 import { CONFIDENCE, DAMAGE, DATE_KINDS, NEXT_ACTIONS, READ_SCHEMA, readPrompt, type ItemRead } from "./schema";
 
@@ -74,12 +75,28 @@ export async function readItem(
   jpegBase64: string,
   context: Parameters<typeof readPrompt>[0] = {},
 ): Promise<ReadResult> {
+  // A Performance Monitoring trace per read, tagged with where it ran, so real-world
+  // on-device and cloud latency show up side by side in the Firebase console.
+  const t = trace(perf, "item_read");
+  t.start();
+  t.putAttribute("mode", mode);
   const t0 = performance.now();
-  const result = await model.generateContent([
-    { type: "inlineData", inlineData: { mimeType: "image/jpeg", data: jpegBase64 } },
-    { type: "text", text: readPrompt(context) },
-  ]);
-  const ms = Math.round(performance.now() - t0);
-  const source = result.response.inferenceSource === "on_device" ? "on_device" : "in_cloud";
-  return { read: toItemRead(result.response.text()), source, ms, mode };
+  try {
+    const result = await model.generateContent([
+      { type: "inlineData", inlineData: { mimeType: "image/jpeg", data: jpegBase64 } },
+      { type: "text", text: readPrompt(context) },
+    ]);
+    const ms = Math.round(performance.now() - t0);
+    const source = result.response.inferenceSource === "on_device" ? "on_device" : "in_cloud";
+    const read = toItemRead(result.response.text());
+    t.putAttribute("source", source);
+    t.putAttribute("next_action", read.next_action);
+    t.putMetric("ms", ms);
+    return { read, source, ms, mode };
+  } catch (e) {
+    t.putAttribute("source", "error");
+    throw e;
+  } finally {
+    t.stop();
+  }
 }

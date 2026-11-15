@@ -37,3 +37,17 @@ marked as such and never feed `results/`.
   path then read the same label in 1,673 ms. Reading a label is perception, not reasoning; the
   slow model also had to decode an 86-value category enum. Remote Config will carry the model
   name so a food bank can switch it without a release.
+- On-device in Chrome needed three flags, not one: Gemma 4 for Built-in AI, Prompt API for Gemini
+  Nano, and its multimodal input. With only the first, `LanguageModel` is absent from the page
+  and every read silently takes the cloud path; the sort screen says so on its status line.
+- Anonymous sign-in enabled from `firebase.json` (`firebase deploy --only auth`, no console),
+  Firestore rules deployed (signed-in users only; the item log is append-only from clients),
+  Remote Config template deployed (cloud model, chart bound, per-category overrides, food bank).
+- The app now signs in, loads the food bank's Remote Config, opens a shift, and logs every
+  camera read to Firestore with a persistent offline cache. Each read is a Performance
+  Monitoring trace tagged on_device or in_cloud, the way Firebase's own Friendly Meals sample
+  measures its hybrid calls.
+- Plumbing check (synthetic label through a fake camera, not data): Remote Config fetched from
+  the server, read in 2,138 ms in the cloud, KEEP until 2027-03-14 (chart p.4), item and shift
+  documents written and accepted by the rules, then deleted so no test row sits in a food bank's
+  log.

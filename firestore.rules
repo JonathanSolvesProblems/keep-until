@@ -1,0 +1,54 @@
+rules_version = '2';
+
+// Keep Until's data: one document per food bank, with its shifts, the item log and the
+// recall notices the daily job writes. The item log is append-only: a decision, once
+// logged, is never edited or deleted from a client, so the sort record can be trusted.
+// Demo scope: any signed-in user (anonymous volunteers and judges included) can read and
+// add to a food bank. A real deployment would restrict each food bank to its members.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isStringOrNull(v) {
+      return v == null || v is string;
+    }
+
+    match /foodBanks/{foodBankId} {
+      allow read: if signedIn();
+      allow write: if false;
+
+      match /shifts/{shiftId} {
+        allow read: if signedIn();
+        allow create: if signedIn()
+          && request.resource.data.startedBy == request.auth.uid
+          && request.resource.data.keys().hasOnly(['startedBy', 'startedAt', 'mode', 'platform', 'onDevice', 'cloudModel']);
+        allow update, delete: if false;
+      }
+
+      match /items/{itemId} {
+        allow read: if signedIn();
+        allow create: if signedIn()
+          && request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.decision in ['KEEP', 'DISCARD', 'SET_ASIDE']
+          && request.resource.data.shiftId is string
+          && isStringOrNull(request.resource.data.keepUntil)
+          && request.resource.data.keys().hasOnly([
+               'createdBy', 'createdAt', 'shiftId', 'platform',
+               'product', 'brand', 'category', 'dateText', 'dateKind', 'parsedDate', 'damage',
+               'decision', 'keepUntil', 'pastPrintedDate', 'reason', 'chartPage', 'policy',
+               'route', 'reads', 'barcode'
+             ]);
+        allow update, delete: if false;
+      }
+
+      // Written only by the scheduled recall job (Admin SDK bypasses rules).
+      match /recalls/{recallId} {
+        allow read: if signedIn();
+        allow write: if false;
+      }
+    }
+  }
+}
