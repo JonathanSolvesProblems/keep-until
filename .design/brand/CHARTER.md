@@ -3,9 +3,10 @@
 The metaphor: the canning line's date coder, run in reverse. A can arrives with a stamp nobody
 can read; Keep Until reads it and prints it again, large and clear, with what to do.
 
-1. **Dates are printed in the coder's dots, and only dates.** Every date the app reads or
-   computes (the stamp, the keep-until date) is set in Doto. Words never are. Because the dot
-   matrix is the stamp on the can; using it for words would turn evidence into decoration.
+1. **Dates and the name are printed in the coder's dots, in upper case.** Every date the app
+   reads or computes (the stamp, the keep-until date) and the name KEEP UNTIL are set in Doto,
+   capitals only, the way a coder prints. No other words are. Because the dot matrix is the
+   stamp on the can; the name is the one thing the coder prints that is not evidence.
 2. **Words are set in Atkinson Hyperlegible Next.** Because volunteers are any age, often on
    their first shift, reading from about a metre away; this face was drawn for low-vision readers.
 3. **The verdict is the largest thing on the screen, and the stamp is second.** Nothing else
@@ -14,16 +15,19 @@ can read; Keep Until reads it and prints it again, large and clear, with what to
 4. **Cobalt appears once per screen: the Read item button** (and its focus ring). Because it is
    the colour of the gloves, the hands doing the work; it marks the volunteer's own action and
    nothing else. Links are ink with an underline.
-5. **Verdict colours fill bands, never text.** Keep green, set-aside yellow and discard red are
-   only ever backgrounds behind ink or white words, and every verdict also carries its word.
+5. **A decision floods the answer panel with its colour, and colour is never text.** Keep green,
+   set-aside yellow and discard red fill the whole answer panel (and the log chip), behind ink or
+   white words, and every verdict also carries its word. Turn it and Nothing in view are
+   instructions, not decisions, and stay on carton.
    Because colour alone fails for colour-blind volunteers and in a compressed video.
 6. **Discard red appears only on a discard that two reads agreed on.** Because a wrong discard is
    the one mistake this app exists to prevent.
-7. **The can lid is the signature device.** Concentric rings in the canvas grey, in the mark and
-   bleeding off the answer panel while it waits for the first item. Never under the stamp or the
-   verdict (round 2: the rings ran through "FE 14"), never behind words, never as a loader.
-   Because it stands for the thing being read.
-8. **Illustrations are two-ink halftone dots, black and cobalt, on nothing.** Carton white shows
+7. **The re-printed stamp is the signature device.** The waiting state shows a sample stamp;
+   every verdict re-prints the one it read. The can lid appears only as the favicon and app icon
+   (rounds 2 and 3: rings on the page read as radar decoration and crossed the stamp).
+   Because the stamp is the thing being read.
+8. **Illustrations appear only while waiting** (the empty answer panel, the empty shift log),
+   never beside a decision. **They are two-ink halftone dots, black and cobalt, on nothing.** Carton white shows
    through only where the paper would (a white can, a white box). Cobalt is only ever the gloves.
    No disc, panel or shadow behind them. Because they are the coder's dots making a picture; a
    backing shape would turn them into clip art.

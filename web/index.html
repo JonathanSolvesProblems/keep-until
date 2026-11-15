@@ -10,15 +10,13 @@
     <link rel="apple-touch-icon" href="/icons/icon-180.png" />
     <link rel="preload" href="/fonts/atkinson-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/doto-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <meta name="theme-color" content="#b8b6b0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#d0cec8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1c1d1e" media="(prefers-color-scheme: dark)" />
   </head>
   <body>
     <header class="bar">
       <a class="brand" href="/" aria-label="Keep Until, home">
-        <svg class="wordmark" viewBox="34 -786 4978 968" aria-hidden="true">
-          <use href="/brand/wordmark.svg#wordmark" />
-        </svg>
+        <span class="wordmark" aria-hidden="true">KEEP UNTIL</span>
       </a>
       <p id="status" class="status">Getting ready</p>
       <div class="sheetline">
@@ -48,6 +46,10 @@
         <div class="answer-empty">
           <h1 class="answer-title">Hold an item up to the camera</h1>
           <p class="answer-sub">Date side first. Keep Until reads the stamp, checks Food Banks Canada's chart, and tells you which box it goes in.</p>
+          <div class="sample">
+            <span class="sample-code" aria-hidden="true">2027 FE 14</span>
+            <p class="sample-note">A Canadian date stamp: year, a two-letter month, then the day. Look on the top, the bottom or a seam.</p>
+          </div>
           <img class="answer-art" src="/brand/art/hands-can.webp" width="950" height="815" alt="Two gloved hands holding a can up with its lid toward the camera" />
         </div>
       </section>
@@ -66,7 +68,7 @@
     </section>
 
     <details class="tools">
-      <summary>Tools for testing and judging</summary>
+      <summary>Testing tools: compare the three ways of reading, or run saved photos</summary>
       <div class="tools-body">
         <p id="toolStatus" class="tool-status" role="status"></p>
         <label>How items are read

@@ -6,7 +6,7 @@
   "metaphor": "the canning line's date coder run in reverse: the stamp nobody can read is read and printed again, large, with what to do",
   "convention_avoided": "food bank software's white canvas under a trust-blue or leafy-green header with Bootstrap tables and stock volunteer photos; scanner apps' black viewfinder with corner brackets, scan line and a frosted check sheet",
   "canvas": "mid-tone light (can-lid aluminium); dark theme is the sort-table black",
-  "canvas_hex": "#b8b6b0",
+  "canvas_hex": "#d0cec8",
   "canvas_dark_hex": "#1c1d1e",
   "panel_hex": "#f2f2ef",
   "ink_hex": "#151515",
@@ -32,10 +32,10 @@
   "depth": "flat with one rule: panels sit on the canvas with a 1 px ink-at-12% edge, no shadows",
   "ornament": "typography (the dot-matrix stamp) and two-ink halftone illustration",
   "motion": "one orchestrated moment: the stamp prints column by column in about 300 ms, stepped; nothing else animates on arrival; reduced motion shows it at once",
-  "signature_device": "the can lid from above (cobalt disc, rim and beads): in the mark, and bleeding off the answer panel in its waiting state",
-  "texture": "the coder's dot screen inside the camera box until the camera is on (round 3: on the whole canvas it read as a dev-tool grid)",
+  "signature_device": "the re-printed date stamp: Doto dot matrix, upper case, for the name and every date; the can lid stays in the favicon and app icon only (round 3: rings on the page read as radar decoration)",
+  "texture": "none on screen (round 3: a dot grid anywhere read as a stock tech texture); the dot lives in the stamp and the halftone art",
   "register": "warm and plain",
   "expressive_axis": "scale: the re-printed date and the verdict are huge",
-  "notes": "Breaks the recent run of label, tag and tape devices (keyhook, setpiece-v2, swatchless). Primary face not shared with the last two entries.",
+  "notes": "Breaks the recent run of label, tag and tape devices (keyhook, setpiece-v2, swatchless). Primary face not shared with the last two entries. Round 4: lid lightened from #b8b6b0 (read as a dimmed overlay); wordmark moved from the drawn Atkinson mark with a lid tittle to the coder dot matrix.",
   "contrast": "checked 2026-11-15: ink on lid 9.0, white on keep 5.35, ink on set-aside 9.55, white on discard 6.49, white on cobalt 6.71, cobalt ring on lid 3.31; dark: text 14.7, muted 7.0, ink on keep 5.24, ink on set-aside 10.4, white on discard 4.94, light cobalt ring 5.48"
 }

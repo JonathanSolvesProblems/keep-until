@@ -42,7 +42,7 @@
 
 :root {
   color-scheme: light dark;
-  --lid: #b8b6b0;
+  --lid: #d0cec8;
   --lid-dot: rgb(21 21 21 / 0.07);
   --carton: #f2f2ef;
   --ink: #151515;
@@ -130,8 +130,9 @@ button, select, input { font: inherit; color: inherit; }
   gap: 24px;
   padding: 22px 32px 18px;
 }
-.brand { display: block; color: var(--ink); line-height: 0; }
-.wordmark { height: 34px; width: auto; }
+.brand { display: block; color: var(--ink); text-decoration: none; }
+/* The name is printed the way the coder prints a date (charter law 1). */
+.wordmark { font-family: var(--dots); font-weight: 900; font-size: 38px; line-height: 1; letter-spacing: 0.04em; white-space: nowrap; }
 .status { color: var(--ink-2); font-size: var(--t-1); }
 .sheetline { display: flex; align-items: center; gap: 12px; justify-self: end; font-size: var(--t-1); }
 .sheet-status { color: var(--ink-2); }
@@ -167,7 +168,7 @@ button:disabled { cursor: not-allowed; opacity: 0.45; }
   background: transparent;
   font-weight: 600;
 }
-.read:disabled { opacity: 1; background: var(--edge); color: var(--ink-3); }
+.read:disabled { opacity: 1; background: transparent; box-shadow: inset 0 0 0 1.5px var(--edge); color: var(--ink-3); }
 
 select, input[type="date"] {
   min-height: 44px;
@@ -194,12 +195,18 @@ select, input[type="date"] {
   overflow: hidden;
   border-radius: var(--r);
   background-color: var(--viewport);
-  /* The coder's print head at rest: its dot screen, until the camera is on. */
-  background-image: radial-gradient(circle at 1.5px 1.5px, rgb(242 242 239 / 0.10) 1px, transparent 1.3px);
-  background-size: 7px 7px;
 }
 .viewport video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.viewport-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: var(--viewport); }
+.viewport-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+/* A saved photo is shown whole, over a blurred copy of itself rather than black bars. */
+.viewport.has-still::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background: var(--still) center / cover;
+  filter: blur(28px) brightness(0.55);
+}
+.live .viewport.has-still::before { display: none; }
 .live .viewport-still { display: none; }
 /* Before the shift, the camera's place holds the one thing to do. */
 .viewport .start {
@@ -216,6 +223,9 @@ select, input[type="date"] {
   font-weight: 700;
 }
 .started .viewport .start, .started .viewport-hint { display: none; }
+/* Controls appear when they can be used: one button before the shift, Read item after. */
+body:not(.started) .read { display: none; }
+body:not(.started) .sheetline { visibility: hidden; }
 .viewport-hint {
   position: absolute;
   inset: auto 0 0 0;
@@ -246,8 +256,8 @@ select, input[type="date"] {
 
 /* The can lid (signature device): rim and beads, bleeding off the panel's corner while it waits
    for the first item. It never sits under the stamp or the verdict. */
-.answer:not(:has(.answer-empty))::before { display: none; }
 .answer::before {
+  display: none;
   content: "";
   position: absolute;
   z-index: -1;
@@ -261,23 +271,36 @@ select, input[type="date"] {
 }
 
 /* Empty and prompt states: the volunteer's hands come up from the bottom edge, as from the table. */
-.answer-empty, .verdict--art { display: flex; flex-direction: column; gap: 14px; min-height: 560px; }
-.answer-art, .verdict-art {
+.answer-empty { display: flex; flex-direction: column; gap: 14px; min-height: 560px; }
+.answer-art {
   display: block;
-  width: min(360px, 78%);
+  width: min(280px, 56%);
   height: auto;
   margin: auto -8px -28px auto;
 }
-.verdict-art { width: auto; max-width: min(360px, 78%); max-height: 300px; }
+
+/* A decision floods the answer panel with its colour (charter law 5); instructions do not. */
+.answer:has(.verdict--KEEP) { background: var(--keep); color: var(--keep-ink); border-color: transparent; }
+.answer:has(.verdict--SET_ASIDE) { background: var(--aside); color: var(--aside-ink); border-color: transparent; }
+.answer:has(.verdict--DISCARD) { background: var(--discard); color: var(--discard-ink); border-color: transparent; }
 .answer-title { font-size: var(--t3); line-height: 1.08; font-weight: 800; max-width: 14ch; }
 .answer-sub { color: var(--ink-3); max-width: 42ch; }
 
-.stamp { display: grid; gap: 6px; margin-bottom: 24px; }
-.stamp-label { color: var(--ink-3); font-size: var(--t-1); }
+.stamp {
+  display: grid;
+  gap: 6px;
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1.5px solid color-mix(in srgb, currentColor 35%, transparent);
+}
+/* The waiting state shows what to look for: a stamp, in the same dots it will be re-printed in. */
+.sample { display: grid; gap: 8px; margin-top: 10px; padding-top: 18px; border-top: 1px solid var(--edge); }
+.sample-code { font-family: var(--dots); font-weight: 900; font-size: clamp(2.2rem, 4.6vw, var(--t5)); line-height: 1; letter-spacing: 0.02em; font-variant-numeric: normal; }
+.sample-note { color: var(--ink-3); font-size: var(--t-1); max-width: 40ch; }
 .stamp-code {
   font-family: var(--dots);
-  font-weight: 800;
-  font-size: clamp(3rem, 7vw, var(--t6));
+  font-weight: 900;
+  font-size: clamp(2.4rem, 5vw, var(--t5));
   line-height: 0.95;
   letter-spacing: 0.02em;
   font-variant-numeric: normal;
@@ -291,27 +314,20 @@ select, input[type="date"] {
   to { clip-path: inset(0 0 0 0); }
 }
 
-.band {
-  display: grid;
-  gap: 4px;
-  padding: 20px 24px 22px;
-  border-radius: var(--r);
-  background: var(--band, transparent);
-  color: var(--band-ink, var(--ink));
-  border: 2px solid var(--band-edge, transparent);
-}
-.band-word { font-size: var(--t5); font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
-.band-until { font-size: var(--t2); font-weight: 600; }
-.band-until .date { font-family: var(--dots); font-weight: 800; letter-spacing: 0.02em; font-variant-numeric: normal; }
+.band { display: grid; gap: 6px; }
+.band-word { font-size: var(--t6); font-weight: 800; line-height: 0.95; letter-spacing: -0.025em; }
+.band-until { font-size: var(--t2); font-weight: 600; white-space: nowrap; }
+.band-until .date { font-size: var(--t3); }
+.band-until .date { font-family: var(--dots); font-weight: 900; letter-spacing: 0.02em; font-variant-numeric: normal; }
 
 .verdict--KEEP { --band: var(--keep); --band-ink: var(--keep-ink); }
 .verdict--SET_ASIDE { --band: var(--aside); --band-ink: var(--aside-ink); }
 .verdict--DISCARD { --band: var(--discard); --band-ink: var(--discard-ink); }
 .verdict--TURN, .verdict--NONE { --band: var(--ink); --band-ink: var(--carton); }
-.verdict--TURN .band-word, .verdict--NONE .band-word { font-size: var(--t4); }
 
-.reason { margin-top: 18px; font-size: var(--t1); line-height: 1.35; max-width: 34ch; }
-.reason-source { display: block; margin-top: 6px; color: var(--ink-3); font-size: var(--t0); }
+.reason { margin-top: 18px; font-size: var(--t1); line-height: 1.35; max-width: 34ch; text-wrap: balance; }
+.reason-source { display: block; margin-top: 6px; font-size: var(--t0); }
+.verdict--TURN .reason-source, .verdict--NONE .reason-source { color: var(--ink-3); }
 
 .readby {
   align-self: flex-start;
@@ -320,13 +336,12 @@ select, input[type="date"] {
   gap: 10px;
   margin-top: 20px;
   padding: 8px 12px;
-  border: 1px solid var(--edge);
+  border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
   border-radius: var(--r);
   font-size: var(--t-1);
-  color: var(--ink-2);
 }
 .readby svg { width: 18px; height: 18px; flex: none; }
-.readby strong { color: var(--ink); font-weight: 700; }
+.readby strong { font-weight: 700; }
 
 /* This shift: the record, newest first */
 
@@ -366,11 +381,11 @@ select, input[type="date"] {
 .row-what span { color: var(--ink-3); font-size: var(--t-1); }
 .row-what .noname { color: var(--ink-3); font-weight: 600; }
 .row-until { text-align: right; font-size: var(--t-1); color: var(--ink-2); }
-.row-until .date { display: block; font-family: var(--dots); font-weight: 800; font-size: var(--t1); color: var(--ink); font-variant-numeric: normal; }
+.row-until .date { display: block; font-family: var(--dots); font-weight: 900; font-size: var(--t1); color: var(--ink); font-variant-numeric: normal; }
 
 /* Tools for testing and judging (charter law 16: closed by default) */
 
-.tools { margin: 40px 32px 0; border-top: 1px solid var(--edge); padding-top: 14px; }
+.tools { margin: 28px 32px 0; border-top: 1px solid var(--edge); padding-top: 14px; }
 .tools summary { cursor: pointer; color: var(--ink-2); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
 .tools-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px 28px; padding: 12px 0 8px; }
 .tools label { display: grid; gap: 6px; color: var(--ink-2); font-size: var(--t-1); }
@@ -379,7 +394,7 @@ select, input[type="date"] {
 .tool-status { grid-column: 1 / -1; color: var(--ink-2); font-size: var(--t-1); }
 .tool-status:empty { display: none; }
 
-.foot { display: grid; gap: 8px; padding: 36px 32px 40px; color: var(--ink-2); font-size: var(--t-1); max-width: 72ch; }
+.foot { display: grid; gap: 8px; padding: 20px 32px 40px; color: var(--ink-2); font-size: var(--t-1); max-width: 72ch; }
 
 /* Phone width */
 
@@ -393,12 +408,13 @@ select, input[type="date"] {
   .read { flex: 1 1 auto; }
   .wide { display: none; }
   .answer { min-height: 0; padding: 22px 20px; }
-  .answer::before { width: 300px; height: 300px; top: -110px; right: -110px; }
   .answer { min-height: 0; }
-  .answer-empty, .verdict--art { min-height: 0; }
-  .answer-art, .verdict-art { width: min(260px, 72%); margin: 4px -4px -22px auto; }
+  .answer-empty { min-height: 0; }
+  .answer-art { width: min(200px, 52%); margin: 4px -4px -22px auto; }
+  .band-word { font-size: var(--t5); }
+  .band-until { font-size: var(--t1); }
+  .wordmark { font-size: 28px; }
   .answer-title { font-size: var(--t2); }
-  .band-word { font-size: var(--t4); }
   .shift { padding: 28px 16px 0; }
   .row { grid-template-columns: 48px auto minmax(0, 1fr); gap: 10px 12px; }
   .row img { width: 48px; height: 48px; grid-row: 1; }

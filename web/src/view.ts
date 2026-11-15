@@ -13,7 +13,8 @@ export function longDate(iso: string): string {
 
 export function shortDate(iso: string): string {
   const [y, m, d] = iso.split("-").map(Number);
-  return `${d ? d + " " : ""}${MONTHS[m - 1].slice(0, 3)} ${y}`;
+  // Upper case, the way a date coder prints it.
+  return `${d ? d + " " : ""}${MONTHS[m - 1].slice(0, 3).toUpperCase()} ${y}`;
 }
 
 // Icons are dot-matrix pictograms on a 7 by 7 grid (charter law 9).
@@ -92,7 +93,8 @@ interface View {
   reason: string;
   source?: string;
   stamp?: { code: string; plain: string };
-  art?: { src: string; alt: string; w: number; h: number };
+  /** The second line under the word, when there is no keep-until date ("for the lead"). */
+  sub?: string;
 }
 
 function stampOf(step: Step): View["stamp"] {
@@ -100,7 +102,10 @@ function stampOf(step: Step): View["stamp"] {
   const read = [...step.reads].reverse().find((r) => r.read.date_text);
   if (!read) return undefined;
   const kind = read.read.date_kind === "expiry" ? "Expiry" : read.read.date_kind === "packaged_on" ? "Packaged on" : "Best before";
-  return { code: read.read.date_text.replace(/^(BB\/MA|BEST BEFORE|MEILLEUR AVANT|EXP)\s*/i, ""), plain: `${kind} ${longDate(step.parsed.iso)}` };
+  // Only the date itself is re-printed: a lot code on the same line ("2027 FE 14 02146") is not.
+  const raw = read.read.date_text.replace(/^(BB\/MA|BEST BEFORE|MEILLEUR AVANT|EXP)\s*/i, "");
+  const code = raw.match(/\d{2,4}\s?[A-Z]{2}\s?\d{1,2}(?!\d)/i)?.[0] ?? raw;
+  return { code: code.toUpperCase(), plain: `${kind} ${longDate(step.parsed.iso)}` };
 }
 
 export function viewOf(step: Step): View {
@@ -109,14 +114,13 @@ export function viewOf(step: Step): View {
       cls: "NONE",
       word: "Nothing in view",
       reason: "Hold the item closer, date side toward the camera.",
-      art: { src: "/brand/art/no-item.webp", alt: "Two gloved hands held open with nothing in them", w: 951, h: 799 },
     };
   if (step.kind === "need_date_photo")
     return {
       cls: "TURN",
       word: "Turn it",
+      sub: "so the date faces the camera",
       reason: "Show the side with the date stamp, then press Read item again.",
-      art: { src: "/brand/art/turn.webp", alt: "Two gloved hands holding up a carton", w: 949, h: 837 },
     };
   const { reason, source } = plainReason(step.verdict.reason);
   const stamp = stampOf(step);
@@ -128,11 +132,11 @@ export function viewOf(step: Step): View {
   }
   return {
     cls: "SET_ASIDE",
-    word: "Set it aside for the lead",
+    word: "Set aside",
+    sub: "for the lead",
     reason,
     source,
     stamp,
-    art: stamp ? undefined : { src: "/brand/art/set-aside.webp", alt: "A gloved hand holding a can aside", w: 701, h: 954 },
   };
 }
 
@@ -146,19 +150,24 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: 
 export function renderAnswer(container: HTMLElement, step: Step): void {
   const v = viewOf(step);
   const root = el("div", `verdict verdict--${v.cls}`);
-  if (v.stamp) {
-    const stamp = el("div", "stamp");
-    stamp.append(el("span", "stamp-label", "Printed on the package"), el("span", "stamp-code", v.stamp.code), el("span", "stamp-plain", v.stamp.plain));
-    root.append(stamp);
-  }
+  // The decision first and largest, then the stamp it was read from (charter law 3).
   const band = el("div", "band");
   band.append(el("p", "band-word", v.word));
   if (v.until) {
     const until = el("p", "band-until", "until ");
     until.append(el("span", "date", shortDate(v.until)));
     band.append(until);
+  } else if (v.sub) {
+    band.append(el("p", "band-until", v.sub));
   }
   root.append(band);
+  if (v.stamp) {
+    const stamp = el("div", "stamp");
+    const code = el("span", "stamp-code", v.stamp.code);
+    code.setAttribute("aria-label", `Stamped on the package: ${v.stamp.code}`);
+    stamp.append(code, el("span", "stamp-plain", v.stamp.plain));
+    root.append(stamp);
+  }
   const reason = el("p", "reason", v.reason);
   if (v.source) reason.append(el("span", "reason-source", v.source));
   root.append(reason);
@@ -167,18 +176,9 @@ export function renderAnswer(container: HTMLElement, step: Step): void {
     const badge = el("p", "readby");
     rb.icons.forEach((i) => badge.append(dotIcon(i, i === "laptop" ? "this laptop" : "the cloud")));
     const words = el("span");
-    words.append(el("strong", "", rb.lead), `${rb.rest} · ${rb.seconds}`);
+    words.append(el("strong", "", rb.lead), `${rb.rest} in ${rb.seconds}`);
     badge.append(words);
     root.append(badge);
-  }
-  if (v.art) {
-    root.classList.add("verdict--art");
-    const art = el("img", "verdict-art");
-    art.src = v.art.src;
-    art.alt = v.art.alt;
-    art.width = v.art.w;
-    art.height = v.art.h;
-    root.append(art);
   }
   container.replaceChildren(root);
 }
@@ -191,7 +191,7 @@ export function renderRow(step: Step, thumb: string): HTMLLIElement | null {
   const img = el("img");
   img.src = thumb;
   img.alt = "";
-  const chip = el("span", "row-verdict", v.cls === "SET_ASIDE" ? "Set aside" : v.word);
+  const chip = el("span", "row-verdict", v.word);
   const what = el("div", "row-what");
   // The read often repeats the brand inside the product name ("Liberté Liberté Grec").
   const brand = last?.brand?.trim() ?? "";
@@ -201,7 +201,7 @@ export function renderRow(step: Step, thumb: string): HTMLLIElement | null {
   const row = step.verdict.chart?.label;
   what.append(el("strong", "", name || row || "Item with no name in view"));
   const detail = v.stamp ? v.stamp.plain : v.reason;
-  what.append(el("span", "", name || !row ? detail : `No name in this photo · ${detail}`));
+  what.append(el("span", "", name || !row ? detail : `No name in this photo. ${detail}`));
   // One meaning for the right-hand column: the date it stays good until, when it is kept.
   const until = el("div", "row-until");
   if (v.until) {
@@ -225,10 +225,11 @@ export function renderTally(container: HTMLElement, steps: Step[]): void {
     [count("SET_ASIDE"), "set aside"],
     [count("DISCARD"), "discarded"],
   ];
+  // "3 items: 1 kept, 1 set aside, 1 discarded"
   container.replaceChildren(
     ...parts.flatMap(([n, word], i) => {
       const nodes: (Node | string)[] = [];
-      if (i) nodes.push(" · ");
+      if (i) nodes.push(i === 1 ? ": " : ", ");
       nodes.push(el("span", "n", String(n)), ` ${word}`);
       return nodes;
     }),

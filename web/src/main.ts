@@ -110,7 +110,7 @@ $("start").addEventListener("click", async () => {
   shiftInfo = { foodBankId: settings.foodBankId, uid, mode, onDevice, cloudModel: settings.cloudModel };
   shift = null;
   const sortDay = new Date(todayInput.value + "T12:00:00").toLocaleDateString("en-CA", { weekday: "long", day: "numeric", month: "long" });
-  status.textContent = `${settings.foodBankName} · sorting ${sortDay} · reading ${MODE_WORDS[mode] ?? mode}`;
+  status.textContent = `${settings.foodBankName}, sorting ${sortDay}. Reading ${MODE_WORDS[mode] ?? mode}.`;
   document.body.classList.add("started");
   await openCamera(localStorageGet("camera"));
   await listCameras();
@@ -134,10 +134,10 @@ function showSheetStatus(note = ""): void {
     a.target = "_blank";
     a.rel = "noopener";
     a.textContent = "open the sheet";
-    sheetStatus.append("Stock sheet connected · ", a);
+    sheetStatus.append("Stock sheet connected: ", a);
   }
-  const extra = [waiting ? `${waiting} row${waiting > 1 ? "s" : ""} waiting to be sent` : "", note].filter(Boolean).join(" · ");
-  if (extra) sheetStatus.append((url ? " · " : "") + extra);
+  const extra = [waiting ? `${waiting} row${waiting > 1 ? "s" : ""} waiting to be sent` : "", note].filter(Boolean).join(", ");
+  if (extra) sheetStatus.append((url ? ". " : "") + extra.charAt(0).toUpperCase() + extra.slice(1));
 }
 
 sheetBtn.addEventListener("click", async () => {
@@ -319,6 +319,10 @@ function render(step: Step, thumb: string, _label: string): void {
   if (!video.videoWidth) {
     still.src = thumb;
     still.hidden = false;
+    const box = still.parentElement as HTMLElement;
+    box.style.setProperty("--still", `url("${thumb}")`);
+    box.classList.add("has-still");
+    promptEl.textContent = "";
   }
   // At phone width the answer sits under the camera; bring it into view so the volunteer
   // never has to scroll with an item in their hand.
