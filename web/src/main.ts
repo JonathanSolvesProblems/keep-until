@@ -65,13 +65,66 @@ $("start").addEventListener("click", async () => {
   const onDevice = await describeOnDevice();
   shift = { id: startShift({ foodBankId: settings.foodBankId, uid, mode, onDevice, cloudModel: settings.cloudModel }), uid };
   status.textContent = `${settings.foodBankName} · ${onDevice} · mode ${mode} · cloud ${settings.cloudModel} (${settings.from} config)`;
+  await openCamera(localStorageGet("camera"));
+  await listCameras();
+  readBtn.disabled = false;
+  batchBtn.disabled = false;
+});
+
+const cameraSel = $<HTMLSelectElement>("camera");
+
+function localStorageGet(key: string): string | undefined {
   try {
-    video.srcObject = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } });
+    return localStorage.getItem("keepuntil." + key) ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function localStorageSet(key: string, value: string): void {
+  try {
+    localStorage.setItem("keepuntil." + key, value);
+  } catch {
+    // Private windows can refuse storage; the choice just is not remembered.
+  }
+}
+
+async function openCamera(deviceId?: string): Promise<void> {
+  (video.srcObject as MediaStream | null)?.getTracks().forEach((t) => t.stop());
+  try {
+    // Date stamps are small print, so ask for full HD; the browser falls back if it cannot.
+    video.srcObject = await navigator.mediaDevices.getUserMedia({
+      video: { ...(deviceId ? { deviceId: { exact: deviceId } } : {}), width: { ideal: 1920 }, height: { ideal: 1080 } },
+    });
+    promptEl.textContent = "";
+    // A phone used as a webcam (Windows Phone Link) sends no picture while the phone is locked.
+    setTimeout(() => {
+      if (video.srcObject && !video.videoWidth) {
+        promptEl.textContent = "This camera sends no picture. If it is a phone, unlock it, or pick another camera.";
+      }
+    }, 3000);
   } catch {
     promptEl.textContent = "no camera; use saved photos";
   }
-  readBtn.disabled = false;
-  batchBtn.disabled = false;
+}
+
+async function listCameras(): Promise<void> {
+  const current = (video.srcObject as MediaStream | null)?.getVideoTracks()[0]?.getSettings().deviceId;
+  const cams = (await navigator.mediaDevices.enumerateDevices()).filter((d) => d.kind === "videoinput");
+  cameraSel.replaceChildren(
+    ...cams.map((c, i) => {
+      const o = document.createElement("option");
+      o.value = c.deviceId;
+      o.textContent = c.label || `Camera ${i + 1}`;
+      o.selected = c.deviceId === current;
+      return o;
+    }),
+  );
+}
+
+cameraSel.addEventListener("change", async () => {
+  localStorageSet("camera", cameraSel.value);
+  await openCamera(cameraSel.value);
 });
 
 modeSel.addEventListener("change", () => {
