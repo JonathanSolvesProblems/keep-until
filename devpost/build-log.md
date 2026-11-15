@@ -10,7 +10,7 @@ marked as such and never feed `results/`.
   reCAPTCHA Enterprise key registered with App Check, one App Check debug token for local work
   (kept in the gitignored `web/.env.local`).
 - Firebase agent skills installed in the project with `npx skills add firebase/agent-skills`
-  (14 skills). `firebase-ai-logic-basics` set the provisioning order used the next day.
+  (14 skills, pinned in `skills-lock.json`). `firebase-ai-logic-basics` set the provisioning order used the next day.
 - Food Banks Canada's "Guidelines for Food Shelf Life" (July 2018) encoded row by row in
   `shared/fbc-shelf-life-2018.json`, each row with its page. The CFIA date-marking rules (year
   first, bilingual month symbols) went into `web/src/chart/dates.ts`. 16 tests.

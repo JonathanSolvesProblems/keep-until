@@ -11,12 +11,39 @@ with cloud fallback), on Web (Chrome) and Android.
 
 ## Status
 
-In development (started November 14, 2026). Nothing here runs yet.
+In development (started November 14, 2026). Working today: the Food Banks Canada chart gate and
+the Canadian date-stamp parser (with tests), and a sort-table page that reads an item through
+Firebase AI Logic, on-device in Chrome when Gemini Nano is available and in the cloud when it is
+not. Coming: the food bank's stock sheet, the recall watch, the Android app, and a hosted URL.
 
 ## How to run it
 
-Not runnable yet. This section will hold the exact setup and run commands, copied from a
-clean-clone test, once the first end-to-end run works.
+You need Node.js 20 or newer and desktop Chrome 139 or newer.
+
+```bash
+git clone https://github.com/JonathanSolvesProblems/keep-until.git
+cd keep-until
+npm --prefix web install
+npm --prefix web test
+cp web/.env.example web/.env.local
+npm --prefix web run dev
+```
+
+Then open http://localhost:5173 in Chrome, click **Start shift**, and hold an item up to the
+camera, or choose saved photos and click **Run batch**.
+
+The tests need nothing else. Reading items needs a Firebase project of your own, filled into
+`web/.env.local`:
+
+1. Create a Firebase project and register a web app; copy its config into `web/.env.local`.
+2. Run `npx firebase-tools init ailogic` in the repo root to provision Firebase AI Logic
+   (Gemini Developer API).
+3. Create a reCAPTCHA Enterprise key for `localhost`, register it for the web app under App Check,
+   and register a debug token for local use (Firebase AI Logic requires App Check).
+
+To run on-device, turn these on in `chrome://flags` and relaunch Chrome: **Gemma 4 for Built-in
+AI**, **Prompt API for Gemini Nano**, and **Prompt API for Gemini Nano with Multimodal Input**.
+Without them the app still works and says so: every read is marked CLOUD.
 
 ## Sources
 
