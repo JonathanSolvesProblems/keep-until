@@ -125,7 +125,32 @@ function withoutYear(m: number, d: number, today: string): ParsedDate {
   return result(plausible, "month and day with no year");
 }
 
+/**
+ * A misread digit can turn a real stamp into a calendar-valid date centuries away: the cloud
+ * read a cut-off "2027" as "5037" on 15 November 2026 and the gate said keep. A best-before or
+ * expiry stamp sits within a few years of the day it is sorted, so a year more than 15 behind
+ * or 7 ahead of the sort date is refused as unreadable and the item goes to a second look.
+ */
+const YEARS_BEHIND = 15;
+const YEARS_AHEAD = 7;
+
 export function parseDateText(raw: string, today: string): ParsedDate {
+  const parsed = parseStamp(raw, today);
+  const y = Number(today.slice(0, 4));
+  const ok = (iso: string) => {
+    const yy = Number(iso.slice(0, 4));
+    return yy >= y - YEARS_BEHIND && yy <= y + YEARS_AHEAD;
+  };
+  if (parsed.kind === "exact" && !ok(parsed.iso)) return { kind: "unreadable", why: `year ${parsed.iso.slice(0, 4)} is not a plausible date stamp` };
+  if (parsed.kind === "ambiguous") {
+    const kept = parsed.candidates.filter(ok);
+    // An ambiguous stamp stays ambiguous (the lead decides); it is never narrowed to one date here.
+    if (kept.length === 0) return { kind: "unreadable", why: "no plausible year among " + parsed.candidates.join(", ") };
+  }
+  return parsed;
+}
+
+function parseStamp(raw: string, today: string): ParsedDate {
   const upper = stripAccents(raw).toUpperCase().trim();
   if (!upper) return { kind: "unreadable", why: "empty" };
 

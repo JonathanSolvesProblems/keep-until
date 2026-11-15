@@ -1,0 +1,531 @@
+{
+  "exported": "2026-11-15T21:19:04.871Z",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "policy": {
+    "bound": "min",
+    "overrides": {}
+  },
+  "results": [
+    {
+      "file": "20261115_112242.jpg",
+      "at": "2026-11-15T21:18:33.034Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "25 OC 2029FYFY",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "ask_cloud",
+              "why": "The product name is not visible in the image."
+            },
+            "source": "in_cloud",
+            "ms": 2842,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "the cloud model could not settle it: The product name is not visible in the image."
+        },
+        "route": "in_cloud: The product name is not visible in the image.; already in the cloud"
+      }
+    },
+    {
+      "file": "20261115_112247.jpg",
+      "at": "2026-11-15T21:18:34.339Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Cream Style Corn",
+              "brand": "Green Giant",
+              "category": "canned_fruit_veg",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on the cans, so the volunteer needs to turn them to show the top or bottom."
+            },
+            "source": "in_cloud",
+            "ms": 1258,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112303.jpg",
+      "at": "2026-11-15T21:18:36.249Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "UNICO",
+              "category": "olive_oil",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product is olive oil, but the date is not visible in the current view."
+            },
+            "source": "in_cloud",
+            "ms": 1858,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112311.jpg",
+      "at": "2026-11-15T21:18:38.262Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Extra Virgin Olive Oil",
+              "brand": "Gallo",
+              "category": "olive_oil",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on the front of the bottle; please turn the item to check for the expiry date."
+            },
+            "source": "in_cloud",
+            "ms": 1949,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112323.jpg",
+      "at": "2026-11-15T21:18:41.078Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Simple",
+              "category": "dry_sauce_mix",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product name is not visible, and the best before date is stated to be on the bottom of the container which is not shown."
+            },
+            "source": "in_cloud",
+            "ms": 2786,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112326.jpg",
+      "at": "2026-11-15T21:18:42.621Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "baking powder",
+              "brand": "no name",
+              "category": "flour_based_mixes",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product is visible, but no date is shown on this side of the container."
+            },
+            "source": "in_cloud",
+            "ms": 1483,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112402.jpg",
+      "at": "2026-11-15T21:18:45.799Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Arm & Hammer",
+              "category": "non_food",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "This is baking soda which is a non-food item."
+            },
+            "source": "in_cloud",
+            "ms": 3125,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "non_food",
+            "label": "Non-food (laundry detergent, deodorant, body wash, diapers, infant wipes)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "in_cloud: model chose log"
+      }
+    },
+    {
+      "file": "20261115_112406.jpg",
+      "at": "2026-11-15T21:18:48.343Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Hershey",
+              "category": "flour_based_mixes",
+              "date_text": "BB/MA 5037 MA",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is a flour-based mix and the best-before date is clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 2472,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "5037-05-01",
+          "precision": "month"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "5037-11-01",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "flour_based_mixes",
+            "label": "Cake, cookie, brownie, muffin, biscuit, pancake or waffle mixes",
+            "page": 6
+          },
+          "reason": "Cake, cookie, brownie, muffin, biscuit, pancake or waffle mixes: 6 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log"
+      }
+    },
+    {
+      "file": "20261115_112410.jpg",
+      "at": "2026-11-15T21:18:50.714Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Chipits",
+              "brand": "Hershey's",
+              "category": "flour_based_mixes",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product is visible, but the date stamp is not in view on this side of the package."
+            },
+            "source": "in_cloud",
+            "ms": 2288,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112419.jpg",
+      "at": "2026-11-15T21:18:52.371Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product category is identified, but the expiration date is not visible on the front of the carton."
+            },
+            "source": "in_cloud",
+            "ms": 1596,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112421.jpg",
+      "at": "2026-11-15T21:18:54.152Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the package, please show the date."
+            },
+            "source": "in_cloud",
+            "ms": 1723,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "20261115_112427.jpg",
+      "at": "2026-11-15T21:18:55.218Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "shelf_stable_milk",
+              "date_text": "2027 FE 14",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is shelf stable milk, and the best before date is clearly legible."
+            },
+            "source": "in_cloud",
+            "ms": 1015,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2027-02-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "2027-03-14",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "shelf_stable_milk",
+            "label": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch)",
+            "page": 5
+          },
+          "reason": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch): 1 months past best before (chart p.5)"
+        },
+        "route": "in_cloud: model chose log"
+      }
+    },
+    {
+      "file": "20261115_112441.jpg",
+      "at": "2026-11-15T21:18:58.094Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Liberté",
+              "category": "chilled_or_frozen",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "set_aside",
+              "why": "This yogurt product requires refrigeration and must be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 2814,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This yogurt product requires refrigeration and must be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "20261115_112446.jpg",
+      "at": "2026-11-15T21:18:59.610Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Liberté",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 DE 07",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is yogurt, which requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1454,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is yogurt, which requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "20261115_112452.jpg",
+      "at": "2026-11-15T21:19:02.549Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "PC",
+              "category": "chilled_or_frozen",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "set_aside",
+              "why": "This is a frozen or refrigerated food item that requires freezer storage, which is not suitable for ambient food bank sorting."
+            },
+            "source": "in_cloud",
+            "ms": 2886,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a frozen or refrigerated food item that requires freezer storage, which is not suitable for ambient food bank sorting."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "20261115_112458.jpg",
+      "at": "2026-11-15T21:19:04.815Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "PARMESAN SHREDDED CHEESE",
+              "brand": "",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 NO 30",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a shredded cheese product which requires refrigeration and must be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 2205,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a shredded cheese product which requires refrigeration and must be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    }
+  ]
+}

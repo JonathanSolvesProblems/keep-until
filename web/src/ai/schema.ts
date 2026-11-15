@@ -32,7 +32,10 @@ export interface ItemRead {
 export const READ_SCHEMA = {
   type: "object",
   properties: {
-    product: { type: "string", description: "Product name as printed, e.g. 'Chickpeas 540 mL'." },
+    // Empty is a legal answer: a can lid or carton top often shows a date and no name, and a
+    // required name with no way to say "absent" is how "Broccoli Soup" got logged for a chicken
+    // broth carton top (round 1 screenshots, 2026-11-15).
+    product: { type: "string", description: "Product name exactly as printed in this photo, e.g. 'Chickpeas 540 mL'. Empty if no name is printed in view; never guess it from the package." },
     brand: { type: "string", description: "Brand as printed, or empty if none is visible." },
     category: { type: "string", enum: [...CATEGORY_IDS, "unclear"], description: "The chart row this product belongs to, or 'unclear' if none fits or you cannot tell." },
     date_text: { type: "string", description: "The date characters exactly as printed, including any BB/MA or EXP prefix. Empty if no date is visible." },
@@ -58,7 +61,7 @@ export const TRIAGE_SCHEMA = {
     package_in_view: { type: "boolean", description: "A food or grocery package is in the photo." },
     date_in_view: { type: "boolean", description: "Printed or stamped date characters are visible in this photo." },
     needs_refrigeration: { type: "boolean", description: "The product is kept in a fridge or freezer (yogurt, cheese, milk, meat, frozen food)." },
-    product: { type: "string", description: "Product name as printed, or empty." },
+    product: { type: "string", description: "Product name exactly as printed in this photo, or empty if none is in view." },
   },
   required: ["package_in_view", "date_in_view", "needs_refrigeration", "product"],
 } as const;
@@ -75,7 +78,7 @@ export const TRIAGE_PROMPT =
   "package_in_view: is a food or grocery package in the photo? " +
   "date_in_view: can you see printed or stamped date characters (a best before or expiry date)? Nutrition panels, barcodes and lot codes are not dates. " +
   "needs_refrigeration: is this a product kept in a fridge or freezer? " +
-  "product: the product name as printed.";
+  "product: the product name as printed, or empty if no name is in view.";
 
 const CATEGORY_LINES = CHART.categories.map((c) => `${c.id}: ${c.label} (e.g. ${c.examples})`).join("\n");
 
@@ -92,7 +95,7 @@ export function readPrompt(context: { barcodeProduct?: string; secondLook?: bool
     "Copy the date characters exactly into date_text; do not convert them. Lot codes are not dates.",
     "",
     "Choose next_action:",
-    "- log: you can read the product, its category and the full date (or the product has no date by design, like vinegar or honey).",
+    "- log: you can tell which category the product is and read the full date (or the product has no date by design, like vinegar or honey).",
     "- show_me_the_date: no date is in view (for a can it is usually on the top or bottom). The volunteer will turn the item.",
     "- ask_cloud: a date is visible but you cannot read every character, the label is in a language you cannot read, or the product is unfamiliar.",
     "- set_aside: the package is dented, bulging, rusted, leaking or open, or it needs refrigeration.",

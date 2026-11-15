@@ -1,12 +1,16 @@
+import "./styles.css";
 import { InferenceMode } from "firebase/ai";
 import { browserHasOnDeviceModel, makeModel, makeTriageModel, setRateLimitListener, type Mode } from "./ai/reader";
 import { processItem, type LoopModels, type Step } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
 import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
+import { renderAnswer, renderRow, renderTally } from "./view";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const status = $("status");
+const toolStatus = $("toolStatus");
+const still = $<HTMLImageElement>("still");
 const modeSel = $<HTMLSelectElement>("mode");
 const todayInput = $<HTMLInputElement>("today");
 const video = $<HTMLVideoElement>("video");
@@ -15,6 +19,17 @@ const batchBtn = $<HTMLButtonElement>("batch");
 const files = $<HTMLInputElement>("files");
 const promptEl = $("prompt");
 const log = $("log");
+const answer = $("answer");
+const tally = $("tally");
+
+// Plain names for the three ways of reading, for status lines (charter law 14).
+const MODE_WORDS: Record<string, string> = {
+  prefer_on_device: "on this laptop first",
+  only_on_device: "on this laptop only",
+  only_in_cloud: "in the cloud only",
+};
+
+video.addEventListener("playing", () => document.body.classList.add("live"));
 
 todayInput.value = new Date().toISOString().slice(0, 10);
 
@@ -59,7 +74,7 @@ async function describeOnDevice(): Promise<string> {
   }
 }
 
-describeOnDevice().then((s) => (status.textContent = s));
+describeOnDevice().then((s) => (status.textContent = s.endsWith("available") ? "Ready. This laptop can read items on its own." : "Ready. Items are read in the cloud in this browser."));
 
 // Without Chrome's on-device model the SDK sends every read to the cloud, whatever the mode.
 // Say so where a volunteer will see it, and take "On-device only" off the menu.
@@ -77,16 +92,16 @@ if (!browserHasOnDeviceModel()) {
 
 $("start").addEventListener("click", async () => {
   const mode = modeSel.value as Mode;
-  status.textContent = "signing in";
+  status.textContent = "Starting the shift";
   const uid = await ensureSignedIn();
   settings = await loadSettings();
   models = buildModels(mode, settings.cloudModel);
   if (mode !== InferenceMode.ONLY_IN_CLOUD) {
-    status.textContent = "preparing on-device model";
+    status.textContent = "Getting this laptop's reader ready";
     try {
-      await models.hybrid.model.initializeDeviceModel((p) => (status.textContent = `downloading on-device model ${Math.round(p * 100)}%`));
+      await models.hybrid.model.initializeDeviceModel((p) => (status.textContent = `Downloading this laptop's reader, ${Math.round(p * 100)}%`));
     } catch (e) {
-      status.textContent = "on-device unavailable: " + (e as Error).message;
+      status.textContent = "This laptop cannot read on its own right now, so items go to the cloud.";
     }
   }
   const onDevice = await describeOnDevice();
@@ -94,7 +109,9 @@ $("start").addEventListener("click", async () => {
   // never logs anything leaves no empty shift in the food bank's data.
   shiftInfo = { foodBankId: settings.foodBankId, uid, mode, onDevice, cloudModel: settings.cloudModel };
   shift = null;
-  status.textContent = `${settings.foodBankName} · ${onDevice} · mode ${mode} · cloud ${settings.cloudModel} (${settings.from} config)`;
+  const sortDay = new Date(todayInput.value + "T12:00:00").toLocaleDateString("en-CA", { weekday: "long", day: "numeric", month: "long" });
+  status.textContent = `${settings.foodBankName} · sorting ${sortDay} · reading ${MODE_WORDS[mode] ?? mode}`;
+  document.body.classList.add("started");
   await openCamera(localStorageGet("camera"));
   await listCameras();
   readBtn.disabled = false;
@@ -168,7 +185,7 @@ compareBtn.addEventListener("click", async () => {
       }
     }
     for (const [i, file] of manifest.files.entries()) {
-      status.textContent = `comparison · ${mode} · ${i + 1}/${manifest.files.length}`;
+      toolStatus.textContent = `Comparing, ${MODE_WORDS[mode] ?? mode}: photo ${i + 1} of ${manifest.files.length}`;
       const img = new Image();
       img.src = `/testset/${set}/${file}`;
       await img.decode();
@@ -182,7 +199,7 @@ compareBtn.addEventListener("click", async () => {
       }
     }
   }
-  status.textContent = `comparison done: ${manifest.files.length} photos × ${modes.length} modes`;
+  toolStatus.textContent = `Comparison done: ${manifest.files.length} photos, read ${modes.length} ways. The results file is in your downloads.`;
   const blob = new Blob(
     [JSON.stringify({ exported: new Date().toISOString(), set, sortDate: todayInput.value, cloudModel: settings.cloudModel, onDevice: await describeOnDevice(), results: runs }, null, 2)],
     { type: "application/json" },
@@ -204,8 +221,8 @@ if (import.meta.env.DEV && browserHasOnDeviceModel()) {
     const { runExperiment, VARIANTS } = await import("./dev/ondevice-experiment");
     const set = "pantry-2026-11-15";
     const manifest = (await (await fetch(`/testset/${set}/manifest.json`)).json()) as { files: string[] };
-    const rows = await runExperiment(set, manifest.files, (s) => (status.textContent = s));
-    status.textContent = `on-device experiment done: ${rows.length} reads`;
+    const rows = await runExperiment(set, manifest.files, (s) => (toolStatus.textContent = s));
+    toolStatus.textContent = `On-device experiment done: ${rows.length} reads`;
     const blob = new Blob(
       [JSON.stringify({ exported: new Date().toISOString(), set, onDevice: await describeOnDevice(), variants: VARIANTS.map((v) => ({ id: v.id, prompt: v.prompt })), rows }, null, 2)],
       { type: "application/json" },
@@ -252,11 +269,11 @@ async function openCamera(deviceId?: string): Promise<void> {
     // A phone used as a webcam (Windows Phone Link) sends no picture while the phone is locked.
     setTimeout(() => {
       if (video.srcObject && !video.videoWidth) {
-        promptEl.textContent = "This camera sends no picture. If it is a phone, unlock it, or pick another camera.";
+        promptEl.textContent = "This camera sends no picture. If it is a phone, wake its screen, or pick another camera.";
       }
     }, 3000);
   } catch {
-    promptEl.textContent = "no camera; use saved photos";
+    promptEl.textContent = "No camera found. You can still run saved photos from the tools below.";
   }
 }
 
@@ -293,32 +310,24 @@ function toJpegBase64(source: CanvasImageSource, w: number, h: number): { b64: s
   return { b64: url.split(",")[1], url };
 }
 
-function render(step: Step, thumb: string, label: string): void {
-  const last = step.reads[step.reads.length - 1];
-  const div = document.createElement("div");
-  div.className = "item";
-  const decision = step.kind === "verdict" ? step.verdict.decision : step.kind === "no_item" ? "NO ITEM" : "TURN IT";
-  const until = step.kind === "verdict" && step.verdict.keepUntil ? ` until ${step.verdict.keepUntil}` : "";
-  const reason = step.kind === "verdict" ? step.verdict.reason : last.read.why;
-  const page = step.kind === "verdict" && step.verdict.chart ? ` · chart p.${step.verdict.chart.page}` : "";
-  div.innerHTML = `<img alt="" /><div>
-    <div><span class="decision"></span><span class="badge"></span></div>
-    <div class="product"></div>
-    <div class="small reason"></div>
-    <div class="small route"></div></div>`;
-  (div.querySelector("img") as HTMLImageElement).src = thumb;
-  const d = div.querySelector(".decision")!;
-  d.textContent = decision + until;
-  d.classList.add(step.kind === "verdict" ? step.verdict.decision : "SET_ASIDE");
-  div.querySelector(".badge")!.textContent = step.reads.map((r) => `${r.source === "on_device" ? "ON-DEVICE" : "CLOUD"} ${r.ms} ms`).join(" → ");
-  const what = [`${last.read.brand} ${last.read.product}`.trim(), last.read.category !== "unclear" ? last.read.category : ""]
-    .filter(Boolean)
-    .join(" · ");
-  const date = last.read.date_text ? `date "${last.read.date_text}"` : "no date in view";
-  div.querySelector(".product")!.textContent = step.kind === "no_item" ? "nothing in view" : `${what || "unrecognised item"} · ${date}`;
-  div.querySelector(".reason")!.textContent = reason + page;
-  div.querySelector(".route")!.textContent = `${label} · ${step.route}`;
-  log.prepend(div);
+const narrow = window.matchMedia("(max-width: 860px)");
+const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function render(step: Step, thumb: string, _label: string): void {
+  renderAnswer(answer, step);
+  // Without a live camera (saved photos), the item just read stays in the camera's place.
+  if (!video.videoWidth) {
+    still.src = thumb;
+    still.hidden = false;
+  }
+  // At phone width the answer sits under the camera; bring it into view so the volunteer
+  // never has to scroll with an item in their hand.
+  if (narrow.matches && answer.getBoundingClientRect().top > window.innerHeight * 0.55) {
+    answer.scrollIntoView({ block: "start", behavior: calm.matches ? "auto" : "smooth" });
+  }
+  const row = renderRow(step, thumb);
+  if (row) log.prepend(row);
+  renderTally(tally, [...results.map((r) => r.step)]);
 }
 
 readBtn.addEventListener("click", async () => {
@@ -332,7 +341,7 @@ readBtn.addEventListener("click", async () => {
       previous: pendingTurn ? pendingTurn.reads : undefined,
     });
     pendingTurn = step.kind === "need_date_photo" ? step : null;
-    promptEl.textContent = pendingTurn ? "Turn the item so the date faces the camera, then Read item again." : "";
+    promptEl.textContent = "";
     results.push({ at: new Date().toISOString(), mode: models.hybrid.mode, step });
     if (step.kind === "verdict") {
       shift ??= { id: startShift(shiftInfo), uid: shiftInfo.uid };
@@ -342,7 +351,8 @@ readBtn.addEventListener("click", async () => {
     }
     render(step, frame.url, "camera");
   } catch (e) {
-    promptEl.textContent = "error: " + (e as Error).message;
+    promptEl.textContent = "That read did not go through. Hold the item steady and press Read item again.";
+    console.error(e);
   } finally {
     readBtn.disabled = false;
   }
@@ -355,14 +365,14 @@ async function loadImage(file: File): Promise<HTMLImageElement> {
   return img;
 }
 
-// The batch run is the measurement harness. Its results go to the exported file only, never
+// The batch run is the measurement run. Its results go to the exported file only, never
 // into a food bank's live item log.
 batchBtn.addEventListener("click", async () => {
   if (!models || !settings || !files.files?.length) return;
   batchBtn.disabled = true;
   const list = [...files.files];
   for (const [i, file] of list.entries()) {
-    status.textContent = `batch ${i + 1}/${list.length} · ${file.name}`;
+    toolStatus.textContent = `Reading photo ${i + 1} of ${list.length}`;
     const img = await loadImage(file);
     const frame = toJpegBase64(img, img.naturalWidth, img.naturalHeight);
     try {
@@ -373,7 +383,7 @@ batchBtn.addEventListener("click", async () => {
       results.push({ file: file.name, at: new Date().toISOString(), mode: models.hybrid.mode, step: { kind: "need_date_photo", reads: [], route: "error: " + (e as Error).message } });
     }
   }
-  status.textContent = `batch done: ${list.length} photos · mode ${models.hybrid.mode}`;
+  toolStatus.textContent = `Done: ${list.length} ${list.length === 1 ? "photo" : "photos"} read ${MODE_WORDS[models.hybrid.mode] ?? ""}`;
   batchBtn.disabled = false;
 });
 

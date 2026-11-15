@@ -4,6 +4,18 @@ import { CHART, gate } from "./chart";
 
 const TODAY = "2026-11-14";
 
+describe("parseDateText: implausible years", () => {
+  it("refuses a misread year far from the sort date (cloud read '5037' for a cut-off '2027')", () => {
+    expect(parseDateText("BB/MA 5037 MA", TODAY).kind).toBe("unreadable");
+    expect(parseDateText("2097 FE 14", TODAY).kind).toBe("unreadable");
+    expect(parseDateText("1999 FE 14", TODAY).kind).toBe("unreadable");
+  });
+  it("still reads stamps a few years either side", () => {
+    expect(parseDateText("2027 FE 14", TODAY)).toEqual({ kind: "exact", iso: "2027-02-14", precision: "day" });
+    expect(parseDateText("2019 JA 05", TODAY).kind).toBe("exact");
+  });
+});
+
 describe("parseDateText: CFIA stamps", () => {
   it("reads year, bilingual month symbol, day", () => {
     expect(parseDateText("BB/MA 2025 JA 14", TODAY)).toEqual({ kind: "exact", iso: "2025-01-14", precision: "day" });

@@ -1,7 +1,7 @@
 // The food bank's own stock sheet. The coordinator connects once with Google; the app creates
 // a "Keep Until stock" spreadsheet in their Drive and appends one row per logged item.
 // Scope is drive.file: the app can open only files it created, nothing else in their Drive.
-// Rows that cannot be sent yet (warehouse offline, sign-in expired) wait in a local queue
+// Rows that cannot be sent yet (warehouse offline, sign-in timed out) wait in a local queue
 // and go out with the next successful append, in order.
 
 import { GoogleAuthProvider, linkWithPopup, signInWithPopup, type UserCredential } from "firebase/auth";

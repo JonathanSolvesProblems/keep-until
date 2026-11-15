@@ -1,0 +1,428 @@
+/*
+  Keep Until: design code. Charter: .design/brand/CHARTER.md. Spec: .design/manifest.json.
+
+  Avoided: food bank software's white page under a blue or green header bar with Bootstrap
+  tables, and the scanner app's black viewfinder with corner brackets and a frosted check sheet.
+
+  Metaphor: the canning line's date coder, run in reverse. A can arrives with a stamp nobody can
+  read; Keep Until reads it and prints it again, large, with what to do.
+
+  Dates are set in Doto's dot matrix and words never are, because the dot matrix is the stamp
+  on the can and nothing else on screen is evidence.
+  Words are set in Atkinson Hyperlegible Next, because volunteers of any age read this from a
+  metre away with a can in their hands.
+  Cobalt appears once, on Read item, because it is the colour of the gloves on the hands doing
+  the work.
+  The canvas is can-lid aluminium and panels are carton white, because in the warehouse print
+  lands on lids and cartons. Light by default: sort tables stand under high-bay light.
+*/
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/atkinson-normal-latin.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("/fonts/atkinson-normal-latin-ext.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Doto";
+  src: url("/fonts/doto-normal-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+  --lid: #b8b6b0;
+  --lid-dot: rgb(21 21 21 / 0.07);
+  --carton: #f2f2ef;
+  --ink: #151515;
+  --ink-2: #3a3936;
+  --ink-3: #5a5955;
+  --edge: rgb(21 21 21 / 0.14);
+  --glove: #2553c6;
+  --glove-ink: #ffffff;
+  --focus: #2553c6;
+  --keep: #1d7a46;
+  --keep-ink: #ffffff;
+  --aside: #e3b628;
+  --aside-ink: #151515;
+  --discard: #b2282d;
+  --discard-ink: #ffffff;
+  --viewport: #151515;
+  --lid-ring: var(--carton);
+
+  /* Type: base 18 px, ratio 1.333 (perfect fourth). */
+  --t-1: 0.75rem;
+  --t0: 1rem;
+  --t1: 1.333rem;
+  --t2: 1.777rem;
+  --t3: 2.369rem;
+  --t4: 3.157rem;
+  --t5: 4.209rem;
+  --t6: 5.61rem;
+  --r: 6px;
+  --gap: 28px;
+  --words: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --dots: "Doto", ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lid: #1c1d1e;
+    --lid-dot: rgb(240 239 235 / 0.05);
+    --carton: #2a2b2d;
+    --ink: #f0efeb;
+    --ink-2: #a9a7a1;
+    --ink-3: #a9a7a1;
+    --edge: rgb(240 239 235 / 0.14);
+    --focus: #6b8ff0;
+    --keep: #2f9a5e;
+    --keep-ink: #0f1410;
+    --aside: #e9bf3a;
+    --aside-ink: #151515;
+    --discard: #d2332d;
+    --discard-ink: #ffffff;
+    --viewport: #0f1011;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { font-size: 18px; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--words);
+  font-size: var(--t0);
+  line-height: 1.45;
+  color: var(--ink);
+  background-color: var(--lid);
+  font-variant-numeric: tabular-nums;
+}
+
+h1, h2, p { margin: 0; text-wrap: pretty; }
+h1, h2 { text-wrap: balance; letter-spacing: -0.01em; }
+
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+a:hover { text-decoration-color: currentColor; }
+
+button, select, input { font: inherit; color: inherit; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: var(--r); }
+
+/* Top bar */
+
+.bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 32px 18px;
+}
+.brand { display: block; color: var(--ink); line-height: 0; }
+.wordmark { height: 34px; width: auto; }
+.status { color: var(--ink-2); font-size: var(--t-1); }
+.sheetline { display: flex; align-items: center; gap: 12px; justify-self: end; font-size: var(--t-1); }
+.sheet-status { color: var(--ink-2); }
+
+.note {
+  margin: 0 32px 18px;
+  padding: 12px 16px;
+  border-left: 6px solid var(--aside);
+  background: var(--carton);
+  border-radius: var(--r);
+}
+
+/* Buttons. Cobalt only on Read item (charter law 4). */
+
+button { cursor: pointer; border-radius: var(--r); }
+button:disabled { cursor: not-allowed; opacity: 0.45; }
+
+.read {
+  min-height: 64px;
+  padding: 0 36px;
+  border: 0;
+  background: var(--glove);
+  color: var(--glove-ink);
+  font-size: var(--t1);
+  font-weight: 700;
+}
+.read:not(:disabled):active { transform: translateY(1px); }
+
+.quiet {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  font-weight: 600;
+}
+.read:disabled { opacity: 1; background: var(--edge); color: var(--ink-3); }
+
+select, input[type="date"] {
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1.5px solid var(--edge);
+  border-radius: var(--r);
+  background: var(--carton);
+}
+
+/* The sort table: the item in hand beside the printed answer. */
+
+.table {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--gap);
+  padding: 0 32px;
+  align-items: start;
+}
+
+.viewport {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  max-height: 58vh;
+  overflow: hidden;
+  border-radius: var(--r);
+  background-color: var(--viewport);
+  /* The coder's print head at rest: its dot screen, until the camera is on. */
+  background-image: radial-gradient(circle at 1.5px 1.5px, rgb(242 242 239 / 0.10) 1px, transparent 1.3px);
+  background-size: 7px 7px;
+}
+.viewport video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.viewport-still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: var(--viewport); }
+.live .viewport-still { display: none; }
+/* Before the shift, the camera's place holds the one thing to do. */
+.viewport .start {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: 64px;
+  padding: 0 32px;
+  border: 0;
+  background: #f2f2ef;
+  color: #151515;
+  font-size: var(--t1);
+  font-weight: 700;
+}
+.started .viewport .start, .started .viewport-hint { display: none; }
+.viewport-hint {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 16px 20px;
+  color: #d8d7d2;
+  font-size: var(--t-1);
+}
+.live .viewport-hint { display: none; }
+
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 16px; }
+.camera-pick { display: flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: var(--t-1); }
+.camera-pick:has(select:empty), .camera-pick:has(option:only-child) { display: none; }
+.camera-pick select { max-width: 260px; }
+.prompt { min-height: 1.5em; margin-top: 12px; color: var(--ink-2); font-weight: 600; }
+
+/* The printed answer */
+
+.answer {
+  position: relative;
+  min-height: 620px;
+  padding: 32px 36px 28px;
+  background: var(--carton);
+  border: 1px solid var(--edge);
+  border-radius: var(--r);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The can lid (signature device): rim and beads, bleeding off the panel's corner while it waits
+   for the first item. It never sits under the stamp or the verdict. */
+.answer:not(:has(.answer-empty))::before { display: none; }
+.answer::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: -150px;
+  right: -150px;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 34%, var(--edge) 34% 35.2%, transparent 35.2% 52%, var(--edge) 52% 53.5%, transparent 53.5% 66%, var(--edge) 66% 70%, transparent 70%);
+}
+
+/* Empty and prompt states: the volunteer's hands come up from the bottom edge, as from the table. */
+.answer-empty, .verdict--art { display: flex; flex-direction: column; gap: 14px; min-height: 560px; }
+.answer-art, .verdict-art {
+  display: block;
+  width: min(360px, 78%);
+  height: auto;
+  margin: auto -8px -28px auto;
+}
+.verdict-art { width: auto; max-width: min(360px, 78%); max-height: 300px; }
+.answer-title { font-size: var(--t3); line-height: 1.08; font-weight: 800; max-width: 14ch; }
+.answer-sub { color: var(--ink-3); max-width: 42ch; }
+
+.stamp { display: grid; gap: 6px; margin-bottom: 24px; }
+.stamp-label { color: var(--ink-3); font-size: var(--t-1); }
+.stamp-code {
+  font-family: var(--dots);
+  font-weight: 800;
+  font-size: clamp(3rem, 7vw, var(--t6));
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  font-variant-numeric: normal;
+  /* The one orchestrated moment: the coder prints the date, column by column. */
+  animation: print 320ms steps(14, end) both;
+}
+.stamp-plain { font-size: var(--t1); font-weight: 600; }
+
+@keyframes print {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.band {
+  display: grid;
+  gap: 4px;
+  padding: 20px 24px 22px;
+  border-radius: var(--r);
+  background: var(--band, transparent);
+  color: var(--band-ink, var(--ink));
+  border: 2px solid var(--band-edge, transparent);
+}
+.band-word { font-size: var(--t5); font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+.band-until { font-size: var(--t2); font-weight: 600; }
+.band-until .date { font-family: var(--dots); font-weight: 800; letter-spacing: 0.02em; font-variant-numeric: normal; }
+
+.verdict--KEEP { --band: var(--keep); --band-ink: var(--keep-ink); }
+.verdict--SET_ASIDE { --band: var(--aside); --band-ink: var(--aside-ink); }
+.verdict--DISCARD { --band: var(--discard); --band-ink: var(--discard-ink); }
+.verdict--TURN, .verdict--NONE { --band: var(--ink); --band-ink: var(--carton); }
+.verdict--TURN .band-word, .verdict--NONE .band-word { font-size: var(--t4); }
+
+.reason { margin-top: 18px; font-size: var(--t1); line-height: 1.35; max-width: 34ch; }
+.reason-source { display: block; margin-top: 6px; color: var(--ink-3); font-size: var(--t0); }
+
+.readby {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 8px 12px;
+  border: 1px solid var(--edge);
+  border-radius: var(--r);
+  font-size: var(--t-1);
+  color: var(--ink-2);
+}
+.readby svg { width: 18px; height: 18px; flex: none; }
+.readby strong { color: var(--ink); font-weight: 700; }
+
+/* This shift: the record, newest first */
+
+.shift { padding: 40px 32px 0; }
+.shift-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 28px; margin-bottom: 16px; }
+.shift-head h2 { font-size: var(--t2); font-weight: 800; }
+.tally { color: var(--ink-2); }
+.tally .n { font-weight: 800; color: var(--ink); }
+
+.log { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.log:not(:empty) + .log-empty { display: none; }
+.log-empty { display: flex; align-items: center; gap: 20px; color: var(--ink-2); max-width: 46ch; }
+.log-empty img { width: 120px; height: auto; flex: none; }
+
+.row {
+  display: grid;
+  grid-template-columns: 56px 7rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px 10px 10px;
+  background: var(--carton);
+  border: 1px solid var(--edge);
+  border-radius: var(--r);
+}
+.row img { width: 56px; height: 56px; object-fit: cover; border-radius: 4px; }
+.row-verdict {
+  justify-self: start;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 800;
+  background: var(--band, transparent);
+  color: var(--band-ink, var(--ink));
+  border: 1.5px solid var(--band-edge, transparent);
+}
+.row-what { min-width: 0; }
+.row-what strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-what span { color: var(--ink-3); font-size: var(--t-1); }
+.row-what .noname { color: var(--ink-3); font-weight: 600; }
+.row-until { text-align: right; font-size: var(--t-1); color: var(--ink-2); }
+.row-until .date { display: block; font-family: var(--dots); font-weight: 800; font-size: var(--t1); color: var(--ink); font-variant-numeric: normal; }
+
+/* Tools for testing and judging (charter law 16: closed by default) */
+
+.tools { margin: 40px 32px 0; border-top: 1px solid var(--edge); padding-top: 14px; }
+.tools summary { cursor: pointer; color: var(--ink-2); font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+.tools-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px 28px; padding: 12px 0 8px; }
+.tools label { display: grid; gap: 6px; color: var(--ink-2); font-size: var(--t-1); }
+.tools-group { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.tools-group p { flex-basis: 100%; color: var(--ink-2); font-size: var(--t-1); }
+.tool-status { grid-column: 1 / -1; color: var(--ink-2); font-size: var(--t-1); }
+.tool-status:empty { display: none; }
+
+.foot { display: grid; gap: 8px; padding: 36px 32px 40px; color: var(--ink-2); font-size: var(--t-1); max-width: 72ch; }
+
+/* Phone width */
+
+@media (max-width: 860px) {
+  html { font-size: 16px; }
+  .bar { grid-template-columns: 1fr auto; padding: 16px; gap: 10px 16px; }
+  .status { grid-column: 1 / -1; grid-row: 2; }
+  .note { margin: 0 16px 14px; }
+  .table { grid-template-columns: 1fr; padding: 0 16px; gap: 18px; }
+  .viewport { max-height: 36vh; }
+  .read { flex: 1 1 auto; }
+  .wide { display: none; }
+  .answer { min-height: 0; padding: 22px 20px; }
+  .answer::before { width: 300px; height: 300px; top: -110px; right: -110px; }
+  .answer { min-height: 0; }
+  .answer-empty, .verdict--art { min-height: 0; }
+  .answer-art, .verdict-art { width: min(260px, 72%); margin: 4px -4px -22px auto; }
+  .answer-title { font-size: var(--t2); }
+  .band-word { font-size: var(--t4); }
+  .shift { padding: 28px 16px 0; }
+  .row { grid-template-columns: 48px auto minmax(0, 1fr); gap: 10px 12px; }
+  .row img { width: 48px; height: 48px; grid-row: 1; }
+  .row-verdict { grid-column: 2; grid-row: 1; }
+  .row-until { grid-column: 3; grid-row: 1; }
+  .row-what { grid-column: 1 / -1; grid-row: 2; }
+  .row-what strong { white-space: normal; }
+  .tools { margin: 28px 16px 0; }
+  .foot { padding: 28px 16px 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-code { animation: none; }
+}
+
+/* Selects drop the native arrow for three dots in a V, the screen's only visual language. */
+select {
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cg fill='%23151515'%3E%3Ccircle cx='2' cy='2' r='1.3'/%3E%3Ccircle cx='6' cy='6' r='1.3'/%3E%3Ccircle cx='10' cy='2' r='1.3'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 8px;
+}
+@media (prefers-color-scheme: dark) {
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cg fill='%23f0efeb'%3E%3Ccircle cx='2' cy='2' r='1.3'/%3E%3Ccircle cx='6' cy='6' r='1.3'/%3E%3Ccircle cx='10' cy='2' r='1.3'/%3E%3C/g%3E%3C/svg%3E"); }
+}

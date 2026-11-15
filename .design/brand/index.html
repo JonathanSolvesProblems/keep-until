@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Keep Until brand sheet</title>
+<style>
+  @font-face { font-family: "Atkinson Hyperlegible Next"; src: url("../../web/public/fonts/atkinson-normal-latin.woff2") format("woff2"); font-weight: 200 800; }
+  @font-face { font-family: "Doto"; src: url("../../web/public/fonts/doto-normal-latin.woff2") format("woff2"); font-weight: 100 900; }
+  :root {
+    --lid: #b8b6b0; --carton: #f2f2ef; --ink: #151515; --ink-2: #3a3936; --ink-3: #5a5955;
+    --edge: rgb(21 21 21 / 0.14); --glove: #2553c6;
+    --keep: #1d7a46; --aside: #e3b628; --discard: #b2282d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Atkinson Hyperlegible Next", system-ui, sans-serif; color: var(--ink); background: var(--lid);
+    background-image: radial-gradient(circle at 1.5px 1.5px, rgb(21 21 21 / 0.07) 1px, transparent 1.3px); background-size: 7px 7px; }
+  main { max-width: 1240px; margin: 0 auto; padding: 40px 32px 64px; display: grid; gap: 28px; }
+  h1, h2, p { margin: 0; }
+  h2 { font-size: 13.5px; font-weight: 700; color: var(--ink-3); margin-bottom: 14px; }
+  .panel { background: var(--carton); border: 1px solid var(--edge); border-radius: 6px; padding: 28px; position: relative; overflow: hidden; isolation: isolate; }
+  .grid { display: grid; gap: 28px; }
+  .g2 { grid-template-columns: 1fr 1fr; }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; align-items: end; gap: 24px; min-height: 420px; }
+  .hero::before { content: ""; position: absolute; z-index: -1; top: -180px; right: -180px; width: 560px; height: 560px; border-radius: 50%;
+    background: radial-gradient(circle, transparent 0 34%, var(--edge) 34% 35.2%, transparent 35.2% 52%, var(--edge) 52% 53.5%, transparent 53.5% 66%, var(--edge) 66% 70%, transparent 70%); }
+  .hero svg { width: 100%; max-width: 520px; height: auto; color: var(--ink); }
+  .hero p { margin-top: 18px; font-size: 20px; max-width: 34ch; color: var(--ink-2); }
+  .hero img { width: 100%; max-width: 440px; justify-self: end; margin-bottom: -28px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .sw { border-radius: 6px; border: 1px solid var(--edge); overflow: hidden; background: var(--carton); }
+  .sw i { display: block; height: 72px; }
+  .sw p { padding: 8px 10px; font-size: 13.5px; }
+  .sw b { display: block; }
+  .dots { font-family: "Doto", monospace; font-weight: 800; }
+  .spec-dots { font-size: 64px; line-height: 0.95; }
+  .spec-words { font-size: 56px; font-weight: 800; line-height: 1.02; letter-spacing: -0.02em; }
+  .scale p { display: flex; align-items: baseline; gap: 14px; }
+  .scale span:first-child { width: 72px; color: var(--ink-3); font-size: 13.5px; flex: none; }
+  .art { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .art figure { margin: 0; display: grid; gap: 8px; align-content: end; background: var(--carton); border: 1px solid var(--edge); border-radius: 6px; padding: 16px 16px 12px; }
+  .art img { width: 100%; height: 200px; object-fit: contain; }
+  figcaption { font-size: 13.5px; color: var(--ink-3); }
+  .bands { display: grid; gap: 10px; }
+  .band { border-radius: 6px; padding: 14px 18px; font-weight: 800; font-size: 32px; }
+  .band small { font-weight: 600; font-size: 20px; margin-left: 10px; }
+  .icons { display: flex; gap: 22px; align-items: center; }
+  .icons svg { width: 44px; height: 44px; }
+  ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; columns: 2; }
+  li { break-inside: avoid; font-size: 15px; }
+  .refs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .refs img { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; filter: grayscale(0.2); }
+  .voice p { font-size: 20px; padding: 10px 0; border-bottom: 1px solid var(--edge); }
+  .voice p:last-child { border: 0; }
+  .lid { width: 160px; height: 160px; }
+  .texture { height: 160px; border-radius: 6px; border: 1px solid var(--edge); background: var(--lid);
+    background-image: radial-gradient(circle at 1.5px 1.5px, rgb(21 21 21 / 0.18) 1px, transparent 1.3px); background-size: 7px 7px; }
+  .dark { background: #1c1d1e; color: #f0efeb; }
+  .dark .band { color: #0f1410; }
+</style>
+</head>
+<body>
+<main>
+  <section class="panel hero">
+    <div>
+      <svg viewBox="34 -786 4978 968" aria-label="Keep Until"><g id="wordmark" fill="currentColor">
+  <path id="g0" data-char="K" d="M54.0 0V-668H224.0V-416L454.0 -668H661.0L395.0 -380L671.0 0H475.0L286.0 -263L224.0 -195V0Z"/>
+  <path id="g1" data-char="e" d="M974.0 12Q893.0 12 830.5 -19.0Q768.0 -50 732.5 -109.0Q697.0 -168 697.0 -252Q697.0 -331 734.0 -389.0Q771.0 -447 832.5 -479.0Q894.0 -511 967.0 -511Q1029.0 -511 1078.5 -489.0Q1128.0 -467 1162.5 -426.5Q1197.0 -386 1213.5 -330.0Q1230.0 -274 1225.0 -205H857.0Q863.0 -182 873.5 -165.0Q884.0 -148 898.5 -136.5Q913.0 -125 931.0 -119.5Q949.0 -114 969.0 -114Q1003.0 -114 1028.0 -123.5Q1053.0 -133 1066.0 -149L1195.0 -101Q1154.0 -42 1093.5 -15.0Q1033.0 12 974.0 12ZM856.0 -301H1075.0Q1072.0 -332 1058.0 -351.5Q1044.0 -371 1021.5 -380.5Q999.0 -390 972.0 -390Q945.0 -390 921.0 -381.0Q897.0 -372 880.0 -352.5Q863.0 -333 856.0 -301Z"/>
+  <path id="g2" data-char="e" d="M1538.0 12Q1457.0 12 1394.5 -19.0Q1332.0 -50 1296.5 -109.0Q1261.0 -168 1261.0 -252Q1261.0 -331 1298.0 -389.0Q1335.0 -447 1396.5 -479.0Q1458.0 -511 1531.0 -511Q1593.0 -511 1642.5 -489.0Q1692.0 -467 1726.5 -426.5Q1761.0 -386 1777.5 -330.0Q1794.0 -274 1789.0 -205H1421.0Q1427.0 -182 1437.5 -165.0Q1448.0 -148 1462.5 -136.5Q1477.0 -125 1495.0 -119.5Q1513.0 -114 1533.0 -114Q1567.0 -114 1592.0 -123.5Q1617.0 -133 1630.0 -149L1759.0 -101Q1718.0 -42 1657.5 -15.0Q1597.0 12 1538.0 12ZM1420.0 -301H1639.0Q1636.0 -332 1622.0 -351.5Q1608.0 -371 1585.5 -380.5Q1563.0 -390 1536.0 -390Q1509.0 -390 1485.0 -381.0Q1461.0 -372 1444.0 -352.5Q1427.0 -333 1420.0 -301Z"/>
+  <path id="g3" data-char="p" d="M1848.0 162V-496H1994.0L2013.0 -430Q2030.0 -458 2055.5 -475.5Q2081.0 -493 2109.5 -502.0Q2138.0 -511 2162.0 -511Q2228.0 -511 2277.5 -479.0Q2327.0 -447 2354.5 -388.0Q2382.0 -329 2382.0 -248Q2382.0 -167 2354.5 -108.5Q2327.0 -50 2277.5 -19.0Q2228.0 12 2162.0 12Q2138.0 12 2109.5 3.0Q2081.0 -6 2055.5 -24.5Q2030.0 -43 2013.0 -70V162ZM2109.0 -115Q2150.0 -115 2181.0 -148.5Q2212.0 -182 2212.0 -248Q2212.0 -313 2181.0 -349.0Q2150.0 -385 2109.0 -385Q2068.0 -385 2036.5 -355.5Q2005.0 -326 2005.0 -252Q2005.0 -178 2036.5 -146.5Q2068.0 -115 2109.0 -115Z"/>
+  <path id="g4" data-char=" " d=""/>
+  <path id="g5" data-char="U" d="M3061.0 12Q2902.0 12 2835.5 -63.0Q2769.0 -138 2769.0 -294V-668H2939.0V-274Q2939.0 -190 2968.0 -158.0Q2997.0 -126 3062.0 -126Q3127.0 -126 3154.0 -158.0Q3181.0 -190 3181.0 -274V-668H3351.0V-294Q3351.0 -138 3284.5 -63.0Q3218.0 12 3061.0 12Z"/>
+  <path id="g6" data-char="n" d="M3443.0 0V-496H3590.0L3608.0 -432Q3619.0 -449 3640.5 -467.5Q3662.0 -486 3693.0 -498.5Q3724.0 -511 3761.0 -511Q3822.0 -511 3859.0 -489.0Q3896.0 -467 3913.0 -423.5Q3930.0 -380 3930.0 -317V0H3765.0V-283Q3765.0 -318 3757.5 -340.5Q3750.0 -363 3734.5 -374.0Q3719.0 -385 3694.0 -385Q3648.0 -385 3628.0 -351.0Q3608.0 -317 3608.0 -252V0Z"/>
+  <path id="g7" data-char="t" d="M4228.0 0Q4164.0 0 4126.0 -11.0Q4088.0 -22 4071.5 -52.5Q4055.0 -83 4055.0 -143V-371H3973.0V-496H4055.0V-620H4220.0V-496H4328.0V-371H4220.0V-188Q4220.0 -154 4234.5 -143.5Q4249.0 -133 4286.0 -133H4328.0V0Z"/>
+  <path id="g8" data-char="i" d="M4458.0 0V-372H4372.0V-496H4624.0V0Z"/><g id="g8-lid" data-note="the i tittle redrawn as a can lid from above: rim and two beads, no centre (signature device)"><circle cx="4532.0" cy="-666.0" r="104.0" fill="#2a5bd7"/><circle cx="4532.0" cy="-666.0" r="81.1" fill="none" stroke="var(--lid-ring, #f2f2ef)" stroke-width="9.4"/><circle cx="4532.0" cy="-666.0" r="54.1" fill="none" stroke="var(--lid-ring, #f2f2ef)" stroke-width="8.3"/></g>
+  <path id="g9" data-char="l" d="M4885.0 0Q4822.0 0 4784.0 -11.0Q4746.0 -22 4729.5 -53.0Q4713.0 -84 4713.0 -145V-708H4879.0V-197Q4879.0 -156 4891.0 -144.0Q4903.0 -132 4945.0 -132H4992.0V0Z"/>
+</g></svg>
+      <p>The canning line's date coder, run in reverse. A stamp nobody can read is read, then printed again large, with what to do.</p>
+    </div>
+    <img src="art/hands-can.webp" alt="Two cobalt-gloved hands holding a can up to the camera" />
+  </section>
+
+  <section class="panel">
+    <h2>Palette. Light is the default: sort tables stand under high-bay light</h2>
+    <div class="swatches">
+      <div class="sw"><i style="background:#b8b6b0"></i><p><b>Lid</b>#b8b6b0 canvas</p></div>
+      <div class="sw"><i style="background:#f2f2ef"></i><p><b>Carton</b>#f2f2ef panels</p></div>
+      <div class="sw"><i style="background:#151515"></i><p><b>Ink</b>#151515 text</p></div>
+      <div class="sw"><i style="background:#2553c6"></i><p><b>Glove</b>#2553c6 Read item only</p></div>
+      <div class="sw"><i style="background:#1d7a46"></i><p><b>Keep</b>#1d7a46 band</p></div>
+      <div class="sw"><i style="background:#e3b628"></i><p><b>Set aside</b>#e3b628 band</p></div>
+      <div class="sw"><i style="background:#b2282d"></i><p><b>Discard</b>#b2282d band</p></div>
+      <div class="sw"><i style="background:#1c1d1e"></i><p><b>Table</b>#1c1d1e dark canvas</p></div>
+      <div class="sw"><i style="background:#2a2b2d"></i><p><b>Panel, dark</b>#2a2b2d</p></div>
+      <div class="sw"><i style="background:#6b8ff0"></i><p><b>Glove, dark</b>#6b8ff0 focus</p></div>
+    </div>
+  </section>
+
+  <div class="grid g2">
+    <section class="panel">
+      <h2>Doto: dates only, the coder's dot matrix</h2>
+      <p class="dots spec-dots">2027 FE 14</p>
+      <p style="margin-top:12px;font-size:20px;font-weight:600">Best before 14 February 2027</p>
+    </section>
+    <section class="panel">
+      <h2>Atkinson Hyperlegible Next: every word, read from a metre away</h2>
+      <p class="spec-words">Set it aside for the lead</p>
+      <div class="scale" style="margin-top:14px;display:grid;gap:4px">
+        <p><span>75.7 / t5</span><span style="font-size:32px;font-weight:800">Keep</span></p>
+        <p><span>24 / t1</span><span style="font-size:24px">Canned soup keeps 24 months past best before.</span></p>
+        <p><span>13.5 / t-1</span><span style="font-size:13.5px">Food Banks Canada chart, page 8 · ratio 1.333 on 18 px</span></p>
+      </div>
+    </section>
+  </div>
+
+  <div class="grid g3">
+    <section class="panel">
+      <h2>Signature device: the can lid, rim and beads</h2>
+      <svg class="lid" viewBox="0 0 160 160" aria-hidden="true"><circle cx="80" cy="80" r="76" fill="none" stroke="#151515" stroke-opacity=".14" stroke-width="10"/><circle cx="80" cy="80" r="56" fill="none" stroke="#151515" stroke-opacity=".14" stroke-width="3"/><circle cx="80" cy="80" r="38" fill="none" stroke="#151515" stroke-opacity=".14" stroke-width="2"/></svg>
+      <p style="font-size:15px;color:var(--ink-2);margin-top:10px">Bleeds off the answer panel's corner, under the stamp. Never behind words, never a loader.</p>
+    </section>
+    <section class="panel">
+      <h2>Icons: 7 by 7 dot pictograms, drawn in code</h2>
+      <div class="icons" id="icons"></div>
+      <p style="font-size:15px;color:var(--ink-2);margin-top:14px">This laptop and the cloud: where each read happened, beside every verdict.</p>
+    </section>
+    <section class="panel">
+      <h2>Texture: the coder's dot, 7 px screen</h2>
+      <div class="texture"></div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Illustration: two-ink halftone, cobalt only for the gloves, on nothing</h2>
+    <div class="art">
+      <figure><img src="art/hands-can.webp" alt="" /><figcaption>Anchor. First screen: hold an item up</figcaption></figure>
+      <figure><img src="art/turn.webp" alt="" /><figcaption>Turn it: show the date side</figcaption></figure>
+      <figure><img src="art/no-item.webp" alt="" /><figcaption>Nothing in view</figcaption></figure>
+      <figure><img src="art/set-aside.webp" alt="" /><figcaption>Set it aside for the lead</figcaption></figure>
+      <figure><img src="art/empty-box.webp" alt="" /><figcaption>Nothing sorted yet</figcaption></figure>
+      <figure><img src="art/sheet.webp" alt="" /><figcaption>The food bank's sheet</figcaption></figure>
+    </div>
+  </section>
+
+  <div class="grid g2">
+    <section class="panel">
+      <h2>Verdict bands: colour fills, the word always says it</h2>
+      <div class="bands">
+        <div class="band" style="background:var(--keep);color:#fff">Keep <small>until <span class="dots">14 Feb 2029</span></small></div>
+        <div class="band" style="background:var(--aside)">Set it aside for the lead</div>
+        <div class="band" style="background:var(--discard);color:#fff">Discard</div>
+        <div class="band" style="border:2px solid var(--ink)">Turn it</div>
+      </div>
+    </section>
+    <section class="panel dark">
+      <h2 style="color:#a9a7a1">Dark: the sort-table black</h2>
+      <div class="bands">
+        <div class="band" style="background:#2f9a5e">Keep <small>until <span class="dots">14 Feb 2029</span></small></div>
+        <div class="band" style="background:#e9bf3a;color:#151515">Set it aside for the lead</div>
+        <div class="band" style="background:#d2332d;color:#fff">Discard</div>
+        <div class="band" style="border:2px solid #f0efeb;color:#f0efeb">Turn it</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="grid g2">
+    <section class="panel voice">
+      <h2>Voice: the sort lead beside a first-shift volunteer</h2>
+      <p>Hold an item up to the camera</p>
+      <p>Canned vegetables keep 12 months past best before.</p>
+      <p>Set it aside for the lead. The two reads disagree on the date.</p>
+      <p>No Wi-Fi. Keep sorting: items go to the sheet when it comes back.</p>
+      <p style="font-size:15px;color:var(--ink-3)">Never: expired (for best before), AI-powered, smart sorting, scan, seamless.</p>
+    </section>
+    <section class="panel">
+      <h2>Charter (17 laws, CHARTER.md; checked by lint_brand.py)</h2>
+      <ol>
+        <li>Dates in Doto, and only dates</li>
+        <li>Words in Atkinson Hyperlegible Next</li>
+        <li>Verdict largest, stamp second</li>
+        <li>Cobalt once: Read item</li>
+        <li>Verdict colours fill bands, never text</li>
+        <li>Discard red only after two reads agree</li>
+        <li>The can lid is the signature device</li>
+        <li>Illustrations: halftone on nothing</li>
+        <li>Icons: 7 by 7 dot pictograms</li>
+        <li>Carton white is the only panel</li>
+        <li>No viewfinder brackets, scan line or frost</li>
+        <li>Read-by badge beside every verdict</li>
+        <li>Sentence-case titles, no full stop</li>
+        <li>Internal words never reach the screen</li>
+        <li>One moment: the stamp prints</li>
+        <li>Developer controls in a closed drawer</li>
+        <li>Never "expired" for best before</li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="panel">
+    <h2>Where it came from: the CFIA stamp on a carton top from my own pantry, and the blue nitrile gloves at a food bank sort table (Wikimedia Commons)</h2>
+    <div class="refs">
+      <img src="../../web/public/testset/pantry-2026-11-15/20261115_112427.jpg" alt="" />
+      <img src="../refs/food-bank-sorting-volunteers-1.jpg" alt="" />
+      <img src="../refs/food-bank-sorting-volunteers-2.jpg" alt="" />
+    </div>
+  </section>
+</main>
+<script>
+  const ICONS = {
+    laptop: [".......", ".#####.", ".#...#.", ".#...#.", ".#####.", "#######", "......."],
+    cloud: [".......", "..##...", ".####.#", "#######", "#######", ".#####.", "......."],
+  };
+  const host = document.getElementById("icons");
+  for (const rows of Object.values(ICONS)) {
+    const dots = rows.flatMap((r, y) => [...r].map((c, x) => c === "#" ? `<circle cx="${x + 0.5}" cy="${y + 0.5}" r="0.42" fill="currentColor"/>` : "")).join("");
+    host.insertAdjacentHTML("beforeend", `<svg viewBox="0 0 7 7">${dots}</svg>`);
+  }
+</script>
+</body>
+</html>

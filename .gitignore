@@ -33,3 +33,9 @@ Thumbs.db
 PHASE0.md
 outreach/
 firebase-debug.log
+
+# Design working files: third-party reference photos, raw generations, screenshots
+.design/refs/*.jpg
+.design/brand/art/*.png
+.design/brand/wordmark-base.png
+.design/shots/**/*.png

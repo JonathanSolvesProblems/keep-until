@@ -97,3 +97,22 @@ marked as such and never feed `results/`.
   detection was wrong both ways on-device (broth called chilled, parmesan not), so a "fridge"
   answer sends the photo to the cloud rather than setting it aside. The full on-device read stays
   as the "on-device only" mode so the comparison keeps measuring it.
+- Design pass screenshots (round 1) showed "Broccoli Soup" in the shift log for a chicken broth
+  carton top that prints no name. The read schema required a product name with no way to say
+  "absent", so the model supplied one. The name is now "exactly as printed in this photo, empty
+  if none is in view", the prompt no longer asks for the product before logging, and the log
+  says "Name not in this photo". Re-running the 16 photos in the cloud after that change
+  (`results/pantry-2026-11-15-cloud-only-name-optional.md`): 13 of 15, against 14 of 15 before.
+  The one difference is the chocolate chips photo whose stamp is cut off at the top edge, which
+  has given a different answer on every run so far (turn it, discard, keep 2027-05-17, and now
+  keep). This time the cloud read "BB/MA 5037 MA" and the parser accepted year 5037, so the gate
+  said keep. Fixed in the gate, not the prompt: a stamp year more than 15 years behind or 7 ahead
+  of the sort date is refused as unreadable, which sends the item to a second look and then to
+  the lead. Ambiguous stamps stay ambiguous; the window never narrows them to one date.
+- Same design-pass run: with the made-up name gone, the broth carton's top (a date and no name)
+  was filed under three different chart rows on three reads of the same photo (mixed prepared
+  foods 24 months, canned vegetables 12 months, shelf-stable UHT drinks 1 month). The date was
+  right every time; the row was a guess every time, and so was the keep-until date. The product
+  shows the row it used in the reason, so a volunteer can see it, but the honest behaviour is to
+  ask for the front of the package when no name is in view and the row is not certain. Not yet
+  built; it changes the measured photo set, so it goes in with a re-run of all three modes.

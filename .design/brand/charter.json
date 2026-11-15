@@ -1,0 +1,43 @@
+{
+  "allow_fonts": [],
+  "banned_fonts": [
+    "Big Shoulders Stencil",
+    "Bodoni Moda",
+    "Libre Caslon Display",
+    "B612"
+  ],
+  "banned_words": [
+    "expired",
+    "AI-powered",
+    "smart sorting",
+    "scan",
+    "seamless"
+  ],
+  "banned_hex": [
+    "#F4EFE6",
+    "#C2552D",
+    "#edefe9",
+    "#7cc0aa",
+    "#d6e13c",
+    "#284d5f",
+    "#C4CDD5"
+  ],
+  "allow_hex": [],
+  "title_punctuation": "forbid",
+  "max_tracked_caps_rules": 1,
+  "allow_long_dashes": false,
+  "forbid_regex": [
+    {
+      "pattern": "class=\"[^\"]*eyebrow",
+      "why": "no eyebrow labels above titles"
+    },
+    {
+      "pattern": ">[^<>\\n{};()]*\\b(prefer_on_device|only_in_cloud|only_on_device|in_cloud:|on_device:)",
+      "why": "internal mode and route strings never reach the screen as text (charter law 14)"
+    },
+    {
+      "pattern": "corner-bracket|scanline|backdrop-filter",
+      "why": "no scanner-app viewfinder or frosted glass (charter law 11)"
+    }
+  ]
+}

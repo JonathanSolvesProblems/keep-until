@@ -15,6 +15,10 @@ import sys
 
 
 def outcome(step):
+    # A read that failed outright is recorded with an "error:" route; it never counts as the
+    # app choosing "turn it" or "no item".
+    if step.get("route", "").startswith("error"):
+        return "error", None, None
     if step["kind"] == "need_date_photo":
         return "turn_it", None, None
     if step["kind"] == "no_item":

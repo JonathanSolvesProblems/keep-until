@@ -4,68 +4,98 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Keep Until</title>
-    <style>
-      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
-      body { margin: 0 auto; max-width: 1100px; padding: 16px; }
-      header { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
-      h1 { margin: 0; font-size: 1.4rem; }
-      #status { font-size: 0.9rem; opacity: 0.8; }
-      .row { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0; }
-      video, canvas.preview { width: 100%; max-width: 480px; max-height: 45vh; object-fit: cover; border-radius: 8px; background: #111; }
-      button, select, input { font: inherit; padding: 8px 12px; }
-      #log { display: grid; gap: 8px; }
-      .item { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 8px; border: 1px solid #8884; border-radius: 8px; }
-      .item img { width: 96px; height: 96px; object-fit: cover; border-radius: 6px; }
-      .decision { font-weight: 700; }
-      .KEEP { color: #1a7f37; } .DISCARD { color: #c62828; } .SET_ASIDE { color: #b26a00; }
-      .badge { font-size: 0.75rem; padding: 2px 6px; border-radius: 999px; border: 1px solid currentColor; margin-left: 6px; }
-      .small { font-size: 0.85rem; opacity: 0.85; }
-      .note { margin: 12px 0; padding: 10px 12px; border-radius: 8px; border: 1px solid #b26a00; }
-    </style>
+    <meta name="description" content="Keep Until reads the best-before date on donated food at a food bank sort table, applies Food Banks Canada's shelf-life chart, and says keep, set aside or discard." />
+    <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/icon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <link rel="preload" href="/fonts/atkinson-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/doto-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#b8b6b0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1d1e" media="(prefers-color-scheme: dark)" />
   </head>
   <body>
-    <header>
-      <h1>Keep Until</h1>
-      <span id="status">loading</span>
+    <header class="bar">
+      <a class="brand" href="/" aria-label="Keep Until, home">
+        <svg class="wordmark" viewBox="34 -786 4978 968" aria-hidden="true">
+          <use href="/brand/wordmark.svg#wordmark" />
+        </svg>
+      </a>
+      <p id="status" class="status">Getting ready</p>
+      <div class="sheetline">
+        <button id="sheet" class="quiet" disabled>Connect <span class="wide">the food bank's </span>sheet</button>
+        <span id="sheetStatus" class="sheet-status"></span>
+      </div>
     </header>
+
     <p id="browserNote" class="note" hidden></p>
-    <div class="row">
-      <button id="start">Start shift</button>
-      <label>Inference
-        <select id="mode">
-          <option value="prefer_on_device" selected>Prefer on-device (the product)</option>
-          <option value="only_on_device">On-device only</option>
-          <option value="only_in_cloud">Cloud only</option>
-        </select>
-      </label>
-      <label>Sort date <input id="today" type="date" /></label>
-      <button id="sheet" disabled>Connect the food bank's sheet</button>
-      <span id="sheetStatus" class="small"></span>
-    </div>
-    <div class="row">
-      <div>
-        <video id="video" autoplay playsinline muted></video>
-        <div class="row">
-          <button id="read" disabled>Read item</button>
-          <label class="small">Camera <select id="camera"></select></label>
-          <span id="prompt" class="small"></span>
+
+    <main class="table">
+      <section class="hand" aria-label="The item in your hand">
+        <div class="viewport">
+          <video id="video" autoplay playsinline muted></video>
+          <img id="still" class="viewport-still" alt="The item just read" hidden />
+          <button id="start" class="start">Start shift</button>
+          <p class="viewport-hint">The camera turns on when the shift starts</p>
+        </div>
+        <div class="controls">
+          <button id="read" class="read" disabled>Read item</button>
+          <label class="camera-pick">Camera <select id="camera"></select></label>
+        </div>
+        <p id="prompt" class="prompt" role="status"></p>
+      </section>
+
+      <section id="answer" class="answer" aria-live="polite" aria-label="What to do with this item">
+        <div class="answer-empty">
+          <h1 class="answer-title">Hold an item up to the camera</h1>
+          <p class="answer-sub">Date side first. Keep Until reads the stamp, checks Food Banks Canada's chart, and tells you which box it goes in.</p>
+          <img class="answer-art" src="/brand/art/hands-can.webp" width="950" height="815" alt="Two gloved hands holding a can up with its lid toward the camera" />
+        </div>
+      </section>
+    </main>
+
+    <section class="shift" aria-labelledby="shift-title">
+      <div class="shift-head">
+        <h2 id="shift-title">This shift</h2>
+        <p id="tally" class="tally"></p>
+      </div>
+      <ol id="log" class="log"></ol>
+      <div class="log-empty">
+        <img src="/brand/art/sheet.webp" width="1002" height="955" alt="A gloved hand writing on a clipboard log sheet" />
+        <p>Nothing sorted yet. The first item you read shows up here and in the food bank's sheet.</p>
+      </div>
+    </section>
+
+    <details class="tools">
+      <summary>Tools for testing and judging</summary>
+      <div class="tools-body">
+        <p id="toolStatus" class="tool-status" role="status"></p>
+        <label>How items are read
+          <select id="mode">
+            <option value="prefer_on_device" selected>On this laptop first, cloud for dates</option>
+            <option value="only_on_device">On this laptop only</option>
+            <option value="only_in_cloud">In the cloud only</option>
+          </select>
+        </label>
+        <label>Sort date <input id="today" type="date" /></label>
+        <div class="tools-group">
+          <p>Compare the three ways on the 16 sample pantry photos</p>
+          <button id="compare" class="quiet" disabled>Run comparison</button>
+          <button id="experiment" class="quiet" hidden>Run on-device experiment</button>
+        </div>
+        <div class="tools-group">
+          <p>Run your own photos</p>
+          <input id="files" type="file" accept="image/jpeg,image/png" multiple />
+          <button id="batch" class="quiet" disabled>Run batch</button>
+          <button id="export" class="quiet">Export results</button>
         </div>
       </div>
-      <div>
-        <p class="small">Or run saved photos:</p>
-        <input id="files" type="file" accept="image/jpeg,image/png" multiple />
-        <div class="row">
-          <button id="batch" disabled>Run batch</button>
-          <button id="export">Export results</button>
-        </div>
-        <p class="small">Compare on-device, hybrid and cloud on the 16 sample pantry photos:</p>
-        <div class="row">
-          <button id="compare" disabled>Run comparison</button>
-          <button id="experiment" hidden>Run on-device experiment</button>
-        </div>
-      </div>
-    </div>
-    <div id="log"></div>
+    </details>
+
+    <footer class="foot">
+      <p>Keep-until dates come from Food Banks Canada's <a href="https://www.harvestmanitoba.ca/wp-content/uploads/2021/01/FBC-Food-Shelf-Life-En.pdf">Guidelines for Food Shelf Life</a> (July 2018). Canadian date stamps are read the way the CFIA prints them: year, a two-letter month, then the day.</p>
+      <p>Built by Jonathan Andrei for food bank sort tables. More of what I build at <a href="https://jonathansolvesproblems.com">jonathansolvesproblems.com</a>.</p>
+    </footer>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

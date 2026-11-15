@@ -1,0 +1,27 @@
+{
+  "ai_generated": true,
+  "provider": "local",
+  "model": "flux-2-klein-4b-fp8.safetensors",
+  "subject": "two open hands in cobalt gloves, palms up and empty, held toward the camera, nothing in them",
+  "references": [
+    ".design\\brand\\art\\hands-can.raw.png"
+  ],
+  "transparent": true,
+  "lock_palette": "#151515,#2553c6,#f2f2ef",
+  "direction_file": ".design/brand/art-direction.md",
+  "prompt": "two open hands in cobalt gloves, palms up and empty, held toward the camera, nothing in them. A two-ink print made entirely of coarse round halftone dots, like an industrial inkjet date coder printing a picture instead of a date. Only two inks: solid black ink and one cobalt blue, the exact blue of nitrile food-handling gloves. Every shape is built from visible round dots on a regular grid; dense dots for the darkest areas, sparse dots for the light areas. No outlines, no smooth gradients, no shading except dot size and spacing. The cobalt blue is used only for gloves and for nothing else in the picture; everything else is black dots. Flat even light, no cast shadows, no glow. People appear only as hands and forearms in cobalt gloves, simple, calm, holding things steadily; never faces. One subject, centred, plenty of empty space around it, a slight tilt as if held up to a camera. Plain empty background, nothing behind the subject. Isolated on a plain flat solid pure green #00FF00 background, nothing else behind it.",
+  "date": "2026-11-15T16:15:50",
+  "runner": "ComfyUI",
+  "mode": "klein",
+  "text_encoder": "qwen_3_4b_fp8_mixed.safetensors",
+  "vae": "flux2-vae.safetensors",
+  "seed": 32,
+  "steps": 4,
+  "cfg": 1.0,
+  "negative": "",
+  "size": [
+    1024,
+    1024
+  ],
+  "seconds": 13.3
+}
