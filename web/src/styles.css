@@ -132,7 +132,7 @@ button, select, input { font: inherit; color: inherit; }
 }
 .brand { display: block; color: var(--ink); text-decoration: none; }
 /* The name is printed the way the coder prints a date (charter law 1). */
-.wordmark { font-family: var(--dots); font-weight: 900; font-size: 38px; line-height: 1; letter-spacing: 0.04em; white-space: nowrap; }
+.wordmark { display: block; height: 28px; width: auto; color: var(--ink); }
 .status { color: var(--ink-2); font-size: var(--t-1); }
 .sheetline { display: flex; align-items: center; gap: 12px; justify-self: end; font-size: var(--t-1); }
 .sheet-status { color: var(--ink-2); }
@@ -300,7 +300,7 @@ body:not(.started) .sheetline { visibility: hidden; }
 .stamp-code {
   font-family: var(--dots);
   font-weight: 900;
-  font-size: clamp(2.4rem, 5vw, var(--t5));
+  font-size: clamp(2rem, 3.4vw, var(--t3));
   line-height: 0.95;
   letter-spacing: 0.02em;
   font-variant-numeric: normal;
@@ -317,7 +317,7 @@ body:not(.started) .sheetline { visibility: hidden; }
 .band { display: grid; gap: 6px; }
 .band-word { font-size: var(--t6); font-weight: 800; line-height: 0.95; letter-spacing: -0.025em; }
 .band-until { font-size: var(--t2); font-weight: 600; white-space: nowrap; }
-.band-until .date { font-size: var(--t3); }
+.band-until .date { font-size: var(--t4); margin-left: 0.12em; }
 .band-until .date { font-family: var(--dots); font-weight: 900; letter-spacing: 0.02em; font-variant-numeric: normal; }
 
 .verdict--KEEP { --band: var(--keep); --band-ink: var(--keep-ink); }
@@ -413,7 +413,9 @@ body:not(.started) .sheetline { visibility: hidden; }
   .answer-art { width: min(200px, 52%); margin: 4px -4px -22px auto; }
   .band-word { font-size: var(--t5); }
   .band-until { font-size: var(--t1); }
-  .wordmark { font-size: 28px; }
+  .band-until .date { font-size: var(--t2); }
+  body:not(.started) .controls, body:not(.started) .prompt { display: none; }
+  .wordmark { height: 21px; }
   .answer-title { font-size: var(--t2); }
   .shift { padding: 28px 16px 0; }
   .row { grid-template-columns: 48px auto minmax(0, 1fr); gap: 10px 12px; }

@@ -86,6 +86,20 @@ export function plainReason(text: string): { reason: string; source?: string } {
   return { reason: t, source };
 }
 
+const DAMAGE_WORDS: Record<string, string> = { dent: "dented", bulge: "bulging", rust: "rusted", leak: "leaking", open: "open" };
+
+/**
+ * A set-aside reason in the sort lead's words, built from the read's own fields where they
+ * explain it (fridge, damage), so the model's sentence never reaches the screen as the reason.
+ */
+function asideReason(step: Extract<Step, { kind: "verdict" }>, fallback: string): string {
+  const last = step.reads[step.reads.length - 1]?.read;
+  if (last?.category === "chilled_or_frozen") return "Needs the fridge. The lead checks the cold chain.";
+  const damage = last ? DAMAGE_WORDS[last.damage] : undefined;
+  if (damage) return `The package is ${damage}. The lead decides.`;
+  return fallback;
+}
+
 interface View {
   cls: "KEEP" | "SET_ASIDE" | "DISCARD" | "TURN" | "NONE";
   word: string;
@@ -134,7 +148,7 @@ export function viewOf(step: Step): View {
     cls: "SET_ASIDE",
     word: "Set aside",
     sub: "for the lead",
-    reason,
+    reason: asideReason(step, reason),
     source,
     stamp,
   };
