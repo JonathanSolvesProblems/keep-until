@@ -220,7 +220,9 @@ export function renderRow(step: Step, thumb: string): HTMLLIElement | null {
   // The read often repeats the brand inside the product name ("Liberté Liberté Grec").
   const brand = last?.brand?.trim() ?? "";
   const product = last?.product?.trim() ?? "";
-  const name = brand && product.toLowerCase().startsWith(brand.toLowerCase()) ? product : [brand, product].filter(Boolean).join(" ");
+  // Letters and digits only, so "Campbell's" and "CAMPBELL’S" count as the same brand.
+  const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g, "");
+  const name = brand && plain(product).includes(plain(brand)) ? product : [brand, product].filter(Boolean).join(" ");
   // With no name printed in view, the chart row the gate used names the item, and says so.
   const row = step.verdict.chart?.label;
   what.append(el("strong", "", name || row || "Item with no name in view"));
