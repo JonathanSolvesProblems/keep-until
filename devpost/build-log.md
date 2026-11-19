@@ -132,3 +132,17 @@ marked as such and never feed `results/`.
   (`results/recall-control-2026-11-19.md`). The real collisions came from my own pantry photos:
   Hershey's Chipits against the August 2026 Hershey's Kisses recall, Campbell's broth against a
   Campbell's frozen soup recall, No Name baking powder against No Name walnuts and beef burgers.
+- Nov 19. One item, two photos (front for the name, top for the date): the loop keeps what
+  each photo showed and settles from all of them; a date with no name in view asks for the
+  front instead of guessing the chart row. Re-run of the 16 photos in the cloud after the change
+  (`results/pantry-2026-11-19-cloud-only-two-photo.md`): 14 of 15, the same as before. The
+  carton top, read alone, now carries its row only when the photo shows it.
+- Nov 19. Live site, real Chrome on my laptop: the first Gemini Nano call took 457.9 s cold.
+  The laptop check now warms up in the background at shift start and items go to the cloud
+  until it answers; a check that stalls past 20 s is abandoned for that item.
+- Nov 19. Android client (Kotlin, Compose) with the same loop and gate. The gate is proven
+  identical to the web's on 294 date stamps and 2,580 chart decisions
+  (`shared/gate-vectors.json`, written by the TypeScript, replayed by a Kotlin test). On Firebase
+  Test Lab's Pixel 10, Pixel 11 and Galaxy S26: 14 of 15 on the cloud path; on-device was
+  unavailable because those phones carry a stub AICore (`results/android-testlab-2026-11-19.md`).
+  An Android on-device number needs a real Nano phone.
