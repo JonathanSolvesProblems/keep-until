@@ -205,3 +205,51 @@ describe("processItem: the hybrid hand-off", () => {
     expect(step.kind).toBe("no_item");
   });
 });
+
+describe("one item, two photos (front for the name, top for the date)", () => {
+  const front = read({ product: "Chicken broth 900 mL", brand: "Campbell's", category: "canned_prepared_meals", date_text: "", date_kind: "none_visible", next_action: "show_me_the_date" });
+  const top = read({ product: "", brand: "", category: "unclear", date_text: "2027 FE 14", date_kind: "best_before", next_action: "log" });
+
+  it("asks for the name when the cloud reads a date but cannot tell the chart row", async () => {
+    const { m } = models([], [{ text: top, source: "in_cloud" }]);
+    m.hybrid = m.cloud!;
+    const step = await processItem(m, "img", { today: TODAY });
+    expect(step.kind).toBe("need_date_photo");
+    expect(step.kind === "need_date_photo" && step.want).toBe("name");
+  });
+
+  it("settles from the front's name and row plus the top's date", async () => {
+    const { m } = models([], [{ text: front, source: "in_cloud" }, { text: top, source: "in_cloud" }]);
+    m.hybrid = m.cloud!;
+    const first = await processItem(m, "front", { today: TODAY });
+    expect(first.kind).toBe("need_date_photo");
+    const second = await processItem(m, "top", { today: TODAY, previous: first.reads });
+    expect(second.kind === "verdict" && second.verdict.decision).toBe("KEEP");
+    expect(second.kind === "verdict" && second.verdict.chart?.id).toBe("canned_prepared_meals");
+    expect(second.kind === "verdict" && second.parsed?.kind === "exact" && second.parsed.iso).toBe("2027-02-14");
+    expect(second.route).toBe("in_cloud: photos together give the row and the date");
+  });
+
+  it("never fills in a fact no photo showed", async () => {
+    const { itemFacts } = await import("./loop");
+    const f = itemFacts([{ read: JSON.parse(top), source: "in_cloud", ms: 1, mode: "only_in_cloud", valid: true }]);
+    expect(f.category).toBe("unclear");
+    expect(f.product).toBe("");
+  });
+
+  it("gives up on a laptop check that stalls and reads in the cloud", async () => {
+    const stall = { calls: 0, generateContent: () => new Promise(() => {}) } as unknown as GenerativeModel;
+    const { m, c } = models([], [{ text: read({}), source: "in_cloud" }]);
+    m.triage = { model: stall };
+    const g = globalThis as { LanguageModel?: unknown };
+    g.LanguageModel = {};
+    try {
+      const step = await processItem(m, "img", { today: TODAY, triageBudgetMs: 30 });
+      expect(step.kind).toBe("verdict");
+      expect(step.route.startsWith("on-device triage failed (took over 0 s) → ")).toBe(true);
+      expect(c!.calls).toBe(1);
+    } finally {
+      delete g.LanguageModel;
+    }
+  });
+});

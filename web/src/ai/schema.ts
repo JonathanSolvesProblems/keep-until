@@ -82,7 +82,7 @@ export const TRIAGE_PROMPT =
 
 const CATEGORY_LINES = CHART.categories.map((c) => `${c.id}: ${c.label} (e.g. ${c.examples})`).join("\n");
 
-export function readPrompt(context: { barcodeProduct?: string; secondLook?: boolean } = {}): string {
+export function readPrompt(context: { barcodeProduct?: string; secondLook?: boolean; seen?: string } = {}): string {
   return [
     "You are reading one donated food item held up to a camera at a food bank sort table in Canada.",
     "Read only what is printed on the package. Never invent a date.",
@@ -100,8 +100,9 @@ export function readPrompt(context: { barcodeProduct?: string; secondLook?: bool
     "- ask_cloud: a date is visible but you cannot read every character, the label is in a language you cannot read, or the product is unfamiliar.",
     "- set_aside: the package is dented, bulging, rusted, leaking or open, or it needs refrigeration.",
     "- no_item: there is no food package in view at all (an empty table, a wall, a hand with nothing in it).",
-    context.secondLook
-      ? "This is the second photo of the same item, taken after you asked to see the date."
+    context.secondLook ? "This is another photo of the same item, taken after the volunteer turned it." : "",
+    context.seen
+      ? `Earlier photos of this same item showed: ${context.seen}. Report only what this photo shows for the date; for the product, brand and category, keep what the earlier photos showed when this photo does not show the name.`
       : "",
     context.barcodeProduct ? `The barcode lookup says this product is: ${context.barcodeProduct}` : "",
     "",

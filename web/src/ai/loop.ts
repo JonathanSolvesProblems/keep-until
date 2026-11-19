@@ -6,10 +6,12 @@ import type { GenerativeModel } from "firebase/ai";
 import { gate, type Policy, type Verdict } from "../chart/chart";
 import { parseDateText, type ParsedDate } from "../chart/dates";
 import { readItem, triageItem, type Mode, type ReadResult, type TriageResult } from "./reader";
+import type { ItemRead } from "./schema";
 
 export type Step =
   | { kind: "verdict"; reads: ReadResult[]; parsed: ParsedDate | null; verdict: Verdict; route: string }
-  | { kind: "need_date_photo"; reads: ReadResult[]; route: string }
+  // "Turn it": the date is not in view, or (want: "name") the date is read and the name is not.
+  | { kind: "need_date_photo"; reads: ReadResult[]; route: string; want?: "name" }
   | { kind: "no_item"; reads: ReadResult[]; route: string };
 
 export interface LoopModels {
@@ -35,10 +37,59 @@ export interface ItemContext {
    * retries with this copy before giving up on the laptop.
    */
   smallJpeg?: string;
+  /** How long the laptop check may take before this item goes to the cloud without it. */
+  triageBudgetMs?: number;
+}
+
+const WORSE_THAN_NONE = new Set(["dent", "bulge", "rust", "leak", "open"]);
+
+/**
+ * One item is often two photos: the front shows the name and no date, the top shows the date
+ * and no name. This is the item as all its photos together show it: for each fact, the latest
+ * photo that shows it. Nothing is filled in that no photo showed.
+ */
+export function itemFacts(reads: ReadResult[]): ItemRead {
+  const last = reads[reads.length - 1].read;
+  const latest = (has: (r: ItemRead) => boolean) => [...reads].reverse().find((r) => has(r.read))?.read;
+  const named = latest((r) => Boolean(r.product || r.brand));
+  const rowed = latest((r) => r.category !== "unclear");
+  const dated = latest((r) => Boolean(r.date_text));
+  const damaged = latest((r) => WORSE_THAN_NONE.has(r.damage));
+  return {
+    ...last,
+    product: named?.product ?? "",
+    brand: named?.brand ?? "",
+    category: rowed?.category ?? "unclear",
+    date_text: dated?.date_text ?? "",
+    date_kind: dated?.date_kind ?? last.date_kind,
+    damage: damaged?.damage ?? last.damage,
+  };
+}
+
+/** What earlier photos showed, as one line for the next read's prompt. */
+function seenSoFar(reads: ReadResult[]): string | undefined {
+  if (!reads.length) return undefined;
+  const f = itemFacts(reads);
+  const parts = [
+    f.product || f.brand ? `name "${[f.brand, f.product].filter(Boolean).join(" ")}"` : "",
+    f.category !== "unclear" ? `chart row ${f.category}` : "",
+    f.date_text ? `date "${f.date_text}"` : "",
+  ].filter(Boolean);
+  return parts.length ? parts.join(", ") : undefined;
+}
+
+function withBudget<T>(work: Promise<T>, ms: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error(`took over ${Math.round(ms / 1000)} s`)), ms);
+    work.then(
+      (v) => (clearTimeout(timer), resolve(v)),
+      (e) => (clearTimeout(timer), reject(e)),
+    );
+  });
 }
 
 function settle(reads: ReadResult[], today: string, policy: Policy | undefined, route: string): Step {
-  const last = reads[reads.length - 1].read;
+  const last = itemFacts(reads);
   const parsed = last.date_text ? parseDateText(last.date_text, today) : null;
   const verdict = gate({
     categoryId: last.category,
@@ -123,12 +174,13 @@ function setAside(reads: ReadResult[], route: string, reason: string): Step {
 }
 
 /** Why a "log" answer cannot be trusted as-is, tested against facts rather than the model's own confidence. */
-function objectiveProblem(r: ReadResult, today: string): string | undefined {
-  if (r.read.category === "unclear") return "no chart category";
-  if (r.read.date_kind !== "none_visible") {
-    if (!r.read.date_text) return "date kind given but no date characters";
-    const p = parseDateText(r.read.date_text, today);
-    if (p.kind === "unreadable") return `date "${r.read.date_text}" does not parse (${p.why})`;
+function objectiveProblem(r: ReadResult | ItemRead, today: string): string | undefined {
+  const read = "read" in r ? r.read : r;
+  if (read.category === "unclear") return "no chart category";
+  if (read.date_kind !== "none_visible") {
+    if (!read.date_text) return "date kind given but no date characters";
+    const p = parseDateText(read.date_text, today);
+    if (p.kind === "unreadable") return `date "${read.date_text}" does not parse (${p.why})`;
   }
   return undefined;
 }
@@ -136,7 +188,8 @@ function objectiveProblem(r: ReadResult, today: string): string | undefined {
 export async function processItem(models: LoopModels, jpegBase64: string, ctx: ItemContext): Promise<Step> {
   const reads = [...(ctx.previous ?? [])];
   const secondLook = reads.length > 0;
-  const readContext = { barcodeProduct: ctx.barcodeProduct, secondLook };
+  const readContext = { barcodeProduct: ctx.barcodeProduct, secondLook, seen: seenSoFar(reads) };
+  const budget = ctx.triageBudgetMs ?? 20000;
 
   // Triage first, on the laptop, when this browser can do it. Measured on real Gemini Nano,
   // triage is the job it does well (10 of 15) and the full read is not (4 of 15), so with
@@ -147,11 +200,11 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
     try {
       let tr;
       try {
-        tr = await triageItem(models.triage!.model, jpegBase64);
+        tr = await withBudget(triageItem(models.triage!.model, jpegBase64), budget);
       } catch (e) {
         if (!ctx.smallJpeg || !/too large/i.test((e as Error).message)) throw e;
         fallback = "on_device triage: photo too large, retried smaller → ";
-        tr = await triageItem(models.triage!.model, ctx.smallJpeg);
+        tr = await withBudget(triageItem(models.triage!.model, ctx.smallJpeg), budget);
       }
       const tread = triageAsRead(tr);
       if (!tr.triage.package_in_view) {
@@ -187,6 +240,15 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
   reads.push(first);
   const routed = (route: string) => fallback + route;
 
+  // After a turn, the item is everything its photos showed together. When that is enough for
+  // the chart (a row, and a date that parses), it is settled here, whatever this one photo lacks.
+  if (secondLook && first.read.next_action !== "no_item" && first.read.next_action !== "set_aside") {
+    const facts = itemFacts(reads);
+    if (facts.date_text && !objectiveProblem(facts, ctx.today)) {
+      return confirmDiscard(settle(reads, ctx.today, ctx.policy, routed(`${first.source}: photos together give the row and the date`)), models, jpegBase64, readContext, ctx.today);
+    }
+  }
+
   const escalate = async (why: string): Promise<Step> => {
     if (first.source === "in_cloud") return setAside(reads, routed(`${first.source}: ${why}; already in the cloud`), `the cloud model could not settle it: ${why}`);
     if (!models.cloud) return setAside(reads, routed(`${first.source}: ${why}; cloud switched off`), `on-device could not settle it and the cloud is off: ${why}`);
@@ -210,6 +272,11 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
       return escalate(first.read.why || "model asked for the cloud");
     case "log": {
       const problem = objectiveProblem(first, ctx.today);
+      // The date is read and the name is not in view (a carton top, a can lid): ask for the
+      // front rather than guess the chart row or give up on the item.
+      if (problem === "no chart category" && !secondLook && first.source === "in_cloud" && first.read.date_text) {
+        return { kind: "need_date_photo", want: "name", reads, route: routed("in_cloud: date read, no name in view; asked for the front") };
+      }
       if (problem) return escalate(problem);
       return confirmDiscard(settle(reads, ctx.today, ctx.policy, routed(`${first.source}: model chose log`)), models, jpegBase64, readContext, ctx.today);
     }

@@ -1,6 +1,6 @@
 import "./styles.css";
 import { InferenceMode } from "firebase/ai";
-import { browserHasOnDeviceModel, makeModel, makeTriageModel, setRateLimitListener, type Mode } from "./ai/reader";
+import { browserHasOnDeviceModel, makeModel, makeTriageModel, setRateLimitListener, triageItem, type Mode } from "./ai/reader";
 import { processItem, type LoopModels, type Step } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
@@ -66,6 +66,46 @@ function buildModels(mode: Mode, cloudModel: string): LoopModels {
   };
 }
 
+// Gemini Nano's first call after Chrome starts can take minutes (457.9 s on the live site,
+// 2026-11-19), so the laptop check warms up in the background on a blank frame and items go to
+// the cloud until it answers. Nobody waits on a cold model.
+let laptopWarm = false;
+let warming: Promise<void> | null = null;
+
+function liveModels(mode: Mode, cloudModel: string): LoopModels {
+  const m = buildModels(mode, cloudModel);
+  const triage = m.triage;
+  if (triage && !laptopWarm) {
+    m.triage = null;
+    warming ??= (async () => {
+      const blank = document.createElement("canvas");
+      blank.width = blank.height = 64;
+      blank.getContext("2d")!.fillRect(0, 0, 64, 64);
+      const t0 = performance.now();
+      try {
+        await triageItem(triage.model, blank.toDataURL("image/jpeg", 0.8).split(",")[1]);
+        laptopWarm = true;
+        console.info(`laptop check warm after ${Math.round((performance.now() - t0) / 1000)} s`);
+        if (models && models.hybrid.mode === InferenceMode.PREFER_ON_DEVICE) models.triage = triage;
+        showShiftLine();
+      } catch (e) {
+        console.error("laptop check did not start", e);
+        showShiftLine("This laptop's reader did not start, so items are read in the cloud.");
+      }
+    })();
+  }
+  return m;
+}
+
+function showShiftLine(note?: string): void {
+  if (!settings) return;
+  const mode = models?.hybrid.mode ?? modeSel.value;
+  const sortDay = new Date(todayInput.value + "T12:00:00").toLocaleDateString("en-CA", { weekday: "long", day: "numeric", month: "long" });
+  const warmingUp = mode === InferenceMode.PREFER_ON_DEVICE && browserHasOnDeviceModel() && !laptopWarm;
+  const how = note ?? (warmingUp ? "This laptop's reader is warming up, so items are read in the cloud for now." : `Reading ${MODE_WORDS[mode] ?? mode}.`);
+  status.textContent = `${settings.foodBankName}, sorting ${sortDay}. ${how}`;
+}
+
 async function describeOnDevice(): Promise<string> {
   const lm = (globalThis as unknown as { LanguageModel?: { availability: (o?: object) => Promise<string> } }).LanguageModel;
   if (!lm) return "on-device: not in this browser (cloud fallback)";
@@ -92,12 +132,13 @@ if (!browserHasOnDeviceModel()) {
   }
 }
 
-$("start").addEventListener("click", async () => {
+/** Signs in, loads this food bank's settings and gets the readers ready. No camera yet. */
+async function prepare(): Promise<string> {
   const mode = modeSel.value as Mode;
   status.textContent = "Starting the shift";
   const uid = await ensureSignedIn();
   settings = await loadSettings();
-  models = buildModels(mode, settings.cloudModel);
+  models = liveModels(mode, settings.cloudModel);
   if (mode !== InferenceMode.ONLY_IN_CLOUD) {
     status.textContent = "Getting this laptop's reader ready";
     try {
@@ -111,19 +152,67 @@ $("start").addEventListener("click", async () => {
   // never logs anything leaves no empty shift in the food bank's data.
   shiftInfo = { foodBankId: settings.foodBankId, uid, mode, onDevice, cloudModel: settings.cloudModel };
   shift = null;
-  const sortDay = new Date(todayInput.value + "T12:00:00").toLocaleDateString("en-CA", { weekday: "long", day: "numeric", month: "long" });
-  status.textContent = `${settings.foodBankName}, sorting ${sortDay}. Reading ${MODE_WORDS[mode] ?? mode}.`;
+  showShiftLine();
+  batchBtn.disabled = false;
+  compareBtn.disabled = false;
+  recallControlBtn.disabled = false;
+  return uid;
+}
+
+$("start").addEventListener("click", async () => {
+  const uid = await prepare();
   document.body.classList.add("started");
   await openCamera(localStorageGet("camera"));
   await listCameras();
   readBtn.disabled = false;
-  batchBtn.disabled = false;
-  compareBtn.disabled = false;
   sheetBtn.disabled = false;
-  recallControlBtn.disabled = false;
   showSheetStatus();
   runRecallCheck(uid);
 });
+
+// Sample photos: real pantry photos read through the same loop, for anyone with no item to
+// hand or no webcam. Like the batch, a sample is never written to a food bank's item log.
+// The first two are one item: the front of a broth carton (name, no date), then its top (date,
+// no name). The third is a yogurt tub lid.
+const SAMPLES = ["20261115_112419.jpg", "20261115_112427.jpg", "20261115_112446.jpg"];
+let nextSample = 0;
+const sampleBtn = $<HTMLButtonElement>("sample");
+const sampleNote = $("sampleNote");
+
+async function readSample(): Promise<void> {
+  sampleBtn.disabled = true;
+  sampleNote.textContent = "Reading a sample photo";
+  try {
+    if (!models || !settings) await prepare();
+    const img = new Image();
+    img.src = `/testset/pantry-2026-11-15/${SAMPLES[nextSample++ % SAMPLES.length]}`;
+    await img.decode();
+    const frame = toJpegBase64(img, img.naturalWidth, img.naturalHeight);
+    const small = toJpegBase64(img, img.naturalWidth, img.naturalHeight, 512).b64;
+    const step = await processItem(models!, frame.b64, {
+      today: todayInput.value,
+      policy: settings!.policy,
+      smallJpeg: small,
+      previous: pendingTurn ? pendingTurn.reads : undefined,
+    });
+    pendingTurn = step.kind === "need_date_photo" ? step : null;
+    results.push({ file: "sample", at: new Date().toISOString(), mode: models!.hybrid.mode, step });
+    render(step, frame.url, "sample");
+  } catch (e) {
+    sampleNote.textContent = readFailure(e);
+    document.title = "Keep Until: read failed";
+    console.error(e);
+    return;
+  } finally {
+    sampleBtn.disabled = false;
+  }
+  sampleBtn.textContent = pendingTurn ? "Turn the sample item" : "Try another sample photo";
+  sampleNote.textContent = pendingTurn
+    ? "The next sample is the same carton, turned."
+    : "Real photos from my pantry. Samples are never added to a food bank's log.";
+}
+sampleBtn.addEventListener("click", readSample);
+if (new URLSearchParams(location.search).has("sample")) readSample();
 
 const recallNote = $("recallNote");
 const recallControlBtn = $<HTMLButtonElement>("recallControl");
@@ -362,7 +451,10 @@ cameraSel.addEventListener("change", async () => {
 });
 
 modeSel.addEventListener("change", () => {
-  if (models && settings) models = buildModels(modeSel.value as Mode, settings.cloudModel);
+  if (models && settings) {
+    models = liveModels(modeSel.value as Mode, settings.cloudModel);
+    showShiftLine();
+  }
 });
 
 /**
@@ -395,6 +487,8 @@ const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function render(step: Step, thumb: string, _label: string): void {
   renderAnswer(answer, step);
+  // The tab title carries the last answer, so it reads out and shows in the tab strip.
+  document.title = `Keep Until: ${[...(answer.querySelector(".band")?.children ?? [])].map((c) => c.textContent).join(" ")}`;
   // Without a live camera (saved photos), the item just read stays in the camera's place.
   if (!video.videoWidth) {
     still.src = thumb;

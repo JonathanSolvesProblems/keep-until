@@ -4,7 +4,7 @@
 
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
-import type { Step } from "./ai/loop";
+import { itemFacts, type Step } from "./ai/loop";
 import { chartRow, type Policy } from "./chart/chart";
 import { viewOf } from "./view";
 
@@ -37,7 +37,8 @@ function describePolicy(policy: Policy | undefined, categoryId: string): string 
 }
 
 export function logItem(foodBankId: string, shiftId: string, uid: string, step: Extract<Step, { kind: "verdict" }>, policy?: Policy): { id: string; sheetRow: string[] } {
-  const last = step.reads[step.reads.length - 1]?.read;
+  // The item as all its photos showed it (name from one, date from another).
+  const last = step.reads.length ? itemFacts(step.reads) : undefined;
   const parsed = step.parsed;
   const record = {
     createdBy: uid,

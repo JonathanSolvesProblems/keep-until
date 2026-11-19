@@ -211,6 +211,9 @@ select, input[type="date"] {
   filter: blur(28px) brightness(0.55);
 }
 .live .viewport.has-still::before { display: none; }
+/* With a sample photo showing, Start shift moves off the photo's stamp to the corner. */
+.viewport.has-still .start { inset: auto auto 16px 16px; margin: 0; height: 52px; padding: 0 22px; font-size: var(--t0); }
+.viewport.has-still .viewport-hint { display: none; }
 .live .viewport-still { display: none; }
 /* Before the shift, the camera's place holds the one thing to do. */
 .viewport .start {
@@ -301,6 +304,8 @@ body:not(.started) .sheetline { visibility: hidden; }
 .sample { display: grid; gap: 8px; margin-top: 10px; padding-top: 18px; border-top: 1px solid var(--edge); }
 .sample-code { font-family: var(--dots); font-weight: 900; font-size: clamp(2.2rem, 4.6vw, var(--t5)); line-height: 1; letter-spacing: 0.02em; font-variant-numeric: normal; }
 .sample-note { color: var(--ink-3); font-size: var(--t-1); max-width: 40ch; }
+.try { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 14px; }
+.live .try { display: none; }
 .stamp-code {
   font-family: var(--dots);
   font-weight: 900;

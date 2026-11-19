@@ -1,4 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+// view.ts reads the item's facts through the loop, which imports Firebase; neither is called here.
+vi.mock("./firebase", () => ({ ai: {}, perf: {}, db: {} }));
+vi.mock("firebase/performance", () => ({ trace: () => ({ start() {}, stop() {}, putAttribute() {}, putMetric() {} }) }));
+
 import { plainReason } from "./view";
 
 describe("plainReason: the gate's reasons in the sort lead's words", () => {

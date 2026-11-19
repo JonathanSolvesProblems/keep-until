@@ -1,7 +1,7 @@
 // What the volunteer sees: the printed answer, the shift record and the read-by badge, in
 // plain words (charter law 14: internal strings never reach the screen).
 
-import type { Step } from "./ai/loop";
+import { itemFacts, type Step } from "./ai/loop";
 import type { ReadResult } from "./ai/reader";
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -43,7 +43,7 @@ export function dotIcon(name: keyof typeof ICONS, label: string): SVGSVGElement 
   return svg;
 }
 
-export function readBy(reads: ReadResult[], route = ""): { lead: string; rest: string; icons: ("laptop" | "cloud")[]; seconds: string } {
+export function readBy(reads: ReadResult[], route = ""): { lead: string; rest: string; icons: ("laptop" | "cloud")[]; seconds: string; after?: string } {
   const device = reads.some((r) => r.source === "on_device");
   const cloud = reads.some((r) => r.source === "in_cloud");
   const seconds = (reads.reduce((s, r) => s + r.ms, 0) / 1000).toFixed(1) + " s";
@@ -52,8 +52,8 @@ export function readBy(reads: ReadResult[], route = ""): { lead: string; rest: s
   if (device && cloud) return { lead: "Checked on this laptop", rest: `, date ${where}`, icons: ["laptop", "cloud"], seconds };
   if (device) return { lead: reads.length > 1 ? "Read twice on this laptop" : "Read on this laptop", rest: "", icons: ["laptop"], seconds };
   // Said on the screen when this laptop was meant to check the photo and could not (charter law 12).
-  const missed = /on-device triage failed/.test(route) ? ", this laptop could not check it" : "";
-  return { lead: where.charAt(0).toUpperCase() + where.slice(1), rest: missed, icons: ["cloud"], seconds };
+  const after = /on-device triage failed/.test(route) ? ". This laptop could not check it." : undefined;
+  return { lead: where.charAt(0).toUpperCase() + where.slice(1), rest: "", icons: ["cloud"], seconds, after };
 }
 
 /** Turns the gate's and the loop's reasons into the sort lead's words. */
@@ -75,6 +75,7 @@ export function plainReason(text: string): { reason: string; source?: string } {
     .replace(/^on-device could not settle it and the cloud is off: /i, "This laptop could not settle it, and cloud reads are off: ")
     .replace(/date "[^"]*" does not parse \([^)]*\)/i, "the date stamp could not be read clearly")
     .replace(/^no readable date, so the chart cannot be applied$/i, "No date could be read, so the chart cannot be applied")
+    .replace(/^no chart category$/i, "No row of the chart fits what the photos show")
     .replace(/(\d{4}-\d{2}-\d{2})/g, (iso) => longDate(iso));
   const keep = t.match(/^(.*?): (\d+ (?:months|days)) past best before$/);
   if (keep) t = `${keep[1]} keep ${keep[2]} past best before.`;
@@ -95,7 +96,7 @@ const DAMAGE_WORDS: Record<string, string> = { dent: "dented", bulge: "bulging",
  * explain it (fridge, damage), so the model's sentence never reaches the screen as the reason.
  */
 function asideReason(step: Extract<Step, { kind: "verdict" }>, fallback: string): string {
-  const last = step.reads[step.reads.length - 1]?.read;
+  const last = step.reads.length ? itemFacts(step.reads) : undefined;
   if (last?.category === "chilled_or_frozen") return "Needs the fridge. The lead checks the cold chain.";
   const damage = last ? DAMAGE_WORDS[last.damage] : undefined;
   if (damage) return `The package is ${damage}. The lead decides.`;
@@ -130,6 +131,13 @@ export function viewOf(step: Step): View {
       cls: "NONE",
       word: "Nothing in view",
       reason: "Hold the item closer, date side toward the camera.",
+    };
+  if (step.kind === "need_date_photo" && step.want === "name")
+    return {
+      cls: "TURN",
+      word: "Turn it",
+      sub: "so the name faces the camera",
+      reason: "The date is read. Show the front of the package, then press Read item again.",
     };
   if (step.kind === "need_date_photo")
     return {
@@ -192,7 +200,7 @@ export function renderAnswer(container: HTMLElement, step: Step): void {
     const badge = el("p", "readby");
     rb.icons.forEach((i) => badge.append(dotIcon(i, i === "laptop" ? "this laptop" : "the cloud")));
     const words = el("span");
-    words.append(el("strong", "", rb.lead), `${rb.rest} in ${rb.seconds}`);
+    words.append(el("strong", "", rb.lead), `${rb.rest} in ${rb.seconds}${rb.after ?? ""}`);
     badge.append(words);
     root.append(badge);
   }
@@ -202,7 +210,7 @@ export function renderAnswer(container: HTMLElement, step: Step): void {
 export function renderRow(step: Step, thumb: string): HTMLLIElement | null {
   if (step.kind !== "verdict") return null;
   const v = viewOf(step);
-  const last = step.reads[step.reads.length - 1]?.read;
+  const last = step.reads.length ? itemFacts(step.reads) : undefined;
   const li = el("li", `row verdict--${v.cls}`);
   const img = el("img");
   img.src = thumb;
