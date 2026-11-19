@@ -46,8 +46,15 @@ def img(name):
     return (SRC / name).as_uri()
 
 
+def gate():
+    import json
+    v = json.loads(read("shared/gate-vectors.json"))
+    return {"stamps": f"{len(v['dates']):,}", "decisions": f"{len(v['gates']):,}"}
+
+
 A = ablation()
 R = recall()
+GATE = gate()
 
 SLIDES = [
     {
@@ -116,6 +123,14 @@ SLIDES = [
         "body": f'<img class="phone" src="{img("phone-keep.png")}"><div class="note">The verdict fills the panel in its colour, with the word. Dates print in the coder\'s dot matrix, the way they are stamped on the can.</div>',
         "caption": "The decision fills the screen in its colour and always carries the word. Dates are re-printed the way the coder stamped them.",
     },
+    {
+        "name": "android",
+        "headline": "The same sort table on Android",
+        "badge": "Galaxy S24, a real phone; results/android-testlab-2026-11-19.md",
+        "body": f'<img class="phone" src="{img("android-s24-live.png")}"><img class="phone" src="{img("android-s24-read.png")}">'
+        f'<div class="note">Same loop, same chart. The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. This phone has no on-device model, so it reads in the cloud and says so.</div>',
+        "caption": f"The Android app runs the same loop and chart, matching the web on {GATE['decisions']} decisions. On a phone without Nano it says it reads in the cloud.",
+    },
 ]
 
 CSS = f"""
@@ -139,7 +154,7 @@ th {{ font-size: 20px; color: #3a3936; }}
 tr.hi td {{ background: #1d7a46; color: #fff; font-weight: 800; }}
 table.small {{ font-size: 21px; }} table.small td, table.small th {{ padding: 10px 16px; }}
 .big {{ position: absolute; right: 0; bottom: 0; margin: 0; font-size: 34px; font-weight: 800; background: #151515; color: #f2f2ef; padding: 12px 20px; border-radius: 8px; }}
-.phone {{ height: 640px; border-radius: 22px; border: 1px solid rgb(21 21 21 / .2); }}
+.phone {{ height: 660px; border-radius: 22px; border: 1px solid rgb(21 21 21 / .2); }}
 .note {{ font-size: 30px; line-height: 1.35; max-width: 26ch; }}
 """
 

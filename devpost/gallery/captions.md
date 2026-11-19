@@ -47,3 +47,9 @@ Each morning a Firebase function checks food recalls against stock. Gemini clear
 ```
 The decision fills the screen in its colour and always carries the word. Dates are re-printed the way the coder stamped them.
 ```
+
+## 09-android.png
+
+```
+The Android app runs the same loop and chart, matching the web on 2,580 decisions. On a phone without Nano it says it reads in the cloud.
+```
