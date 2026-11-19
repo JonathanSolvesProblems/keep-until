@@ -127,8 +127,8 @@ SLIDES = [
         "name": "android",
         "headline": "The same sort table on Android",
         "badge": "Galaxy S24, a real phone; results/android-testlab-2026-11-19.md",
-        "body": f'<img class="phone" src="{img("android-s24-live.png")}"><img class="phone" src="{img("android-s24-read.png")}">'
-        f'<div class="note">Same loop, same chart. The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. This phone has no on-device model, so it reads in the cloud and says so.</div>',
+        "body": f'<img class="phone" src="{img("android-s24-turn.png")}"><img class="phone" src="{img("android-s24-keep.png")}">'
+        f'<div class="note">Same loop, same chart. The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. On this Galaxy S24, with no on-device model, it reads in the cloud and says so: the front of the carton, then the top.</div>',
         "caption": f"The Android app runs the same loop and chart, matching the web on {GATE['decisions']} decisions. On a phone without Nano it says it reads in the cloud.",
     },
 ]

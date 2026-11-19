@@ -5,6 +5,10 @@ package com.keepuntil.sort.ui
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import com.keepuntil.sort.scaledTo
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.keepuntil.sort.ai.OnDeviceState
@@ -25,13 +29,17 @@ data class LoggedRow(val name: String, val answer: Answer)
 
 data class SortState(
     /** One line at the top: the food bank, the day, and how items are being read. */
-    val status: String = "Getting ready",
+    val status: String = "Ready. Press Start shift to turn on the camera.",
     val started: Boolean = false,
     val reading: Boolean = false,
     val answer: Answer? = null,
     val readBy: String = "",
     val prompt: String = "",
     val log: List<LoggedRow> = emptyList(),
+    /** A sample photo being read, shown in the camera's place. */
+    val still: ImageBitmap? = null,
+    val sampleLabel: String = "Try a sample photo",
+    val sampleNote: String = "No item to hand? This reads a real photo from my pantry, the same way.",
 )
 
 class SortViewModel(app: Application) : AndroidViewModel(app) {
@@ -49,6 +57,18 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
     private var warmUp: Job? = null
 
     private fun setStatus(s: String) = _state.update { it.copy(status = s) }
+
+    // The first two are one item: a broth carton's front (name, no date), then its top (date, no
+    // name). The third is a yogurt lid.
+    private val samples = listOf("samples/carton-front.jpg", "samples/carton-top.jpg", "samples/yogurt-lid.jpg")
+    private var nextSample = 0
+
+    fun readSample() {
+        if (loop == null || _state.value.reading) return
+        val photo = getApplication<Application>().assets.open(samples[nextSample++ % samples.size]).use { BitmapFactory.decodeStream(it) }
+        _state.update { it.copy(still = photo.asImageBitmap()) }
+        readItem(photo.scaledTo(1024), photo.scaledTo(512), sample = true)
+    }
 
     fun startShift() {
         if (_state.value.started) return
@@ -83,11 +103,11 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
         return "${s.foodBankName}, sorting $day. $how"
     }
 
-    fun readItem(photo: Bitmap, small: Bitmap) {
+    fun readItem(photo: Bitmap, small: Bitmap, sample: Boolean = false) {
         val l = loop ?: return
         val s = settings ?: return
         if (_state.value.reading) return
-        _state.update { it.copy(reading = true, prompt = "") }
+        _state.update { it.copy(reading = true, prompt = "", still = if (sample) it.still else null) }
         viewModelScope.launch {
             try {
                 val previous = (pendingTurn as? Step.NeedDatePhoto)?.reads ?: emptyList()
@@ -97,11 +117,23 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                 val phoneHasModel = readers?.onDevice?.ready == true
                 var log = _state.value.log
                 if (step is Step.Decided) {
-                    val shift = shiftId ?: backend.startShift(s, uid!!, readers?.onDevice?.status ?: "unknown").also { shiftId = it }
-                    backend.logItem(s, shift, uid!!, step)
-                    log = listOf(LoggedRow(itemName(step), answer)) + log
+                    // A sample is shown in this shift's list but never written to the food bank's log.
+                    if (!sample) {
+                        val shift = shiftId ?: backend.startShift(s, uid!!, readers?.onDevice?.status ?: "unknown").also { shiftId = it }
+                        backend.logItem(s, shift, uid!!, step)
+                    }
+                    log = listOf(LoggedRow(if (sample) "${itemName(step)} (sample)" else itemName(step), answer)) + log
                 }
-                _state.update { it.copy(answer = answer, readBy = readBy(step, phoneHasModel), log = log) }
+                val turnSample = sample && step is Step.NeedDatePhoto
+                _state.update {
+                    it.copy(
+                        answer = answer,
+                        readBy = readBy(step, phoneHasModel),
+                        log = log,
+                        sampleLabel = if (turnSample) "Turn the sample item" else if (sample) "Try another sample photo" else it.sampleLabel,
+                        sampleNote = if (turnSample) "The next sample is the same carton, turned." else if (sample) "Real photos from my pantry. Samples are never added to a food bank's log." else it.sampleNote,
+                    )
+                }
             } catch (e: Exception) {
                 _state.update { it.copy(prompt = readFailure(e)) }
             } finally {

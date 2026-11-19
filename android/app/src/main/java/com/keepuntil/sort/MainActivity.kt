@@ -53,6 +53,7 @@ class MainActivity : ComponentActivity() {
                     else askCamera.launch(Manifest.permission.CAMERA)
                 },
                 onRead = ::capture,
+                onSample = vm::readSample,
             )
         }
     }

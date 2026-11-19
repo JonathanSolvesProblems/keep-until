@@ -21,6 +21,8 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -78,8 +80,15 @@ private fun fill(kind: Kind): Pair<Color, Color> = when (kind) {
 }
 
 @Composable
-fun SortScreen(state: SortState, camera: @Composable (Modifier) -> Unit, onStart: () -> Unit, onRead: () -> Unit) {
+fun SortScreen(state: SortState, camera: @Composable (Modifier) -> Unit, onStart: () -> Unit, onRead: () -> Unit, onSample: () -> Unit) {
+    // After each read the answer is brought into view, so the volunteer never scrolls with an
+    // item in their hand (the web does the same at phone width).
+    val list = rememberLazyListState()
+    LaunchedEffect(state.answer) {
+        if (state.answer != null) list.animateScrollToItem(if (state.started) 3 else 2)
+    }
     LazyColumn(
+        state = list,
         modifier = Modifier.fillMaxSize().background(Lid).safeDrawingPadding(),
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
@@ -97,6 +106,14 @@ fun SortScreen(state: SortState, camera: @Composable (Modifier) -> Unit, onStart
             ) {
                 if (state.started) {
                     camera(Modifier.fillMaxSize())
+                    state.still?.let {
+                        androidx.compose.foundation.Image(
+                            bitmap = it,
+                            contentDescription = "The sample photo being read",
+                            contentScale = androidx.compose.ui.layout.ContentScale.Fit,
+                            modifier = Modifier.fillMaxSize().background(Viewport),
+                        )
+                    }
                 } else {
                     Button(
                         onClick = onStart,
@@ -126,6 +143,17 @@ fun SortScreen(state: SortState, camera: @Composable (Modifier) -> Unit, onStart
                         Spacer(Modifier.height(10.dp))
                         Text(state.prompt, style = words(16, FontWeight.SemiBold, Ink2))
                     }
+                    Spacer(Modifier.height(12.dp))
+                    androidx.compose.material3.OutlinedButton(
+                        onClick = onSample,
+                        enabled = !state.reading,
+                        shape = RoundedCornerShape(6.dp),
+                        border = androidx.compose.foundation.BorderStroke(1.5.dp, Ink),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = Ink),
+                        modifier = Modifier.height(48.dp),
+                    ) { Text(state.sampleLabel, style = words(16, FontWeight.SemiBold)) }
+                    Spacer(Modifier.height(6.dp))
+                    Text(state.sampleNote, style = words(13, color = Ink2))
                 }
             }
         }
