@@ -6,6 +6,8 @@ import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
 import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
 import { renderAnswer, renderRow, renderTally } from "./view";
+import { checkRecallsAtShiftStart, makeRecallModel, settle, type Found, type Notice } from "./recall";
+import recallControl from "../../shared/recall-control.json";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const status = $("status");
@@ -118,7 +120,70 @@ $("start").addEventListener("click", async () => {
   batchBtn.disabled = false;
   compareBtn.disabled = false;
   sheetBtn.disabled = false;
+  recallControlBtn.disabled = false;
   showSheetStatus();
+  runRecallCheck(uid);
+});
+
+const recallNote = $("recallNote");
+const recallControlBtn = $<HTMLButtonElement>("recallControl");
+
+function recallRow(f: Found, what: string): string[] {
+  return [
+    new Date().toLocaleString("en-CA"), f.item.product, f.item.brand, "Recall notice", f.item.dateText ?? "", "",
+    what, "", `${f.notice.title}. ${f.settled.why} ${f.notice.url}`, "", f.settled.source === "on_device" ? "this laptop" : "cloud", f.item.id,
+  ];
+}
+
+// The recall watch, settled at shift start: what to pull before anything else, in words.
+async function runRecallCheck(uid: string): Promise<void> {
+  if (!settings) return;
+  try {
+    const r = await checkRecallsAtShiftStart(settings.foodBankId, uid, makeRecallModel(settings.cloudModel));
+    const lines: string[] = [];
+    for (const f of r.toPull) lines.push(`Pull ${f.item.brand} ${f.item.product}: ${f.notice.title}.`);
+    for (const f of r.toCheck) lines.push(`Check the lot code on ${f.item.brand} ${f.item.product} against "${f.notice.title}".`);
+    const w = r.watch;
+    const checked = w?.recallsInWindow !== undefined ? `${w.recallsInWindow} food recalls from the past year checked against ${w.itemsWatched ?? 0} kept items` : "Recall watch has not run yet";
+    const cleared = r.cleared ? ` ${r.cleared} brand ${r.cleared === 1 ? "match was" : "matches were"} a different product.` : "";
+    recallNote.replaceChildren(lines.length ? `Recall check: ${lines.join(" ")}` : `Recall check: nothing to pull. ${checked}.${cleared}`);
+    recallNote.classList.toggle("recall-note--act", lines.length > 0);
+    recallNote.hidden = false;
+    if (sheetUrl()) {
+      for (const f of r.toPull.filter((x) => x.fresh)) appendRow(recallRow(f, "Pull: recalled"));
+      for (const f of r.toCheck.filter((x) => x.fresh)) appendRow(recallRow(f, "Check the lot code"));
+    }
+  } catch (e) {
+    recallNote.textContent = "Recall check could not run this shift. It runs again at the next shift start.";
+    recallNote.hidden = false;
+    console.error(e);
+  }
+}
+
+// The recall control set: eight real notices, each with an item under the same brand, expected
+// outcomes registered before the first run (shared/recall-control.json). The brand rule alone
+// would pull all eight; the file records what the model decided against that.
+recallControlBtn.addEventListener("click", async () => {
+  if (!settings) return;
+  recallControlBtn.disabled = true;
+  const model = makeRecallModel(settings.cloudModel);
+  const runs: unknown[] = [];
+  for (const [i, c] of recallControl.cases.entries()) {
+    toolStatus.textContent = `Recall control set: case ${i + 1} of ${recallControl.cases.length}`;
+    try {
+      const s = await settle(model, c.recall as Notice, c.item);
+      runs.push({ id: c.id, expected: c.expected, rule: "pull", model: s.decision, why: s.why, source: s.source, ms: s.ms });
+    } catch (e) {
+      runs.push({ id: c.id, expected: c.expected, rule: "pull", error: (e as Error).message });
+    }
+  }
+  const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), cloudModel: settings.cloudModel, registered: recallControl.registered, runs }, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "keep-until-recall-control.json";
+  a.click();
+  toolStatus.textContent = "Recall control set done. The results file is in your downloads.";
+  recallControlBtn.disabled = false;
 });
 
 const sheetBtn = $<HTMLButtonElement>("sheet");

@@ -116,3 +116,19 @@ marked as such and never feed `results/`.
   shows the row it used in the reason, so a volunteer can see it, but the honest behaviour is to
   ask for the front of the package when no name is in view and the row is not certain. Not yet
   built; it changes the measured photo set, so it goes in with a re-run of all three modes.
+- Nov 19. Live site on Firebase Hosting (keep-until-hybrid.web.app). Automated browsers get
+  "App attestation failed" from App Check (reCAPTCHA scores them low) and Google then answers
+  the read with a misleading "genai config not found"; the app now says in words that the
+  browser could not be verified, and the score threshold is 0.3 so judges' real browsers pass.
+- Nov 19. The Nov 16 sheet test showed a read marked only "Read in the cloud" in on-laptop-first
+  mode. The item's record said why: Gemini Nano refused the webcam frame with "The input is too
+  large", and the read went to the cloud unnoticed. The laptop check now retries a 512 px copy,
+  and the badge says when the laptop could not check.
+- Nov 19. Recall watch. A scheduled Cloud Function pulls the Government of Canada recall feed
+  daily (241 food recalls in the past year at the first run) and lists kept items sharing a
+  brand with one; at shift start Gemini settles each through AI Logic with PREFER_IN_CLOUD (the
+  app's second inference policy, text only, Nano as the offline fallback). Pre-registered control
+  set of 8 real notices (3 true recalls, 5 brand collisions): model 8 of 8, brand rule alone 3 of 8
+  (`results/recall-control-2026-11-19.md`). The real collisions came from my own pantry photos:
+  Hershey's Chipits against the August 2026 Hershey's Kisses recall, Campbell's broth against a
+  Campbell's frozen soup recall, No Name baking powder against No Name walnuts and beef burgers.

@@ -49,6 +49,16 @@ service cloud.firestore {
         allow read: if signedIn();
         allow write: if false;
       }
+
+      // The model's decision on one recall candidate, made at shift start. Append-only.
+      match /recallChecks/{checkId} {
+        allow read: if signedIn();
+        allow create: if signedIn()
+          && request.resource.data.createdBy == request.auth.uid
+          && request.resource.data.keys().hasOnly(['nid', 'itemId', 'decision', 'why', 'source', 'ms', 'createdBy', 'createdAt'])
+          && request.resource.data.decision in ['pull', 'check_lot', 'no_match'];
+        allow update, delete: if false;
+      }
     }
   }
 }

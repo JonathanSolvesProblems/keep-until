@@ -146,5 +146,6 @@
    },
    "expected": "no_match"
   }
- ]
+ ],
+ "correction": "2026-11-19, after the run: the note's count was wrong. The set has 3 'recalled' cases and 5 'no_match' cases, so brand-only matching is right on 3 of 8 and wrong on 5. No case's expected outcome was changed."
 }

@@ -1,0 +1,79 @@
+{
+  "exported": "2026-11-19T14:16:44.766Z",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "registered": "2026-11-19",
+  "runs": [
+    {
+      "id": "c1",
+      "expected": "no_match",
+      "rule": "pull",
+      "model": "no_match",
+      "why": "The notice recalls Kisses while the kept item is Chipits milk chocolate chips.",
+      "source": "in_cloud",
+      "ms": 1660
+    },
+    {
+      "id": "c2",
+      "expected": "recalled",
+      "rule": "pull",
+      "model": "pull",
+      "why": "The recall notice lists the exact same brand and product name as the kept item.",
+      "source": "in_cloud",
+      "ms": 1109
+    },
+    {
+      "id": "c3",
+      "expected": "no_match",
+      "rule": "pull",
+      "model": "no_match",
+      "why": "The recall notice is for chopped walnuts while the kept item is baking powder.",
+      "source": "in_cloud",
+      "ms": 2123
+    },
+    {
+      "id": "c4",
+      "expected": "recalled",
+      "rule": "pull",
+      "model": "pull",
+      "why": "The recall notice names the exact same brand and product as the kept item.",
+      "source": "in_cloud",
+      "ms": 830
+    },
+    {
+      "id": "c5",
+      "expected": "no_match",
+      "rule": "pull",
+      "model": "no_match",
+      "why": "The notice recalls beef burgers while the kept item is baking powder.",
+      "source": "in_cloud",
+      "ms": 1071
+    },
+    {
+      "id": "c6",
+      "expected": "no_match",
+      "rule": "pull",
+      "model": "no_match",
+      "why": "The recall notice only applies to frozen soup, while the kept item is chicken broth.",
+      "source": "in_cloud",
+      "ms": 865
+    },
+    {
+      "id": "c7",
+      "expected": "recalled",
+      "rule": "pull",
+      "model": "pull",
+      "why": "The recall notice names the exact same brand and product type as the kept item.",
+      "source": "in_cloud",
+      "ms": 733
+    },
+    {
+      "id": "c8",
+      "expected": "no_match",
+      "rule": "pull",
+      "model": "no_match",
+      "why": "The notice recalls shrimp products, but the kept item is cheese.",
+      "source": "in_cloud",
+      "ms": 1146
+    }
+  ]
+}
