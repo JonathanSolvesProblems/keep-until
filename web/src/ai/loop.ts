@@ -29,6 +29,12 @@ export interface ItemContext {
   barcodeProduct?: string;
   /** Reads already made for this item (the first photo, before the volunteer turned it). */
   previous?: ReadResult[];
+  /**
+   * The same photo at a smaller size. Gemini Nano refused a 1024 px webcam frame with "The
+   * input is too large" on 2026-11-16, and the read went to the cloud unnoticed; triage then
+   * retries with this copy before giving up on the laptop.
+   */
+  smallJpeg?: string;
 }
 
 function settle(reads: ReadResult[], today: string, policy: Policy | undefined, route: string): Step {
@@ -139,7 +145,14 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
   let fallback = "";
   if (useTriage && !secondLook) {
     try {
-      const tr = await triageItem(models.triage!.model, jpegBase64);
+      let tr;
+      try {
+        tr = await triageItem(models.triage!.model, jpegBase64);
+      } catch (e) {
+        if (!ctx.smallJpeg || !/too large/i.test((e as Error).message)) throw e;
+        fallback = "on_device triage: photo too large, retried smaller → ";
+        tr = await triageItem(models.triage!.model, ctx.smallJpeg);
+      }
       const tread = triageAsRead(tr);
       if (!tr.triage.package_in_view) {
         return { kind: "no_item", reads: [...reads, tread], route: "on_device triage: no package in view; no cloud call" };
@@ -148,7 +161,7 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
         return { kind: "need_date_photo", reads: [...reads, tread], route: "on_device triage: no date in view; no cloud call" };
       }
       reads.push(tread);
-      fallback = `on_device triage: ${tr.triage.date_in_view ? "date in view" : "may need the fridge"} → `;
+      fallback += `on_device triage: ${tr.triage.date_in_view ? "date in view" : "may need the fridge"} → `;
     } catch (e) {
       fallback = `on-device triage failed (${(e as Error).message}) → `;
     }

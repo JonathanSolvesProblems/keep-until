@@ -5,7 +5,8 @@
 import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import type { Step } from "./ai/loop";
-import type { Policy } from "./chart/chart";
+import { chartRow, type Policy } from "./chart/chart";
+import { viewOf } from "./view";
 
 export interface ShiftInfo {
   foodBankId: string;
@@ -71,6 +72,9 @@ export function logItem(foodBankId: string, shiftId: string, uid: string, step: 
   };
   const ref = doc(collection(db, "foodBanks", foodBankId, "items"));
   setDoc(ref, record).catch((e) => console.error("item log failed", e));
+  // The sheet is the food bank's own record, so it gets the words the volunteer saw, not ids.
+  const v = viewOf(step);
+  const kindWords: Record<string, string> = { best_before: "Best before", expiry: "Expiry", packaged_on: "Packaged on", none_visible: "None visible" };
   return {
     id: ref.id,
     // The same item as a row for the food bank's own sheet.
@@ -78,14 +82,14 @@ export function logItem(foodBankId: string, shiftId: string, uid: string, step: 
       new Date().toLocaleString("en-CA"),
       record.product,
       record.brand,
-      step.verdict.chart?.label ?? record.category,
+      step.verdict.chart?.label ?? chartRow(record.category)?.label ?? record.category,
       record.dateText,
-      record.dateKind,
-      record.decision,
+      kindWords[record.dateKind] ?? record.dateKind,
+      v.word,
       record.keepUntil ?? "",
-      record.reason,
+      v.reason,
       record.chartPage === null ? "" : String(record.chartPage),
-      step.reads.map((r) => (r.source === "on_device" ? "on-device" : "cloud")).join(" > "),
+      step.reads.map((r) => (r.source === "on_device" ? "this laptop" : "cloud")).join(", then "),
       ref.id,
     ],
   };

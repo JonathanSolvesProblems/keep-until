@@ -185,6 +185,18 @@ describe("processItem: the hybrid hand-off", () => {
       expect(step.route.startsWith("on-device triage failed (model crashed) → ")).toBe(true);
       expect(c!.calls).toBe(1);
     });
+
+    it("retries the laptop check with the smaller photo when Nano says the input is too large", async () => {
+      // Seen on 2026-11-16: a webcam frame was refused and the read silently went to the cloud.
+      const t = fakeModel([new Error("The input is too large."), triageReply({ date_in_view: true })]);
+      const { m, c } = models([], [{ text: read({}), source: "in_cloud" }]);
+      m.triage = { model: t };
+      const step = await withLanguageModel(() => processItem(m, "img", { today: TODAY, smallJpeg: "small" }));
+      expect(t.calls).toBe(2);
+      expect(step.route).toBe("on_device triage: photo too large, retried smaller → on_device triage: date in view → in_cloud: model chose log");
+      expect(step.reads.map((r) => r.source)).toEqual(["on_device", "in_cloud"]);
+      expect(c!.calls).toBe(1);
+    });
   });
 
   it("treats an empty frame as no item, so the next item starts fresh", async () => {

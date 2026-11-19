@@ -43,7 +43,7 @@ export function dotIcon(name: keyof typeof ICONS, label: string): SVGSVGElement 
   return svg;
 }
 
-export function readBy(reads: ReadResult[]): { lead: string; rest: string; icons: ("laptop" | "cloud")[]; seconds: string } {
+export function readBy(reads: ReadResult[], route = ""): { lead: string; rest: string; icons: ("laptop" | "cloud")[]; seconds: string } {
   const device = reads.some((r) => r.source === "on_device");
   const cloud = reads.some((r) => r.source === "in_cloud");
   const seconds = (reads.reduce((s, r) => s + r.ms, 0) / 1000).toFixed(1) + " s";
@@ -51,7 +51,9 @@ export function readBy(reads: ReadResult[]): { lead: string; rest: string; icons
   const where = cloudReads > 1 ? "read twice in the cloud" : "read in the cloud";
   if (device && cloud) return { lead: "Checked on this laptop", rest: `, date ${where}`, icons: ["laptop", "cloud"], seconds };
   if (device) return { lead: reads.length > 1 ? "Read twice on this laptop" : "Read on this laptop", rest: "", icons: ["laptop"], seconds };
-  return { lead: where.charAt(0).toUpperCase() + where.slice(1), rest: "", icons: ["cloud"], seconds };
+  // Said on the screen when this laptop was meant to check the photo and could not (charter law 12).
+  const missed = /on-device triage failed/.test(route) ? ", this laptop could not check it" : "";
+  return { lead: where.charAt(0).toUpperCase() + where.slice(1), rest: missed, icons: ["cloud"], seconds };
 }
 
 /** Turns the gate's and the loop's reasons into the sort lead's words. */
@@ -186,7 +188,7 @@ export function renderAnswer(container: HTMLElement, step: Step): void {
   if (v.source) reason.append(el("span", "reason-source", v.source));
   root.append(reason);
   if (step.reads.length) {
-    const rb = readBy(step.reads);
+    const rb = readBy(step.reads, step.route);
     const badge = el("p", "readby");
     rb.icons.forEach((i) => badge.append(dotIcon(i, i === "laptop" ? "this laptop" : "the cloud")));
     const words = el("span");

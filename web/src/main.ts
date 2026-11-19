@@ -151,7 +151,7 @@ sheetBtn.addEventListener("click", async () => {
       shiftInfo = { ...shiftInfo, uid };
       shift = null;
     }
-    sheetBtn.textContent = "Reconnect the sheet";
+    sheetBtn.innerHTML = 'Reconnect <span class="wide">the </span>sheet';
     showSheetStatus();
   } catch (e) {
     showSheetStatus("could not connect: " + (e as Error).message);
@@ -300,8 +300,8 @@ modeSel.addEventListener("change", () => {
   if (models && settings) models = buildModels(modeSel.value as Mode, settings.cloudModel);
 });
 
-function toJpegBase64(source: CanvasImageSource, w: number, h: number): { b64: string; url: string } {
-  const scale = Math.min(1, 1024 / Math.max(w, h));
+function toJpegBase64(source: CanvasImageSource, w: number, h: number, maxSide = 1024): { b64: string; url: string } {
+  const scale = Math.min(1, maxSide / Math.max(w, h));
   const canvas = document.createElement("canvas");
   canvas.width = Math.round(w * scale);
   canvas.height = Math.round(h * scale);
@@ -338,11 +338,13 @@ readBtn.addEventListener("click", async () => {
   if (!models || !settings || !shiftInfo || !video.videoWidth) return;
   readBtn.disabled = true;
   const frame = toJpegBase64(video, video.videoWidth, video.videoHeight);
+  const small = toJpegBase64(video, video.videoWidth, video.videoHeight, 512).b64;
   try {
     const step = await processItem(models, frame.b64, {
       today: todayInput.value,
       policy: settings.policy,
       previous: pendingTurn ? pendingTurn.reads : undefined,
+      smallJpeg: small,
     });
     pendingTurn = step.kind === "need_date_photo" ? step : null;
     promptEl.textContent = "";
@@ -379,8 +381,9 @@ batchBtn.addEventListener("click", async () => {
     toolStatus.textContent = `Reading photo ${i + 1} of ${list.length}`;
     const img = await loadImage(file);
     const frame = toJpegBase64(img, img.naturalWidth, img.naturalHeight);
+    const small = toJpegBase64(img, img.naturalWidth, img.naturalHeight, 512).b64;
     try {
-      const step = await processItem(models, frame.b64, { today: todayInput.value, policy: settings.policy });
+      const step = await processItem(models, frame.b64, { today: todayInput.value, policy: settings.policy, smallJpeg: small });
       results.push({ file: file.name, at: new Date().toISOString(), mode: models.hybrid.mode, step });
       render(step, frame.url, file.name);
     } catch (e) {
