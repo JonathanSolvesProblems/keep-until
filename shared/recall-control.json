@@ -1,0 +1,150 @@
+{
+ "registered": "2026-11-19",
+ "note": "Pre-registered before any run. Each case pairs a real Government of Canada food recall notice (feed pulled 2026-11-14, copied verbatim) with an item a food bank could have kept under the same brand. 'recalled' accepts pull or check_lot; 'no_match' must be no_match. Brand-only matching proposes all eight, so it is right on the four recalled cases and wrong on the four others.",
+ "cases": [
+  {
+   "id": "c1",
+   "recall": {
+    "nid": "82433",
+    "title": "Hershey's brand Kisses - Creamy Milk Chocolate recalled due to undeclared almond",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/hershey-s-brand-kisses-creamy-milk-chocolate-recalled-due-undeclared-almond",
+    "product": "Kisses - Creamy Milk Chocolate",
+    "issue": "Tree nut",
+    "recallClass": "Class 1",
+    "lastUpdated": "2026-08-01"
+   },
+   "item": {
+    "id": "control-1",
+    "brand": "Hershey's",
+    "product": "Chipits milk chocolate chips"
+   },
+   "expected": "no_match"
+  },
+  {
+   "id": "c2",
+   "recall": {
+    "nid": "82433",
+    "title": "Hershey's brand Kisses - Creamy Milk Chocolate recalled due to undeclared almond",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/hershey-s-brand-kisses-creamy-milk-chocolate-recalled-due-undeclared-almond",
+    "product": "Kisses - Creamy Milk Chocolate",
+    "issue": "Tree nut",
+    "recallClass": "Class 1",
+    "lastUpdated": "2026-08-01"
+   },
+   "item": {
+    "id": "control-2",
+    "brand": "Hershey's",
+    "product": "Kisses Creamy Milk Chocolate"
+   },
+   "expected": "recalled"
+  },
+  {
+   "id": "c3",
+   "recall": {
+    "nid": "82629",
+    "title": "no name brand chopped walnuts recalled due to shell fragments",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/no-name-brand-chopped-walnuts-recalled-due-shell-fragments",
+    "product": "Chopped Walnuts",
+    "issue": "Extraneous Material",
+    "recallClass": "Class 2",
+    "lastUpdated": "2026-09-15"
+   },
+   "item": {
+    "id": "control-3",
+    "brand": "No Name",
+    "product": "Baking powder"
+   },
+   "expected": "no_match"
+  },
+  {
+   "id": "c4",
+   "recall": {
+    "nid": "82629",
+    "title": "no name brand chopped walnuts recalled due to shell fragments",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/no-name-brand-chopped-walnuts-recalled-due-shell-fragments",
+    "product": "Chopped Walnuts",
+    "issue": "Extraneous Material",
+    "recallClass": "Class 2",
+    "lastUpdated": "2026-09-15"
+   },
+   "item": {
+    "id": "control-4",
+    "brand": "No Name",
+    "product": "Chopped walnuts"
+   },
+   "expected": "recalled"
+  },
+  {
+   "id": "c5",
+   "recall": {
+    "nid": "81475",
+    "title": "no name brand Beef Burgers recalled due to E. coli O157:H7",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/no-name-brand-beef-burgers-recalled-due-e-coli-o157h7",
+    "product": "Beef Burgers",
+    "issue": "E. Coli O157:H7",
+    "recallClass": "Class 1",
+    "lastUpdated": "2026-01-14"
+   },
+   "item": {
+    "id": "control-5",
+    "brand": "No Name",
+    "product": "Baking powder"
+   },
+   "expected": "no_match"
+  },
+  {
+   "id": "c6",
+   "recall": {
+    "nid": "77334",
+    "title": "Campbell's Verve brand and Campbell's brand frozen soup recalled due to pieces of wood",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/campbell-s-verve-brand-and-campbell-s-brand-frozen-soup-recalled-due-pieces-wood",
+    "product": "Frozen soup",
+    "issue": "Extraneous Material",
+    "recallClass": "Class 3",
+    "lastUpdated": "2025-04-23"
+   },
+   "item": {
+    "id": "control-6",
+    "brand": "Campbell's",
+    "product": "Chicken broth 900 mL"
+   },
+   "expected": "no_match"
+  },
+  {
+   "id": "c7",
+   "recall": {
+    "nid": "77334",
+    "title": "Campbell's Verve brand and Campbell's brand frozen soup recalled due to pieces of wood",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/campbell-s-verve-brand-and-campbell-s-brand-frozen-soup-recalled-due-pieces-wood",
+    "product": "Frozen soup",
+    "issue": "Extraneous Material",
+    "recallClass": "Class 3",
+    "lastUpdated": "2025-04-23"
+   },
+   "item": {
+    "id": "control-7",
+    "brand": "Campbell's",
+    "product": "Frozen soup"
+   },
+   "expected": "recalled"
+  },
+  {
+   "id": "c8",
+   "recall": {
+    "nid": "82733",
+    "title": "SeaQuest brand Shrimp Ring with Mild Cocktail Sauce and President's Choice brand Black Tiger Shrimp with Mild Cocktail Sauce recalled due to undeclared mustard",
+    "url": "https://recalls-rappels.canada.ca/en/alert-recall/seaquest-brand-shrimp-ring-mild-cocktail-sauce-and-president-s-choice-brand-black",
+    "product": "Shrimp Ring with Mild Cocktail Sauce and Black Tiger Shrimp with Mild Cocktail Sauce",
+    "issue": "Mustard",
+    "recallClass": "Class 2",
+    "lastUpdated": "2026-10-06"
+   },
+   "item": {
+    "id": "control-8",
+    "brand": "President's Choice",
+    "product": "Shredded parmesan cheese"
+   },
+   "expected": "no_match"
+  }
+ ]
+}
