@@ -1,0 +1,1152 @@
+{
+ "what": "Firebase Test Lab runs of android/app/src/androidTest/.../OnDevicePantryTest.kt: the 16 pantry photos through the on-device check and the whole loop, on physical phones from the ML Kit Prompt API device list. One JSON object per line was logged under the tag KeepUntilResult; these are those lines, verbatim.",
+ "matrices": {
+  "run 1": "matrix-16wnpyphytezq (gs://test-lab-n390ub83h57h4-mcy0dc6vkq3cs/2026-11-19_10:05:48.567402_cnWO/)",
+  "run 2": "gs://test-lab-n390ub83h57h4-mcy0dc6vkq3cs/2026-11-19_10:09:46.525912_ZlhV/"
+ },
+ "runs": [
+  {
+   "run": "run 1, 2026-11-19 10:05",
+   "device": "frankel-36",
+   "lines": [
+    {
+     "kind": "device",
+     "manufacturer": "Google",
+     "model": "Pixel 10",
+     "device": "frankel",
+     "sdk": 36,
+     "onDeviceReady": false,
+     "onDeviceStatus": "unavailable",
+     "onDeviceModel": "",
+     "prepareMs": 6,
+     "progress": "",
+     "cloudModel": "gemini-3.5-flash-lite"
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112242.jpg",
+     "expected": "unverified",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "KEEP",
+     "parsedDate": "2029-10-25",
+     "route": "in_cloud: model chose log",
+     "sources": "in_cloud",
+     "ms": 2843
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112247.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2065
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112303.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2016
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112311.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2001
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112323.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1903
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112326.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1773
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112402.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2019
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112406.jpg",
+     "expected": "log",
+     "labelDate": "2027-05",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: The visible text appears to be a lot code rather than a clear date.; already in the cloud",
+     "sources": "in_cloud",
+     "ms": 1988
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112410.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2214
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112419.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1958
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112421.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2100
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112427.jpg",
+     "expected": "log",
+     "labelDate": "2027-02-14",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "KEEP",
+     "parsedDate": "2027-02-14",
+     "route": "in_cloud: model chose log",
+     "sources": "in_cloud",
+     "ms": 2018
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112441.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1680
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112446.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-12-07",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1576
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112452.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1696
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112458.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-11-30",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1682
+    },
+    {
+     "kind": "done",
+     "photos": 16
+    }
+   ]
+  },
+  {
+   "run": "run 2, 2026-11-19 10:09",
+   "device": "frankel-36",
+   "lines": [
+    {
+     "kind": "aicore",
+     "package": "0.stub.stub_aicore_20250905.00_RC00.803343729 (enabled true)",
+     "categories": {
+      "STABLE": "UNAVAILABLE",
+      "PREVIEW": "UNAVAILABLE",
+      "PREVIEW_FAST": "UNAVAILABLE"
+     }
+    },
+    {
+     "kind": "device",
+     "manufacturer": "Google",
+     "model": "Pixel 10",
+     "device": "frankel",
+     "sdk": 36,
+     "onDeviceReady": false,
+     "onDeviceStatus": "unavailable",
+     "onDeviceModel": "",
+     "prepareMs": 6,
+     "progress": "",
+     "cloudModel": "gemini-3.5-flash-lite"
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112242.jpg",
+     "expected": "unverified",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1921
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112247.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1639
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112303.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1919
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112311.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1478
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112323.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1360
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112326.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1233
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112402.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1608
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112406.jpg",
+     "expected": "log",
+     "labelDate": "2027-05",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2362
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112410.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1638
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112419.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2301
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112421.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2037
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112427.jpg",
+     "expected": "log",
+     "labelDate": "2027-02-14",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "KEEP",
+     "parsedDate": "2027-02-14",
+     "route": "in_cloud: model chose log",
+     "sources": "in_cloud",
+     "ms": 2723
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112441.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1917
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112446.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-12-07",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1759
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112452.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1832
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112458.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-11-30",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 2253
+    },
+    {
+     "kind": "done",
+     "photos": 16
+    }
+   ]
+  },
+  {
+   "run": "run 2, 2026-11-19 10:09",
+   "device": "cubs-37",
+   "lines": [
+    {
+     "kind": "aicore",
+     "package": "0.stub.stub_aicore_20260302.01_RC00.877448964 (enabled true)",
+     "categories": {
+      "STABLE": "UNAVAILABLE",
+      "PREVIEW": "UNAVAILABLE",
+      "PREVIEW_FAST": "UNAVAILABLE"
+     }
+    },
+    {
+     "kind": "device",
+     "manufacturer": "Google",
+     "model": "Pixel 11",
+     "device": "cubs",
+     "sdk": 37,
+     "onDeviceReady": false,
+     "onDeviceStatus": "unavailable",
+     "onDeviceModel": "",
+     "prepareMs": 3,
+     "progress": "",
+     "cloudModel": "gemini-3.5-flash-lite"
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112242.jpg",
+     "expected": "unverified",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "KEEP",
+     "parsedDate": "2029-10-25",
+     "route": "in_cloud: model chose log",
+     "sources": "in_cloud",
+     "ms": 3158
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112247.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2711
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112303.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 3089
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112311.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2642
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112323.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2868
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112326.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2544
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112402.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 3117
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112406.jpg",
+     "expected": "log",
+     "labelDate": "2027-05",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: The visible text on the package appears to be a lot code rather than a clear date.; already in the cloud",
+     "sources": "in_cloud",
+     "ms": 3119
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112410.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2029
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112419.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2648
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112421.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2490
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112427.jpg",
+     "expected": "log",
+     "labelDate": "2027-02-14",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "KEEP",
+     "parsedDate": "2027-02-14",
+     "route": "in_cloud: model chose log",
+     "sources": "in_cloud",
+     "ms": 4031
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112441.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 3813
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112446.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-12-07",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 2410
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112452.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 2553
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112458.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-11-30",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 3649
+    },
+    {
+     "kind": "done",
+     "photos": 16
+    }
+   ]
+  },
+  {
+   "run": "run 2, 2026-11-19 10:09",
+   "device": "m1q-36",
+   "lines": [
+    {
+     "kind": "aicore",
+     "package": "0.stub.oem.aicore_stub_for_android_B_RC02.728786427 (enabled true)",
+     "categories": {
+      "STABLE": "UNAVAILABLE",
+      "PREVIEW": "UNAVAILABLE",
+      "PREVIEW_FAST": "UNAVAILABLE"
+     }
+    },
+    {
+     "kind": "device",
+     "manufacturer": "samsung",
+     "model": "SM-S942U1",
+     "device": "m1q",
+     "sdk": 36,
+     "onDeviceReady": false,
+     "onDeviceStatus": "unavailable",
+     "onDeviceModel": "",
+     "prepareMs": 0,
+     "progress": "",
+     "cloudModel": "gemini-3.5-flash-lite"
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112242.jpg",
+     "expected": "unverified",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 10611
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112247.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 4030
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112303.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 3596
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112311.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 3728
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112323.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 3457
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112326.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2635
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112402.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 3345
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112406.jpg",
+     "expected": "log",
+     "labelDate": "2027-05",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: The visible date string appears to be a lot code rather than a clear Canadian best-before date.; already in the cloud",
+     "sources": "in_cloud",
+     "ms": 1972
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112410.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1697
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112419.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 2434
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112421.jpg",
+     "expected": "turn_it",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "turn_it",
+     "decision": "",
+     "parsedDate": "",
+     "route": "in_cloud: model asked to see the date",
+     "sources": "in_cloud",
+     "ms": 1804
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112427.jpg",
+     "expected": "log",
+     "labelDate": "2027-02-14",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "KEEP",
+     "parsedDate": "2027-02-14",
+     "route": "in_cloud: model chose log",
+     "sources": "in_cloud",
+     "ms": 2113
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112441.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1663
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112446.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-12-07",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1698
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112452.jpg",
+     "expected": "set_aside",
+     "labelDate": "",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1726
+    },
+    {
+     "kind": "photo",
+     "file": "20261115_112458.jpg",
+     "expected": "set_aside",
+     "labelDate": "2026-11-30",
+     "triage": {
+      "ok": false,
+      "error": "no on-device model on this phone"
+     },
+     "step": "verdict",
+     "decision": "SET_ASIDE",
+     "parsedDate": "",
+     "route": "in_cloud: model chose set_aside",
+     "sources": "in_cloud",
+     "ms": 1937
+    },
+    {
+     "kind": "done",
+     "photos": 16
+    }
+   ]
+  }
+ ]
+}

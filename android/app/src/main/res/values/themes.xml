@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The window before Compose draws: the can-lid grey canvas, no action bar. -->
+    <style name="Theme.KeepUntil" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/lid</item>
+        <item name="android:statusBarColor">@color/lid</item>
+        <item name="android:navigationBarColor">@color/lid</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

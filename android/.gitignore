@@ -1,0 +1,12 @@
+# Build output and machine-local files
+.gradle/
+build/
+app/build/
+.kotlin/
+local.properties
+*.iml
+.idea/
+captures/
+
+# Firebase client config and the App Check debug token live outside the repo
+app/google-services.json
