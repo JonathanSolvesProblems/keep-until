@@ -62,7 +62,7 @@ SLIDES = [
         "headline": "Good food gets binned because of the date on it",
         "badge": "Brita Ball, PhD, Food Banks Canada guest blog, May 2019",
         "body": f'<blockquote>&ldquo;{html.escape(quote())}&rdquo;</blockquote><img class="art" src="{ART}/hands-can.webp">',
-        "caption": "Food Banks Canada's own blog: people call best-before food expired and throw it out. Sort tables face that call with every item.",
+        "caption": "Food Banks Canada's own blog: people throw out good food once it reaches its best-before date. Sort tables face that with every item.",
     },
     {
         "name": "two-photos",

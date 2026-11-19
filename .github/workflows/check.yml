@@ -1,0 +1,21 @@
+name: check
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Web tests (chart gate, date parser, loop, sheet)
+        run: npm --prefix web ci && npm --prefix web test
+      - name: Recall matcher tests (real notices)
+        run: npm --prefix functions ci && npm --prefix functions test
+      - name: Every stated number matches its results file
+        run: python scripts/check_claims.py

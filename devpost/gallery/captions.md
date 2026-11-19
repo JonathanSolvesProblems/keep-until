@@ -9,7 +9,7 @@ A volunteer holds up a donation. Keep Until reads the date stamp and says keep i
 ## 02-problem.png
 
 ```
-Food Banks Canada's own blog: people call best-before food expired and throw it out. Sort tables face that call with every item.
+Food Banks Canada's own blog: people throw out good food once it reaches its best-before date. Sort tables face that with every item.
 ```
 
 ## 03-two-photos.png
