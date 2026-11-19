@@ -300,6 +300,21 @@ modeSel.addEventListener("change", () => {
   if (models && settings) models = buildModels(modeSel.value as Mode, settings.cloudModel);
 });
 
+/**
+ * Why a read failed, in the volunteer's words. When App Check cannot verify the browser,
+ * Google answers the read with "genai config not found" (seen on the live site from an
+ * automated browser, 2026-11-19), which is not the volunteer's to fix by holding still.
+ */
+function readFailure(e: unknown): string {
+  const m = (e as Error)?.message ?? "";
+  if (/config not found|attestation|app ?check|PERMISSION_DENIED/i.test(m)) {
+    return "Google could not verify this browser, so it will not read items here. Try Chrome without extensions or private mode, or the sample photos under Testing tools.";
+  }
+  if (/prepayment|RESOURCE_EXHAUSTED|429/i.test(m)) return "The cloud reader is busy or out of credit. Wait a minute and press Read item again.";
+  if (!navigator.onLine) return "No connection. Items read on this laptop still work; the cloud reads will need Wi-Fi.";
+  return "That read did not go through. Hold the item steady and press Read item again.";
+}
+
 function toJpegBase64(source: CanvasImageSource, w: number, h: number, maxSide = 1024): { b64: string; url: string } {
   const scale = Math.min(1, maxSide / Math.max(w, h));
   const canvas = document.createElement("canvas");
@@ -357,7 +372,7 @@ readBtn.addEventListener("click", async () => {
     }
     render(step, frame.url, "camera");
   } catch (e) {
-    promptEl.textContent = "That read did not go through. Hold the item steady and press Read item again.";
+    promptEl.textContent = readFailure(e);
     console.error(e);
   } finally {
     readBtn.disabled = false;
@@ -377,6 +392,7 @@ batchBtn.addEventListener("click", async () => {
   if (!models || !settings || !files.files?.length) return;
   batchBtn.disabled = true;
   const list = [...files.files];
+  let failure = "";
   for (const [i, file] of list.entries()) {
     toolStatus.textContent = `Reading photo ${i + 1} of ${list.length}`;
     const img = await loadImage(file);
@@ -388,9 +404,10 @@ batchBtn.addEventListener("click", async () => {
       render(step, frame.url, file.name);
     } catch (e) {
       results.push({ file: file.name, at: new Date().toISOString(), mode: models.hybrid.mode, step: { kind: "need_date_photo", reads: [], route: "error: " + (e as Error).message } });
+      failure = readFailure(e);
     }
   }
-  toolStatus.textContent = `Done: ${list.length} ${list.length === 1 ? "photo" : "photos"} read ${MODE_WORDS[models.hybrid.mode] ?? ""}`;
+  toolStatus.textContent = `Done: ${list.length} ${list.length === 1 ? "photo" : "photos"} read ${MODE_WORDS[models.hybrid.mode] ?? ""}${failure ? `. ${failure}` : ""}`;
   batchBtn.disabled = false;
 });
 
