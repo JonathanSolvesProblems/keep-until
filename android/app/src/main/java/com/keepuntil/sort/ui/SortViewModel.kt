@@ -58,6 +58,12 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun setStatus(s: String) = _state.update { it.copy(status = s) }
 
+    private fun online(): Boolean {
+        val cm = getApplication<Application>().getSystemService(android.net.ConnectivityManager::class.java) ?: return true
+        val caps = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
+        return caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET)
+    }
+
     // The first two are one item: a broth carton's front (name, no date), then its top (date, no
     // name). The third is a yogurt lid.
     private val samples = listOf("samples/carton-front.jpg", "samples/carton-top.jpg", "samples/yogurt-lid.jpg")
@@ -135,7 +141,11 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                     )
                 }
             } catch (e: Exception) {
-                _state.update { it.copy(prompt = readFailure(e)) }
+                android.util.Log.w("KeepUntil", "read failed", e)
+                // Asked of the phone, not guessed from the error text: in airplane mode the SDK's
+                // message named no network (Android 8 emulator, 2026-11-20), and the volunteer was
+                // told to hold the item steady.
+                _state.update { it.copy(prompt = if (!online()) OFFLINE else readFailure(e)) }
             } finally {
                 _state.update { it.copy(reading = false) }
             }
@@ -144,6 +154,8 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
 
     fun cameraFailed() = _state.update { it.copy(prompt = "No camera picture. Allow the camera for Keep Until in the phone's settings.") }
 }
+
+const val OFFLINE = "No connection. This phone reads dates in the cloud, so reading waits for Wi-Fi. Items already read stay in this shift's list."
 
 /** Why a read failed, in the volunteer's words. */
 fun readFailure(e: Exception): String {

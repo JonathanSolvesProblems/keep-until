@@ -142,6 +142,8 @@ fun itemName(step: Step.Decided): String {
     val last = if (step.reads.isEmpty()) null else itemFacts(step.reads)
     val brand = last?.brand?.trim().orEmpty()
     val product = last?.product?.trim().orEmpty()
-    val name = if (brand.isNotEmpty() && product.lowercase(Locale.ROOT).startsWith(brand.lowercase(Locale.ROOT))) product else listOf(brand, product).filter { it.isNotEmpty() }.joinToString(" ")
+    // Letters and digits only, so "Campbell's" and "CAMPBELL’S" count as the same brand (as on the web).
+    val plain = { x: String -> java.text.Normalizer.normalize(x.lowercase(Locale.ROOT), java.text.Normalizer.Form.NFD).replace(Regex("[^a-z0-9]"), "") }
+    val name = if (brand.isNotEmpty() && plain(product).contains(plain(brand))) product else listOf(brand, product).filter { it.isNotEmpty() }.joinToString(" ")
     return name.ifEmpty { step.verdict.chart?.label ?: "Item with no name in view" }
 }
