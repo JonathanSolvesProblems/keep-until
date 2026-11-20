@@ -7,25 +7,27 @@ import { fetchAndActivate, getRemoteConfig, getValue } from "firebase/remote-con
 import { getPerformance } from "firebase/performance";
 import type { Policy } from "./chart/chart";
 
-const env = import.meta.env;
+// Each value is read as import.meta.env.X, never through an alias: an alias makes Vite inline
+// every VITE_ variable as one object, which shipped the dev-only App Check debug token in the
+// production bundle until 2026-11-20.
 
 export const app = initializeApp({
-  apiKey: env.VITE_FIREBASE_API_KEY,
-  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: env.VITE_FIREBASE_APP_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 });
 
 // Firebase AI Logic requires App Check. Local development uses a registered debug token
 // read from the gitignored .env.local; the hosted site uses reCAPTCHA Enterprise.
-if (env.DEV && env.VITE_APPCHECK_DEBUG_TOKEN) {
-  (self as unknown as { FIREBASE_APPCHECK_DEBUG_TOKEN: string }).FIREBASE_APPCHECK_DEBUG_TOKEN = env.VITE_APPCHECK_DEBUG_TOKEN;
+if (import.meta.env.DEV && import.meta.env.VITE_APPCHECK_DEBUG_TOKEN) {
+  (self as unknown as { FIREBASE_APPCHECK_DEBUG_TOKEN: string }).FIREBASE_APPCHECK_DEBUG_TOKEN = import.meta.env.VITE_APPCHECK_DEBUG_TOKEN;
 }
 
 export const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaEnterpriseProvider(env.VITE_RECAPTCHA_ENTERPRISE_SITE_KEY),
+  provider: new ReCaptchaEnterpriseProvider(import.meta.env.VITE_RECAPTCHA_ENTERPRISE_SITE_KEY),
   isTokenAutoRefreshEnabled: true,
 });
 
@@ -41,7 +43,7 @@ export const db = initializeFirestore(app, {
 export const perf = getPerformance(app);
 
 const remoteConfig = getRemoteConfig(app);
-remoteConfig.settings.minimumFetchIntervalMillis = env.DEV ? 60_000 : 3_600_000;
+remoteConfig.settings.minimumFetchIntervalMillis = import.meta.env.DEV ? 60_000 : 3_600_000;
 // Must match remoteconfig.template.json, so the app behaves the same before the first fetch
 // and when it has never been online.
 remoteConfig.defaultConfig = {

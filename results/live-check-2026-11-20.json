@@ -1,5 +1,5 @@
 {
-  "ran": "2026-11-20T14:18:52+00:00",
+  "ran": "2026-11-20T19:43:28+00:00",
   "results": [
     {
       "check": "live site serves the current build",
@@ -7,9 +7,14 @@
       "detail": "HTTP 200, current build"
     },
     {
+      "check": "no build-time secrets in the served bundle",
+      "ok": true,
+      "detail": "1 script(s) checked, VITE_ variables found in: none"
+    },
+    {
       "check": "recall feed up, control notices still published",
       "ok": true,
-      "detail": "34,398 notices, 5,351 from the CFIA; control notices missing: none"
+      "detail": "34,408 notices, 5,351 from the CFIA; control notices missing: none"
     },
     {
       "check": "item log refuses an unsigned write",

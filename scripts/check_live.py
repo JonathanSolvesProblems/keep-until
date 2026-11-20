@@ -11,6 +11,7 @@ Writes the run to results/live-check-<date>.json. Standard library only."""
 import datetime
 import json
 import pathlib
+import re
 import urllib.error
 import urllib.request
 
@@ -37,6 +38,14 @@ status, body = get(SITE)
 html = body.decode("utf-8", "replace")
 check("live site serves the current build", status == 200 and "wordmark-dots" in html and "Try a sample photo" in html,
       f"HTTP {status}, {'current' if 'Try a sample photo' in html else 'older'} build")
+
+# Until 2026-11-20 an alias of import.meta.env made Vite inline every VITE_ variable, and the
+# dev-only App Check debug token shipped in the live bundle (revoked the same day). No VITE_ name
+# may appear in what the site serves.
+bundles = re.findall(r'/assets/[^"]+\.js', html)
+leaks = [js for js in bundles if b"VITE_" in get(SITE.rstrip("/") + js)[1]]
+check("no build-time secrets in the served bundle", bundles and not leaks,
+      f"{len(bundles)} script(s) checked, VITE_ variables found in: {leaks or 'none'}")
 
 status, body = get(FEED)
 feed = json.loads(body)
