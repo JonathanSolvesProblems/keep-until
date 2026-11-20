@@ -413,7 +413,7 @@ function localStorageSet(key: string, value: string): void {
   }
 }
 
-// ?clip=1: a 31-second recording of real pantry photos (an empty table, a carton's front, its
+// ?clip=1: a 70-second recording of real pantry photos (an empty table, a carton's front, its
 // top, the table again, a yogurt lid) plays in the camera's place, so hands-free can be tried
 // with no item and no webcam. Like the samples, nothing read from it is written to a food bank's log.
 const clipMode = new URLSearchParams(location.search).has("clip");
@@ -452,6 +452,7 @@ async function openCamera(deviceId?: string): Promise<void> {
 }
 
 async function listCameras(): Promise<void> {
+  if (clipMode) return; // the clip stands in for the camera
   const current = (video.srcObject as MediaStream | null)?.getVideoTracks()[0]?.getSettings().deviceId;
   const cams = (await navigator.mediaDevices.enumerateDevices()).filter((d) => d.kind === "videoinput");
   cameraSel.replaceChildren(
@@ -573,6 +574,8 @@ let handsFree = false;
 let ready = true; // the table has been clear since the last item was settled
 let lastReadSig: Uint8Array | null = null;
 const watchCounts = { looks: 0, cloudReads: 0 };
+const lookMs: number[] = [];
+const watchLog: { at: number; saw: string; ms: number }[] = [];
 
 /** A 32x24 grey thumbnail: enough to tell whether the item in front of the camera has moved. */
 function signature(): Uint8Array {
@@ -605,8 +608,13 @@ async function watchLoop(): Promise<void> {
       handsBtn.setAttribute("aria-pressed", "false");
       handsBtn.textContent = "Hands-free";
       readBtn.disabled = false;
-      promptEl.textContent = `Clip finished: ${watchCounts.looks} looks on this laptop, ${watchCounts.cloudReads} sent to the cloud.`;
-      console.info("hands-free clip", JSON.stringify({ ...watchCounts, steps: results.map((r) => r.step.kind === "verdict" ? r.step.verdict.decision : r.step.kind) }));
+      const answers = results.map((r) => (r.step.kind === "verdict" ? r.step.verdict.decision : r.step.kind).toLowerCase().replace(/_/g, " "));
+      const looks = [...lookMs].sort((a, b) => a - b);
+      const median = looks.length ? (looks[Math.floor(looks.length / 2)] / 1000).toFixed(1) : "?";
+      const summary = `${watchCounts.looks} looks on this laptop (median ${median} s), ${watchCounts.cloudReads} sent to the cloud: ${answers.join(", ") || "none"}`;
+      promptEl.textContent = `Clip finished: ${summary}.`;
+      document.title = `Keep Until clip: ${summary} | ${watchLog.map((w) => `${w.at}s ${w.saw}`).join(", ")}`;
+      console.info("hands-free clip", JSON.stringify({ ...watchCounts, lookMs, answers, timeline: watchLog }));
       break;
     }
     const triage = models?.triage;
@@ -623,6 +631,7 @@ async function watchLoop(): Promise<void> {
     try {
       tr = await triageItem(triage.model, small.b64);
       watchCounts.looks++;
+      lookMs.push(tr.ms);
     } catch (e) {
       showWatching("This laptop could not check that frame. Trying again.");
       console.error(e);
@@ -634,6 +643,7 @@ async function watchLoop(): Promise<void> {
     let next = watchStep(tr.triage, ready);
     // The same view as the last read is not a new photo: a person turns it, or takes it away.
     if (next === "read" && !moved(sig, lastReadSig)) next = pendingTurn ? "turn" : "next";
+    watchLog.push({ at: Math.round(video.currentTime * 10) / 10, saw: next, ms: tr.ms });
     if (next === "clear") {
       ready = true;
       lastReadSig = null;

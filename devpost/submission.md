@@ -11,7 +11,7 @@ Keep Until
 ## Tagline
 
 ```
-Hold up a donated can and it says keep until when. Gemini Nano checks each photo on the laptop; 10 of 16 never left it.
+Hold up a donated can, no buttons, and it says keep until when. In a 70-second hands-free run: 18 looks on the laptop with Gemini Nano, 3 calls to the cloud.
 ```
 
 ## Platforms
@@ -69,6 +69,8 @@ The screen is built to be read from a metre away with an item in your hand: the 
 - Every decision, with the measurement behind it, is in `devpost/build-log.md`.
 
 ## Results
+
+Hands-free, on real Gemini Nano in my Chrome: a 70-second clip of pantry photos (empty table, a carton's front, its top, the table, a yogurt lid) played in the camera's place, and nobody touched the laptop. 18 looks on the laptop, 3 calls to the cloud, and each item got the right answer: turn it, keep, set aside. Once an item was answered, the laptop kept looking and sent nothing until the table was clear (`results/handsfree-clip-2026-11-20.md`). One run of three items: it shows the loop working on the real model, not accuracy.
 
 Sixteen photos of eight real products from my pantry, labelled by hand before any model run, graded by a script:
 
