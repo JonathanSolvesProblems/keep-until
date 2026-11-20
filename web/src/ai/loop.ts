@@ -39,6 +39,25 @@ export interface ItemContext {
   smallJpeg?: string;
   /** How long the laptop check may take before this item goes to the cloud without it. */
   triageBudgetMs?: number;
+  /** The laptop already checked this frame (hands-free watching), so it is not checked twice. */
+  triaged?: TriageResult;
+}
+
+/**
+ * Hands-free: Gemini Nano on the laptop watches the camera, and the cloud is called only when a
+ * package with its date facing the camera (or a fridge item) is in front of it. Watching every
+ * frame is only affordable on the device: in the cloud it would be a paid call, and a video of
+ * the sort table leaving the building, every second or two.
+ *
+ * `ready` is true when the table has been clear since the last item was settled, or the last
+ * item asked to be turned. It is what stops one can held up for five seconds being read five times.
+ */
+export type Watch = "clear" | "turn" | "read" | "next";
+export function watchStep(t: TriageResult["triage"], ready: boolean): Watch {
+  if (!t.package_in_view) return "clear";
+  if (!ready) return "next";
+  if (t.date_in_view || t.needs_refrigeration) return "read";
+  return "turn";
 }
 
 const WORSE_THAN_NONE = new Set(["dent", "bulge", "rust", "leak", "open"]);
@@ -202,9 +221,9 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
   let fallback = "";
   if (useTriage && !secondLook) {
     try {
-      let tr;
+      let tr = ctx.triaged;
       try {
-        tr = await withBudget(triageItem(models.triage!.model, jpegBase64), budget);
+        tr ??= await withBudget(triageItem(models.triage!.model, jpegBase64), budget);
       } catch (e) {
         if (!ctx.smallJpeg || !/too large/i.test((e as Error).message)) throw e;
         fallback = "on_device triage: photo too large, retried smaller → ";

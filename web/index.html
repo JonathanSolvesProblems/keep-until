@@ -33,11 +33,13 @@
         <div class="viewport">
           <video id="video" autoplay playsinline muted></video>
           <img id="still" class="viewport-still" alt="The item just read" hidden />
+          <p id="watching" class="watching" role="status" hidden></p>
           <button id="start" class="start">Start shift</button>
           <p class="viewport-hint">The camera turns on when the shift starts</p>
         </div>
         <div class="controls">
           <button id="read" class="read" disabled>Read item</button>
+          <button id="handsfree" class="quiet handsfree" aria-pressed="false" disabled>Hands-free</button>
           <label class="camera-pick">Camera <select id="camera"></select></label>
         </div>
         <p id="prompt" class="prompt" role="status"></p>

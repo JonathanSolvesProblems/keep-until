@@ -231,7 +231,13 @@ select, input[type="date"] {
 }
 .started .viewport .start, .started .viewport-hint { display: none; }
 /* Controls appear when they can be used: one button before the shift, Read item after. */
-body:not(.started) .read { display: none; }
+body:not(.started) .read, body:not(.started) .handsfree { display: none; }
+.handsfree { min-height: 64px; }
+.handsfree[aria-pressed="true"] { background: var(--glove); border-color: var(--glove); color: var(--glove-ink); }
+.handsfree:disabled { opacity: .55; }
+/* While the laptop watches, the camera says so: nothing leaves the laptop until a date faces it. */
+.watching { position: absolute; left: 12px; top: 12px; z-index: 2; padding: 6px 12px; border-radius: 6px;
+  background: rgb(21 21 21 / .78); color: #f2f2ef; font-weight: 700; font-size: var(--t-1); pointer-events: none; }
 body:not(.started) .sheetline { visibility: hidden; }
 .viewport-hint {
   position: absolute;

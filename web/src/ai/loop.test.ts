@@ -8,7 +8,7 @@ vi.mock("firebase/performance", () => ({
 }));
 
 import type { GenerativeModel } from "firebase/ai";
-import { processItem, type LoopModels } from "./loop";
+import { processItem, watchStep, type LoopModels } from "./loop";
 
 const TODAY = "2026-11-15";
 
@@ -197,6 +197,18 @@ describe("processItem: the hybrid hand-off", () => {
       expect(step.reads.map((r) => r.source)).toEqual(["on_device", "in_cloud"]);
       expect(c!.calls).toBe(1);
     });
+
+    it("hands-free: uses the laptop's look at the frame instead of checking it twice", async () => {
+      const t = fakeModel([]);
+      const { m, c } = models([], [{ text: read({}), source: "in_cloud" }]);
+      m.triage = { model: t };
+      const triaged = { triage: { package_in_view: true, date_in_view: true, needs_refrigeration: false, product: "Corn" }, ms: 900 };
+      const step = await withLanguageModel(() => processItem(m, "img", { today: TODAY, triaged }));
+      expect(step.kind === "verdict" && step.verdict.decision).toBe("KEEP");
+      expect(t.calls).toBe(0);
+      expect(c!.calls).toBe(1);
+      expect(step.reads[0].ms).toBe(900);
+    });
   });
 
   it("treats an empty frame as no item, so the next item starts fresh", async () => {
@@ -274,5 +286,19 @@ describe("the confirming read is independent", () => {
     expect(second.kind === "verdict" && second.verdict.decision).toBe("DISCARD");
     expect(prompts[1]).toContain("Earlier photos of this same item showed");
     expect(prompts[2]).not.toContain("Earlier photos of this same item showed");
+  });
+});
+
+describe("hands-free watching (the laptop decides when the cloud is asked)", () => {
+  const t = (p: boolean, d: boolean, f = false) => ({ package_in_view: p, date_in_view: d, needs_refrigeration: f, product: "" });
+  it("asks the cloud only when a package faces the camera with its date, or needs the fridge", () => {
+    expect(watchStep(t(true, true), true)).toBe("read");
+    expect(watchStep(t(true, false, true), true)).toBe("read");
+    expect(watchStep(t(true, false), true)).toBe("turn");
+    expect(watchStep(t(false, false), true)).toBe("clear");
+  });
+  it("never reads the same item twice: after an answer it waits for the table to clear", () => {
+    expect(watchStep(t(true, true), false)).toBe("next");
+    expect(watchStep(t(false, false), false)).toBe("clear");
   });
 });
