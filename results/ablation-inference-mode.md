@@ -37,6 +37,11 @@ it does well, so it became the on-device job.
 
 - 16 photos of 8 products from one pantry, none past its best-before date. It measures reading
   and routing, not the kept-food headline, which needs a real sort.
+- It is mostly a routing test. By expected answer (`scripts/grade_run.py`, re-graded
+  2026-11-20): turn it 9 of 9 for hybrid and cloud, set aside 3 of 4 (hybrid) and 4 of 4 (cloud),
+  and logged with the right date only 1 of 2 for both, because only 2 scored photos show a
+  readable date. An app that always said "turn it" would score 9 of 15 and never log an item.
+  Date reading needs its own, larger set of dated photos.
 - The first on-device read after loading the page took 503 s in this run (later reads 5 to 10 s).
 - The cloud model gave different readings of the same Chipits photo across runs (see
   `pantry-2026-11-15-cloud-repeatability.md`), which is why every discard needs a second read.

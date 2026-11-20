@@ -7,7 +7,13 @@ Every item lands in the food bank's own Google Sheet, and every morning the app 
 kept against new Government of Canada food recalls.
 
 Gemini Nano checks each photo on the laptop first. Only photos with a date worth reading go to
-the cloud. Built for #BuildHybridAI 2026 with Firebase AI Logic, on Web (Chrome) and Android.
+the cloud. With **Hands-free** on, Nano watches the camera itself and calls the cloud only when a
+date faces it, so the volunteer never touches the keyboard. Built for #BuildHybridAI 2026 with
+Firebase AI Logic, on Web (Chrome) and Android.
+
+To watch hands-free with no item and no webcam, open the app with `?clip=1` in Chrome with Gemini
+Nano: a 31-second clip of real pantry photos plays in the camera's place, and nothing from it is
+logged.
 
 **Try it:** https://keep-until-hybrid.web.app. No item to hand or no webcam? Press **Try a sample
 photo**: it reads a real carton from my pantry the same way, front first, then the top.
@@ -66,10 +72,13 @@ the 16 pantry photos three ways and downloads one file; grade it with
 | Recall check, 8 real notices, answers registered before the run | Gemini 8 of 8, brand alone 3 of 8 | [recall control](results/recall-control-2026-11-19.md) |
 | Android gate against the web gate | identical on 294 stamps and 2,580 chart decisions | `shared/gate-vectors.json` |
 | Android on Firebase Test Lab (Pixel 10, Pixel 11, Galaxy S26) | 14 of 15 on the cloud path; on-device unavailable (stub AICore) | [Test Lab](results/android-testlab-2026-11-19.md) |
+| Android 8 and Android 16 emulators, no on-device model | same answers on the sample carton; offline message fixed | [emulators](results/android-emulator-2026-11-20.md) |
 
 "Handled right" means what a careful volunteer would do: logged with the right date, asked to
 turn the item when no date is in view, or set aside when it needs the fridge. One photo whose
-stamp I could not read by hand either is not scored.
+stamp I could not read by hand either is not scored. The set mostly tests routing: 9 of the 15
+scored photos should get "turn it", so an app that always said "turn it" would score 9 of 15, and
+only 2 show a date to log (both modes read 1 of them right). Date reading needs a larger set.
 
 What it cannot do yet: read lot codes, so a recall limited to certain lots is always "check the
 lot code" for the lead. An Android on-device result needs a phone on Google's Nano list (Pixel 9

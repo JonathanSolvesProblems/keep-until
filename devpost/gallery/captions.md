@@ -9,7 +9,7 @@ A volunteer holds up a donation. Keep Until reads the date stamp and says keep i
 ## 02-problem.png
 
 ```
-Food Banks Canada's own blog: people throw out good food once it reaches its best-before date. Sort tables face that with every item.
+A guest post on Food Banks Canada's blog: people throw out good food once it reaches its best-before date. Sort tables decide item by item.
 ```
 
 ## 03-two-photos.png
@@ -27,7 +27,7 @@ Gemini Nano checks each photo on the laptop; only photos with a date go to the c
 ## 05-refusal.png
 
 ```
-A discard needs a second read that finds the same date. If the reads disagree, the item goes to the sort lead instead.
+One cloud read took a 2027 stamp for May 2026 and said discard. Now nothing is binned unless a second, independent read agrees.
 ```
 
 ## 06-aside.png

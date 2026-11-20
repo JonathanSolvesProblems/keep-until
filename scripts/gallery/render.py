@@ -69,7 +69,7 @@ SLIDES = [
         "headline": "Good food gets binned because of the date on it",
         "badge": "Brita Ball, PhD, Food Banks Canada guest blog, May 2019",
         "body": f'<blockquote>&ldquo;{html.escape(quote())}&rdquo;</blockquote><img class="art" src="{ART}/hands-can.webp">',
-        "caption": "Food Banks Canada's own blog: people throw out good food once it reaches its best-before date. Sort tables face that with every item.",
+        "caption": "A guest post on Food Banks Canada's blog: people throw out good food once it reaches its best-before date. Sort tables decide item by item.",
     },
     {
         "name": "two-photos",
@@ -92,10 +92,17 @@ SLIDES = [
     },
     {
         "name": "refusal",
-        "headline": "Nothing is binned on one read",
-        "badge": "The live app, same carton, sort date set to 2030",
-        "body": f'<img class="cap" src="{img("discard.png")}">',
-        "caption": "A discard needs a second read that finds the same date. If the reads disagree, the item goes to the sort lead instead.",
+        "headline": "One misread would have binned good chocolate chips",
+        "badge": "results/pantry-2026-11-15-cloud-repeatability.md, a real bag from my pantry",
+        "body": f'''<div class="stack"><img class="cap" src="{img("chipits-stamp.png")}" style="width:620px">
+<p class="small-note">The stamp, turned the right way up here. The model saw it upside down, with the day cut off.</p></div>
+<table class="small"><tr><th></th><th>Read</th><th>App said</th></tr>
+<tr><td>Run 1</td><td><code>26MA14</code>, 14 May 2026, already past</td><td><b>Discard</b> (wrong)</td></tr>
+<tr><td>Run 2</td><td><code>2027 MA 17</code></td><td>Keep</td></tr>
+<tr><td>On the bag</td><td><code>BB/MA 2027 MA</code></td><td>Best before May 2027</td></tr>
+<tr class="hi"><td>Now</td><td colspan="2">A discard needs a second, independent read of the same date. If they disagree, the sort lead checks it.</td></tr>
+</table>''',
+        "caption": "One cloud read took a 2027 stamp for May 2026 and said discard. Now nothing is binned unless a second, independent read agrees.",
     },
     {
         "name": "aside",
@@ -156,6 +163,9 @@ table.small {{ font-size: 21px; }} table.small td, table.small th {{ padding: 10
 .big {{ position: absolute; right: 0; bottom: 0; margin: 0; font-size: 34px; font-weight: 800; background: #151515; color: #f2f2ef; padding: 12px 20px; border-radius: 8px; }}
 .phone {{ height: 660px; border-radius: 22px; border: 1px solid rgb(21 21 21 / .2); }}
 .note {{ font-size: 30px; line-height: 1.35; max-width: 26ch; }}
+.stack {{ display: flex; flex-direction: column; gap: 10px; flex: none; }}
+.small-note {{ margin: 0; font-size: 20px; color: #3a3936; max-width: 32ch; }}
+code {{ font-family: D; font-weight: 800; letter-spacing: .03em; }}
 """
 
 

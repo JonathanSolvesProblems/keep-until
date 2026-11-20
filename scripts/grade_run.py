@@ -83,6 +83,18 @@ def grade_mode(results_path, run, labels, mode, results):
         print("| " + " | ".join(str(c) for c in row) + " |")
     print(f"\nScored photos: {correct} of {scored} handled as a careful volunteer would.")
     print(f"Dates checked against the label: {date_ok} of {date_checks} correct.")
+    # Per expected class, so a set heavy in "turn it" photos cannot hide a weak date reader, and
+    # the trivial baseline (an app that always says "turn it") is printed next to it.
+    by = {}
+    for row in rows:
+        exp, ok = row[1], row[6]
+        if exp in ("unverified", "?"):
+            continue
+        hit, n = by.get(exp, (0, 0))
+        by[exp] = (hit + ok.startswith("yes"), n + 1)
+    print("By expected answer: " + ", ".join(f"{k} {h} of {n}" for k, (h, n) in sorted(by.items())))
+    turn = by.get("turn_it", (0, 0))[1]
+    print(f"Baseline, an app that always says turn it: {turn} of {scored}, and no item ever logged.")
     for k, v in lat.items():
         if v:
             print(f"{k}: {len(v)} reads, median {statistics.median(v):.0f} ms, max {max(v)} ms")
