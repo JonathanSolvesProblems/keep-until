@@ -253,3 +253,26 @@ describe("one item, two photos (front for the name, top for the date)", () => {
     }
   });
 });
+
+describe("the confirming read is independent", () => {
+  it("never tells the confirming read the date the first read found", async () => {
+    const front = read({ product: "Chicken broth 900 mL", brand: "Campbell's", category: "canned_prepared_meals", date_text: "", date_kind: "none_visible", next_action: "show_me_the_date" });
+    const top = read({ product: "", brand: "", category: "unclear", date_text: "2024 FE 14", date_kind: "best_before", next_action: "log" });
+    const prompts: string[] = [];
+    const replies = [front, top, top];
+    const cloud = {
+      calls: 0,
+      async generateContent(parts: { text?: string }[]) {
+        cloud.calls++;
+        prompts.push(parts.map((p) => p.text ?? "").join(" "));
+        return { response: { text: () => replies.shift()!, inferenceSource: "in_cloud" } };
+      },
+    } as unknown as GenerativeModel & { calls: number };
+    const m: LoopModels = { hybrid: { model: cloud, mode: "only_in_cloud" }, cloud: { model: cloud, mode: "only_in_cloud" } };
+    const first = await processItem(m, "front", { today: "2027-06-01" });
+    const second = await processItem(m, "top", { today: "2027-06-01", previous: first.reads });
+    expect(second.kind === "verdict" && second.verdict.decision).toBe("DISCARD");
+    expect(prompts[1]).toContain("Earlier photos of this same item showed");
+    expect(prompts[2]).not.toContain("Earlier photos of this same item showed");
+  });
+});

@@ -142,7 +142,11 @@ async function confirmDiscard(step: Step, models: LoopModels, jpegBase64: string
   const checker = models.cloud ?? models.hybrid;
   let check: ReadResult;
   try {
-    check = await readItem(checker.model, checker.mode, jpegBase64, readContext);
+    // The confirming read is never told what the first read found: a read primed with the
+    // date could copy it and "confirm" it (found by a cold review, 2026-11-20). If this photo
+    // does not show the date itself (the front of a two-photo item), the reads disagree and a
+    // person checks it.
+    check = await readItem(checker.model, checker.mode, jpegBase64, { ...readContext, seen: undefined });
   } catch (e) {
     return {
       ...step,

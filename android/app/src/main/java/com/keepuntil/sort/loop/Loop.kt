@@ -112,7 +112,8 @@ class SortLoop<P>(private val chart: Chart, private val readers: Readers<P>) {
     private suspend fun confirmDiscard(step: Step.Decided, photo: P, secondLook: Boolean, seen: String?, today: String): Step {
         if (step.verdict.decision != "DISCARD") return step
         val check = try {
-            readers.read(photo, secondLook, seen)
+            // Never told what the first read found, so it cannot copy the date and "confirm" it.
+            readers.read(photo, secondLook, null)
         } catch (e: Exception) {
             return step.copy(
                 verdict = step.verdict.copy(decision = "SET_ASIDE", reason = "would discard, but the confirming read failed (${e.message}); a person checks it"),
