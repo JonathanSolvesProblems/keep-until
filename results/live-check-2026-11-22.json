@@ -1,0 +1,25 @@
+{
+  "ran": "2026-11-22T16:16:54+00:00",
+  "results": [
+    {
+      "check": "live site serves the current build",
+      "ok": true,
+      "detail": "HTTP 200, current build"
+    },
+    {
+      "check": "no build-time secrets in the served bundle",
+      "ok": true,
+      "detail": "1 script(s) checked, VITE_ variables found in: none"
+    },
+    {
+      "check": "recall feed up, control notices still published",
+      "ok": true,
+      "detail": "34,415 notices, 5,353 from the CFIA; control notices missing: none"
+    },
+    {
+      "check": "item log refuses an unsigned write",
+      "ok": true,
+      "detail": "HTTP 403 PERMISSION_DENIED"
+    }
+  ]
+}
