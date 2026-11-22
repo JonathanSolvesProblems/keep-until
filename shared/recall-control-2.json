@@ -1,0 +1,158 @@
+{
+  "registered": "2026-11-22",
+  "note": "Second control set, harder than the first: every case shares the brand with the notice, and most share the kind of food too. Pre-registered before any run of the model or of the product-keyword rule. Notices are real Government of Canada food recalls, copied verbatim from the open data feed pulled 2026-11-22 (characters the feed itself garbles are kept as they are). 'recalled' accepts pull or check_lot; 'no_match' must be no_match. The cases were chosen to be the hard part of recall matching: variants of the same product, an abbreviated brand and a French label.",
+  "cases": [
+    {
+      "id": "d1",
+      "recall": {
+        "nid": "82751",
+        "title": "President’s Choice brand English-Style Gingersnap Cookies recalled due to metal wire",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/president-s-choice-brand-english-style-gingersnap-cookies-recalled-due-metal-wire",
+        "product": "English-Style Gingersnap Cookies",
+        "issue": "Extraneous Material",
+        "recallClass": "Class 2",
+        "lastUpdated": "2026-10-08"
+      },
+      "item": {
+        "id": "control2-1",
+        "brand": "President's Choice",
+        "product": "Chocolate Chip Cookies"
+      },
+      "expected": "no_match",
+      "why_hard": "same brand and same kind of food (cookies), a different product"
+    },
+    {
+      "id": "d2",
+      "recall": {
+        "nid": "82751",
+        "title": "President’s Choice brand English-Style Gingersnap Cookies recalled due to metal wire",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/president-s-choice-brand-english-style-gingersnap-cookies-recalled-due-metal-wire",
+        "product": "English-Style Gingersnap Cookies",
+        "issue": "Extraneous Material",
+        "recallClass": "Class 2",
+        "lastUpdated": "2026-10-08"
+      },
+      "item": {
+        "id": "control2-2",
+        "brand": "PC",
+        "product": "English Style Gingersnap Cookies"
+      },
+      "expected": "recalled",
+      "why_hard": "the recalled product, with the brand printed as PC, the short form of President's Choice"
+    },
+    {
+      "id": "d3",
+      "recall": {
+        "nid": "81662",
+        "title": "Compliments Organic brand Dark Chocolate with Sea Salt recalled due to undeclared almond",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/compliments-organic-brand-dark-chocolate-sea-salt-recalled-due-undeclared-almond",
+        "product": "Dark Chocolate with Sea Salt",
+        "issue": "Tree nut",
+        "recallClass": "Class 3",
+        "lastUpdated": "2026-03-02"
+      },
+      "item": {
+        "id": "control2-3",
+        "brand": "Compliments Organic",
+        "product": "Dark Chocolate 70% Cacao"
+      },
+      "expected": "no_match",
+      "why_hard": "same brand, dark chocolate, but not the sea salt bar the notice names"
+    },
+    {
+      "id": "d4",
+      "recall": {
+        "nid": "81662",
+        "title": "Compliments Organic brand Dark Chocolate with Sea Salt recalled due to undeclared almond",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/compliments-organic-brand-dark-chocolate-sea-salt-recalled-due-undeclared-almond",
+        "product": "Dark Chocolate with Sea Salt",
+        "issue": "Tree nut",
+        "recallClass": "Class 3",
+        "lastUpdated": "2026-03-02"
+      },
+      "item": {
+        "id": "control2-4",
+        "brand": "Compliments Organic",
+        "product": "Dark Chocolate with Sea Salt 100 g"
+      },
+      "expected": "recalled",
+      "why_hard": "the recalled product, with a pack size the notice does not repeat"
+    },
+    {
+      "id": "d5",
+      "recall": {
+        "nid": "82810",
+        "title": "Soup Time brand French Onion Soup recalled due to undeclared wheat",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/soup-time-brand-french-onion-soup-recalled-due-undeclared-wheat",
+        "product": "French Onion Soup",
+        "issue": "Wheat - Gluten",
+        "recallClass": "Class 1",
+        "lastUpdated": "2026-10-29"
+      },
+      "item": {
+        "id": "control2-5",
+        "brand": "Soup Time",
+        "product": "Baba's Borscht Soup"
+      },
+      "expected": "no_match",
+      "why_hard": "same brand, another soup; this notice is only French Onion Soup"
+    },
+    {
+      "id": "d6",
+      "recall": {
+        "nid": "81347",
+        "title": "Great Value brand 100% Grape Juice recalled due to tartrate crystals",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/great-value-brand-100-grape-juice-recalled-due-tartrate-crystals",
+        "product": "100% Grape Juice",
+        "issue": "Extraneous Material",
+        "recallClass": "Class 3",
+        "lastUpdated": "2025-12-11"
+      },
+      "item": {
+        "id": "control2-6",
+        "brand": "Great Value",
+        "product": "100% Apple Juice"
+      },
+      "expected": "no_match",
+      "why_hard": "same brand and same kind of juice carton, a different fruit"
+    },
+    {
+      "id": "d7",
+      "recall": {
+        "nid": "82405",
+        "title": "Cadbury brand Dairy Milk Oreo Candy (bar) recalled due to undeclared pistachio",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/cadbury-brand-dairy-milk-oreo-candy-bar-recalled-due-undeclared-pistachio",
+        "product": "Dairy Milk Oreo Candy (bar)",
+        "issue": "Tree nut",
+        "recallClass": "Class 1",
+        "lastUpdated": "2026-07-24"
+      },
+      "item": {
+        "id": "control2-7",
+        "brand": "Cadbury",
+        "product": "Dairy Milk Fruit & Nut bar"
+      },
+      "expected": "no_match",
+      "why_hard": "same brand and line (Dairy Milk bar), a different bar"
+    },
+    {
+      "id": "d8",
+      "recall": {
+        "nid": "82255",
+        "title": "Amy's brand Organic Lentil Soup (Less Sodium) recalled due to container integrity defects and spoilage",
+        "url": "https://recalls-rappels.canada.ca/en/alert-recall/amy-s-brand-organic-lentil-soup-less-sodium-recalled-due-container-integrity-defects",
+        "product": "Organic Lentil Soup (Less Sodium)",
+        "issue": "Non harmful (quality or spoilage)",
+        "recallClass": "Class 3",
+        "lastUpdated": "2026-06-26"
+      },
+      "item": {
+        "id": "control2-8",
+        "brand": "Amy's",
+        "product": "Soupe aux lentilles biologique, teneur reduite en sodium"
+      },
+      "expected": "recalled",
+      "why_hard": "the recalled product, read from the French side of the bilingual label"
+    }
+  ]
+}
