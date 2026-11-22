@@ -60,13 +60,13 @@ the 16 pantry photos three ways and downloads one file; grade it with
   recall feed every morning and lists kept items that share a brand with a food recall. At the
   next shift start Gemini settles each one: pull it, check the lot code, or no match.
 - **Says what it could not do.** "This laptop could not check it", "Google could not verify this
-  browser", "No name in this photo": limits are stated on the screen, not in a footnote.
+  browser", "No name in this photo": limits are stated on the screen where they apply.
 
 ## Results
 
 | What | Result | File |
 |---|---|---|
-| Hands-free on real Gemini Nano, 70-second clip, nobody touching the laptop | 18 looks on the laptop, 3 calls to the cloud, all 3 items answered right | [hands-free run](results/handsfree-clip-2026-11-20.md) |
+| Hands-free on real Gemini Nano, 70-second clip, nobody touching the laptop | 18 checks on the laptop, 3 calls to the cloud, both items answered right | [hands-free run](results/handsfree-clip-2026-11-20.md) |
 | Hybrid: Nano checks every photo on the laptop, the cloud reads dates | 13 of 15 handled right, 6 cloud calls for 16 photos | [ablation](results/ablation-inference-mode.md) |
 | Cloud only | 14 of 15, 16 cloud calls | [ablation](results/ablation-inference-mode.md) |
 | Gemini Nano alone on the laptop | 4 of 15 | [ablation](results/ablation-inference-mode.md) |

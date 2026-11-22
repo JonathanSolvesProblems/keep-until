@@ -19,7 +19,7 @@ camera (or the item needs the fridge) and the view has changed since the last re
 
 ## Result
 
-**18 looks on the laptop (median 3.8 s each), 3 calls to the cloud, every item handled right:**
+**18 checks on the laptop (median 3.8 s each), 3 calls to the cloud, every item handled right:**
 the carton front got "turn it", the carton top "keep", the yogurt "set aside" for the fridge.
 15 of the 18 frames never left the laptop.
 
@@ -41,16 +41,16 @@ Each time is when the look finished; its frame was taken when the look started, 
 
 Raw record: the browser window title at the end of the run, which the app sets to the summary and
 this timeline (`Keep Until clip: 18 looks on this laptop (median 3.8 s), 3 sent to the cloud: need
-date photo, keep, set aside | ...`).
+date photo, keep, set aside | ...`). The app called each check a "look" at the time.
 
 ## What it shows, and what it does not
 
 - At 11.3 s Nano said a date was in view on the carton's front, which shows none. The cloud read
-  found no date and asked for the item to be turned, so this cost one cloud call, not a wrong answer.
+  found no date and asked for the item to be turned, so this cost one extra cloud call and no wrong answer.
   Nano's triage is a filter for the cloud, and the cloud read still decides.
 - After the carton was answered, three looks (31.8 to 40.4 s) saw the same item and sent nothing.
   Without the "wait for a clear table" rule the same carton would have gone to the cloud again.
-- One run, three items, from a clip rather than a live camera. It shows the loop works on the real
+- One run, two items (three answers: the carton needed turning), from a clip rather than a live camera. It shows the loop works on the real
   on-device model. It does not measure accuracy, which needs many more dated items.
 - The first run of the earlier 31-second clip fit only 6 looks (about 5 s each while the model
   warmed up), so items went by unseen. The clip now holds each item for 14 to 16 s, about as long

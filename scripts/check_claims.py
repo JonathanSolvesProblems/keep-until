@@ -30,7 +30,7 @@ def recall():
 
 
 def handsfree():
-    m = re.search(r"\*\*(\d+) looks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", read("results/handsfree-clip-2026-11-20.md"))
+    m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", read("results/handsfree-clip-2026-11-20.md"))
     return {"looks": m[1], "median": m[2], "calls": m[3]}
 
 
@@ -46,8 +46,8 @@ CLAIMS = [
     (r"Cloud only \| (\d+ of \d+)", A["cloud"], "cloud-only score"),
     (r"Nano alone on the laptop \| (\d+ of \d+)", A["device"], "on-device-only score"),
     (r"(\d+) of 16 photos never left the laptop", str(16 - int(A["hybrid_calls"])), "photos kept on the laptop"),
-    (r"(\d+) looks on the laptop", H["looks"], "hands-free looks on the laptop"),
-    (r"\d+ looks on the laptop[^.]*?(\d+) (?:calls to|sent to) the cloud", H["calls"], "hands-free cloud calls"),
+    (r"(\d+) checks on the laptop", H["looks"], "hands-free checks on the laptop"),
+    (r"\d+ checks on the laptop[^.]*?(\d+) (?:calls to|sent to) the cloud", H["calls"], "hands-free cloud calls"),
 ]
 
 # Claims that were true once and are not now. Each entry says why it was retired.

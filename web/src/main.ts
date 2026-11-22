@@ -621,7 +621,7 @@ async function watchLoop(): Promise<void> {
       const answers = results.map((r) => (r.step.kind === "verdict" ? r.step.verdict.decision : r.step.kind).toLowerCase().replace(/_/g, " "));
       const looks = [...lookMs].sort((a, b) => a - b);
       const median = looks.length ? (looks[Math.floor(looks.length / 2)] / 1000).toFixed(1) : "?";
-      const summary = `${watchCounts.looks} looks on this laptop (median ${median} s), ${watchCounts.cloudReads} sent to the cloud: ${answers.join(", ") || "none"}`;
+      const summary = `${watchCounts.looks} checks on this laptop (median ${median} s), ${watchCounts.cloudReads} sent to the cloud: ${answers.join(", ") || "none"}`;
       promptEl.textContent = `Clip finished: ${summary}.`;
       document.title = `Keep Until clip: ${summary} | ${watchLog.map((w) => `${w.at}s ${w.saw}`).join(", ")}`;
       console.info("hands-free clip", JSON.stringify({ ...watchCounts, lookMs, answers, timeline: watchLog }));
@@ -649,7 +649,7 @@ async function watchLoop(): Promise<void> {
       continue;
     }
     if (!handsFree) break;
-    const tally = `${watchCounts.looks} looks on this laptop, ${watchCounts.cloudReads} sent to the cloud`;
+    const tally = `${watchCounts.looks} checks on this laptop, ${watchCounts.cloudReads} sent to the cloud`;
     let next = watchStep(tr.triage, ready);
     // The same view as the last read is not a new photo: a person turns it, or takes it away.
     if (next === "read" && !moved(sig, lastReadSig)) next = pendingTurn ? "turn" : "next";

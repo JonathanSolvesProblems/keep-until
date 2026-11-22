@@ -9,7 +9,7 @@ A volunteer holds up a donation. Keep Until reads the date stamp and says keep i
 ## 02-hands-free.png
 
 ```
-Nobody touched the laptop. Gemini Nano watched a 70-second clip: 18 looks on the laptop, 3 calls to the cloud, 3 items right.
+Nobody touched the laptop. Gemini Nano watched a 70-second clip: 18 checks on the laptop, 3 calls to the cloud, both items right.
 ```
 
 ## 03-problem.png
@@ -51,7 +51,7 @@ Fridge items, damaged packages and dates two reads disagree on are set aside for
 ## 09-recall.png
 
 ```
-Recalls are checked against stock every morning. Gemini 16 of 16; brand plus a product word 11 of 16; brand alone 6 of 16.
+Each morning a function lists same-brand recalls; Gemini settles them at shift start. Gemini 16 of 16; brand plus a product word 11 of 16.
 ```
 
 ## 10-offline.png

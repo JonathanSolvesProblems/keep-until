@@ -11,7 +11,7 @@ Keep Until
 ## Tagline
 
 ```
-Hold up a donated can, no buttons, and it says keep until when. In a 70-second hands-free run: 18 looks on the laptop with Gemini Nano, 3 calls to the cloud.
+Hold up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop at no cost and calls the cloud only for dates: 18 checks on the laptop, 3 calls to the cloud.
 ```
 
 ## Platforms
@@ -63,14 +63,14 @@ The screen is built to be read from a metre away with an item in your hand: the 
 ## How I built it on Firebase
 
 - **Firebase AI Logic, hybrid inference, chosen per feature.** The photo check runs on-device (Gemini Nano in Chrome, the Prompt API through `InferenceMode.ONLY_ON_DEVICE` with a JSON schema); the date read runs in the cloud (`gemini-3.5-flash-lite`, minimal thinking, `responseJsonSchema`); the recall check uses `PREFER_IN_CLOUD` with Nano as the offline fallback. Every answer records `inferenceSource`, and the screen says where each read happened and how long it took.
-- **I chose the split by measuring it.** My first design read everything on Nano. On real Gemini Nano it handled 4 of 15 photos; as a checker it handled 10 of 15. So Nano checks and the cloud reads dates.
+- **I chose the split by measuring it.** My first design read everything on Nano. On real Gemini Nano it handled 4 of 15 photos; as a checker (is a package in view, is a date facing the camera) it was right on 10 of 15. So Nano checks and the cloud reads dates.
 - **App Check** (reCAPTCHA Enterprise on web, debug provider on Android), **Authentication** (anonymous for volunteers, Google with Drive file access for the coordinator's sheet), **Firestore** (offline persistence, append-only rules), **Remote Config** (the cloud model and each food bank's own policy over the chart), **Performance Monitoring** (a trace around every read, tagged on-device or cloud), **Cloud Functions with Cloud Scheduler** (the daily recall pull, retried when the feed download drops), **Crashlytics** on Android (a failed read is reported with whether the phone was online and could read on-device) and **Hosting**.
 - **Android** runs the same loop and the same chart gate in Kotlin (`firebase-ai` with `firebase-ai-ondevice`, on-device first). The two gates are proven identical on 294 date stamps and 2,580 chart decisions written by the TypeScript and replayed by a Kotlin test. I ran it on a Galaxy S24 and on Android 8 and Android 16 emulators: same answers, and on each it says it reads in the cloud because the phone has no on-device model.
 - Every decision, with the measurement behind it, is in `devpost/build-log.md`.
 
 ## Results
 
-Hands-free, on real Gemini Nano in my Chrome: a 70-second clip of pantry photos (empty table, a carton's front, its top, the table, a yogurt lid) played in the camera's place, and nobody touched the laptop. 18 looks on the laptop, 3 calls to the cloud, and each item got the right answer: turn it, keep, set aside. Once an item was answered, the laptop kept looking and sent nothing until the table was clear (`results/handsfree-clip-2026-11-20.md`). One run of three items: it shows the loop working on the real model, not accuracy.
+Hands-free, on real Gemini Nano in my Chrome: a 70-second clip of pantry photos (empty table, a carton's front, its top, the table, a yogurt lid) played in the camera's place, and nobody touched the laptop. 18 checks on the laptop, 3 calls to the cloud, and both items got the right answers: turn it, then keep, for the carton; set aside for the yogurt. Once an item was answered, the laptop kept checking and sent nothing until the table was clear (`results/handsfree-clip-2026-11-20.md`). One run of two items shows the loop working on the real model; accuracy needs many more dated items.
 
 Sixteen photos of eight real products from my pantry, labelled by hand before any model run, graded by a script:
 
@@ -105,6 +105,6 @@ A script fails the build if any number on this page or in the README stops match
 
 - **Technological implementation.** Three Firebase AI Logic modes, one per job: `ONLY_ON_DEVICE` for watching the camera, the cloud for reading dates, `PREFER_IN_CLOUD` for recalls. The ablation behind the split is in `results/ablation-inference-mode.md`, and the same loop runs on Web and Android.
 - **Design.** Open the live link and press "Try a sample photo": the answer fills the panel in its colour with the word, and the stamp is re-printed the way the coder printed it. On the phone, try it with Wi-Fi off.
-- **Potential impact.** The chart and the quote are Food Banks Canada's, the recall notices are the Government of Canada's, and every number on this page is checked against its results file by `scripts/check_claims.py` in CI.
-- **Quality of the idea.** The model reads and the chart decides. A discard needs two independent reads, and the app keeps checking kept items against new recalls after the shift ends.
+- **Potential impact.** A sort table decides on every donated item whether it is food or waste, and the volunteer deciding is often on a first shift. Keep Until gives that volunteer Food Banks Canada's own answer, logs it where the food bank already works, and keeps checking kept stock against recalls. The chart, the quote and the recall notices are published sources, and every number here is checked against its results file in CI.
+- **Quality of the idea.** Gemini reads the stamp and Food Banks Canada's chart makes the call, in code. A discard needs two independent reads, and the app keeps checking kept items against new recalls after the shift ends.
 ```
