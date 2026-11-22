@@ -86,7 +86,7 @@ This set mostly tests routing. Nine of the 15 scored photos should get "turn it"
 
 Why a discard needs two reads: in one run the cloud model read the Chipits bag as `26MA14`, a date already past, and the app said discard. The bag says May 2027. In the next run the same photo read `2027 MA 17` (`results/pantry-2026-11-15-cloud-repeatability.md`). Since then a discard needs a second, independent read that finds the same date, and when the two disagree the item goes to the sort lead.
 
-The recall check, on 8 real Government of Canada notices with the expected answers committed before the run: Gemini 8 of 8, brand alone 3 of 8. Brand matching alone would have pulled five items that were never recalled, among them Hershey's Chipits against the August 2026 Hershey's Kisses almond recall.
+The recall check, on 16 pairs of a real Government of Canada recall notice and a same-brand item, in two sets whose expected answers were committed before each run: Gemini 16 of 16, brand plus a product word 10 of 16, brand alone 5 of 16. The second set is the hard part on purpose: Gemini cleared President's Choice chocolate chip cookies against a recall of its gingersnaps, and Great Value apple juice against a recall of its grape juice, and matched Amy's lentil soup read from the French side of the label. One gap is mine, not the model's: the daily function proposes candidates by brand, and a brand printed as "PC" is too short for it, so that item would never reach the model in real use.
 
 A script fails the build if any number on this page or in the README stops matching its results file.
 

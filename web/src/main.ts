@@ -7,7 +7,11 @@ import { logItem, startShift } from "./store";
 import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
 import { renderAnswer, renderRow, renderTally } from "./view";
 import { checkRecallsAtShiftStart, makeRecallModel, settle, type Found, type Notice } from "./recall";
-import recallControl from "../../shared/recall-control.json";
+import recallControl1 from "../../shared/recall-control.json";
+import recallControl2 from "../../shared/recall-control-2.json";
+
+// Both pre-registered sets, run together: the first (2026-11-19) and the harder second (2026-11-22).
+const recallSets = [recallControl1, recallControl2];
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const status = $("status");
@@ -263,16 +267,17 @@ recallControlBtn.addEventListener("click", async () => {
   recallControlBtn.disabled = true;
   const model = makeRecallModel(settings.cloudModel);
   const runs: unknown[] = [];
-  for (const [i, c] of recallControl.cases.entries()) {
-    toolStatus.textContent = `Recall control set: case ${i + 1} of ${recallControl.cases.length}`;
+  const cases = recallSets.flatMap((set) => set.cases.map((c) => ({ ...c, registered: set.registered })));
+  for (const [i, c] of cases.entries()) {
+    toolStatus.textContent = `Recall control sets: case ${i + 1} of ${cases.length}`;
     try {
       const s = await settle(model, c.recall as Notice, c.item);
-      runs.push({ id: c.id, expected: c.expected, rule: "pull", model: s.decision, why: s.why, source: s.source, ms: s.ms });
+      runs.push({ id: c.id, registered: c.registered, expected: c.expected, model: s.decision, why: s.why, source: s.source, ms: s.ms });
     } catch (e) {
-      runs.push({ id: c.id, expected: c.expected, rule: "pull", error: (e as Error).message });
+      runs.push({ id: c.id, registered: c.registered, expected: c.expected, error: (e as Error).message });
     }
   }
-  const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), cloudModel: settings.cloudModel, registered: recallControl.registered, runs }, null, 2)], { type: "application/json" });
+  const blob = new Blob([JSON.stringify({ exported: new Date().toISOString(), cloudModel: settings.cloudModel, sets: recallSets.map((x) => x.registered), runs }, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "keep-until-recall-control.json";

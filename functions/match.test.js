@@ -50,3 +50,17 @@ test("keeps only food recalls inside the window, newest first", () => {
   const feed = [kisses, walnuts, { ...kisses, NID: "old", "Last updated": "2024-01-01" }, { ...kisses, NID: "car", Organization: "TC" }];
   assert.deepEqual(recentFoodRecalls(feed, "2025-11-19").map((r) => r.NID), ["real-noname", "real-hershey"]);
 });
+
+// The baseline rule the model is measured against: brand in the notice and a shared product word.
+import { keywordRule } from "./match.js";
+
+test("keyword rule pulls a same-brand item only when a product word is shared", () => {
+  assert.equal(keywordRule(walnuts, { brand: "No Name", product: "Chopped walnuts" }), "pull");
+  assert.equal(keywordRule(walnuts, { brand: "No Name", product: "Baking powder" }), "no_match");
+});
+
+test("keyword rule never matches on the brand's own words or on another brand", () => {
+  const soup = { Title: "Soup Time brand French Onion Soup recalled due to undeclared wheat", Product: "French Onion Soup" };
+  assert.equal(keywordRule(soup, { brand: "Soup Time", product: "Baba's Borscht Soup" }), "no_match");
+  assert.equal(keywordRule(soup, { brand: "Campbell's", product: "French Onion Soup" }), "no_match");
+});

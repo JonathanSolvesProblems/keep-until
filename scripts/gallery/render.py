@@ -30,11 +30,16 @@ def ablation():
     }
 
 
+def w(d):
+    return {"no_match": "clear", "check_lot": "check lot"}.get(d, d)
+
+
 def recall():
-    t = read("results/recall-control-2026-11-19.md")
-    m = re.search(r"Model: (\d+) of (\d+)\. Brand rule alone: (\d+) of (\d+)", t)
-    rows = re.findall(r"^\| c\d \| ([^|]+) \| ([^|]+) \| (\w+) \| pull (.) \| (\w+) (.) \|", t, re.M)
-    return {"model": f"{m[1]} of {m[2]}", "rule": f"{m[3]} of {m[4]}", "false_pulls": int(m[2]) - int(m[3]), "rows": rows}
+    t = read("results/recall-control-2026-11-22.md")
+    m = re.search(r"Model: (\d+ of \d+)\. Brand plus a product word: (\d+ of \d+)\. Brand alone: (\d+ of \d+)", t)
+    second = t[t.index("## Second set"):t.index("## Both sets")]
+    rows = re.findall(r"^\| (d\d) \| ([^|]+) \| ([^|]+) \| (\w+) \| (\w+) (.) \| (\w+) (.) \| (\w+) (.) \|", second, re.M)
+    return {"model": m[1], "keyword": m[2], "rule": m[3], "rows": rows}
 
 
 def quote():
@@ -149,15 +154,15 @@ SLIDES = [
     },
     {
         "name": "recall",
-        "headline": "Same brand is not the same product",
-        "badge": "Government of Canada recall notices; expected answers committed before the run",
-        "body": "<table class=\"small\"><tr><th>Recall notice</th><th>Item on the shelf</th><th>Brand alone</th><th>Gemini</th></tr>"
+        "headline": "Same brand, same kind of food, not the same product",
+        "badge": "Government of Canada recall notices; expected answers committed before each run",
+        "body": "<div class=\"stack\" style=\"width:100%\"><table class=\"tiny\"><tr><th>Recalled</th><th>Item on the shelf</th><th>Brand alone</th><th>+ product word</th><th>Gemini</th></tr>"
         + "".join(
-            f"<tr><td>{html.escape(n.strip()[:58])}</td><td>{html.escape(i.strip())}</td><td>{'pull ' + ok_rule}</td><td>{dec} {ok_m}</td></tr>"
-            for n, i, exp, ok_rule, dec, ok_m in R["rows"]
+            f"<tr><td>{html.escape(n.split(' recalled')[0].replace(' brand', '').strip())}</td><td>{html.escape(i.strip())}</td><td>{w(rb)} {okb}</td><td>{w(rk)} {okk}</td><td><b>{w(dm)} {okm}</b></td></tr>"
+            for _, n, i, exp, rb, okb, rk, okk, dm, okm in R["rows"]
         )
-        + f"</table><p class=\"big\">Gemini {R['model']}. Brand alone {R['rule']}.</p>",
-        "caption": f"Each morning a Firebase function checks food recalls against stock. Gemini clears same-brand items: {R['model']}, brand alone {R['rule']}.",
+        + f"</table><p class=\"bigline\">Both sets, 16 cases: Gemini {R['model']}. Brand plus a product word {R['keyword']}. Brand alone {R['rule']}.</p></div>",
+        "caption": f"Recalls are checked against stock every morning. Gemini {R['model']}; brand plus a product word {R['keyword']}; brand alone {R['rule']}.",
     },
     {
         "name": "phone",
@@ -256,6 +261,8 @@ code {{ font-family: D; font-weight: 800; letter-spacing: .03em; }}
 .axis {{ display: flex; justify-content: space-between; font-size: 18px; color: #3a3936; margin-top: 4px; }}
 .keys {{ font-size: 22px; margin: 14px 0 0; }} .key {{ margin-right: 22px; }} .key i {{ display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 6px; }}
 .keynote {{ color: #3a3936; }}
+.tiny {{ font-size: 19px; }} table.tiny td, table.tiny th {{ padding: 8px 14px; }}
+.bigline {{ margin: 0; align-self: flex-end; font-size: 28px; font-weight: 800; background: #151515; color: #f2f2ef; padding: 10px 18px; border-radius: 8px; }}
 .term {{ margin: 0; background: #151515; color: #f2f2ef; font-family: D; font-size: 26px; line-height: 1.5; padding: 28px 32px; border-radius: 8px; white-space: pre-wrap; max-width: 820px; }}
 """
 

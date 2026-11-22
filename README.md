@@ -70,7 +70,7 @@ the 16 pantry photos three ways and downloads one file; grade it with
 | Hybrid: Nano checks every photo on the laptop, the cloud reads dates | 13 of 15 handled right, 6 cloud calls for 16 photos | [ablation](results/ablation-inference-mode.md) |
 | Cloud only | 14 of 15, 16 cloud calls | [ablation](results/ablation-inference-mode.md) |
 | Gemini Nano alone on the laptop | 4 of 15 | [ablation](results/ablation-inference-mode.md) |
-| Recall check, 8 real notices, answers registered before the run | Gemini 8 of 8, brand alone 3 of 8 | [recall control](results/recall-control-2026-11-19.md) |
+| Recall check, 16 real notice and item pairs in two sets, answers registered before each run | Gemini 16 of 16, brand plus a product word 10 of 16, brand alone 5 of 16 | [recall control](results/recall-control-2026-11-22.md) |
 | Android gate against the web gate | identical on 294 stamps and 2,580 chart decisions | `shared/gate-vectors.json` |
 | Android on Firebase Test Lab (Pixel 10, Pixel 11, Galaxy S26) | 14 of 15 on the cloud path; on-device unavailable (stub AICore) | [Test Lab](results/android-testlab-2026-11-19.md) |
 | Android 8 and Android 16 emulators, no on-device model | same answers on the sample carton; offline message fixed | [emulators](results/android-emulator-2026-11-20.md) |

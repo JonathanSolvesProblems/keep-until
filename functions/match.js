@@ -49,6 +49,34 @@ export function candidatesFor(recall, items) {
   return out;
 }
 
+const NOT_PRODUCT_WORDS = new Set(["with", "from", "size", "pack", "organic", "style", "brand", "recalled", "certain", "various"]);
+
+/** Product words of four or more letters, singular, without the brand's own words. */
+function productWords(text, brand) {
+  const skip = new Set(norm(brand).trim().split(" "));
+  return new Set(
+    norm(text)
+      .trim()
+      .split(" ")
+      .map((w) => w.replace(/(es|s)$/, ""))
+      .filter((w) => w.length >= 4 && !NOT_PRODUCT_WORDS.has(w) && !skip.has(w)),
+  );
+}
+
+/**
+ * The fairer baseline the model is measured against (2026-11-22): pull only when the brand is in
+ * the notice and the kept item's product shares at least one product word with the recalled
+ * product. It never runs in the product; it exists so the model is compared with a rule a
+ * careful programmer would write, and not only with brand matching.
+ */
+export function keywordRule(recall, item) {
+  if (!candidatesFor(recall, [{ id: "x", brand: item.brand, product: item.product }]).length) return "no_match";
+  const recalled = `${recall.Product ?? ""} ${String(recall.Title ?? "").split(/ recalled /i)[0]}`;
+  const mine = productWords(item.product, item.brand);
+  for (const w of productWords(recalled, item.brand)) if (mine.has(w)) return "pull";
+  return "no_match";
+}
+
 /** Food recalls updated on or after `since` (YYYY-MM-DD), newest first. */
 export function recentFoodRecalls(feed, since) {
   return feed

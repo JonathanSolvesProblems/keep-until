@@ -1,0 +1,154 @@
+{
+  "exported": "2026-11-22T16:50:11.648Z",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "sets": [
+    "2026-11-19",
+    "2026-11-22"
+  ],
+  "runs": [
+    {
+      "id": "c1",
+      "registered": "2026-11-19",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The notice recalls Kisses - Creamy Milk Chocolate, but the kept item is Chipits milk chocolate chips.",
+      "source": "in_cloud",
+      "ms": 1382
+    },
+    {
+      "id": "c2",
+      "registered": "2026-11-19",
+      "expected": "recalled",
+      "model": "pull",
+      "why": "The recall notice explicitly lists the exact brand and product name of the kept item.",
+      "source": "in_cloud",
+      "ms": 808
+    },
+    {
+      "id": "c3",
+      "registered": "2026-11-19",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The recall is for chopped walnuts while the kept item is baking powder.",
+      "source": "in_cloud",
+      "ms": 889
+    },
+    {
+      "id": "c4",
+      "registered": "2026-11-19",
+      "expected": "recalled",
+      "model": "pull",
+      "why": "The recall notice explicitly names the brand and product as recalled due to shell fragments.",
+      "source": "in_cloud",
+      "ms": 758
+    },
+    {
+      "id": "c5",
+      "registered": "2026-11-19",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The recall notice is for Beef Burgers while the kept item is Baking powder.",
+      "source": "in_cloud",
+      "ms": 757
+    },
+    {
+      "id": "c6",
+      "registered": "2026-11-19",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The recall notice specifies frozen soup, whereas the kept item is chicken broth.",
+      "source": "in_cloud",
+      "ms": 653
+    },
+    {
+      "id": "c7",
+      "registered": "2026-11-19",
+      "expected": "recalled",
+      "model": "pull",
+      "why": "The recall notice explicitly names Campbell's brand frozen soup, which matches the kept item.",
+      "source": "in_cloud",
+      "ms": 749
+    },
+    {
+      "id": "c8",
+      "registered": "2026-11-19",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The notice recalls shrimp products, but the kept item is shredded parmesan cheese.",
+      "source": "in_cloud",
+      "ms": 725
+    },
+    {
+      "id": "d1",
+      "registered": "2026-11-22",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The recall notice is for English-Style Gingersnap Cookies while the kept item is Chocolate Chip Cookies.",
+      "source": "in_cloud",
+      "ms": 764
+    },
+    {
+      "id": "d2",
+      "registered": "2026-11-22",
+      "expected": "recalled",
+      "model": "pull",
+      "why": "The recall notice explicitly names the President’s Choice brand English-Style Gingersnap Cookies.",
+      "source": "in_cloud",
+      "ms": 806
+    },
+    {
+      "id": "d3",
+      "registered": "2026-11-22",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The notice recalls Dark Chocolate with Sea Salt while the kept item is Dark Chocolate 70% Cacao.",
+      "source": "in_cloud",
+      "ms": 747
+    },
+    {
+      "id": "d4",
+      "registered": "2026-11-22",
+      "expected": "recalled",
+      "model": "pull",
+      "why": "The recall notice states the exact same brand and product as the kept item.",
+      "source": "in_cloud",
+      "ms": 765
+    },
+    {
+      "id": "d5",
+      "registered": "2026-11-22",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The notice recalls French Onion Soup, but the kept item is Baba's Borscht Soup.",
+      "source": "in_cloud",
+      "ms": 750
+    },
+    {
+      "id": "d6",
+      "registered": "2026-11-22",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The recall notice is for Grape Juice while the kept item is Apple Juice.",
+      "source": "in_cloud",
+      "ms": 665
+    },
+    {
+      "id": "d7",
+      "registered": "2026-11-22",
+      "expected": "no_match",
+      "model": "no_match",
+      "why": "The notice recalls the Dairy Milk Oreo Candy bar, while the kept item is a Dairy Milk Fruit & Nut bar.",
+      "source": "in_cloud",
+      "ms": 729
+    },
+    {
+      "id": "d8",
+      "registered": "2026-11-22",
+      "expected": "recalled",
+      "model": "pull",
+      "why": "The notice recalls the Amy's brand Organic Lentil Soup (Less Sodium), which matches the kept item.",
+      "source": "in_cloud",
+      "ms": 736
+    }
+  ]
+}

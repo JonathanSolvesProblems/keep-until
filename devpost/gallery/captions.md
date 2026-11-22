@@ -45,7 +45,7 @@ Fridge items, damaged packages and dates two reads disagree on are set aside for
 ## 08-recall.png
 
 ```
-Each morning a Firebase function checks food recalls against stock. Gemini clears same-brand items: 8 of 8, brand alone 3 of 8.
+Recalls are checked against stock every morning. Gemini 16 of 16; brand plus a product word 10 of 16; brand alone 5 of 16.
 ```
 
 ## 09-offline.png

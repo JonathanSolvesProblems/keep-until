@@ -25,8 +25,8 @@ def ablation():
 
 
 def recall():
-    m = re.search(r"Model: (\d+ of \d+)\. Brand rule alone: (\d+ of \d+)", read("results/recall-control-2026-11-19.md"))
-    return {"model": m[1], "rule": m[2]}
+    m = re.search(r"Model: (\d+ of \d+)\. Brand plus a product word: (\d+ of \d+)\. Brand alone: (\d+ of \d+)", read("results/recall-control-2026-11-22.md"))
+    return {"model": m[1], "keyword": m[2], "rule": m[3]}
 
 
 def handsfree():
@@ -40,6 +40,7 @@ A, R, H = ablation(), recall(), handsfree()
 CLAIMS = [
     (r"Gemini (\d+ of \d+)", R["model"], "recall control, model"),
     (r"[Bb]rand alone:? (\d+ of \d+)", R["rule"], "recall control, brand rule"),
+    (r"product word:? (\d+ of \d+)", R["keyword"], "recall control, brand plus product word rule"),
     (r"(\d+ of \d+) handled right, \d+ cloud calls", A["hybrid"], "hybrid score"),
     (r"\d+ of \d+ handled right, (\d+) cloud calls", A["hybrid_calls"], "hybrid cloud calls"),
     (r"Cloud only \| (\d+ of \d+)", A["cloud"], "cloud-only score"),
