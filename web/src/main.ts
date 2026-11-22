@@ -604,6 +604,11 @@ function moved(a: Uint8Array, b: Uint8Array | null): boolean {
 function showWatching(words: string): void {
   watching.textContent = words;
   watching.hidden = false;
+  // In clip mode the window title says whether the laptop is watching yet, so a recording can
+  // start the moment the run does.
+  if (clipMode && !document.title.startsWith("Keep Until clip:")) {
+    document.title = models?.triage && video.videoWidth ? "Keep Until: watching" : "Keep Until: warming up";
+  }
 }
 
 async function watchLoop(): Promise<void> {

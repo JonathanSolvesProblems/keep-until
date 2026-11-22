@@ -39,3 +39,6 @@ firebase-debug.log
 .design/brand/art/*.png
 .design/brand/wordmark-base.png
 .design/shots/**/*.png
+
+# Raw footage for the demo video edit (large, local only)
+broll/
