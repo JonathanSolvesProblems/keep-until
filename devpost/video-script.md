@@ -32,10 +32,10 @@ About 150 words, roughly 70 seconds at a normal pace.
 |---|---|---|---|---|
 | 1 | "A donated carton of broth..." | Close-up of the carton top, `2027 FE 14 02146`, in a hand | film: phone, 4K, the real carton | needs Jonathan |
 | 2 | "At a food bank sort table..." | Sort table with donations (no people's faces) | film at the sort shift; fallback: a kitchen table of donations | needs a shift, or fallback |
-| 3 | "I hold the carton up..." | Screen: hands-free on, carton front, "Turn it", badge "Checked on this laptop" | screen recording, `?clip=1` or live webcam | `tmp/scripts/record_handsfree.sh` when the screen is free |
-| 4 | "I turn it..." | Screen: carton top, Keep until 14 FEB 2029, chart page 8 | same recording | same |
+| 3 | "I hold the carton up..." | Screen: hands-free on, carton front, "Turn it", badge "Checked on this laptop" | screen recording, `?clip=1` | recorded 2026-11-22: `broll/handsfree-chrome-2026-11-22-1607.mp4` (turn it at about 20 s, keep at 35 s) |
+| 4 | "I turn it..." | Screen: carton top, Keep until 14 FEB 2029, chart page 8 | same recording | recorded |
 | 5 | "Nothing gets binned on one read..." | Slide 07 (the Chipits misread) | `devpost/gallery/07-refusal.png`, slow push-in | ready |
-| 6 | "Yogurt needs the fridge..." | Screen: yogurt lid, Set aside | same recording | same |
+| 6 | "Yogurt needs the fridge..." | Screen: yogurt lid, Set aside | same recording | recorded (about 55 s) |
 | 7 | "Every morning..." | Slide 09 (recall table), then the shift-start recall line | `devpost/gallery/09-recall.png` | ready |
 | 8 | "And each item lands..." | The food bank's Google Sheet with the new row appearing | screen recording of the sheet in Chrome | needs Jonathan's Google sign-in |
 
