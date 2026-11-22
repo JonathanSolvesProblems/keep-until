@@ -47,7 +47,7 @@ export interface ItemContext {
  * Hands-free: Gemini Nano on the laptop watches the camera, and the cloud is called only when a
  * package with its date facing the camera (or a fridge item) is in front of it. Watching every
  * frame is only affordable on the device: in the cloud it would be a paid call, and a video of
- * the sort table leaving the building, every second or two.
+ * the sort table leaving the building, every few seconds.
  *
  * `ready` is true when the table has been clear since the last item was settled, or the last
  * item asked to be turned. It is what stops one can held up for five seconds being read five times.

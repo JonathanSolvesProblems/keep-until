@@ -21,9 +21,15 @@ export function isFoodRecall(r) {
   return r.Organization === "CFIA";
 }
 
-/** A brand worth matching on: at least three letters and not a generic word. */
+// Brands a label prints in short form, as the notices spell them out. Found by the second recall
+// control set (2026-11-22): a "PC" item was never proposed against a "President's Choice" recall,
+// so the model never saw it. Store brands only, from the notices in the feed.
+const BRAND_ALIASES = { pc: "president s choice", "pc blue menu": "president s choice", "pc organics": "president s choice" };
+
+/** A brand worth matching on: at least three letters and not a generic word, short forms spelled out. */
 function usableBrand(brand) {
-  const b = norm(brand).trim();
+  const raw = norm(brand).trim();
+  const b = BRAND_ALIASES[raw] ?? raw;
   return b.length >= 3 && !GENERIC.has(b) ? b : null;
 }
 

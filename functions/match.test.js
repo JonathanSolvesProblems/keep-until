@@ -64,3 +64,9 @@ test("keyword rule never matches on the brand's own words or on another brand", 
   assert.equal(keywordRule(soup, { brand: "Soup Time", product: "Baba's Borscht Soup" }), "no_match");
   assert.equal(keywordRule(soup, { brand: "Campbell's", product: "French Onion Soup" }), "no_match");
 });
+
+test("a brand printed in short form (PC) is proposed against the spelled-out brand", () => {
+  const ginger = { Title: "President’s Choice brand English-Style Gingersnap Cookies recalled due to metal wire", Product: "English-Style Gingersnap Cookies" };
+  assert.equal(candidatesFor(ginger, [{ id: "pc", brand: "PC", product: "English Style Gingersnap Cookies" }]).length, 1);
+  assert.equal(candidatesFor(ginger, [{ id: "x", brand: "PC Financial", product: "Gift card" }]).length, 0);
+});

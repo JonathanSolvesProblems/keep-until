@@ -203,6 +203,33 @@ SLIDES = [
         "caption": "Every number on the page is checked against the results file it came from, on every push. A stale or retired claim fails the build.",
     },
     {
+        "name": "built",
+        "headline": "Which job runs where, and why",
+        "badge": "Firebase AI Logic on Web and Android; one Firebase project",
+        "body": """<div class="flow">
+<div class="lane"><h3>On the laptop</h3><p><b>Gemini Nano</b>, ONLY_ON_DEVICE</p><p>Watches the camera: item in view? date facing? fridge?</p><p class="why">A look every few seconds. No cloud cost, and the sort table never leaves the building.</p></div>
+<div class="arrow">date faces the camera</div>
+<div class="lane"><h3>In the cloud</h3><p><b>Gemini Flash-Lite</b>, JSON schema</p><p>Reads the stamp exactly as printed: <code>2027 FE 14</code></p><p class="why">Only for photos worth reading. A discard needs a second, independent read.</p></div>
+<div class="arrow">date and food type</div>
+<div class="lane"><h3>In code</h3><p><b>Food Banks Canada's chart</b></p><p>Keep until, set aside, or discard</p><p class="why">The model reads; the chart decides. Same gate on Web and Android.</p></div>
+</div>
+<p class="strip"><b>Lands in:</b> the food bank's Google Sheet and Firestore &nbsp; <b>Every morning:</b> Cloud Functions + Scheduler check recalls; Gemini (PREFER_IN_CLOUD) settles them at shift start &nbsp; <b>Also:</b> App Check, Auth, Remote Config, Performance Monitoring, Crashlytics, Hosting</p>""",
+        "caption": "Nano watches on the laptop, the cloud reads dates, Food Banks Canada's chart decides in code, and a daily function checks recalls.",
+    },
+    {
+        "name": "limits",
+        "headline": "What it does not do yet",
+        "badge": "Stated on the project page and, where it applies, on the screen",
+        "body": """<ul class="limits">
+<li><b>No Android phone has run Gemini Nano for it yet.</b> Test Lab phones and emulators have no working on-device model, and my Galaxy S24 is not on Google's list. On those phones it reads in the cloud and says so.</li>
+<li><b>Lot codes are not read.</b> A recall limited to certain lots always goes to the sort lead as "check the lot code".</li>
+<li><b>Date reading is measured on too few dated photos.</b> The 16-photo set mostly tests routing; a larger dated set is next.</li>
+<li><b>Hands-free needs Nano on the laptop.</b> Elsewhere the volunteer presses Read item, and the app says why.</li>
+<li><b>A store-brand short form not on the matcher's list is missed</b> before the model sees it.</li>
+</ul>""",
+        "caption": "No Android Nano run yet, no lot codes, a small dated test set, and hands-free only with Nano. Each limit is stated where it applies.",
+    },
+    {
         "name": "sources",
         "headline": "Where every rule and number comes from",
         "badge": "devpost/sources.md",
@@ -220,7 +247,7 @@ SLIDES = [
 ]
 
 # Upload order: the hero, then the on-device moment, then the story.
-ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "refusal", "aside", "recall", "offline", "android", "phone", "honesty", "sources"]
+ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "built", "refusal", "aside", "recall", "offline", "android", "phone", "honesty", "limits", "sources"]
 SLIDES = sorted(SLIDES, key=lambda s: ORDER.index(s["name"]))
 for old in OUT.glob("[0-9][0-9]-*.png"):
     old.unlink()
@@ -263,6 +290,14 @@ code {{ font-family: D; font-weight: 800; letter-spacing: .03em; }}
 .keynote {{ color: #3a3936; }}
 .tiny {{ font-size: 19px; }} table.tiny td, table.tiny th {{ padding: 8px 14px; }}
 .bigline {{ margin: 0; align-self: flex-end; font-size: 28px; font-weight: 800; background: #151515; color: #f2f2ef; padding: 10px 18px; border-radius: 8px; }}
+.flow {{ display: grid; grid-template-columns: 1fr 150px 1fr 150px 1fr; gap: 0; align-items: stretch; width: 100%; }}
+.lane {{ background: #f2f2ef; border-radius: 8px; padding: 22px 24px; font-size: 22px; line-height: 1.35; }}
+.lane h3 {{ margin: 0 0 10px; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; color: #3a3936; }}
+.lane p {{ margin: 0 0 10px; }} .lane .why {{ color: #3a3936; font-size: 19px; }}
+.arrow {{ align-self: center; text-align: center; font-size: 18px; font-weight: 700; color: #2553c6; padding: 0 8px; }}
+.arrow::after {{ content: "→"; display: block; font-size: 44px; line-height: 1; }}
+.strip {{ position: absolute; left: 0; right: 0; bottom: 0; margin: 0; font-size: 21px; line-height: 1.45; background: #151515; color: #f2f2ef; padding: 16px 22px; border-radius: 8px; }}
+.limits {{ margin: 0; padding: 0 0 0 28px; font-size: 27px; line-height: 1.4; max-width: 1250px; }} .limits li {{ margin-bottom: 16px; }}
 .term {{ margin: 0; background: #151515; color: #f2f2ef; font-family: D; font-size: 26px; line-height: 1.5; padding: 28px 32px; border-radius: 8px; white-space: pre-wrap; max-width: 820px; }}
 """
 
