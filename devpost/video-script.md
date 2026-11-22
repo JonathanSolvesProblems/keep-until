@@ -15,7 +15,7 @@ This is Keep Until. I hold the carton up. Gemini Nano, running on the laptop, se
 
 I turn it. Now the date faces the camera, so that one photo goes to Gemini in the cloud, which reads the stamp exactly as printed. Food Banks Canada's chart decides: keep it, until February 2029.
 
-Nothing gets binned on one read. When a cloud read once took a 2027 stamp for 2026, the second, independent read caught it, and a person checks it.
+Nothing gets binned on one read. A cloud read once took a 2027 stamp for 2026 and said discard. So now a discard needs a second, independent read, and if the two disagree, a person checks it.
 
 Yogurt needs the fridge, so it goes to the sort lead.
 
