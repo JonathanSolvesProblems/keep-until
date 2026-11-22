@@ -34,7 +34,11 @@ def handsfree():
     return {"looks": m[1], "median": m[2], "calls": m[3]}
 
 
-A, R, H = ablation(), recall(), handsfree()
+def date_reading():
+    return re.search(r"\*\*Dates read right: (\d+ of \d+)\.\*\*", read("results/date-control-off-ca-2026-11-22.md"))[1]
+
+
+A, R, H, D = ablation(), recall(), handsfree(), date_reading()
 
 # (pattern with one group, expected value, what it is). Every match in every document must equal it.
 CLAIMS = [
@@ -46,6 +50,7 @@ CLAIMS = [
     (r"Cloud only \| (\d+ of \d+)", A["cloud"], "cloud-only score"),
     (r"Nano alone on the laptop \| (\d+ of \d+)", A["device"], "on-device-only score"),
     (r"(\d+) of 16 photos never left the laptop", str(16 - int(A["hybrid_calls"])), "photos kept on the laptop"),
+    (r"read (?:the same date on |right on )?(\d+ of 100)", D, "date reading on the outside set"),
     (r"(\d+) checks on the laptop", H["looks"], "hands-free checks on the laptop"),
     (r"\d+ checks on the laptop[^.]*?(\d+) (?:calls to|sent to) the cloud", H["calls"], "hands-free cloud calls"),
 ]

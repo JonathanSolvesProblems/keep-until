@@ -1,0 +1,5034 @@
+{
+  "exported": "2026-11-22T19:56:41.488Z",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "policy": {
+    "bound": "min",
+    "overrides": {}
+  },
+  "results": [
+    {
+      "file": "8004476001068-1.jpg",
+      "at": "2026-11-22T19:52:33.892Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Olio Corvino Biologique Huile D'Olive Extra Vierge",
+              "brand": "Olio Corvino",
+              "category": "olive_oil",
+              "date_text": "SCAD. 31/01/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 2113,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Olio Corvino Biologique Huile D'Olive Extra Vierge",
+              "brand": "Olio Corvino",
+              "category": "olive_oil",
+              "date_text": "31/01/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The olive oil product and its best before date are clearly visible and readable."
+            },
+            "source": "in_cloud",
+            "ms": 1457,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-01-31",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-01-31",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "olive_oil",
+            "label": "Olive oil",
+            "page": 7
+          },
+          "reason": "Olive oil: more than 12 months past best before (chart p.7)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0872214008666-2.jpg",
+      "at": "2026-11-22T19:52:36.777Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "meal_replacement_liquid",
+              "date_text": "EXP:04/10/2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a liquid meal replacement and the expiry date is clearly readable."
+            },
+            "source": "in_cloud",
+            "ms": 1456,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "meal_replacement_liquid",
+              "date_text": "EXP:04/10/2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The expiry date is clearly visible on the nutrition label."
+            },
+            "source": "in_cloud",
+            "ms": 1341,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-04-10",
+            "2023-10-04"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "meal_replacement_liquid",
+            "label": "Complete meal replacement liquid",
+            "page": 11
+          },
+          "reason": "two reads disagree on the date (2023-04-10 or 2023-10-04 vs 2023-04-10 or 2023-10-04), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0621001001645-1.jpg",
+      "at": "2026-11-22T19:52:40.691Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Millet",
+              "brand": "",
+              "category": "white_rice_barley",
+              "date_text": "13/05/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the label."
+            },
+            "source": "in_cloud",
+            "ms": 1902,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Millet",
+              "brand": "",
+              "category": "white_rice_barley",
+              "date_text": "13/05/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The millet is clearly labeled with a best before date and is in good condition."
+            },
+            "source": "in_cloud",
+            "ms": 1912,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2021-05-13",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-05-13",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "white_rice_barley",
+            "label": "Other grains and cereals: white rice, whole barley, low fat grains",
+            "page": 6
+          },
+          "reason": "Other grains and cereals: white rice, whole barley, low fat grains: more than 36 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0883204017216-1.jpg",
+      "at": "2026-11-22T19:52:43.503Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "SAUCE AU PIMENT FORT SRIRACHA",
+              "brand": "HO-YA",
+              "category": "hot_pepper_sauce",
+              "date_text": "EXP:26/06/2021",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, brand, category, and expiry date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1619,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "SAUCE AU PIMENT FORT SRIRACHA",
+              "brand": "HO-YA",
+              "category": "hot_pepper_sauce",
+              "date_text": "EXP:26/06/2021",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible on the bottle."
+            },
+            "source": "in_cloud",
+            "ms": 1117,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2021-06-26",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2026-06-26",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "hot_pepper_sauce",
+            "label": "Hot pepper sauce",
+            "page": 8
+          },
+          "reason": "Hot pepper sauce: more than 60 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "5904637025410-1.jpg",
+      "at": "2026-11-22T19:52:46.402Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Christmas Choco 12 PK Hazelnut, Caramel, Vanilla",
+              "brand": "Magnat",
+              "category": "crackers_cookies",
+              "date_text": "08.08.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the label."
+            },
+            "source": "in_cloud",
+            "ms": 1619,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Christmas Choco 12 PK Hazelnut, Caramel, Vanilla",
+              "brand": "Magnat",
+              "category": "crackers_cookies",
+              "date_text": "08.08.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the label."
+            },
+            "source": "in_cloud",
+            "ms": 1179,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-08-08",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2023-09-08",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "Dry crackers and cookies, rice cakes: more than 1 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0621001003946-1.jpg",
+      "at": "2026-11-22T19:52:49.399Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Rosettes",
+              "brand": "Distributions DYN",
+              "category": "crackers_cookies",
+              "date_text": "03/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item is identified, category matches, and the best before date is fully readable."
+            },
+            "source": "in_cloud",
+            "ms": 1664,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Rosettes",
+              "brand": "Distributions DYN",
+              "category": "crackers_cookies",
+              "date_text": "03/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, brand, and best before date are clearly visible and readable."
+            },
+            "source": "in_cloud",
+            "ms": 1213,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-03-10",
+            "2023-10-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2023-03-10 or 2023-10-03 vs 2023-03-10 or 2023-10-03), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0621001003953-1.jpg",
+      "at": "2026-11-22T19:52:52.500Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MACARONS",
+              "brand": "DYN",
+              "category": "crackers_cookies",
+              "date_text": "03/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1761,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Macarons",
+              "brand": "Distributions DYN",
+              "category": "crackers_cookies",
+              "date_text": "03/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, best before date, and clean packaging condition are all clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1225,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-03-10",
+            "2023-10-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2023-03-10 or 2023-10-03 vs 2023-03-10 or 2023-10-03), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0061308210195-1.jpg",
+      "at": "2026-11-22T19:52:54.223Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Pastry / Feuilleté Bites / Bouchées",
+              "brand": "Pilaros",
+              "category": "chilled_or_frozen",
+              "date_text": "BB/MA 2022 DE 31",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This frozen pastry product needs to be kept frozen and belongs in the chilled or frozen category."
+            },
+            "source": "in_cloud",
+            "ms": 1653,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This frozen pastry product needs to be kept frozen and belongs in the chilled or frozen category."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0069529050064-2.jpg",
+      "at": "2026-11-22T19:52:57.356Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "dry_pasta_noodles",
+              "date_text": "BBF : 30/10/2025",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is dry rice noodles, category and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1664,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "dry_pasta_noodles",
+              "date_text": "BBF:30/10/2025",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly rice noodles, category dry_pasta_noodles, and the best before date is fully readable."
+            },
+            "source": "in_cloud",
+            "ms": 1320,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2025-10-30",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dry_pasta_noodles",
+            "label": "Dry pasta and noodles",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2025-10-30 vs 2025-10-01), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0797059859573-1.jpg",
+      "at": "2026-11-22T19:52:58.972Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Fig Balsamic Cream",
+              "brand": "Veliotiko",
+              "category": "vinegar",
+              "date_text": "EXP 10/09/23",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible on the bottle."
+            },
+            "source": "in_cloud",
+            "ms": 1536,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-09-10",
+            "2023-10-09"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "vinegar",
+            "label": "White, cider, rice, malt vinegars",
+            "page": 8
+          },
+          "reason": "White, cider, rice, malt vinegars: no limit in the chart (p.8)"
+        },
+        "route": "in_cloud: model chose log"
+      }
+    },
+    {
+      "file": "0069694014878-1.jpg",
+      "at": "2026-11-22T19:53:02.127Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mini Fruit Flavoured Candies",
+              "brand": "S&F",
+              "category": "crackers_cookies",
+              "date_text": "25.11.2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified and the best before date is fully visible and readable."
+            },
+            "source": "in_cloud",
+            "ms": 1726,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Fruit Flavoured Candies",
+              "brand": "S&F",
+              "category": "crackers_cookies",
+              "date_text": "25.11.2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified, in good condition, and the best before date is fully readable."
+            },
+            "source": "in_cloud",
+            "ms": 1311,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2024-11-25",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-12-25",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "Dry crackers and cookies, rice cakes: more than 1 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "3700311812176-5.jpg",
+      "at": "2026-11-22T19:53:05.342Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MADELEINES LONGUES",
+              "brand": "Tous les jours",
+              "category": "crackers_cookies",
+              "date_text": "23/11/2018",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name, brand, category, and date are all clearly visible and legible."
+            },
+            "source": "in_cloud",
+            "ms": 1595,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "MADELEINES LONGUES",
+              "brand": "Tous les jours",
+              "category": "crackers_cookies",
+              "date_text": "23/11/2018",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1225,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2018-11-23",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2018-12-23",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "Dry crackers and cookies, rice cakes: more than 1 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "3256540002364-11.jpg",
+      "at": "2026-11-22T19:53:08.284Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BRIOCHE TRESSÉE TRANCHÉE",
+              "brand": "Gabriel",
+              "category": "bread_commercial",
+              "date_text": "19/07/2019",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a commercially packaged sliced brioche, categorized as commercial bread, with a clearly visible date and no damage."
+            },
+            "source": "in_cloud",
+            "ms": 1585,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Sliced Braided Brioche with Butter",
+              "brand": "Gabriel",
+              "category": "bread_commercial",
+              "date_text": "19/07/2019",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best-before date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1269,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2019-07-19",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2019-07-24",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "Commercially packaged loaves, rolls, bagels, muffins: more than 5 days past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0066019200251-4.jpg",
+      "at": "2026-11-22T19:53:10.729Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Sardines",
+              "brand": "Pêche Ocean",
+              "category": "canned_meat_fish",
+              "date_text": "22/12/2016",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item is clearly identified, the packaging is intact, and the expiry date is fully visible."
+            },
+            "source": "in_cloud",
+            "ms": 1362,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Sardines",
+              "brand": "Pêche Ocean",
+              "category": "canned_meat_fish",
+              "date_text": "22/12/2016",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible and undamaged."
+            },
+            "source": "in_cloud",
+            "ms": 1024,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2016-12-22",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2017-12-22",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "canned_meat_fish",
+            "label": "Cooked meats, fish, shellfish in tins or commercial pouches",
+            "page": 10
+          },
+          "reason": "Cooked meats, fish, shellfish in tins or commercial pouches: more than 12 months past best before (chart p.10)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "3245412891168-9.jpg",
+      "at": "2026-11-22T19:53:13.919Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Carrefour",
+              "category": "canned_fruit_veg",
+              "date_text": "01.06.2020",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly visible, the category is canned fruits and vegetables, and a legible best before date is present."
+            },
+            "source": "in_cloud",
+            "ms": 1888,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Carrefour",
+              "category": "canned_fruit_veg",
+              "date_text": "01.06.2020",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item and its best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1176,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2020-01-06",
+            "2020-06-01"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_fruit_veg",
+            "label": "Canned fruits and vegetables",
+            "page": 4
+          },
+          "reason": "two reads disagree on the date (2020-01-06 or 2020-06-01 vs 2020-01-06 or 2020-06-01), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "8025202001220-2.jpg",
+      "at": "2026-11-22T19:53:17.087Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "VERMICELLI COUPES 167",
+              "brand": "",
+              "category": "dry_pasta_noodles",
+              "date_text": "EXP: 19/05/2025",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is dry pasta noodles and the expiry date is clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1668,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Vermicelli Coupes 167",
+              "brand": "",
+              "category": "dry_pasta_noodles",
+              "date_text": "19/05/2025",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The dry pasta noodles are clearly labeled and the expiry date is fully visible."
+            },
+            "source": "in_cloud",
+            "ms": 1421,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2025-05-19",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2026-05-19",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "dry_pasta_noodles",
+            "label": "Dry pasta and noodles",
+            "page": 6
+          },
+          "reason": "Dry pasta and noodles: more than 12 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0083747003657-2.jpg",
+      "at": "2026-11-22T19:53:19.486Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "flour_based_mixes",
+              "date_text": "07/01/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identifiable as a cake or baking mix from the nutrition facts label, and a clear date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1262,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "07/01/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "ask_cloud",
+              "why": "A date is visible on a nutrition facts label, but the product name and brand are not shown to determine the category."
+            },
+            "source": "in_cloud",
+            "ms": 1082,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-01-07",
+            "2023-07-01"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "flour_based_mixes",
+            "label": "Cake, cookie, brownie, muffin, biscuit, pancake or waffle mixes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2023-01-07 or 2023-07-01 vs 2023-01-07 or 2023-07-01), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0689466018479-1.jpg",
+      "at": "2026-11-22T19:53:22.223Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Raspberry Black Pepper Vinaigrette",
+              "brand": "Okanagan Wineland Dressings",
+              "category": "vinaigrette",
+              "date_text": "24/10/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1411,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Raspberry Black Pepper Vinaigrette",
+              "brand": "Okanagan Wineland Dressings",
+              "category": "vinaigrette",
+              "date_text": "24/10/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the bottle."
+            },
+            "source": "in_cloud",
+            "ms": 1239,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2024-10-24",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2025-01-24",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "vinaigrette",
+            "label": "Vinaigrette dressings",
+            "page": 7
+          },
+          "reason": "Vinaigrette dressings: more than 3 months past best before (chart p.7)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0889842103557-1.jpg",
+      "at": "2026-11-22T19:53:23.806Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "no_item",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "non_food",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "no_item",
+              "why": "This is a video game, which is not a food or accepted grocery item."
+            },
+            "source": "in_cloud",
+            "ms": 1484,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model saw no item"
+      }
+    },
+    {
+      "file": "6253001010378-1.jpg",
+      "at": "2026-11-22T19:53:26.721Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Halva Extra Vanilla",
+              "brand": "Kasih",
+              "category": "general_grocery_boxed",
+              "date_text": "03/05/2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1512,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Halva Extra Vanilla",
+              "brand": "Kasih",
+              "category": "general_grocery_boxed",
+              "date_text": "03/05/2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, brand, category, and expiry date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1313,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-03-05",
+            "2023-05-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_boxed",
+            "label": "General grocery, shelf stable, boxed or bagged (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "two reads disagree on the date (2023-03-05 or 2023-05-03 vs 2023-03-05 or 2023-05-03), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0814574001307-2.jpg",
+      "at": "2026-11-22T19:53:28.740Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Chicken Burgers with Fire-Roasted Vegetables",
+              "brand": "Janet and Greta's",
+              "category": "chilled_or_frozen",
+              "date_text": "18-06-18",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This product requires refrigeration or freezing."
+            },
+            "source": "in_cloud",
+            "ms": 1632,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This product requires refrigeration or freezing."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0872632120193-2.jpg",
+      "at": "2026-11-22T19:53:30.260Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "13/08/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "ask_cloud",
+              "why": "The date and nutrition facts are visible, but the product name and brand are missing from this view."
+            },
+            "source": "in_cloud",
+            "ms": 1471,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "the cloud model could not settle it: The date and nutrition facts are visible, but the product name and brand are missing from this view."
+        },
+        "route": "in_cloud: The date and nutrition facts are visible, but the product name and brand are missing from this view.; already in the cloud"
+      }
+    },
+    {
+      "file": "0697658692383-2.jpg",
+      "at": "2026-11-22T19:53:32.963Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Manitoba Harvest",
+              "category": "energy_bars",
+              "date_text": "12-10-20",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is an energy bar, the category and date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1503,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Manitoba Harvest",
+              "category": "energy_bars",
+              "date_text": "12-10-20",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The energy bar is undamaged, and the best before date is clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1121,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2020-10-12",
+            "2020-12-10"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "energy_bars",
+            "label": "Breakfast, lunch or energy bars",
+            "page": 11
+          },
+          "reason": "two reads disagree on the date (2020-10-12 or 2020-12-10 vs 2020-10-12 or 2020-12-10), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0665081004622-3.jpg",
+      "at": "2026-11-22T19:53:34.527Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Dark Chocolate Superfood Real Cherry",
+              "brand": "Healthy Crunch",
+              "category": "dried_fruit",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product package is in view and identifiable, but no date stamp is currently visible."
+            },
+            "source": "in_cloud",
+            "ms": 1490,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "0064420100818-3.jpg",
+      "at": "2026-11-22T19:53:36.280Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Sealtest Lait Partiellement Écrémé 2% M.G.",
+              "brand": "Sealtest",
+              "category": "chilled_or_frozen",
+              "date_text": "21-01-19",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is fresh milk in a carton and requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1654,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is fresh milk in a carton and requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0056932604045-1.jpg",
+      "at": "2026-11-22T19:53:39.411Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Honey Mustard Pretzels",
+              "brand": "Neal Brothers",
+              "category": "pretzels_popcorn",
+              "date_text": "04/09/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and date are all clearly visible and intact."
+            },
+            "source": "in_cloud",
+            "ms": 1920,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Honey Mustard Pretzels",
+              "brand": "Neal Brothers",
+              "category": "pretzels_popcorn",
+              "date_text": "04/09/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, brand, and readable best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1126,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2021-04-09",
+            "2021-09-04"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "pretzels_popcorn",
+            "label": "Pretzels, prepared popcorn",
+            "page": 12
+          },
+          "reason": "two reads disagree on the date (2021-04-09 or 2021-09-04 vs 2021-04-09 or 2021-09-04), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "5425010833151-2.jpg",
+      "at": "2026-11-22T19:53:42.243Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Minestronesoep/Soupe minestrone",
+              "brand": "",
+              "category": "canned_prepared_meals",
+              "date_text": "18/07/2019",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a commercially canned soup, and the best before date is clearly readable."
+            },
+            "source": "in_cloud",
+            "ms": 1555,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Minestronesoep / Soupe minestrone",
+              "brand": "",
+              "category": "canned_prepared_meals",
+              "date_text": "18/07/2019",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a minestrone soup and the best before date is clearly legible."
+            },
+            "source": "in_cloud",
+            "ms": 1180,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2019-07-18",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2021-07-18",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: more than 24 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "8076809507110-9.jpg",
+      "at": "2026-11-22T19:53:45.704Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Macine con Panna Fresca",
+              "brand": "Mulino Bianco",
+              "category": "crackers_cookies",
+              "date_text": "02/01/2020",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1767,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Macine con Panna Fresca",
+              "brand": "Mulino Bianco",
+              "category": "crackers_cookies",
+              "date_text": "02/01/2020",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a cookie, the category and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1255,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2020-01-02",
+            "2020-02-01"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2020-01-02 or 2020-02-01 vs 2020-01-02 or 2020-02-01), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0041508963985-3.jpg",
+      "at": "2026-11-22T19:53:48.936Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "bottled_water",
+              "date_text": "BBE 10.2019",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identified as bottled water, the best before date is clearly legible, and the package has no visible damage."
+            },
+            "source": "in_cloud",
+            "ms": 1636,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "bottled_water",
+              "date_text": "BBE 10.2019",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category can be inferred and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1203,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2019-10-01",
+          "precision": "month"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2021-10-01",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "bottled_water",
+            "label": "Bottled water, plain",
+            "page": 5
+          },
+          "reason": "Bottled water, plain: more than 24 months past best before (chart p.5)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0753519473840-1.jpg",
+      "at": "2026-11-22T19:53:51.793Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Protein Blend Mélange de Protéines",
+              "brand": "Imperial Nuts",
+              "category": "nuts_seeds",
+              "date_text": "BEST BY:04/05/2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, brand, and best before date are all clearly visible and intact on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1519,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Protein Blend",
+              "brand": "Imperial Nuts",
+              "category": "nuts_seeds",
+              "date_text": "BEST BY:04/05/2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a bag of nuts, category is nuts_seeds, and the best before date is clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1238,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2024-04-05",
+            "2024-05-04"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "nuts_seeds",
+            "label": "Shelled nuts and seeds",
+            "page": 12
+          },
+          "reason": "two reads disagree on the date (2024-04-05 or 2024-05-04 vs 2024-04-05 or 2024-05-04), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0068200859118-4.jpg",
+      "at": "2026-11-22T19:53:53.390Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Balderson",
+              "category": "chilled_or_frozen",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "set_aside",
+              "why": "This is cheese which requires refrigeration and must be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1511,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is cheese which requires refrigeration and must be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "6281036281203-4.jpg",
+      "at": "2026-11-22T19:53:54.884Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "crackers_cookies",
+              "date_text": "P 12/04/20",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is chips or similar snacks, the packaging is intact, and a legible date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1270,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2020-04-12",
+            "2020-12-04"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "packaged-on date: the chart counts from best-before dates, so the lead decides; the stamp reads 2020-04-12 or 2020-12-04 and both give the same call"
+        },
+        "route": "in_cloud: model chose log"
+      }
+    },
+    {
+      "file": "0037695503486-2.jpg",
+      "at": "2026-11-22T19:53:58.464Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Cookies United",
+              "category": "crackers_cookies",
+              "date_text": "12/11/2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identified as cookies, and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1824,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Cookies United",
+              "category": "crackers_cookies",
+              "date_text": "12/11/2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identified, and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1389,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2024-11-12",
+            "2024-12-11"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2024-11-12 or 2024-12-11 vs 2024-11-12 or 2024-12-11), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0056664013115-2.jpg",
+      "at": "2026-11-22T19:54:01.392Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Beurre d'arachide Peanut Butter",
+              "brand": "Yum Nature",
+              "category": "natural_peanut_butter",
+              "date_text": "14/03/2021",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified, categorized, and has a visible date."
+            },
+            "source": "in_cloud",
+            "ms": 1552,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Beurre d'arachide Peanut Butter",
+              "brand": "Yum Nature",
+              "category": "natural_peanut_butter",
+              "date_text": "14/03/2021",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is identified as natural peanut butter with a clear best before date visible."
+            },
+            "source": "in_cloud",
+            "ms": 1259,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2021-03-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2021-05-14",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "natural_peanut_butter",
+            "label": "Natural peanut butter (no hydrogenated oils)",
+            "page": 12
+          },
+          "reason": "Natural peanut butter (no hydrogenated oils): more than 2 months past best before (chart p.12)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0815442005021-1.jpg",
+      "at": "2026-11-22T19:54:04.669Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mixed Seasoning Triguisar",
+              "brand": "Triguisar",
+              "category": "dry_sauce_mix",
+              "date_text": "USE BY/EMPLOYEZ AVANT 24 MA 18",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are fully legible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1777,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Mixed Seasoning Triguisar",
+              "brand": "Triguisar",
+              "category": "dry_sauce_mix",
+              "date_text": "USE BY/EMPLOYEZ AVANT 24 MA 18",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a dry seasoning mix and the best before date is fully readable."
+            },
+            "source": "in_cloud",
+            "ms": 1418,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2024-05-18",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-11-18",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "dry_sauce_mix",
+            "label": "Dry packaged sauce mixes",
+            "page": 8
+          },
+          "reason": "Dry packaged sauce mixes: more than 6 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0185782000223-1.jpg",
+      "at": "2026-11-22T19:54:08.481Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Extra Virgin Olive Oil",
+              "brand": "",
+              "category": "olive_oil",
+              "date_text": "03/08/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best-before date are all clearly visible and legible."
+            },
+            "source": "in_cloud",
+            "ms": 1400,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Extra Virgin Olive Oil",
+              "brand": "",
+              "category": "olive_oil",
+              "date_text": "03/09/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible and undamaged."
+            },
+            "source": "in_cloud",
+            "ms": 2317,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-03-08",
+            "2023-08-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "olive_oil",
+            "label": "Olive oil",
+            "page": 7
+          },
+          "reason": "two reads disagree on the date (2023-03-08 or 2023-08-03 vs 2023-03-09 or 2023-09-03), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0272928908991-1.jpg",
+      "at": "2026-11-22T19:54:10.326Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "GATEAU DBLE CHOC 350G",
+              "brand": "",
+              "category": "chilled_or_frozen",
+              "date_text": "29.03.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a perishable cake that requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1725,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a perishable cake that requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0666872160435-1.jpg",
+      "at": "2026-11-22T19:54:12.065Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Cream Custard Buns",
+              "brand": "Vanworld",
+              "category": "chilled_or_frozen",
+              "date_text": "13.07.2025",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This product requires freezing as indicated on the packaging."
+            },
+            "source": "in_cloud",
+            "ms": 1573,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This product requires freezing as indicated on the packaging."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "8160550018510-1.jpg",
+      "at": "2026-11-22T19:54:13.593Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Pizza Traditionnelle Aux Tomates",
+              "brand": "Olive Et Tomate",
+              "category": "chilled_or_frozen",
+              "date_text": "30/01/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a fresh pizza product that requires refrigeration and must be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1399,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a fresh pizza product that requires refrigeration and must be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0678432504047-1.jpg",
+      "at": "2026-11-22T19:54:17.308Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Flat Bread",
+              "brand": "Pasquier",
+              "category": "bread_commercial",
+              "date_text": "28/1/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 2230,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Flat Bread",
+              "brand": "Pasquier",
+              "category": "bread_commercial",
+              "date_text": "28/1/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1371,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-01-28",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2023-02-02",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "Commercially packaged loaves, rolls, bagels, muffins: more than 5 days past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "2100001048860-1.jpg",
+      "at": "2026-11-22T19:54:20.223Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Oat Organic Non-Dairy Beverage",
+              "brand": "Kirkland Signature",
+              "category": "shelf_stable_milk",
+              "date_text": "10/10/2022",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1673,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Oat Organic Non-Dairy Beverage",
+              "brand": "Kirkland Signature",
+              "category": "shelf_stable_milk",
+              "date_text": "10/10/2022",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1110,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2022-10-10",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2022-11-10",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "shelf_stable_milk",
+            "label": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch)",
+            "page": 5
+          },
+          "reason": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch): more than 1 months past best before (chart p.5)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "5027738016191-1.jpg",
+      "at": "2026-11-22T19:54:23.266Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Thick Savian",
+              "brand": "Regal Snacks",
+              "category": "crackers_cookies",
+              "date_text": "03/Jan/2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, brand, category, and best before date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1701,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Thick Savian",
+              "brand": "Regal",
+              "category": "pretzels_popcorn",
+              "date_text": "03/Jan/2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1246,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2024-01-03",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-02-03",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "Dry crackers and cookies, rice cakes: more than 1 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0069288001987-1.jpg",
+      "at": "2026-11-22T19:54:24.929Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "shortcake au caramel",
+              "brand": "Baril",
+              "category": "chilled_or_frozen",
+              "date_text": "07/11/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a perishable bakery item that requires refrigeration and must be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1552,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a perishable bakery item that requires refrigeration and must be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0773619030064-1.jpg",
+      "at": "2026-11-22T19:54:26.595Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Gateau a base de plantes",
+              "brand": "Maison Isabelle",
+              "category": "bread_commercial",
+              "date_text": "10/10/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a perishable bakery cake that requires refrigeration or should be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1546,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a perishable bakery cake that requires refrigeration or should be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0850033079791-3.jpg",
+      "at": "2026-11-22T19:54:29.587Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Salted Caramel Syrup",
+              "brand": "Jordan's Skinny Syrups",
+              "category": "general_grocery_canned",
+              "date_text": "BEST BY 10/06/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the bottle."
+            },
+            "source": "in_cloud",
+            "ms": 1699,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Salted Caramel Skinny Syrups",
+              "brand": "Jordan's Skinny Syrups",
+              "category": "general_grocery_canned",
+              "date_text": "BEST BY 10/06/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible and readable."
+            },
+            "source": "in_cloud",
+            "ms": 1194,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2024-06-10",
+            "2024-10-06"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "two reads disagree on the date (2024-06-10 or 2024-10-06 vs 2024-06-10 or 2024-10-06), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0067400017922-1.jpg",
+      "at": "2026-11-22T19:54:31.505Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Raclette Tasting",
+              "brand": "Agropur Import",
+              "category": "chilled_or_frozen",
+              "date_text": "25/03/20",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a cheese product which requires refrigeration, so it must be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1836,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a cheese product which requires refrigeration, so it must be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0710228339935-1.jpg",
+      "at": "2026-11-22T19:54:33.122Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Farmer Cheese Dessert Classic Vanilla",
+              "brand": "Bandi Foods",
+              "category": "chilled_or_frozen",
+              "date_text": "14.02.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a cheese product and must be set aside for refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1521,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a cheese product and must be set aside for refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0667888082179-2.jpg",
+      "at": "2026-11-22T19:54:36.239Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "dried_fruit",
+              "date_text": "14/05/2021",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is dried fruit and the best before date is clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1746,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "dried_fruit",
+              "date_text": "14/05/2021",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is dried plums, the category is dried_fruit, and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1267,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2021-05-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2021-11-14",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "dried_fruit",
+            "label": "Dried fruit",
+            "page": 4
+          },
+          "reason": "Dried fruit: more than 6 months past best before (chart p.4)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "8681630323015-2.jpg",
+      "at": "2026-11-22T19:54:40.959Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LOKMA",
+              "brand": "ZÜBER",
+              "category": "energy_bars",
+              "date_text": "09.11.23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified, the category and best before date are fully visible and readable."
+            },
+            "source": "in_cloud",
+            "ms": 2563,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "LOKMA",
+              "brand": "ZÜBER",
+              "category": "crackers_cookies",
+              "date_text": "09.11.23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified, has a visible best before date, and is undamaged."
+            },
+            "source": "in_cloud",
+            "ms": 2033,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-09-11",
+            "2023-11-09"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "energy_bars",
+            "label": "Breakfast, lunch or energy bars",
+            "page": 11
+          },
+          "reason": "two reads disagree on the date (2023-09-11 or 2023-11-09 vs 2023-09-11 or 2023-11-09), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0638031612178-19.jpg",
+      "at": "2026-11-22T19:54:42.716Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Field Roast",
+              "category": "chilled_or_frozen",
+              "date_text": "05/03/25",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This plant-based meat product needs refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1610,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This plant-based meat product needs refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0817670010204-2.jpg",
+      "at": "2026-11-22T19:54:45.691Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Alter Eco",
+              "category": "crackers_cookies",
+              "date_text": "03/12/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identified and the best before date is clearly legible."
+            },
+            "source": "in_cloud",
+            "ms": 1634,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Alter Eco",
+              "category": "crackers_cookies",
+              "date_text": "03/12/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identified and the best before date is clearly legible."
+            },
+            "source": "in_cloud",
+            "ms": 1250,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2021-03-12",
+            "2021-12-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2021-03-12 or 2021-12-03 vs 2021-03-12 or 2021-12-03), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0256760916956-1.jpg",
+      "at": "2026-11-22T19:54:47.207Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Première Moisson",
+              "category": "chilled_or_frozen",
+              "date_text": "23.NO.22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a refrigerated quiche that requires refrigeration and must be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1416,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a refrigerated quiche that requires refrigeration and must be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0037466041339-12.jpg",
+      "at": "2026-11-22T19:54:50.437Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Lindt",
+              "category": "crackers_cookies",
+              "date_text": "30-11 -2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The best before date and brand are clearly visible, allowing the item to be logged."
+            },
+            "source": "in_cloud",
+            "ms": 1515,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Lindt",
+              "category": "crackers_cookies",
+              "date_text": "30-11 -2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The best before date and brand are clearly visible, allowing the item to be logged."
+            },
+            "source": "in_cloud",
+            "ms": 1243,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-11-30",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2023-12-30",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "Dry crackers and cookies, rice cakes: more than 1 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0628451526308-4.jpg",
+      "at": "2026-11-22T19:54:52.850Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "shelf_stable_milk",
+              "date_text": "11/11/2020",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identified and a clear date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1320,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "asian_sauces_other",
+              "date_text": "11/11/2020",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is identified and a clear date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 991,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2020-11-11",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2020-12-11",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "shelf_stable_milk",
+            "label": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch)",
+            "page": 5
+          },
+          "reason": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch): more than 1 months past best before (chart p.5)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0065244133204-10.jpg",
+      "at": "2026-11-22T19:54:54.719Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "shelf_stable_milk",
+              "date_text": "22-08-22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "A date is visible but it is unclear if this print is the actual best before date or a manufacturing code."
+            },
+            "source": "in_cloud",
+            "ms": 1514,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "the cloud model could not settle it: A date is visible but it is unclear if this print is the actual best before date or a manufacturing code."
+        },
+        "route": "in_cloud: A date is visible but it is unclear if this print is the actual best before date or a manufacturing code.; already in the cloud"
+      }
+    },
+    {
+      "file": "0833280000046-1.jpg",
+      "at": "2026-11-22T19:54:56.485Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Vegan Pesto Végé",
+              "brand": "Marcello",
+              "category": "chilled_or_frozen",
+              "date_text": "28/07/20",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a fresh pesto sauce that requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1650,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a fresh pesto sauce that requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0856303004951-1.jpg",
+      "at": "2026-11-22T19:54:58.174Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "crackers_cookies",
+              "date_text": "14.05.202",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "medium",
+              "next_action": "log",
+              "why": "The product is a snack bar, categorized under crackers and cookies, and a date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1557,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "the cloud model could not settle it: date \"14.05.202\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "in_cloud: date \"14.05.202\" does not parse (no month and no separated date parts (likely a lot code)); already in the cloud"
+      }
+    },
+    {
+      "file": "3547130101070-2.jpg",
+      "at": "2026-11-22T19:55:01.055Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Extra virgin olive oil",
+              "brand": "",
+              "category": "olive_oil",
+              "date_text": "15/06/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The olive oil product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1549,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "olive_oil",
+              "date_text": "15/08/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The olive oil category matches the product, and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1239,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-06-15",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "olive_oil",
+            "label": "Olive oil",
+            "page": 7
+          },
+          "reason": "two reads disagree on the date (2023-06-15 vs 2023-08-15), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "8941100291351-1.jpg",
+      "at": "2026-11-22T19:55:03.795Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Maggi Healthy Soups Thai",
+              "brand": "Maggi",
+              "category": "canned_prepared_meals",
+              "date_text": "EXP : 29/06/23",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1472,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Maggi Healthy Soups Thai",
+              "brand": "Maggi",
+              "category": "canned_prepared_meals",
+              "date_text": "EXP : 29/06/23",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified and the expiry date is fully legible."
+            },
+            "source": "in_cloud",
+            "ms": 1209,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-06-29",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2025-06-29",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: more than 24 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "3800500043715-3.jpg",
+      "at": "2026-11-22T19:55:07.428Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Benjamíssimo",
+              "category": "crackers_cookies",
+              "date_text": "04.09.2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is clear, the best before date is fully visible, and the package is undamaged."
+            },
+            "source": "in_cloud",
+            "ms": 1849,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Benjamíssimo",
+              "brand": "Benjamíssimo",
+              "category": "crackers_cookies",
+              "date_text": "04.09.2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified and a valid best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1358,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2024-04-09",
+            "2024-09-04"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2024-04-09 or 2024-09-04 vs 2024-04-09 or 2024-09-04), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0083747003978-2.jpg",
+      "at": "2026-11-22T19:55:10.128Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "bread_commercial",
+              "date_text": "07/06/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category is commercially packaged muffins and the best before date is clearly legible."
+            },
+            "source": "in_cloud",
+            "ms": 1484,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "bread_commercial",
+              "date_text": "07/06/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a commercial bread or muffin product which requires proper handling or refrigeration depending on freshness, so it should be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1158,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2024-06-07",
+            "2024-07-06"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2024-06-07 or 2024-07-06 vs 2024-06-07 or 2024-07-06), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "7622201686994-1.jpg",
+      "at": "2026-11-22T19:55:11.650Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mango Tang",
+              "brand": "Tang",
+              "category": "cold_drink_mixes",
+              "date_text": "OTG0320282",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product and category are clear, but the visible code is a lot code rather than a best before date."
+            },
+            "source": "in_cloud",
+            "ms": 1419,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "no month and no separated date parts (likely a lot code)"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "cold_drink_mixes",
+            "label": "Powdered dry drink mixes",
+            "page": 5
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "in_cloud: model chose log"
+      }
+    },
+    {
+      "file": "8413575000900-1.jpg",
+      "at": "2026-11-22T19:55:14.104Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "PATATAS PAJA CON KETCHUP",
+              "brand": "VIDA SANA",
+              "category": "chips",
+              "date_text": "19/06/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1309,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "PATATAS PAJA CON KETCHUP",
+              "brand": "VIDA SANA",
+              "category": "chips",
+              "date_text": "19/06/24",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the label."
+            },
+            "source": "in_cloud",
+            "ms": 1018,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2024-06-19",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-08-19",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "chips",
+            "label": "Potato chips, corn chips, nachos",
+            "page": 12
+          },
+          "reason": "Potato chips, corn chips, nachos: more than 2 months past best before (chart p.12)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0827896001306-1.jpg",
+      "at": "2026-11-22T19:55:15.856Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Baklawa Assortis",
+              "brand": "Patisserie Villeray",
+              "category": "crackers_cookies",
+              "date_text": "100223",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item is identified as baklava pastries, belongs to the crackers_cookies category, and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1645,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "the cloud model could not settle it: date \"100223\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "in_cloud: date \"100223\" does not parse (no month and no separated date parts (likely a lot code)); already in the cloud"
+      }
+    },
+    {
+      "file": "8801073142312-6.jpg",
+      "at": "2026-11-22T19:55:19.397Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Buldak Carbonara HOT Chicken Flavor Ramen",
+              "brand": "Samyang",
+              "category": "dry_pasta_noodles",
+              "date_text": "EXP. 15.07.2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are fully visible and clear."
+            },
+            "source": "in_cloud",
+            "ms": 1675,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Buldak Carbonara HOT Chicken Flavor Ramen",
+              "brand": "Samyang",
+              "category": "dry_pasta_noodles",
+              "date_text": "EXP. 15.07.2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1227,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-07-15",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-07-15",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "dry_pasta_noodles",
+            "label": "Dry pasta and noodles",
+            "page": 6
+          },
+          "reason": "Dry pasta and noodles: more than 12 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0764718447952-1.jpg",
+      "at": "2026-11-22T19:55:22.936Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Barley Grass Juice Powder",
+              "brand": "Alovitox",
+              "category": "general_grocery_boxed",
+              "date_text": "09/01/2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are fully visible and undamaged."
+            },
+            "source": "in_cloud",
+            "ms": 1514,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Barley Grass Juice Powder",
+              "brand": "Alovitox",
+              "category": "general_grocery_boxed",
+              "date_text": "EXP DATE: 09/01/2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, brand, category, and expiry date are fully visible and undamaged."
+            },
+            "source": "in_cloud",
+            "ms": 1910,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-01-09",
+            "2023-09-01"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_boxed",
+            "label": "General grocery, shelf stable, boxed or bagged (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "two reads disagree on the date (2023-01-09 or 2023-09-01 vs 2023-01-09 or 2023-09-01), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0057391100031-1.jpg",
+      "at": "2026-11-22T19:55:25.754Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Organic Tortillas Biologiques Wheat & Corn",
+              "brand": "Bakestone Brothers",
+              "category": "bread_commercial",
+              "date_text": "12/06/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1519,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Organic Tortillas Biologiques Wheat & Corn Blé Et Maïs",
+              "brand": "Bakestone Brothers",
+              "category": "bread_commercial",
+              "date_text": "12/06/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, brand, and date are all clearly visible and the item is in good condition."
+            },
+            "source": "in_cloud",
+            "ms": 1186,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2022-06-12",
+            "2022-12-06"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2022-06-12 or 2022-12-06 vs 2022-06-12 or 2022-12-06), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0716519089985-1.jpg",
+      "at": "2026-11-22T19:55:27.507Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "MANN'S",
+              "category": "chilled_or_frozen",
+              "date_text": "12/06/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a fresh produce package that requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1632,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a fresh produce package that requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0048107199128-1.jpg",
+      "at": "2026-11-22T19:55:30.245Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "PRO Performance Whey Iso Burst",
+              "brand": "GNC",
+              "category": "meal_replacement_powder",
+              "date_text": "EXP:03/10/24",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible on the container."
+            },
+            "source": "in_cloud",
+            "ms": 1404,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "PRO PERFORMANCE WHEY ISO BURST",
+              "brand": "GNC",
+              "category": "meal_replacement_powder",
+              "date_text": "EXP:03/10/24",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and expiry date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1216,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2024-03-10",
+            "2024-10-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "meal_replacement_powder",
+            "label": "Complete meal replacement powders",
+            "page": 11
+          },
+          "reason": "two reads disagree on the date (2024-03-10 or 2024-10-03 vs 2024-03-10 or 2024-10-03), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0036632077653-3.jpg",
+      "at": "2026-11-22T19:55:33.342Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "shelf_stable_milk",
+              "date_text": "ECI-25-04-23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a shelf-stable milk carton with a clear best-before date visible."
+            },
+            "source": "in_cloud",
+            "ms": 1488,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Danone",
+              "category": "shelf_stable_milk",
+              "date_text": "ECI-25-04-23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1240,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-04-25",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2023-05-25",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "shelf_stable_milk",
+            "label": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch)",
+            "page": 5
+          },
+          "reason": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch): more than 1 months past best before (chart p.5)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0065244133129-7.jpg",
+      "at": "2026-11-22T19:55:35.103Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "shelf_stable_milk",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the package, so please show me the date."
+            },
+            "source": "in_cloud",
+            "ms": 1413,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "0628451668336-1.jpg",
+      "at": "2026-11-22T19:55:38.380Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mini Tortillas Street Tacos",
+              "brand": "LA TRIGUENA",
+              "category": "bread_commercial",
+              "date_text": "25/11/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1912,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Mini Tortillas Street Tacos",
+              "brand": "LA TRIGUENA",
+              "category": "bread_commercial",
+              "date_text": "25/11/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1243,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2022-11-25",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2022-11-30",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "Commercially packaged loaves, rolls, bagels, muffins: more than 5 days past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "2000001105320-4.jpg",
+      "at": "2026-11-22T19:55:40.356Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Bleu D'Elizabeth",
+              "brand": "Fromagerie du Presbytere",
+              "category": "chilled_or_frozen",
+              "date_text": "08-FE-2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a cheese that requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1615,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a cheese that requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0627843476740-1.jpg",
+      "at": "2026-11-22T19:55:43.599Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Soft Beef Jerky",
+              "brand": "MHMT",
+              "category": "dry_hard_meats",
+              "date_text": "15/12/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1663,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Soft Beef Jerky",
+              "brand": "MHMT",
+              "category": "dry_hard_meats",
+              "date_text": "15/12/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1463,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-12-15",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-01-12",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "dry_hard_meats",
+            "label": "Dry, hard meats (dry salami, pepperoni, jerky)",
+            "page": 10
+          },
+          "reason": "Dry, hard meats (dry salami, pepperoni, jerky): more than 28 days past best before (chart p.10)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0890142001719-1.jpg",
+      "at": "2026-11-22T19:55:45.625Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "Cuisine de Jean-Philippe",
+              "category": "chilled_or_frozen",
+              "date_text": "02/09/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a frozen cake that requires refrigeration or freezing."
+            },
+            "source": "in_cloud",
+            "ms": 1899,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a frozen cake that requires refrigeration or freezing."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0209311212991-1.jpg",
+      "at": "2026-11-22T19:55:47.503Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "POULET BBQ",
+              "brand": "IGA",
+              "category": "chilled_or_frozen",
+              "date_text": "16.01.2023",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a hot/prepared rotisserie chicken that requires refrigeration and is perishable."
+            },
+            "source": "in_cloud",
+            "ms": 1728,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a hot/prepared rotisserie chicken that requires refrigeration and is perishable."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "8690997135506-1.jpg",
+      "at": "2026-11-22T19:55:50.690Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Orient Special",
+              "brand": "Tayaş",
+              "category": "crackers_cookies",
+              "date_text": "EXP DATE: 23.10.2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is identified, category is set, and the expiry date is fully legible."
+            },
+            "source": "in_cloud",
+            "ms": 1810,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Orient Special",
+              "brand": "Tayaş",
+              "category": "crackers_cookies",
+              "date_text": "23.10.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified, undamaged, and has a legible expiry date."
+            },
+            "source": "in_cloud",
+            "ms": 1237,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-10-23",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2023-11-23",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "Dry crackers and cookies, rice cakes: more than 1 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0841161096057-1.jpg",
+      "at": "2026-11-22T19:55:52.466Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "16 Mini Blini",
+              "brand": "Cool & Simple",
+              "category": "chilled_or_frozen",
+              "date_text": "26/01/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a frozen product that requires freezing at -18 degrees Celsius."
+            },
+            "source": "in_cloud",
+            "ms": 1611,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a frozen product that requires freezing at -18 degrees Celsius."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0062229089334-1.jpg",
+      "at": "2026-11-22T19:55:54.089Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Cookies & Cream",
+              "brand": "Kawartha",
+              "category": "chilled_or_frozen",
+              "date_text": "BB/ 14/10/2023",
+              "date_kind": "best_before",
+              "damage": "open",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "Ice cream requires refrigeration and the container appears open."
+            },
+            "source": "in_cloud",
+            "ms": 1513,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "Ice cream requires refrigeration and the container appears open."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0211650203998-1.jpg",
+      "at": "2026-11-22T19:55:56.931Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Bridor Croissant",
+              "brand": "Bridor",
+              "category": "bread_commercial",
+              "date_text": "09.05.2021",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The commercial bakery product is clearly visible, has no damage, and has a legible best before date."
+            },
+            "source": "in_cloud",
+            "ms": 1553,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Bridor Croissant",
+              "brand": "Bridor",
+              "category": "bread_commercial",
+              "date_text": "09.05.2021",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a commercial bakery product that requires refrigeration or has passed its best before date."
+            },
+            "source": "in_cloud",
+            "ms": 1162,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2021-05-09",
+            "2021-09-05"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2021-05-09 or 2021-09-05 vs 2021-05-09 or 2021-09-05), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0067400825602-1.jpg",
+      "at": "2026-11-22T19:55:58.650Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Raclette",
+              "brand": "Monsieur Gustav",
+              "category": "chilled_or_frozen",
+              "date_text": "21/12/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is cheese which requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1592,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is cheese which requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0200036004427-1.jpg",
+      "at": "2026-11-22T19:56:00.335Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LABNEH VACHE ET CHEURE",
+              "brand": "",
+              "category": "chilled_or_frozen",
+              "date_text": "09.04.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a refrigerated dairy product that needs to be set aside for proper storage."
+            },
+            "source": "in_cloud",
+            "ms": 1602,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a refrigerated dairy product that needs to be set aside for proper storage."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0073996001238-1.jpg",
+      "at": "2026-11-22T19:56:01.945Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BEIGNE AUX MIEL",
+              "brand": "BOULANGERIE REGAL INC",
+              "category": "bread_commercial",
+              "date_text": "14/12/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "The product is commercially packaged baked goods that require refrigeration or short shelf-life consideration, so it should be set aside."
+            },
+            "source": "in_cloud",
+            "ms": 1503,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "The product is commercially packaged baked goods that require refrigeration or short shelf-life consideration, so it should be set aside."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0065244125216-7.jpg",
+      "at": "2026-11-22T19:56:03.573Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No expiration date or recognizable product name is visible on this panel of the packaging."
+            },
+            "source": "in_cloud",
+            "ms": 1453,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "0621147300916-2.jpg",
+      "at": "2026-11-22T19:56:06.294Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "DRIED MANGO SLICES",
+              "brand": "",
+              "category": "dried_fruit",
+              "date_text": "23/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified as dried mango slices, the category is dried fruit, and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1435,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "DRIED MANGO SLICES",
+              "brand": "",
+              "category": "dried_fruit",
+              "date_text": "23/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible and legible."
+            },
+            "source": "in_cloud",
+            "ms": 1236,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-10-23",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-04-23",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "dried_fruit",
+            "label": "Dried fruit",
+            "page": 4
+          },
+          "reason": "Dried fruit: more than 6 months past best before (chart p.4)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0810175007335-1.jpg",
+      "at": "2026-11-22T19:56:07.831Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Gateau au Fromage, au Yogourt & aux Framboises",
+              "brand": "3 fois par jour",
+              "category": "chilled_or_frozen",
+              "date_text": "27/12/20",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a cheesecake and yogurt cake that requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1450,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a cheesecake and yogurt cake that requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0850013716807-3.jpg",
+      "at": "2026-11-22T19:56:09.851Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "energy_bars",
+              "date_text": "25.05.28",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is an energy or fruit bar, category is clear, and the best before date is fully readable."
+            },
+            "source": "in_cloud",
+            "ms": 1573,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2028-05-25",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "2028-11-25",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "energy_bars",
+            "label": "Breakfast, lunch or energy bars",
+            "page": 11
+          },
+          "reason": "Breakfast, lunch or energy bars: 6 months past best before (chart p.11)"
+        },
+        "route": "in_cloud: model chose log"
+      }
+    },
+    {
+      "file": "0743434000337-4.jpg",
+      "at": "2026-11-22T19:56:13.395Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "LINDT & SPRÜNGLI",
+              "category": "crackers_cookies",
+              "date_text": "30/11/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a chocolate or baked snack, the brand is clearly Lindt & Sprüngli, and a clear best before date is visible."
+            },
+            "source": "in_cloud",
+            "ms": 1757,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "LINDT & SPRÜNGLI",
+              "category": "crackers_cookies",
+              "date_text": "30/11/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a chocolate or sweet baked item with a clearly legible best before date."
+            },
+            "source": "in_cloud",
+            "ms": 1194,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-11-30",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2023-12-30",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "Dry crackers and cookies, rice cakes: more than 1 months past best before (chart p.6)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "2000000145943-3.jpg",
+      "at": "2026-11-22T19:56:14.877Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "01/04/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "medium",
+              "next_action": "show_me_the_date",
+              "why": "Only the nutrition table and a partial date are visible, so the product name and full package need to be shown."
+            },
+            "source": "in_cloud",
+            "ms": 1437,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "file": "0624823101043-1.jpg",
+      "at": "2026-11-22T19:56:18.178Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Buttersalt Sel Au Beurre",
+              "brand": "Kernels",
+              "category": "pretzels_popcorn",
+              "date_text": "03/09/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1965,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Buttersalt Sel au beurre",
+              "brand": "Kernels",
+              "category": "pretzels_popcorn",
+              "date_text": "03/09/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and date are fully visible and readable on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1227,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-03-09",
+            "2023-09-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "pretzels_popcorn",
+            "label": "Pretzels, prepared popcorn",
+            "page": 12
+          },
+          "reason": "two reads disagree on the date (2023-03-09 or 2023-09-03 vs 2023-03-09 or 2023-09-03), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0876681002806-1.jpg",
+      "at": "2026-11-22T19:56:19.882Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Chocolate Caramel Muffins",
+              "brand": "fgf brands",
+              "category": "bread_commercial",
+              "date_text": "11/10/2021",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a commercial bakery muffin item which typically requires refrigeration or has a short shelf life, and the date is from 2021."
+            },
+            "source": "in_cloud",
+            "ms": 1589,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a commercial bakery muffin item which typically requires refrigeration or has a short shelf life, and the date is from 2021."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0041800326006-11.jpg",
+      "at": "2026-11-22T19:56:22.959Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Bebida a Base de Jugo Concentrado de Uva",
+              "brand": "Welch's",
+              "category": "juice_cans",
+              "date_text": "28/03/2019",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, brand, category, and expiry date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1745,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Welch's",
+              "category": "juice_cans",
+              "date_text": "28/03/2019",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The juice can label is clearly readable with a visible expiry date."
+            },
+            "source": "in_cloud",
+            "ms": 1198,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2019-03-28",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2019-09-28",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "juice_cans",
+            "label": "Juice cans, shelf stable",
+            "page": 5
+          },
+          "reason": "Juice cans, shelf stable: more than 6 months past best before (chart p.5)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0876131001199-1.jpg",
+      "at": "2026-11-22T19:56:25.456Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Sicilian Red Pesto",
+              "brand": "Martelli",
+              "category": "pasta_sauce_tomato",
+              "date_text": "B.B. 22/10/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a tomato-based pasta sauce and the best before date is clearly legible on the lid."
+            },
+            "source": "in_cloud",
+            "ms": 1366,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Sicilian Red Pesto",
+              "brand": "Martelli",
+              "category": "pasta_sauce_tomato",
+              "date_text": "B.B. 22/10/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a jarred tomato-based pasta sauce with a clear best before date."
+            },
+            "source": "in_cloud",
+            "ms": 1063,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-10-22",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-10-22",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "pasta_sauce_tomato",
+            "label": "Tomato based pasta sauce",
+            "page": 8
+          },
+          "reason": "Tomato based pasta sauce: more than 12 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    },
+    {
+      "file": "0628176694061-1.jpg",
+      "at": "2026-11-22T19:56:26.979Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Bratwurst",
+              "brand": "The Very Good Butchers",
+              "category": "chilled_or_frozen",
+              "date_text": "10/07/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This plant-based sausage product requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1396,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This plant-based sausage product requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0621001012634-1.jpg",
+      "at": "2026-11-22T19:56:30.110Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Bâtons Sésames",
+              "brand": "Distributions DYN",
+              "category": "pretzels_popcorn",
+              "date_text": "12/07/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1508,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Bâtons Sésames",
+              "brand": "Distributions DYN",
+              "category": "pretzels_popcorn",
+              "date_text": "12/07/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item is clearly identified, the category and best before date are fully visible with no damage present."
+            },
+            "source": "in_cloud",
+            "ms": 1503,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2022-07-12",
+            "2022-12-07"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "pretzels_popcorn",
+            "label": "Pretzels, prepared popcorn",
+            "page": 12
+          },
+          "reason": "two reads disagree on the date (2022-07-12 or 2022-12-07 vs 2022-07-12 or 2022-12-07), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0014100280132-1.jpg",
+      "at": "2026-11-22T19:56:32.924Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Goldfish Veggie Crackers",
+              "brand": "Pepperidge Farm",
+              "category": "crackers_cookies",
+              "date_text": "02/05/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1497,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Goldfish Veggie Crackers",
+              "brand": "Pepperidge Farm",
+              "category": "crackers_cookies",
+              "date_text": "02/05/22",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1176,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2022-02-05",
+            "2022-05-02"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "two reads disagree on the date (2022-02-05 or 2022-05-02 vs 2022-02-05 or 2022-05-02), so a person checks it before anything is binned"
+        },
+        "route": "in_cloud: model chose log → second read (in_cloud) disagreed → set aside"
+      }
+    },
+    {
+      "file": "4897053640538-2.jpg",
+      "at": "2026-11-22T19:56:34.353Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "19.04.2022",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "ask_cloud",
+              "why": "The product name is not visible in the photo."
+            },
+            "source": "in_cloud",
+            "ms": 1293,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "the cloud model could not settle it: The product name is not visible in the photo."
+        },
+        "route": "in_cloud: The product name is not visible in the photo.; already in the cloud"
+      }
+    },
+    {
+      "file": "0814153001834-1.jpg",
+      "at": "2026-11-22T19:56:36.392Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mini Muffins au Sacré Chocolat Devil's Chocolate Mini Muffins",
+              "brand": "Patichérie",
+              "category": "bread_commercial",
+              "date_text": "12/10/21",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This commercial baked item is perishable and typically requires refrigeration or has a short shelf life."
+            },
+            "source": "in_cloud",
+            "ms": 1899,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This commercial baked item is perishable and typically requires refrigeration or has a short shelf life."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "file": "0875405005468-2.jpg",
+      "at": "2026-11-22T19:56:37.868Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "03/08/2022",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "ask_cloud",
+              "why": "A date is visible, but the product name and brand are not in view."
+            },
+            "source": "in_cloud",
+            "ms": 1417,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "the cloud model could not settle it: A date is visible, but the product name and brand are not in view."
+        },
+        "route": "in_cloud: A date is visible, but the product name and brand are not in view.; already in the cloud"
+      }
+    },
+    {
+      "file": "0058449172192-4.jpg",
+      "at": "2026-11-22T19:56:41.346Z",
+      "mode": "only_in_cloud",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Organic Coconut & Cashew Butter Granola",
+              "brand": "",
+              "category": "granola_bars",
+              "date_text": "15/02/2022",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name, category, and best before date are clearly visible on the label."
+            },
+            "source": "in_cloud",
+            "ms": 1496,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Organic Coconut & Cashew Butter Granola",
+              "brand": "",
+              "category": "granola_bars",
+              "date_text": "15/02/2022",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name, category, and best before date are clearly visible on the package."
+            },
+            "source": "in_cloud",
+            "ms": 1685,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2022-02-15",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2022-08-15",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "granola_bars",
+            "label": "Dry or chewy granola and cereal bars",
+            "page": 11
+          },
+          "reason": "Dry or chewy granola and cereal bars: more than 6 months past best before (chart p.11)"
+        },
+        "route": "in_cloud: model chose log → discard confirmed by a second read (in_cloud)"
+      }
+    }
+  ]
+}

@@ -16,6 +16,7 @@ published source, or the measurement in `results/` that produced it.
 | Galaxy S24 not on the on-device list (Samsung support starts at the S25) | ML Kit GenAI device support: https://developers.google.com/ml-kit/genai | 2026-11-14 |
 | The cloud free tier allows 15 requests a minute for gemini-3.5-flash-lite | The API's own 429 response on this project, 2026-11-15: "Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 15, model: gemini-3.5-flash-lite"; limits documented at https://aistudio.google.com/docs/rate-limits | 2026-11-15 |
 | Canadian date stamps: year first, bilingual month symbols, year optional when clear; expiry dates required on formula and meal replacements | CFIA, "Date markings and storage instructions": https://inspection.canada.ca/en/food-labels/labelling/industry/date-markings-and-storage-instructions | 2026-11-14 |
+| Date-reading test set: 100 photos of products sold in Canada and the expiry date an Open Food Facts volunteer confirmed on each | Open Food Facts, Robotoff `expiration_date` insights with `annotation = 1`, country `ca`: https://robotoff.openfoodfacts.org/api/v1/insights?insight_types=expiration_date&annotation=1&countries=ca ; images by Open Food Facts contributors, CC BY-SA 4.0 | 2026-11-22 |
 
 ## Measurements
 

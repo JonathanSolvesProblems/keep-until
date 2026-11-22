@@ -70,6 +70,7 @@ the 16 pantry photos three ways and downloads one file; grade it with
 | Hybrid: Nano checks every photo on the laptop, the cloud reads dates | 13 of 15 handled right, 6 cloud calls for 16 photos | [ablation](results/ablation-inference-mode.md) |
 | Cloud only | 14 of 15, 16 cloud calls | [ablation](results/ablation-inference-mode.md) |
 | Gemini Nano alone on the laptop | 4 of 15 | [ablation](results/ablation-inference-mode.md) |
+| Date reading, 100 photos of products sold in Canada, dates confirmed by Open Food Facts volunteers, registered before the run | 72 of 100 read right; of the 28 misses, 14 read the best-before where the confirmed date was the packed-on date, 2 clear misreads | [date control](results/date-control-off-ca-2026-11-22.md) |
 | Recall check, 16 real notice and item pairs in two sets, answers registered before each run | Gemini 16 of 16, brand plus a product word 11 of 16, brand alone 6 of 16 | [recall control](results/recall-control-2026-11-22.md) |
 | Android gate against the web gate | identical on 294 stamps and 2,580 chart decisions | `shared/gate-vectors.json` |
 | Android on Firebase Test Lab (Pixel 10, Pixel 11, Galaxy S26) | 14 of 15 on the cloud path; on-device unavailable (stub AICore) | [Test Lab](results/android-testlab-2026-11-19.md) |
@@ -79,7 +80,8 @@ the 16 pantry photos three ways and downloads one file; grade it with
 turn the item when no date is in view, or set aside when it needs the fridge. One photo whose
 stamp I could not read by hand either is not scored. The set mostly tests routing: 9 of the 15
 scored photos should get "turn it", so an app that always said "turn it" would score 9 of 15, and
-only 2 show a date to log (both modes read 1 of them right). Date reading needs a larger set.
+only 2 show a date to log (both modes read 1 of them right). Date reading has its own test on
+100 outside photos (below).
 
 What it cannot do yet: read lot codes, so a recall limited to certain lots is always "check the
 lot code" for the lead. An Android on-device result needs a phone on Google's Nano list (Pixel 9

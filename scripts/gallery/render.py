@@ -71,7 +71,15 @@ def claims_output():
     return r.stdout.strip().splitlines()
 
 
+def dates():
+    t = read("results/date-control-off-ca-2026-11-22.md")
+    m = re.search(r"\*\*Dates read right: (\d+) of (\d+)\.\*\*", t)
+    rows = re.findall(r"^\| (.+?) \| (\d+) \|$", t[t.index("## Audit"):t.index("## Every photo")], re.M)
+    return {"right": f"{m[1]} of {m[2]}", "rows": rows}
+
+
 A = ablation()
+D = dates()
 R = recall()
 GATE = gate()
 H = handsfree()
@@ -203,6 +211,15 @@ SLIDES = [
         "caption": "Every number on the page is checked against the results file it came from, on every push. A stale or retired claim fails the build.",
     },
     {
+        "name": "dates",
+        "headline": f"Read right on {D['right']} photos that are not mine",
+        "badge": "Open Food Facts photos of products sold in Canada, dates confirmed by volunteers; CC BY-SA",
+        "body": "<div class=\"stack\" style=\"width:100%\"><table class=\"small\"><tr><th>The 28 misses, looked at one by one</th><th>Photos</th></tr>"
+        + "".join(f"<tr><td>{html.escape(a)}</td><td>{b}</td></tr>" for a, b in D["rows"])
+        + "</table><p class=\"bigline\">The test set and its scoring rule were committed before the run.</p></div>",
+        "caption": f"On 100 outside photos with volunteer-confirmed dates, the app read {D['right']}; on 14 misses it read the best-before, not the packed-on date.",
+    },
+    {
         "name": "built",
         "headline": "Which job runs where, and why",
         "badge": "Firebase AI Logic on Web and Android; one Firebase project",
@@ -223,11 +240,11 @@ SLIDES = [
         "body": """<ul class="limits">
 <li><b>No Android phone has run Gemini Nano for it yet.</b> Test Lab phones and emulators have no working on-device model, and my Galaxy S24 is not on Google's list. On those phones it reads in the cloud and says so.</li>
 <li><b>Lot codes are not read.</b> A recall limited to certain lots always goes to the sort lead as "check the lot code".</li>
-<li><b>Date reading is measured on too few dated photos.</b> The 16-photo set mostly tests routing; a larger dated set is next.</li>
+<li><b>Year-first Canadian stamps are tested on few photos.</b> The 100-photo outside test is numeric dates (31/01/2023); stamps like 2027 FE 14 are only in my own pantry set.</li>
 <li><b>Hands-free needs Nano on the laptop.</b> Elsewhere the volunteer presses Read item, and the app says why.</li>
 <li><b>A store-brand short form not on the matcher's list is missed</b> before the model sees it.</li>
 </ul>""",
-        "caption": "No Android Nano run yet, no lot codes, a small dated test set, and hands-free only with Nano. Each limit is stated where it applies.",
+        "caption": "No Android Nano run yet, no lot codes, few year-first stamps tested, and hands-free only with Nano. Each limit is stated where it applies.",
     },
     {
         "name": "sources",
@@ -247,7 +264,7 @@ SLIDES = [
 ]
 
 # Upload order: the hero, then the on-device moment, then the story.
-ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "built", "refusal", "aside", "recall", "offline", "android", "phone", "honesty", "limits", "sources"]
+ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "dates", "built", "refusal", "aside", "recall", "offline", "android", "phone", "honesty", "limits", "sources"]
 SLIDES = sorted(SLIDES, key=lambda s: ORDER.index(s["name"]))
 for old in OUT.glob("[0-9][0-9]-*.png"):
     old.unlink()
