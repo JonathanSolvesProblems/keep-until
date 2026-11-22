@@ -93,8 +93,8 @@ cloud taking over when it cannot run, the date read in the cloud, and PREFER_IN_
 recall check), App Check, Authentication (anonymous for volunteers,
 Google for the coordinator's sheet), Firestore (offline, append-only rules), Remote Config (the
 cloud model and each food bank's own policy over the chart), Performance Monitoring (a trace per
-read, tagged on-device or cloud), Cloud Functions with Cloud Scheduler (the daily recall pull),
-and Hosting.
+read, tagged on-device or cloud), Cloud Functions with Cloud Scheduler (the daily recall pull, retried when the feed download
+drops), Crashlytics on Android (failed reads, with whether the phone was online), and Hosting.
 
 ## Sources
 

@@ -142,6 +142,13 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                 }
             } catch (e: Exception) {
                 android.util.Log.w("KeepUntil", "read failed", e)
+                // A failed read is not a crash, but it is the failure a volunteer meets, so it is
+                // reported to Crashlytics with whether the phone was online and could read on-device.
+                com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance().apply {
+                    setCustomKey("online", online())
+                    setCustomKey("on_device", readers?.onDevice?.status ?: "unknown")
+                    recordException(e)
+                }
                 // Asked of the phone, not guessed from the error text: in airplane mode the SDK's
                 // message named no network (Android 8 emulator, 2026-11-20), and the volunteer was
                 // told to hold the item steady.
