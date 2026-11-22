@@ -16,12 +16,13 @@ body {{ margin: 0; width: 1500px; height: 1000px; background: #d0cec8; font-fami
 .band {{ position: absolute; left: 80px; top: 260px; width: 900px; background: #1d7a46; color: #fff; border-radius: 14px; padding: 46px 56px; }}
 .word {{ font-size: 170px; font-weight: 800; line-height: .9; letter-spacing: -.03em; }}
 .until {{ font-size: 64px; font-weight: 700; margin-top: 18px; white-space: nowrap; }}
+.bb {{ font-size: 34px; margin-top: 14px; opacity: .92; }} .bb span {{ font-family: D; font-weight: 900; }}
 .until span {{ font-family: D; font-weight: 900; font-size: 84px; margin-left: 28px; }}
 .line {{ position: absolute; left: 80px; bottom: 80px; font-size: 52px; font-weight: 700; max-width: 22ch; line-height: 1.12; }}
 .art {{ position: absolute; right: -10px; bottom: -6px; width: 560px; }}
 </style></head><body>
 <div class="mark">KEEP UNTIL</div>
-<div class="band"><div class="word">Keep</div><div class="until">until<span>14 FEB 2029</span></div></div>
+<div class="band"><div class="word">Keep</div><div class="until">until<span>14 FEB 2029</span></div><div class="bb">Best before <span>2027 FE 14</span> &middot; Food Banks Canada chart</div></div>
 <div class="line">Hold up donated food. It says how long it stays good.</div>
 <img class="art" src="{ART}/hands-can.webp">
 </body></html>"""
