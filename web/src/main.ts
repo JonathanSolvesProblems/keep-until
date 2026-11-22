@@ -581,6 +581,8 @@ let lastReadSig: Uint8Array | null = null;
 const watchCounts = { looks: 0, cloudReads: 0 };
 const lookMs: number[] = [];
 const watchLog: { at: number; saw: string; ms: number }[] = [];
+// Every answer of a clip run, with the clip time it landed at: the record ?replay=1 plays back.
+const clipSteps: { at: number; step: Step }[] = [];
 
 /** A 32x24 grey thumbnail: enough to tell whether the item in front of the camera has moved. */
 function signature(): Uint8Array {
@@ -625,6 +627,20 @@ async function watchLoop(): Promise<void> {
       promptEl.textContent = `Clip finished: ${summary}.`;
       document.title = `Keep Until clip: ${summary} | ${watchLog.map((w) => `${w.at}s ${w.saw}`).join(", ")}`;
       console.info("hands-free clip", JSON.stringify({ ...watchCounts, lookMs, answers, timeline: watchLog }));
+      // The whole run, saved as a file: the checks, and the real answers the app gave.
+      const record = {
+        recorded: new Date().toISOString(),
+        browser: navigator.userAgent,
+        cloudModel: settings?.cloudModel,
+        onDevice: shiftInfo?.onDevice,
+        clip: "/testset/handsfree-clip.webm",
+        checks: watchLog,
+        steps: clipSteps,
+      };
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], { type: "application/json" }));
+      a.download = "keep-until-handsfree-run.json";
+      a.click();
       break;
     }
     const triage = models?.triage;
@@ -669,6 +685,7 @@ async function watchLoop(): Promise<void> {
       lastReadSig = sig;
       const frame = toJpegBase64(video, video.videoWidth, video.videoHeight);
       const step = await readCamera({ frame, small: small.b64, triaged: tr });
+      if (clipMode && step) clipSteps.push({ at: Math.round(video.currentTime * 10) / 10, step });
       // An item asked to be turned stays this item; anything settled waits for the table to clear.
       ready = step?.kind === "need_date_photo";
     }
@@ -746,3 +763,51 @@ $("export").addEventListener("click", () => {
   a.download = `keep-until-results-${Date.now()}.json`;
   a.click();
 });
+
+// ?replay=1: plays back a recorded hands-free run on the same clip, in any browser, with no
+// on-device model and no cloud call. The checks and the answers are the ones the app made on real
+// Gemini Nano (web/public/testset/handsfree-run.json); nothing is read now, and the screen says so.
+if (new URLSearchParams(location.search).has("replay")) {
+  (async () => {
+    const run = (await (await fetch("/testset/handsfree-run.json")).json()) as {
+      recorded: string;
+      checks: { at: number; saw: string }[];
+      steps: { at: number; step: Step }[];
+    };
+    const day = new Date(run.recorded).toLocaleDateString("en-CA", { day: "numeric", month: "long", year: "numeric" });
+    document.body.classList.add("started");
+    readBtn.disabled = true;
+    handsBtn.disabled = true;
+    sheetBtn.hidden = true;
+    setTimeout(() => (status.textContent = "Replay. Nothing is read in this browser."), 0);
+    promptEl.textContent = `Replay of a real hands-free run on Gemini Nano in Chrome, ${day}. Nothing is read or sent now; the checks and answers are the ones the app made then.`;
+    const words: Record<string, string> = {
+      clear: "Watching on this laptop. Hold up the next item.",
+      turn: "Turn it so the date faces the camera. Nothing sent yet.",
+      next: "Done. Put it down for the next item.",
+      read: "Date in view. Reading it in the cloud.",
+    };
+    let c = 0;
+    let s = 0;
+    let checks = 0;
+    let sent = 0;
+    video.srcObject = null;
+    video.src = "/testset/handsfree-clip.webm";
+    video.muted = true;
+    video.addEventListener("timeupdate", () => {
+      while (c < run.checks.length && run.checks[c].at <= video.currentTime) {
+        const k = run.checks[c++];
+        checks++;
+        if (k.saw === "read") sent++;
+        showWatching(`Replay. ${words[k.saw] ?? k.saw} ${checks} checks on the laptop, ${sent} sent to the cloud`);
+      }
+      while (s < run.steps.length && run.steps[s].at <= video.currentTime) {
+        const { step } = run.steps[s++];
+        results.push({ at: run.recorded, mode: InferenceMode.PREFER_ON_DEVICE, step });
+        render(step, toJpegBase64(video, video.videoWidth, video.videoHeight, 320).url, "replay");
+      }
+    });
+    video.addEventListener("ended", () => (promptEl.textContent += " Replay finished."));
+    await video.play().catch(() => (promptEl.textContent += " Press play: this browser blocked autoplay."));
+  })();
+}

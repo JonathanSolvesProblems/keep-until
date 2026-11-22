@@ -13,7 +13,7 @@ Firebase AI Logic, on Web (Chrome) and Android.
 
 To watch hands-free with no item and no webcam, open the app with `?clip=1` in Chrome with Gemini
 Nano: a 70-second clip of real pantry photos plays in the camera's place, and nothing from it is
-logged.
+logged. To watch a recorded run in any browser, with no on-device model, open `?replay=1`.
 
 **Try it:** https://keep-until-hybrid.web.app. No item to hand or no webcam? Press **Try a sample
 photo**: it reads a real carton from my pantry the same way, front first, then the top.
@@ -66,7 +66,7 @@ the 16 pantry photos three ways and downloads one file; grade it with
 
 | What | Result | File |
 |---|---|---|
-| Hands-free on real Gemini Nano, 70-second clip, nobody touching the laptop | 18 checks on the laptop, 3 calls to the cloud, both items answered right | [hands-free run](results/handsfree-clip-2026-11-20.md) |
+| Hands-free on real Gemini Nano, 70-second clip, nobody touching the laptop | 36 checks on the laptop, 3 calls to the cloud, both items answered right | [hands-free run](results/handsfree-clip-2026-11-22.md) |
 | Hybrid: Nano checks every photo on the laptop, the cloud reads dates | 13 of 15 handled right, 6 cloud calls for 16 photos | [ablation](results/ablation-inference-mode.md) |
 | Cloud only | 14 of 15, 16 cloud calls | [ablation](results/ablation-inference-mode.md) |
 | Gemini Nano alone on the laptop | 4 of 15 | [ablation](results/ablation-inference-mode.md) |

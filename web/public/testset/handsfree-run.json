@@ -1,0 +1,359 @@
+{
+  "recorded": "2026-11-22T19:12:25.833Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip.webm",
+  "checks": [
+    {
+      "at": 3.4,
+      "saw": "clear",
+      "ms": 3412
+    },
+    {
+      "at": 5.1,
+      "saw": "clear",
+      "ms": 1634
+    },
+    {
+      "at": 6.8,
+      "saw": "clear",
+      "ms": 1716
+    },
+    {
+      "at": 8.7,
+      "saw": "read",
+      "ms": 1884
+    },
+    {
+      "at": 12.5,
+      "saw": "turn",
+      "ms": 1811
+    },
+    {
+      "at": 14.3,
+      "saw": "turn",
+      "ms": 1805
+    },
+    {
+      "at": 16.1,
+      "saw": "turn",
+      "ms": 1769
+    },
+    {
+      "at": 17.9,
+      "saw": "turn",
+      "ms": 1799
+    },
+    {
+      "at": 19.8,
+      "saw": "turn",
+      "ms": 1878
+    },
+    {
+      "at": 21.7,
+      "saw": "turn",
+      "ms": 1876
+    },
+    {
+      "at": 23.6,
+      "saw": "read",
+      "ms": 1929
+    },
+    {
+      "at": 27.1,
+      "saw": "next",
+      "ms": 2064
+    },
+    {
+      "at": 29.1,
+      "saw": "next",
+      "ms": 1941
+    },
+    {
+      "at": 31.1,
+      "saw": "next",
+      "ms": 2036
+    },
+    {
+      "at": 33.2,
+      "saw": "next",
+      "ms": 2079
+    },
+    {
+      "at": 35.1,
+      "saw": "next",
+      "ms": 1940
+    },
+    {
+      "at": 37.2,
+      "saw": "next",
+      "ms": 2016
+    },
+    {
+      "at": 38.8,
+      "saw": "clear",
+      "ms": 1670
+    },
+    {
+      "at": 40.5,
+      "saw": "clear",
+      "ms": 1603
+    },
+    {
+      "at": 42.1,
+      "saw": "clear",
+      "ms": 1653
+    },
+    {
+      "at": 43.8,
+      "saw": "clear",
+      "ms": 1654
+    },
+    {
+      "at": 45.4,
+      "saw": "clear",
+      "ms": 1660
+    },
+    {
+      "at": 47,
+      "saw": "clear",
+      "ms": 1592
+    },
+    {
+      "at": 48.8,
+      "saw": "read",
+      "ms": 1762
+    },
+    {
+      "at": 52,
+      "saw": "next",
+      "ms": 1730
+    },
+    {
+      "at": 53.9,
+      "saw": "next",
+      "ms": 1800
+    },
+    {
+      "at": 55.7,
+      "saw": "next",
+      "ms": 1802
+    },
+    {
+      "at": 57.4,
+      "saw": "next",
+      "ms": 1704
+    },
+    {
+      "at": 59.1,
+      "saw": "next",
+      "ms": 1754
+    },
+    {
+      "at": 60.9,
+      "saw": "next",
+      "ms": 1738
+    },
+    {
+      "at": 62.6,
+      "saw": "next",
+      "ms": 1707
+    },
+    {
+      "at": 64.2,
+      "saw": "clear",
+      "ms": 1637
+    },
+    {
+      "at": 66,
+      "saw": "clear",
+      "ms": 1723
+    },
+    {
+      "at": 67.6,
+      "saw": "clear",
+      "ms": 1621
+    },
+    {
+      "at": 69.2,
+      "saw": "clear",
+      "ms": 1606
+    },
+    {
+      "at": 70,
+      "saw": "clear",
+      "ms": 1713
+    }
+  ],
+  "steps": [
+    {
+      "at": 10.7,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's CHICKEN • POULET BROTH - BOUILLON",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view no, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 1884,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The date is not visible on the front of the package, so please show me the top or bottom."
+            },
+            "source": "in_cloud",
+            "ms": 2004,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: may need the fridge → in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "at": 25,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's CHICKEN • POULET BROTH - BOUILLON",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view no, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 1884,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The date is not visible on the front of the package, so please show me the top or bottom."
+            },
+            "source": "in_cloud",
+            "ms": 2004,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Campbell's Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "2027 FE 14",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name, category, and a clear best before date are all visible."
+            },
+            "source": "in_cloud",
+            "ms": 1372,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2027-02-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "2029-02-14",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: 24 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: photos together give the row and the date"
+      }
+    },
+    {
+      "at": 50.3,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LIBERTÉ GREC-GREEK",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view yes, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 1762,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Liberté",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 DE 07",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is yogurt, which requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1455,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is yogurt, which requires refrigeration."
+        },
+        "route": "on_device triage: date in view → in_cloud: model chose set_aside"
+      }
+    }
+  ]
+}

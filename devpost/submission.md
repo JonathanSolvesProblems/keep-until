@@ -11,7 +11,7 @@ Keep Until
 ## Tagline
 
 ```
-Hold up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop at no cost and calls the cloud only for dates: 18 checks on the laptop, 3 calls to the cloud.
+Hold up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop at no cost and calls the cloud only for dates: 36 checks on the laptop, 3 calls to the cloud.
 ```
 
 ## Platforms
@@ -70,7 +70,7 @@ The screen is built to be read from a metre away with an item in your hand: the 
 
 ## Results
 
-Hands-free, on real Gemini Nano in my Chrome: a 70-second clip of pantry photos (empty table, a carton's front, its top, the table, a yogurt lid) played in the camera's place, and nobody touched the laptop. 18 checks on the laptop, 3 calls to the cloud, and both items got the right answers: turn it, then keep, for the carton; set aside for the yogurt. Once an item was answered, the laptop kept checking and sent nothing until the table was clear (`results/handsfree-clip-2026-11-20.md`). One run of two items shows the loop working on the real model; accuracy needs many more dated items.
+Hands-free, on real Gemini Nano in my Chrome: a 70-second clip of pantry photos (empty table, a carton's front, its top, the table, a yogurt lid) played in the camera's place, and nobody touched the laptop. 36 checks on the laptop, 3 calls to the cloud, and both items got the right answers: turn it, then keep, for the carton; set aside for the yogurt. Once an item was answered, the laptop kept checking and sent nothing until the table was clear (`results/handsfree-clip-2026-11-22.md`). You can watch the recorded run, every check and answer as the app made them, at https://keep-until-hybrid.web.app/?replay=1 in any browser. One run of two items shows the loop working on the real model; accuracy needs many more dated items.
 
 Sixteen photos of eight real products from my pantry, labelled by hand before any model run, graded by a script:
 

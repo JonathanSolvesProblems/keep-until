@@ -9,7 +9,7 @@ A volunteer holds up a donation. Keep Until reads the date stamp and says keep i
 ## 02-hands-free.png
 
 ```
-Nobody touched the laptop. Gemini Nano watched a 70-second clip: 18 checks on the laptop, 3 calls to the cloud, both items right.
+Nobody touched the laptop. Gemini Nano watched a 70-second clip: 36 checks on the laptop, 3 calls to the cloud, both items right.
 ```
 
 ## 03-problem.png

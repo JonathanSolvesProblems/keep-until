@@ -30,7 +30,7 @@ def recall():
 
 
 def handsfree():
-    m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", read("results/handsfree-clip-2026-11-20.md"))
+    m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", read("results/handsfree-clip-2026-11-22.md"))
     return {"looks": m[1], "median": m[2], "calls": m[3]}
 
 

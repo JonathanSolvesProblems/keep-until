@@ -58,9 +58,9 @@ def gate():
 
 
 def handsfree():
-    t = read("results/handsfree-clip-2026-11-20.md")
+    t = read("results/handsfree-clip-2026-11-22.md")
     m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", t)
-    line = re.search(r"```\n(0s clear.*?)\n```", t, re.S)[1].replace("\n", " ")
+    line = re.search(r"```\n([\d.]+s \w+.*?)\n```", t, re.S)[1].replace("\n", " ")
     looks = [(float(a), b) for a, b in re.findall(r"([\d.]+)s (\w+)", line)]
     return {"looks": m[1], "median": m[2], "calls": m[3], "timeline": looks}
 
@@ -77,7 +77,7 @@ GATE = gate()
 H = handsfree()
 CLAIMS_OUT = claims_output()
 
-# The clip's scenes, as committed in results/handsfree-clip-2026-11-20.md.
+# The clip's scenes, as committed in results/handsfree-clip-2026-11-22.md.
 SCENES = [(0, 6, "empty table", None), (6, 20, "carton front", "clip-13.png"), (20, 36, "carton top", "clip-28.png"),
           (36, 46, "empty table", None), (46, 62, "yogurt lid", "clip-54.png"), (62, 70, "empty table", None)]
 LOOK_COLOUR = {"clear": "#8a8780", "turn": "#151515", "next": "#5a5955", "read": "#2553c6"}
@@ -95,7 +95,7 @@ def timeline_html():
         f'<div class="look" style="left:{t * px - 9}px;background:{LOOK_COLOUR[k]}" title="{k}"></div>' for t, k in H["timeline"]
     )
     key = " ".join(f'<span class="key"><i style="background:{c}"></i>{k}</span>' for k, c in LOOK_COLOUR.items())
-    return f'<div class="tl"><div class="scenes">{scenes}</div><div class="marks">{marks}</div><div class="axis"><span>0 s</span><span>70 s</span></div><p class="keys">{key} <span class="keynote">Each dot is one Gemini Nano look on the laptop. Blue dots went to the cloud.</span></p></div>'
+    return f'<div class="tl"><div class="scenes">{scenes}</div><div class="marks">{marks}</div><div class="axis"><span>0 s</span><span>70 s</span></div><p class="keys">{key} <span class="keynote">Each dot is one Gemini Nano check on the laptop. Blue dots went to the cloud.</span></p></div>'
 
 SLIDES = [
     {
@@ -182,7 +182,7 @@ SLIDES = [
     {
         "name": "hands-free",
         "headline": f"Hands-free: {H['looks']} checks on the laptop, {H['calls']} calls to the cloud",
-        "badge": "results/handsfree-clip-2026-11-20.md, real Gemini Nano in Chrome",
+        "badge": "results/handsfree-clip-2026-11-22.md, real Gemini Nano in Chrome; replay at ?replay=1",
         "body": timeline_html(),
         "caption": f"Nobody touched the laptop. Gemini Nano watched a 70-second clip: {H['looks']} checks on the laptop, {H['calls']} calls to the cloud, both items right.",
     },
