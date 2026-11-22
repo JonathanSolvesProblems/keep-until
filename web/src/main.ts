@@ -37,7 +37,7 @@ todayInput.value = new Date().toISOString().slice(0, 10);
 
 // Said plainly on screen, so a volunteer knows the pause is the cloud quota, not a crash.
 setRateLimitListener((ms) => {
-  promptEl.textContent = `Cloud limit reached (the free tier allows 15 reads a minute). Waiting ${Math.round(ms / 1000)} s, then retrying.`;
+  promptEl.textContent = `The cloud reader asked to slow down. Waiting ${Math.round(ms / 1000)} s, then retrying.`;
 });
 
 interface Logged {

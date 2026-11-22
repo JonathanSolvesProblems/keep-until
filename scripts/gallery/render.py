@@ -52,9 +52,45 @@ def gate():
     return {"stamps": f"{len(v['dates']):,}", "decisions": f"{len(v['gates']):,}"}
 
 
+def handsfree():
+    t = read("results/handsfree-clip-2026-11-20.md")
+    m = re.search(r"\*\*(\d+) looks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", t)
+    line = re.search(r"```\n(0s clear.*?)\n```", t, re.S)[1].replace("\n", " ")
+    looks = [(float(a), b) for a, b in re.findall(r"([\d.]+)s (\w+)", line)]
+    return {"looks": m[1], "median": m[2], "calls": m[3], "timeline": looks}
+
+
+def claims_output():
+    import subprocess, sys
+    r = subprocess.run([sys.executable, str(ROOT / "scripts" / "check_claims.py")], capture_output=True, text=True)
+    return r.stdout.strip().splitlines()
+
+
 A = ablation()
 R = recall()
 GATE = gate()
+H = handsfree()
+CLAIMS_OUT = claims_output()
+
+# The clip's scenes, as committed in results/handsfree-clip-2026-11-20.md.
+SCENES = [(0, 6, "empty table", None), (6, 20, "carton front", "clip-13.png"), (20, 36, "carton top", "clip-28.png"),
+          (36, 46, "empty table", None), (46, 62, "yogurt lid", "clip-54.png"), (62, 70, "empty table", None)]
+LOOK_COLOUR = {"clear": "#8a8780", "turn": "#151515", "next": "#5a5955", "read": "#2553c6"}
+
+
+def timeline_html():
+    px = 1360 / 70
+    scenes = "".join(
+        f'<div class="scene" style="left:{a * px}px;width:{(b - a) * px}px">'
+        + (f'<img src="{img(f)}">' if f else "")
+        + f"<span>{html.escape(n)}</span></div>"
+        for a, b, n, f in SCENES
+    )
+    marks = "".join(
+        f'<div class="look" style="left:{t * px - 9}px;background:{LOOK_COLOUR[k]}" title="{k}"></div>' for t, k in H["timeline"]
+    )
+    key = " ".join(f'<span class="key"><i style="background:{c}"></i>{k}</span>' for k, c in LOOK_COLOUR.items())
+    return f'<div class="tl"><div class="scenes">{scenes}</div><div class="marks">{marks}</div><div class="axis"><span>0 s</span><span>70 s</span></div><p class="keys">{key} <span class="keynote">Each dot is one Gemini Nano look on the laptop. Blue dots went to the cloud.</span></p></div>'
 
 SLIDES = [
     {
@@ -138,7 +174,51 @@ SLIDES = [
         f'<div class="note">Same loop, same chart. The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. On this Galaxy S24, with no on-device model, it reads in the cloud and says so: the front of the carton, then the top.</div>',
         "caption": f"The Android app runs the same loop and chart, matching the web on {GATE['decisions']} decisions. On a phone without Nano it says it reads in the cloud.",
     },
+    {
+        "name": "hands-free",
+        "headline": f"Hands-free: {H['looks']} looks on the laptop, {H['calls']} calls to the cloud",
+        "badge": "results/handsfree-clip-2026-11-20.md, real Gemini Nano in Chrome",
+        "body": timeline_html(),
+        "caption": f"Nobody touched the laptop. Gemini Nano watched a 70-second clip: {H['looks']} looks on the laptop, {H['calls']} calls to the cloud, 3 items right.",
+    },
+    {
+        "name": "offline",
+        "headline": "No connection? The phone says so in plain words",
+        "badge": "Android 8 emulator, airplane mode; results/android-emulator-2026-11-20.md",
+        "body": f'<img class="phone" src="{img("emu-a8-airplane.png")}"><img class="phone" src="{img("emu-a8-airplane-fixed.png")}">'
+        '<div class="note">Before: "Hold the item steady." After: the app asks the phone whether it is online, and says the date read waits for Wi-Fi.</div>',
+        "caption": "Found on an Android 8 emulator: offline, the app told volunteers to hold still. Now it asks the phone and says the read waits for Wi-Fi.",
+    },
+    {
+        "name": "honesty",
+        "headline": "A script fails the build when a number drifts",
+        "badge": "scripts/check_claims.py, run in GitHub Actions on every push",
+        "body": '<pre class="term">$ python scripts/check_claims.py\n' + html.escape("\n".join(CLAIMS_OUT)) + "</pre>"
+        '<div class="note">Every number on the project page, the README and these captions is read from its results file at run time. A retired claim coming back fails it too.</div>',
+        "caption": "Every number on the page is checked against the results file it came from, on every push. A stale or retired claim fails the build.",
+    },
+    {
+        "name": "sources",
+        "headline": "Where every rule and number comes from",
+        "badge": "devpost/sources.md",
+        "body": """<table class="small">
+<tr><th>Used for</th><th>Source</th></tr>
+<tr><td>How long each food keeps past best before</td><td>Food Banks Canada, Guidelines for Food Shelf Life, July 2018</td></tr>
+<tr><td>How Canadian date stamps are printed</td><td>CFIA, Date markings and storage instructions</td></tr>
+<tr><td>Food recalls checked every morning</td><td>Government of Canada, Recalls and Safety Alerts open data</td></tr>
+<tr><td>Why good food gets binned</td><td>Brita Ball, PhD, guest post on Food Banks Canada's blog, 2019</td></tr>
+<tr><td>A food bank's own longer limit (Remote Config)</td><td>Calgary Food Bank, Best Before Date</td></tr>
+<tr><td>Every score on this page</td><td>results/, graded by script against hand labels made before the runs</td></tr>
+</table>""",
+        "caption": "The chart, the stamp format, the recalls and the quote are all published sources. Every score comes from a results file in the repo.",
+    },
 ]
+
+# Upload order: the hero, then the on-device moment, then the story.
+ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "refusal", "aside", "recall", "offline", "android", "phone", "honesty", "sources"]
+SLIDES = sorted(SLIDES, key=lambda s: ORDER.index(s["name"]))
+for old in OUT.glob("[0-9][0-9]-*.png"):
+    old.unlink()
 
 CSS = f"""
 @font-face {{ font-family: A; src: url({FONTS}/atkinson-normal-latin.woff2); font-weight: 200 800; }}
@@ -166,6 +246,17 @@ table.small {{ font-size: 21px; }} table.small td, table.small th {{ padding: 10
 .stack {{ display: flex; flex-direction: column; gap: 10px; flex: none; }}
 .small-note {{ margin: 0; font-size: 20px; color: #3a3936; max-width: 32ch; }}
 code {{ font-family: D; font-weight: 800; letter-spacing: .03em; }}
+.tl {{ width: 1372px; }}
+.scenes {{ position: relative; height: 420px; }}
+.scene {{ position: absolute; top: 0; height: 420px; border-left: 2px solid #f2f2ef; background: #8a8780; overflow: hidden; display: flex; align-items: flex-end; }}
+.scene img {{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }}
+.scene span {{ position: relative; margin: 10px; background: #151515; color: #f2f2ef; font-size: 18px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }}
+.marks {{ position: relative; height: 40px; margin-top: 14px; border-bottom: 2px solid #151515; }}
+.look {{ position: absolute; top: 4px; width: 18px; height: 18px; border-radius: 50%; }}
+.axis {{ display: flex; justify-content: space-between; font-size: 18px; color: #3a3936; margin-top: 4px; }}
+.keys {{ font-size: 22px; margin: 14px 0 0; }} .key {{ margin-right: 22px; }} .key i {{ display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 6px; }}
+.keynote {{ color: #3a3936; }}
+.term {{ margin: 0; background: #151515; color: #f2f2ef; font-family: D; font-size: 26px; line-height: 1.5; padding: 28px 32px; border-radius: 8px; white-space: pre-wrap; max-width: 820px; }}
 """
 
 

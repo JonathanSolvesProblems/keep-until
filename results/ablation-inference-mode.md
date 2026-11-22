@@ -22,7 +22,10 @@ each costs the volunteer one more photo.
 
 What it gains: 10 of 16 photos never leave the laptop. The free cloud tier allows 15 requests a
 minute for this model (the API's own 429, `devpost/sources.md`), and one volunteer reading an
-item every 4 seconds already uses all of it in cloud-only mode.
+item every 4 seconds already uses all of it in cloud-only mode. (Correction, 2026-11-22: on
+2026-11-16 the project moved to pay-as-you-go billing for the recall function, so that free-tier
+limit no longer applies here. What the laptop saves now is paid cloud calls, and photos of the sort
+table leaving the building.)
 
 ## How the hybrid was chosen
 
