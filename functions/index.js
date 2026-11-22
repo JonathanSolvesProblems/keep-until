@@ -7,11 +7,12 @@ import { logger } from "firebase-functions";
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import { candidatesFor, recallDoc, recentFoodRecalls } from "./match.js";
+import { FEED_URL, fetchFeed } from "./feed.js";
 
 initializeApp();
 const db = getFirestore();
 
-export const FEED_URL = "https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.json";
+export { FEED_URL };
 const LOOKBACK_DAYS = 365;
 
 export async function runRecallWatch(feed, today = new Date()) {
@@ -44,11 +45,17 @@ export async function runRecallWatch(feed, today = new Date()) {
 }
 
 export const recallWatch = onSchedule(
-  { schedule: "every day 06:00", timeZone: "America/Toronto", memory: "1GiB", timeoutSeconds: 300, region: "northamerica-northeast1" },
+  {
+    schedule: "every day 06:00",
+    timeZone: "America/Toronto",
+    memory: "1GiB",
+    timeoutSeconds: 300,
+    region: "northamerica-northeast1",
+    retryCount: 2,
+    minBackoffSeconds: 600,
+  },
   async () => {
-    const res = await fetch(FEED_URL);
-    if (!res.ok) throw new Error(`recall feed returned ${res.status}`);
-    const feed = await res.json();
+    const feed = await fetchFeed();
     const out = await runRecallWatch(feed);
     logger.info("recall watch", out);
   },
