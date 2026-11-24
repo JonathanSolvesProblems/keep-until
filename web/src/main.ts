@@ -584,7 +584,7 @@ async function readCamera(given?: { frame: { b64: string; url: string }; small: 
     return null;
   } finally {
     reading = false;
-    readBtn.disabled = handsFree;
+    readBtn.disabled = handsFree && laptopWarm;
   }
 }
 
@@ -689,15 +689,25 @@ function finishClip(): void {
 
 async function watchLoop(run: number): Promise<void> {
   const live = () => handsFree && run === watchRun;
+  const watchStarted = performance.now();
   const clipTime = () => Math.round(video.currentTime * 10) / 10;
   while (live()) {
     if (clipMode && video.ended) return finishClip();
     const triage = models?.triage;
     if (!triage || !video.videoWidth) {
-      showWatching(laptopWarm ? "Waiting for the camera" : "This laptop's reader is warming up");
+      // Gemini Nano's first start has taken from seconds to over 15 minutes (2026-11-24). Until it
+      // answers, Read item stays usable (items go to the cloud), and hands-free starts by itself.
+      readBtn.disabled = reading;
+      const waited = Math.round((performance.now() - watchStarted) / 60000);
+      showWatching(
+        laptopWarm
+          ? "Waiting for the camera"
+          : `This laptop's reader is starting${waited >= 1 ? ` (${waited} min so far)` : ""}. Press Read item meanwhile; hands-free starts by itself when it is ready.`,
+      );
       await pause(1500);
       continue;
     }
+    readBtn.disabled = true;
     // The clip starts once the laptop's reader is warm, like a volunteer starting on the first item.
     if (clipMode && video.paused && !video.ended) await video.play().catch(() => undefined);
     // Both sizes are taken together, so the frame the cloud reads is the frame the laptop checked.

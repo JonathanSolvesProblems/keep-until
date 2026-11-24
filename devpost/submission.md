@@ -93,7 +93,7 @@ A script fails the build if any number on this page or in the README stops match
 ## Limits
 
 - It does not read lot codes, so a recall limited to certain lots is always "check the lot code" for the lead.
-- Gemini Nano's first call after Chrome starts can take minutes; the laptop check warms up in the background and items go to the cloud until it is ready.
+- Gemini Nano's first call after Chrome starts can take minutes (6.5 on 2026-11-22; on 2026-11-24 it had not answered after 15). The laptop check warms up in the background, items go to the cloud with Read item until it is ready, and hands-free starts by itself when it is.
 - No Android phone has run Gemini Nano for this app yet. Firebase Test Lab's Pixel 10, Pixel 11 and Galaxy S26 carry a stub AICore, Android emulators have no AICore at all, and my own phone is a Galaxy S24, which is not on Google's list. On those phones the app takes the cloud path and says so on the screen.
 - Hands-free needs Gemini Nano, so it is on the laptop in Chrome only. Everywhere else the volunteer presses Read item, and the app says why.
 - Hands-free needs the laptop's GPU to itself. With other GPU work running on mine, checks took up to 52 seconds and one item passed unseen (`results/handsfree-clip-2026-11-24.md`). A check slower than 8 seconds is now ignored, and after two in a row hands-free switches itself off and says to press Read item.
