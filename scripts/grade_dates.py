@@ -1,6 +1,6 @@
 """Grades a batch run of the Open Food Facts date control set against the dates its volunteers
 confirmed, by the rule registered in shared/date-control-off-ca.json: same digits, same order,
-separators ignored, a four-digit year equal to its last two digits.
+separators ignored.
     python scripts/grade_dates.py results/date-control-off-ca-2026-11-22.json"""
 import json
 import pathlib
@@ -12,10 +12,15 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 
 def digits(text):
-    """The registered rule: the date's digits in order, separators ignored, and a four-digit year
-    (2023) the same as its last two digits (23). Fixed 2026-11-22: the first version compared
-    number groups, so "100223" did not match "10/02/2023", against the rule as registered."""
-    return "".join(g[2:] if len(g) == 4 and g.startswith("20") else g for g in re.findall(r"\d+", text or ""))
+    """The registered rule, literally: the date's digits in order, separators ignored. A date
+    written with a two-digit year ("100223") does not match the same date with four ("10/02/2023");
+    such photos are counted and reported separately, never added to the score."""
+    return re.sub(r"\D", "", text or "")
+
+
+def short_year(text):
+    """The same digits with every four-digit 20xx year cut to two, to spot same-date-short-year reads."""
+    return "".join(x[2:] if len(x) == 4 and x.startswith("20") else x for x in re.findall(r"\d+", text or ""))
 
 
 def date_read(step):
@@ -30,7 +35,7 @@ def date_read(step):
 def main(run_path):
     labels = {i["file"]: i for i in json.loads((ROOT / "shared/date-control-off-ca.json").read_text(encoding="utf-8"))["items"]}
     run = json.loads(pathlib.Path(run_path).read_text(encoding="utf-8"))
-    rows, right, no_date, errors, ms = [], 0, 0, 0, []
+    rows, right, no_date, errors, ms, same_date_short_year = [], 0, 0, 0, [], 0
     for r in run["results"]:
         lab = labels.get(r.get("file"))
         if not lab:
@@ -42,8 +47,9 @@ def main(run_path):
             continue
         ms += [x["ms"] for x in step["reads"] if x.get("source") == "in_cloud"]
         read = date_read(step)
-        ok = bool(read) and digits(read) == digits(lab["printed"])
+        ok = bool(read) and digits(read) == lab["digits"]
         right += ok
+        same_date_short_year += bool(read) and not ok and short_year(read) == short_year(lab["printed"])
         no_date += not read
         what = step["kind"] if step["kind"] != "verdict" else step["verdict"]["decision"]
         rows.append((lab["file"], lab["printed"], read or "(no date read)", what, "yes" if ok else "NO"))
@@ -56,6 +62,7 @@ def main(run_path):
         print("| " + " | ".join(str(c).replace("|", "/") for c in row) + " |")
     print()
     print(f"Dates read right: {right} of {n}. No date read: {no_date}. Read failed: {errors}.")
+    print(f"Not counted: {same_date_short_year} more read the same date with a two-digit year.")
     if ms:
         print(f"Cloud read time: median {statistics.median(ms) / 1000:.1f} s over {len(ms)} reads.")
 

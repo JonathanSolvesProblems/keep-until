@@ -1,7 +1,7 @@
 import "./styles.css";
 import { InferenceMode } from "firebase/ai";
 import { browserHasOnDeviceModel, makeModel, makeTriageModel, setRateLimitListener, triageItem, type Mode, type TriageResult } from "./ai/reader";
-import { processItem, watchStep, type LoopModels, type Step } from "./ai/loop";
+import { afterRead, processItem, watchStep, WATCH_START, type LoopModels, type Step, type WatchState } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
 import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
@@ -74,6 +74,7 @@ function buildModels(mode: Mode, cloudModel: string): LoopModels {
 // 2026-11-19), so the laptop check warms up in the background on a blank frame and items go to
 // the cloud until it answers. Nobody waits on a cold model.
 let laptopWarm = false;
+let laptopFailed = false; // this browser has the API but the model cannot run here (old laptop, no disk space)
 let warming: Promise<void> | null = null;
 
 function liveModels(mode: Mode, cloudModel: string): LoopModels {
@@ -94,7 +95,9 @@ function liveModels(mode: Mode, cloudModel: string): LoopModels {
         showShiftLine();
       } catch (e) {
         console.error("laptop check did not start", e);
+        laptopFailed = true;
         showShiftLine("This laptop's reader did not start, so items are read in the cloud.");
+        syncHandsFree();
       }
     })();
   }
@@ -168,13 +171,7 @@ $("start").addEventListener("click", async () => {
   await openCamera(localStorageGet("camera"));
   await listCameras();
   readBtn.disabled = false;
-  // Watching the camera every second is only affordable, and only private, on the laptop itself.
-  if (browserHasOnDeviceModel() && modeSel.value === InferenceMode.PREFER_ON_DEVICE) {
-    handsBtn.disabled = false;
-  } else {
-    handsBtn.title = "Hands-free needs this laptop's own reader (Chrome with Gemini Nano). Here, press Read item.";
-    promptEl.textContent = "Hands-free is off here: it needs Gemini Nano on this laptop, so the camera is never streamed to the cloud. Press Read item.";
-  }
+  syncHandsFree();
   sheetBtn.disabled = false;
   showSheetStatus();
   runRecallCheck(uid);
@@ -188,6 +185,9 @@ const SAMPLES = ["20261115_112419.jpg", "20261115_112427.jpg", "20261115_112446.
 let nextSample = 0;
 const sampleBtn = $<HTMLButtonElement>("sample");
 const sampleNote = $("sampleNote");
+// The sample carton's pending turn is its own: a real item at the camera is never read as the
+// back of a sample, and a sample never uses up a real item's turn.
+let samplePending: Step | null = null;
 
 async function readSample(): Promise<void> {
   sampleBtn.disabled = true;
@@ -203,9 +203,9 @@ async function readSample(): Promise<void> {
       today: todayInput.value,
       policy: settings!.policy,
       smallJpeg: small,
-      previous: pendingTurn ? pendingTurn.reads : undefined,
+      previous: samplePending ? samplePending.reads : undefined,
     });
-    pendingTurn = step.kind === "need_date_photo" ? step : null;
+    samplePending = step.kind === "need_date_photo" ? step : null;
     results.push({ file: "sample", at: new Date().toISOString(), mode: models!.hybrid.mode, step });
     render(step, frame.url, "sample");
   } catch (e) {
@@ -216,8 +216,8 @@ async function readSample(): Promise<void> {
   } finally {
     sampleBtn.disabled = false;
   }
-  sampleBtn.textContent = pendingTurn ? "Turn the sample item" : "Try another sample photo";
-  sampleNote.textContent = pendingTurn
+  sampleBtn.textContent = samplePending ? "Turn the sample item" : "Try another sample photo";
+  sampleNote.textContent = samplePending
     ? "The next sample is the same carton, turned."
     : "Real photos from my pantry. Samples are never added to a food bank's log.";
 }
@@ -480,6 +480,7 @@ modeSel.addEventListener("change", () => {
   if (models && settings) {
     models = liveModels(modeSel.value as Mode, settings.cloudModel);
     showShiftLine();
+    syncHandsFree();
   }
 });
 
@@ -536,9 +537,15 @@ function render(step: Step, thumb: string, _label: string): void {
 
 readBtn.addEventListener("click", () => readCamera());
 
-/** Reads the item in front of the camera and logs it. `triaged`: the laptop already checked this frame. */
-async function readCamera(given?: { frame: { b64: string; url: string }; small: string; triaged: TriageResult }): Promise<Step | null> {
-  if (!models || !settings || !shiftInfo || !video.videoWidth) return null;
+let reading = false; // one camera read at a time, whoever started it
+
+/**
+ * Reads the item in front of the camera and logs it. `given`: hands-free started this read, on a
+ * frame the laptop already checked; `patient` is false once two looks have not settled the item.
+ */
+async function readCamera(given?: { frame: { b64: string; url: string }; small: string; triaged: TriageResult; patient: boolean }): Promise<Step | null> {
+  if (reading || !models || !settings || !shiftInfo || !video.videoWidth) return null;
+  reading = true;
   readBtn.disabled = true;
   const frame = given?.frame ?? toJpegBase64(video, video.videoWidth, video.videoHeight);
   const small = given?.small ?? toJpegBase64(video, video.videoWidth, video.videoHeight, 512).b64;
@@ -549,8 +556,17 @@ async function readCamera(given?: { frame: { b64: string; url: string }; small: 
       previous: pendingTurn ? pendingTurn.reads : undefined,
       smallJpeg: small,
       triaged: given?.triaged,
+      watching: given ? given.patient : undefined,
+      want: pendingTurn?.kind === "need_date_photo" ? pendingTurn.want : undefined,
     });
-    pendingTurn = step.kind === "need_date_photo" ? step : null;
+    // Hands-free: a cloud "nothing there" on one frame does not throw away the face already read.
+    if (step.kind === "need_date_photo") pendingTurn = step;
+    else if (!(given && step.kind === "no_item")) pendingTurn = null;
+    if (!given) {
+      // A read by hand counts for hands-free too: switched on next, it will not read this item again.
+      lastReadSig = signature();
+      watch = afterRead(WATCH_START, step);
+    }
     promptEl.textContent = "";
     results.push({ at: new Date().toISOString(), mode: models.hybrid.mode, step });
     if (step.kind === "verdict" && !clipMode) {
@@ -567,23 +583,30 @@ async function readCamera(given?: { frame: { b64: string; url: string }; small: 
     console.error(e);
     return null;
   } finally {
+    reading = false;
     readBtn.disabled = handsFree;
   }
 }
 
-// Hands-free. Gemini Nano on this laptop looks at the camera every moment it is free, and the
+// Hands-free. Gemini Nano on this laptop checks the camera every moment it is free, and the
 // cloud is asked only when an item's date faces the camera. A volunteer with a can in each hand
 // never touches the keyboard: hold it up, turn it when asked, put it down, next item.
+// The rules for when a frame is sent are watchStep and afterRead in ai/loop.ts.
 const handsBtn = $<HTMLButtonElement>("handsfree");
 const watching = $("watching");
 let handsFree = false;
-let ready = true; // the table has been clear since the last item was settled
+let watchRun = 0; // each switch-on is a new run; a loop from an earlier run stops at its next check
+let watch: WatchState = WATCH_START;
 let lastReadSig: Uint8Array | null = null;
+let failures = 0;
+let slowChecks = 0;
+const STALE_CHECK_MS = 8000;
 const watchCounts = { looks: 0, cloudReads: 0 };
 const lookMs: number[] = [];
 const watchLog: { at: number; saw: string; ms: number }[] = [];
 // Every answer of a clip run, with the clip time it landed at: the record ?replay=1 plays back.
 const clipSteps: { at: number; step: Step }[] = [];
+const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 /** A 32x24 grey thumbnail: enough to tell whether the item in front of the camera has moved. */
 function signature(): Uint8Array {
@@ -614,45 +637,72 @@ function showWatching(words: string): void {
   }
 }
 
-async function watchLoop(): Promise<void> {
-  while (handsFree) {
-    if (clipMode && video.ended) {
-      handsFree = false;
-      handsBtn.setAttribute("aria-pressed", "false");
-      handsBtn.textContent = "Hands-free";
-      readBtn.disabled = false;
-      const answers = results.map((r) => (r.step.kind === "verdict" ? r.step.verdict.decision : r.step.kind).toLowerCase().replace(/_/g, " "));
-      const looks = [...lookMs].sort((a, b) => a - b);
-      const median = looks.length ? (looks[Math.floor(looks.length / 2)] / 1000).toFixed(1) : "?";
-      const summary = `${watchCounts.looks} checks on this laptop (median ${median} s), ${watchCounts.cloudReads} sent to the cloud: ${answers.join(", ") || "none"}`;
-      promptEl.textContent = `Clip finished: ${summary}.`;
-      document.title = `Keep Until clip: ${summary} | ${watchLog.map((w) => `${w.at}s ${w.saw}`).join(", ")}`;
-      console.info("hands-free clip", JSON.stringify({ ...watchCounts, lookMs, answers, timeline: watchLog }));
-      // The whole run, saved as a file: the checks, and the real answers the app gave.
-      const record = {
-        recorded: new Date().toISOString(),
-        browser: navigator.userAgent,
-        cloudModel: settings?.cloudModel,
-        onDevice: shiftInfo?.onDevice,
-        clip: "/testset/handsfree-clip.webm",
-        checks: watchLog,
-        steps: clipSteps,
-      };
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], { type: "application/json" }));
-      a.download = "keep-until-handsfree-run.json";
-      a.click();
-      break;
-    }
+/** Hands-free is offered only where the laptop's own reader can run, and says why where it cannot. */
+function syncHandsFree(): void {
+  const started = document.body.classList.contains("started");
+  const can = browserHasOnDeviceModel() && modeSel.value === InferenceMode.PREFER_ON_DEVICE && !laptopFailed;
+  if (!can && handsFree) stopHandsFree();
+  handsBtn.disabled = !can || !started;
+  handsBtn.title = can ? "" : "Hands-free needs this laptop's own reader (Chrome with Gemini Nano). Here, press Read item.";
+  // Never written over another message (a missing camera matters more than this note).
+  if (started && !can && !promptEl.textContent) {
+    promptEl.textContent = laptopFailed
+      ? "This laptop's reader did not start, so hands-free is off. Press Read item."
+      : "Hands-free is off here: it needs Gemini Nano on this laptop, so the camera is never streamed to the cloud. Press Read item.";
+  }
+}
+
+function stopHandsFree(): void {
+  handsFree = false;
+  watchRun++;
+  handsBtn.setAttribute("aria-pressed", "false");
+  handsBtn.textContent = "Hands-free";
+  readBtn.disabled = reading;
+  watching.hidden = true;
+  if (clipMode) video.pause();
+}
+
+function finishClip(): void {
+  stopHandsFree();
+  const answers = results.map((r) => (r.step.kind === "verdict" ? r.step.verdict.decision : r.step.kind).toLowerCase().replace(/_/g, " "));
+  const looks = [...lookMs].sort((a, b) => a - b);
+  const median = looks.length ? (looks[Math.floor(looks.length / 2)] / 1000).toFixed(1) : "?";
+  const summary = `${watchCounts.looks} checks on this laptop (median ${median} s), ${watchCounts.cloudReads} sent to the cloud: ${answers.join(", ") || "none"}`;
+  promptEl.textContent = `Clip finished: ${summary}.`;
+  document.title = `Keep Until clip: ${summary} | ${watchLog.map((w) => `${w.at}s ${w.saw}`).join(", ")}`;
+  console.info("hands-free clip", JSON.stringify({ ...watchCounts, lookMs, answers, timeline: watchLog }));
+  // The whole run, saved as a file: the checks, and the real answers the app gave.
+  const record = {
+    recorded: new Date().toISOString(),
+    browser: navigator.userAgent,
+    cloudModel: settings?.cloudModel,
+    onDevice: shiftInfo?.onDevice,
+    clip: "/testset/handsfree-clip.webm",
+    checks: watchLog,
+    steps: clipSteps,
+  };
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], { type: "application/json" }));
+  a.download = "keep-until-handsfree-run.json";
+  a.click();
+}
+
+async function watchLoop(run: number): Promise<void> {
+  const live = () => handsFree && run === watchRun;
+  const clipTime = () => Math.round(video.currentTime * 10) / 10;
+  while (live()) {
+    if (clipMode && video.ended) return finishClip();
     const triage = models?.triage;
     if (!triage || !video.videoWidth) {
       showWatching(laptopWarm ? "Waiting for the camera" : "This laptop's reader is warming up");
-      await new Promise((r) => setTimeout(r, 1500));
+      await pause(1500);
       continue;
     }
     // The clip starts once the laptop's reader is warm, like a volunteer starting on the first item.
     if (clipMode && video.paused && !video.ended) await video.play().catch(() => undefined);
+    // Both sizes are taken together, so the frame the cloud reads is the frame the laptop checked.
     const small = toJpegBase64(video, video.videoWidth, video.videoHeight, 512);
+    const frame = toJpegBase64(video, video.videoWidth, video.videoHeight);
     const sig = signature();
     let tr: TriageResult;
     try {
@@ -662,47 +712,73 @@ async function watchLoop(): Promise<void> {
     } catch (e) {
       showWatching("This laptop could not check that frame. Trying again.");
       console.error(e);
-      await new Promise((r) => setTimeout(r, 1000));
+      await pause(1000);
       continue;
     }
-    if (!handsFree) break;
+    if (!live()) return;
+    // A check that took this long describes a table that has moved on: it is never acted on.
+    // (On 2026-11-24, with the laptop's GPU shared with other work, checks took up to 52 s and an
+    // item passed unseen.) Two in a row, and hands-free hands the job back to the Read item button.
+    if (tr.ms > STALE_CHECK_MS) {
+      watchLog.push({ at: clipTime(), saw: "slow", ms: tr.ms });
+      if (++slowChecks >= 2 && !clipMode) {
+        stopHandsFree();
+        promptEl.textContent = "This laptop is too busy to watch the camera right now, so hands-free is off. Press Read item.";
+        say("Hands-free is off. Press Read item.");
+        return;
+      }
+      showWatching("This laptop is busy, so that check came too late. Checking again.");
+      continue;
+    }
+    slowChecks = 0;
     const tally = `${watchCounts.looks} checks on this laptop, ${watchCounts.cloudReads} sent to the cloud`;
-    let next = watchStep(tr.triage, ready);
-    // The same view as the last read is not a new photo: a person turns it, or takes it away.
-    if (next === "read" && !moved(sig, lastReadSig)) next = pendingTurn ? "turn" : "next";
-    watchLog.push({ at: Math.round(video.currentTime * 10) / 10, saw: next, ms: tr.ms });
-    if (next !== "turn") saidTurn = false;
+    const { next, state } = watchStep(tr.triage, watch, moved(sig, lastReadSig));
+    watch = state;
+    if (!watch.pending) pendingTurn = null; // the table cleared: the next item is a new item
+    if (watch.clears >= 2) lastReadSig = null;
+    watchLog.push({ at: clipTime(), saw: next, ms: tr.ms });
     if (next === "clear") {
-      ready = true;
-      lastReadSig = null;
       showWatching(`Watching on this laptop. Hold up the next item. ${tally}`);
     } else if (next === "next") {
       showWatching(`Done. Put it down for the next item. ${tally}`);
+    } else if (next === "again") {
+      showWatching(`Hold it steady, date toward the camera. ${tally}`);
     } else if (next === "turn") {
-      showWatching(`Turn it so the date faces the camera. Nothing sent yet. ${tally}`);
-      promptEl.textContent = "Turn it so the date faces the camera.";
-      // Said once per item, not at every check while the volunteer is still turning it.
-      if (!saidTurn) say("Turn it, so the date faces the camera.");
-      saidTurn = true;
+      showWatching(`Turn it so the ${watch.pending === "name" ? "name" : "date"} faces the camera. Nothing sent. ${tally}`);
+      if (!watch.pending) {
+        // First sight of this item, with no date on this face: the laptop answers "turn it"
+        // itself. The check is kept with the item, and nothing goes to the cloud.
+        lastReadSig = sig;
+        const step = await readCamera({ frame, small: small.b64, triaged: tr, patient: true });
+        if (clipMode && step) clipSteps.push({ at: clipTime(), step });
+        watch = afterRead(watch, step, true);
+      }
     } else {
-      showWatching("Date in view. Reading it in the cloud.");
+      showWatching(watch.pending === "name" ? "Reading the name in the cloud." : "Date in view. Reading it in the cloud.");
       watchCounts.cloudReads++;
       lastReadSig = sig;
-      const frame = toJpegBase64(video, video.videoWidth, video.videoHeight);
-      const step = await readCamera({ frame, small: small.b64, triaged: tr });
-      if (clipMode && step) clipSteps.push({ at: Math.round(video.currentTime * 10) / 10, step });
-      // An item asked to be turned stays this item; anything settled waits for the table to clear.
-      ready = step?.kind === "need_date_photo";
+      // After two looks that did not settle the item, the next one decides (it is set aside).
+      const step = await readCamera({ frame, small: small.b64, triaged: tr, patient: watch.tries < 2 });
+      if (clipMode && step) clipSteps.push({ at: clipTime(), step });
+      if (step) {
+        failures = 0;
+        watch = afterRead(watch, step);
+      } else if (live()) {
+        // The read failed (the Wi-Fi dropped, the cloud was busy). The item is not done: the same
+        // view is tried again, a little later each time.
+        lastReadSig = null;
+        failures++;
+        showWatching("That read did not go through. Keep holding the item; trying again.");
+        await pause(Math.min(30000, 2000 * 2 ** (failures - 1)));
+      }
     }
   }
-  watching.hidden = true;
 }
 
 // Said aloud, for a volunteer looking at the item and not the screen. Hands-free turns it on
 // (the click is the gesture browsers ask for before speaking); the box turns it off, and that
 // choice is remembered on this laptop.
 const speakBox = $<HTMLInputElement>("speak");
-let saidTurn = false;
 if (!("speechSynthesis" in window)) document.body.classList.add("no-speech");
 speakBox.checked = localStorageGet("speak") === "on";
 speakBox.addEventListener("change", () => localStorageSet("speak", speakBox.checked ? "on" : "off"));
@@ -716,19 +792,20 @@ function say(words: string): void {
 }
 
 handsBtn.addEventListener("click", () => {
-  handsFree = !handsFree;
-  if (handsFree && localStorageGet("speak") !== "off") speakBox.checked = true;
-  handsBtn.setAttribute("aria-pressed", String(handsFree));
-  handsBtn.textContent = handsFree ? "Hands-free on" : "Hands-free";
-  readBtn.disabled = handsFree;
-  if (handsFree) {
-    ready = true;
-    lastReadSig = null;
-    if (clipMode && video.ended) video.currentTime = 0;
-    watchLoop();
-  } else if (clipMode) {
-    video.pause();
-  }
+  if (handsFree) return stopHandsFree();
+  handsFree = true;
+  const run = ++watchRun;
+  if (localStorageGet("speak") !== "off") speakBox.checked = true;
+  handsBtn.setAttribute("aria-pressed", "true");
+  handsBtn.textContent = "Hands-free on";
+  readBtn.disabled = true;
+  // A half-turned item from before is forgotten; an item just read by hand is not read again.
+  pendingTurn = null;
+  watch = { ...WATCH_START, ready: watch.ready };
+  failures = 0;
+  slowChecks = 0;
+  if (clipMode && video.ended) video.currentTime = 0;
+  watchLoop(run);
 });
 
 // ?clip=1 runs the whole thing with no hands: start the shift, then watch the clip hands-free.

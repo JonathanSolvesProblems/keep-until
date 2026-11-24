@@ -8,7 +8,7 @@ vi.mock("firebase/performance", () => ({
 }));
 
 import type { GenerativeModel } from "firebase/ai";
-import { processItem, watchStep, type LoopModels } from "./loop";
+import { afterRead, processItem, watchStep, WATCH_START, type LoopModels, type Step } from "./loop";
 
 const TODAY = "2026-11-15";
 
@@ -291,14 +291,89 @@ describe("the confirming read is independent", () => {
 
 describe("hands-free watching (the laptop decides when the cloud is asked)", () => {
   const t = (p: boolean, d: boolean, f = false) => ({ package_in_view: p, date_in_view: d, needs_refrigeration: f, product: "" });
+  const turnStep = (want?: "name") => ({ kind: "need_date_photo", want, reads: [], route: "" }) as Step;
+  const keepStep = { kind: "verdict", reads: [], parsed: null, verdict: { decision: "KEEP", pastPrintedDate: false, reason: "" }, route: "" } as unknown as Step;
+
   it("asks the cloud only when a package faces the camera with its date, or needs the fridge", () => {
-    expect(watchStep(t(true, true), true)).toBe("read");
-    expect(watchStep(t(true, false, true), true)).toBe("read");
-    expect(watchStep(t(true, false), true)).toBe("turn");
-    expect(watchStep(t(false, false), true)).toBe("clear");
+    expect(watchStep(t(true, true), WATCH_START, true).next).toBe("read");
+    expect(watchStep(t(true, false, true), WATCH_START, true).next).toBe("read");
+    expect(watchStep(t(true, false), WATCH_START, true).next).toBe("turn");
+    expect(watchStep(t(false, false), WATCH_START, true).next).toBe("clear");
   });
+
   it("never reads the same item twice: after an answer it waits for the table to clear", () => {
-    expect(watchStep(t(true, true), false)).toBe("next");
-    expect(watchStep(t(false, false), false)).toBe("clear");
+    const done = afterRead(WATCH_START, keepStep);
+    expect(watchStep(t(true, true), done, true).next).toBe("next");
+    const one = watchStep(t(false, false), done, true).state;
+    expect(watchStep(t(true, true), one, true).next).toBe("next"); // one "nothing here" may be the laptop's mistake
+    const two = watchStep(t(false, false), one, true).state;
+    expect(watchStep(t(true, true), two, true).next).toBe("read");
+  });
+
+  it("date side first: the cloud asks for the name, and the front is read though it shows no date", () => {
+    const asked = afterRead(WATCH_START, turnStep("name"));
+    expect(asked.pending).toBe("name");
+    expect(watchStep(t(true, false), asked, true).next).toBe("read");
+    expect(watchStep(t(true, false), asked, false).next).toBe("turn"); // the same view is not another face
+  });
+
+  it("does not re-read the face it just read while the person is still turning the item", () => {
+    const asked = afterRead(WATCH_START, turnStep());
+    const first = watchStep(t(true, true), asked, true);
+    expect(first.next).toBe("turn");
+    const second = watchStep(t(true, true), first.state, true);
+    expect(second.next).toBe("turn");
+    expect(watchStep(t(true, true), second.state, true).next).toBe("read"); // two checks have passed
+    const other = watchStep(t(true, false), asked, true).state; // the laptop saw a face with no date
+    expect(watchStep(t(true, true), other, true).next).toBe("read");
+  });
+
+  it("front first: the laptop says turn itself, and the next date face is read at once", () => {
+    const asked = afterRead(WATCH_START, turnStep(), true);
+    expect(watchStep(t(true, true), asked, true).next).toBe("read");
+  });
+
+  it("an item put away half-turned takes its turn with it, so the next item starts fresh", () => {
+    const asked = afterRead(WATCH_START, turnStep("name"));
+    const gone = watchStep(t(false, false), watchStep(t(false, false), asked, true).state, true).state;
+    expect(gone.pending).toBeNull();
+    expect(gone.ready).toBe(true);
+  });
+
+  it("a failed read or a cloud 'nothing there' does not mark the item done", () => {
+    expect(afterRead(WATCH_START, null).ready).toBe(true);
+    expect(afterRead(WATCH_START, { kind: "no_item", reads: [], route: "" }).ready).toBe(true);
+    expect(watchStep(t(true, true), WATCH_START, false).next).toBe("again"); // the same view is not sent again
+  });
+
+  it("counts the looks that did not settle an item, so the third one decides", () => {
+    let s = afterRead(WATCH_START, turnStep());
+    expect(s.tries).toBe(0);
+    s = afterRead(s, turnStep());
+    s = afterRead(s, turnStep());
+    expect(s.tries).toBe(2);
+  });
+});
+
+describe("hands-free second looks leave an unsettled item waiting", () => {
+  const first = [{ read: { product: "", brand: "", category: "unclear", date_text: "2027 FE 14", date_kind: "best_before", damage: "none", confidence: "high", next_action: "log", why: "" }, source: "in_cloud", ms: 900, mode: "only_in_cloud", valid: true }] as never;
+
+  it("keeps waiting for the name when the look shows the date side again", async () => {
+    const { m } = models([], [{ text: read({ product: "", brand: "", category: "unclear" }), source: "in_cloud" }]);
+    const step = await processItem(m, "img", { today: TODAY, previous: first, watching: true, want: "name" });
+    expect(step.kind).toBe("need_date_photo");
+    expect(step.kind === "need_date_photo" && step.want).toBe("name");
+  });
+
+  it("settles when the front gives the name and chart row", async () => {
+    const { m } = models([], [{ text: read({ date_text: "", date_kind: "none_visible", next_action: "show_me_the_date" }), source: "in_cloud" }]);
+    const step = await processItem(m, "img", { today: TODAY, previous: first, watching: true, want: "name" });
+    expect(step.kind === "verdict" && step.verdict.decision).toBe("KEEP");
+  });
+
+  it("a person pressing Read item a second time still gets a decision", async () => {
+    const { m } = models([], [{ text: read({ product: "", brand: "", category: "unclear" }), source: "in_cloud" }]);
+    const step = await processItem(m, "img", { today: TODAY, previous: first });
+    expect(step.kind === "verdict" && step.verdict.decision).toBe("SET_ASIDE");
   });
 });

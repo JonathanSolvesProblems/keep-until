@@ -6,9 +6,9 @@ The run: the app's own batch reader (Testing tools, run saved photos), cloud onl
 
 ## Result
 
-**Dates read right: 72 of 100.** Median cloud read 1.5 s; no read failed; 5 photos with no date read.
+**Dates read right: 71 of 100.** Median cloud read 1.5 s; no read failed; 5 photos with no date read.
 
-A grader bug was fixed before this file was final: the first version compared number groups, so `100223` did not match `10/02/2023`, against the registered rule (separators ignored). Following the rule moved that one photo; nothing else changed.
+Correction, 2026-11-24: this file first said 72. One photo's stamp reads `100223` and the confirmed date is `10/02/2023`: the same date, written with a two-digit year. The registered rule compares digits and does not allow for that, so the photo is a miss. An interim version of the grader had counted it; a code review caught that the grader was then more lenient than the rule. The grader now compares against the digits registered with each item.
 
 What this set is and is not:
 - It is an outside set with outside labels: neither the photos nor the confirmed dates are mine.
@@ -16,9 +16,9 @@ What this set is and is not:
 - The confirmed date is the one Open Food Facts' text reader picked, which is not always the best-before: some packages print a packed-on or production date too. Those cases count as misses here, by the registered rule; the audit below says how many.
 - The photos are years old, so most of these products are long past their dates on 2026-11-22; the app's decisions on them are not meaningful and are shown only for completeness.
 
-## Audit of the 28 misses
+## Audit of the 29 misses
 
-A separate reviewer, given only the photos and both readings, enlarged each package and recorded every date printed on it (full table: kept with the run notes; summary here):
+A separate reviewer, given only the photos and both readings, enlarged each package and recorded every date printed on it (photo by photo: `results/date-control-off-ca-2026-11-22-audit.md`):
 
 | What the photo shows | Photos |
 |---|---|
@@ -26,9 +26,10 @@ A separate reviewer, given only the photos and both readings, enlarged each pack
 | The confirmed date is not a food date (a carton print code, a date on a paper under the package, an unlabelled code before the real best-before) | 5 |
 | Not legible enough to settle either reading | 6 |
 | The app misread the date (an 8 read as a 9; a code line read as a date) | 2 |
+| The app read the same date, written with a two-digit year (100223 for 10/02/2023) | 1 |
 | Not food (a price sticker on a video game) | 1 |
 
-So the app's clear misreads on this set are 2 of 100. The registered score stays 72: the audit explains the misses, it does not re-score them. The 14 packages with two dates are the case a sort table cares about most, and on each of them the app chose the best-before or expiry.
+So the app's clear misreads on this set are 2 of 100. The registered score stays 71: the audit explains the misses, it does not re-score them. The 14 packages with two dates are the case a sort table cares about most, and on each of them the app chose the best-before or expiry.
 
 ## Every photo
 
@@ -99,7 +100,7 @@ Run: results/date-control-off-ca-2026-11-22.json | cloud model gemini-3.5-flash-
 | 0083747003978-2.jpg | 07/06/24 | 07/06/24 | SET_ASIDE | yes |
 | 7622201686994-1.jpg | 12.01.22 | OTG0320282 | SET_ASIDE | NO |
 | 8413575000900-1.jpg | 19/06/24 | 19/06/24 | DISCARD | yes |
-| 0827896001306-1.jpg | 10/02/2023 | 100223 | SET_ASIDE | yes |
+| 0827896001306-1.jpg | 10/02/2023 | 100223 | SET_ASIDE | NO |
 | 8801073142312-6.jpg | 15.07.2023 | EXP. 15.07.2023 | DISCARD | yes |
 | 0764718447952-1.jpg | 09/01/2023 | EXP DATE: 09/01/2023 | SET_ASIDE | yes |
 | 0057391100031-1.jpg | 12/06/22 | 12/06/22 | SET_ASIDE | yes |
@@ -137,5 +138,6 @@ Run: results/date-control-off-ca-2026-11-22.json | cloud model gemini-3.5-flash-
 | 0875405005468-2.jpg | 03/08/2022 | 03/08/2022 | SET_ASIDE | yes |
 | 0058449172192-4.jpg | 15/02/2022 | 15/02/2022 | DISCARD | yes |
 
-Dates read right: 72 of 100. No date read: 5. Read failed: 0.
+Dates read right: 71 of 100. No date read: 5. Read failed: 0.
+Not counted: 1 more read the same date with a two-digit year.
 Cloud read time: median 1.5 s over 158 reads.

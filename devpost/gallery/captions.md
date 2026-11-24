@@ -33,7 +33,7 @@ Gemini Nano checks each photo on the laptop; only photos with a date go to the c
 ## 06-dates.png
 
 ```
-On 100 outside photos with volunteer-confirmed dates, the app read 72 of 100; on 14 misses it read the best-before, not the packed-on date.
+On 100 outside photos with volunteer-confirmed dates, the app read 71 of 100; on 14 misses it read the best-before, not the packed-on date.
 ```
 
 ## 07-built.png

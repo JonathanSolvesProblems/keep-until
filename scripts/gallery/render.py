@@ -214,7 +214,7 @@ SLIDES = [
         "name": "dates",
         "headline": f"Read right on {D['right']} photos that are not mine",
         "badge": "Open Food Facts photos of products sold in Canada, dates confirmed by volunteers; CC BY-SA",
-        "body": "<div class=\"stack\" style=\"width:100%\"><table class=\"small\"><tr><th>The 28 misses, looked at one by one</th><th>Photos</th></tr>"
+        "body": "<div class=\"stack\" style=\"width:100%\"><table class=\"small\"><tr><th>The 29 misses, looked at one by one</th><th>Photos</th></tr>"
         + "".join(f"<tr><td>{html.escape(a)}</td><td>{b}</td></tr>" for a, b in D["rows"])
         + "</table><p class=\"bigline\">The test set and its scoring rule were committed before the run.</p></div>",
         "caption": f"On 100 outside photos with volunteer-confirmed dates, the app read {D['right']}; on 14 misses it read the best-before, not the packed-on date.",

@@ -70,3 +70,13 @@ test("a brand printed in short form (PC) is proposed against the spelled-out bra
   assert.equal(candidatesFor(ginger, [{ id: "pc", brand: "PC", product: "English Style Gingersnap Cookies" }]).length, 1);
   assert.equal(candidatesFor(ginger, [{ id: "x", brand: "PC Financial", product: "Gift card" }]).length, 0);
 });
+
+test("keyword rule matches singular against plural", () => {
+  const ginger = { Title: "President's Choice brand English-Style Gingersnap Cookies recalled due to metal wire", Product: "English-Style Gingersnap Cookies" };
+  assert.equal(keywordRule(ginger, { brand: "President's Choice", product: "Gingersnap cookie" }), "pull");
+});
+
+test("a brand that prints its short form in the notice still matches as printed", () => {
+  const notice = { Title: "PC Blue Menu brand Lentil Soup recalled due to spoilage", Product: "Lentil Soup" };
+  assert.equal(candidatesFor(notice, [{ id: "a", brand: "PC Blue Menu", product: "Lentil soup" }]).length, 1);
+});

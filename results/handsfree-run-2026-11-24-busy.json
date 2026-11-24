@@ -1,0 +1,210 @@
+{
+  "recorded": "2026-11-24T15:25:18.860Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip.webm",
+  "checks": [
+    {
+      "at": 2.1,
+      "saw": "clear",
+      "ms": 2067
+    },
+    {
+      "at": 4.1,
+      "saw": "clear",
+      "ms": 1992
+    },
+    {
+      "at": 6.2,
+      "saw": "clear",
+      "ms": 2064
+    },
+    {
+      "at": 8.5,
+      "saw": "read",
+      "ms": 2293
+    },
+    {
+      "at": 12.3,
+      "saw": "turn",
+      "ms": 2220
+    },
+    {
+      "at": 14.5,
+      "saw": "turn",
+      "ms": 2158
+    },
+    {
+      "at": 16.9,
+      "saw": "turn",
+      "ms": 2351
+    },
+    {
+      "at": 19.1,
+      "saw": "turn",
+      "ms": 2211
+    },
+    {
+      "at": 21.3,
+      "saw": "turn",
+      "ms": 2195
+    },
+    {
+      "at": 24.3,
+      "saw": "read",
+      "ms": 2986
+    },
+    {
+      "at": 34.3,
+      "saw": "next",
+      "ms": 8565
+    },
+    {
+      "at": 49.6,
+      "saw": "next",
+      "ms": 14333
+    },
+    {
+      "at": 55,
+      "saw": "clear",
+      "ms": 5122
+    },
+    {
+      "at": 60.1,
+      "saw": "next",
+      "ms": 5073
+    },
+    {
+      "at": 70,
+      "saw": "next",
+      "ms": 52373
+    },
+    {
+      "at": 70,
+      "saw": "next",
+      "ms": 26054
+    }
+  ],
+  "steps": [
+    {
+      "at": 10.1,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Poulet",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view yes, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 2293,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product name and brand are visible, but the date stamp is not in view on the front of the carton."
+            },
+            "source": "in_cloud",
+            "ms": 1552,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: date in view → in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "at": 25.5,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Poulet",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view yes, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 2293,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The product name and brand are visible, but the date stamp is not in view on the front of the carton."
+            },
+            "source": "in_cloud",
+            "ms": 1552,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Campbell's Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "2027 FE 14",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and a clear best before date are all visible."
+            },
+            "source": "in_cloud",
+            "ms": 1223,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2027-02-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "2029-02-14",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: 24 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: photos together give the row and the date"
+      }
+    }
+  ]
+}

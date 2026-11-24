@@ -26,11 +26,10 @@ export function isFoodRecall(r) {
 // so the model never saw it. Store brands only, from the notices in the feed.
 const BRAND_ALIASES = { pc: "president s choice", "pc blue menu": "president s choice", "pc organics": "president s choice" };
 
-/** A brand worth matching on: at least three letters and not a generic word, short forms spelled out. */
-function usableBrand(brand) {
+/** The forms of a brand worth matching on: as printed, and spelled out when it is a known short form. */
+function usableBrands(brand) {
   const raw = norm(brand).trim();
-  const b = BRAND_ALIASES[raw] ?? raw;
-  return b.length >= 3 && !GENERIC.has(b) ? b : null;
+  return [...new Set([raw, BRAND_ALIASES[raw]])].filter((b) => b && b.length >= 3 && !GENERIC.has(b));
 }
 
 /**
@@ -41,8 +40,7 @@ export function candidatesFor(recall, items) {
   const text = norm(`${recall.Title ?? ""} ${recall.Product ?? ""}`);
   const out = [];
   for (const item of items) {
-    const b = usableBrand(item.brand);
-    if (!b || !text.includes(` ${b} `)) continue;
+    if (!usableBrands(item.brand).some((b) => text.includes(` ${b} `))) continue;
     out.push({
       itemId: item.id,
       brand: item.brand,
@@ -64,7 +62,8 @@ function productWords(text, brand) {
     norm(text)
       .trim()
       .split(" ")
-      .map((w) => w.replace(/(es|s)$/, ""))
+      // One stem for singular and plural: cookie and cookies, berry and berries, sauce and sauces.
+      .map((w) => w.replace(/(ies|ie|y)$/, "").replace(/(es|e|s)$/, ""))
       .filter((w) => w.length >= 4 && !NOT_PRODUCT_WORDS.has(w) && !skip.has(w)),
   );
 }

@@ -42,3 +42,5 @@ firebase-debug.log
 
 # Raw footage for the demo video edit (large, local only)
 broll/
+
+__pycache__/

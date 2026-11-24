@@ -2,8 +2,8 @@
 
 A reviewer given only the photos and two readings of each (A: the date an Open Food Facts volunteer
 confirmed; B: the date the app read) enlarged each package and recorded every date printed on it.
-Photo #18 below was later scored as a match once the grader followed the registered rule
-(`results/date-control-off-ca-2026-11-22.md`), which leaves 28 misses.
+All 29 are misses by the registered rule (`results/date-control-off-ca-2026-11-22.md`); #18 is the
+same date written with a two-digit year.
 
 | # | File | Dates printed (as printed) | A matches? | B matches? | Category |
 |---|---|---|---|---|---|
@@ -24,7 +24,7 @@ Photo #18 below was later scored as a match once the grader followed the registe
 | 15 | 0256760916956-1 | PACKED ON 18NO.22; BEST BEFORE 23NO.22 | no (NO is November) | yes, BB | A is wrong |
 | 16 | 0856303004951-1 | 14.05.2… year smeared by a crease | can't tell | can't tell | can't tell |
 | 17 | 7622201686994-1 | OTG03202?2 16:26 (code); MFG 12.01.22 | yes, MFG | no (read the code line) | B misread |
-| 18 | 0827896001306-1 | BEST BEFORE 100223; 23/11/2022 (EMBALLÉ LE); 10/02/2023 (MEILLEUR AVANT) | yes, best before | yes, same date | both right (now scored a match) |
+| 18 | 0827896001306-1 | BEST BEFORE 100223; 23/11/2022 (EMBALLÉ LE); 10/02/2023 (MEILLEUR AVANT) | yes, best before | yes, same date | same date, two-digit year (a miss by the rule) |
 | 19 | 0048107199128-1 | LOT#: 104?7022A EXP:?3/1?/24 (curved, blurred) | can't tell | can't tell | can't tell |
 | 20 | 0065244133129-7 | carton colour-bar code only (…-20-11-20); no food date visible | characters match, a print code | none read (correct) | A is not a food date |
 | 21 | 2000001105320-4 | Fab: 21-11-2022; EMBALLAGE 24-JA-2023; MEILLEUR AV 08-FE-2023 | yes, Fab | yes, BB | B is BB, A is another date |
@@ -37,6 +37,6 @@ Photo #18 below was later scored as a match once the grader followed the registe
 | 28 | 2000000145943-3 | 01/04/2? (lower half cut off) | can't tell | can't tell | can't tell |
 | 29 | 0876681002806-1 | 06/10/2021 (EMBALLÉ LE); 11/10/2021 (MEILLEUR AVANT) | yes, packed | yes, best before | B is BB, A is another date |
 
-Counts over the 28 misses: B read the best-before, use-by or expiry and A is a packed or production
+Counts over the 29 misses: B read the best-before, use-by or expiry and A is a packed or production
 date, 14; A is not a food date or is wrong, 5 (#7, 10, 15, 20, 26); can't tell, 6; B misread, 2;
-not food, 1.
+same date with a two-digit year, 1 (#18); not food, 1.

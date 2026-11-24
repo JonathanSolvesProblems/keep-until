@@ -61,7 +61,10 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
     private fun online(): Boolean {
         val cm = getApplication<Application>().getSystemService(android.net.ConnectivityManager::class.java) ?: return true
         val caps = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
-        return caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        // VALIDATED: the phone has actually reached the internet. A router with no uplink, or a
+        // sign-in page, has INTERNET and still cannot read a date.
+        return caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED)
     }
 
     // The first two are one item: a broth carton's front (name, no date), then its top (date, no
@@ -140,6 +143,8 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                         sampleNote = if (turnSample) "The next sample is the same carton, turned." else if (sample) "Real photos from my pantry. Samples are never added to a food bank's log." else it.sampleNote,
                     )
                 }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e // the screen was closed mid-read: not a failed read, and not reported as one
             } catch (e: Exception) {
                 android.util.Log.w("KeepUntil", "read failed", e)
                 // A failed read is not a crash, but it is the failure a volunteer meets, so it is

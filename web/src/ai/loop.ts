@@ -41,6 +41,14 @@ export interface ItemContext {
   triageBudgetMs?: number;
   /** The laptop already checked this frame (hands-free watching), so it is not checked twice. */
   triaged?: TriageResult;
+  /**
+   * Hands-free: this look was started by the laptop, not by a person pressing Read item. A second
+   * look that does not settle the item then leaves it waiting for the right face, where a
+   * deliberate second press would set it aside.
+   */
+  watching?: boolean;
+  /** What the item was last asked to show, kept when a watching look adds nothing. */
+  want?: "name";
 }
 
 /**
@@ -49,15 +57,63 @@ export interface ItemContext {
  * frame is only affordable on the device: in the cloud it would be a paid call, and a video of
  * the sort table leaving the building, every few seconds.
  *
- * `ready` is true when the table has been clear since the last item was settled, or the last
- * item asked to be turned. It is what stops one can held up for five seconds being read five times.
+ * The rules below decide, from each check, whether anything is sent. They exist because a person
+ * holds an item up for many checks in a row: one can must be read once, an item asked to be
+ * turned must be read again only when another face is shown, and one wrong "nothing here" from
+ * the laptop must not start the item over.
  */
-export type Watch = "clear" | "turn" | "read" | "next";
-export function watchStep(t: TriageResult["triage"], ready: boolean): Watch {
-  if (!t.package_in_view) return "clear";
-  if (!ready) return "next";
-  if (t.date_in_view || t.needs_refrigeration) return "read";
-  return "turn";
+export interface WatchState {
+  /** The table has been clear since the last item was settled, so the next item may be read. */
+  ready: boolean;
+  /** This item was asked to be turned, and for which face. */
+  pending: "date" | "name" | null;
+  /** Checks in a row with no package in view. Two clear the table; one may be the laptop's mistake. */
+  clears: number;
+  /** Since this item's last read: how many checks, and whether one saw a face with no date. */
+  sinceRead: number;
+  sawOtherFace: boolean;
+  /** Reads of this item that did not settle it. After two, the next one decides (set aside). */
+  tries: number;
+}
+export const WATCH_START: WatchState = { ready: true, pending: null, clears: 0, sinceRead: 0, sawOtherFace: false, tries: 0 };
+
+/** clear: no item. turn: show another face, nothing sent. read: send this frame. next: this item is answered. again: hold it steady. */
+export type Watch = "clear" | "turn" | "read" | "next" | "again";
+
+/** `changed`: this view differs from the frame last read. */
+export function watchStep(t: TriageResult["triage"], s: WatchState, changed: boolean): { next: Watch; state: WatchState } {
+  if (!t.package_in_view) {
+    const clears = s.clears + 1;
+    // An item that left the table takes its half-finished turn with it: the next item starts fresh.
+    if (clears >= 2) return { next: "clear", state: { ...WATCH_START, clears } };
+    return { next: "clear", state: { ...s, clears, sawOtherFace: true } };
+  }
+  const dateFace = t.date_in_view || t.needs_refrigeration;
+  if (s.pending) {
+    // The face just read is not read again while the person is still turning the item: the
+    // laptop must have seen another face since, or two checks must have passed.
+    const waited = s.sawOtherFace || s.sinceRead >= 2;
+    const wanted = s.pending === "name" ? waited || !dateFace : dateFace && waited;
+    if (wanted && changed) return { next: "read", state: { ...s, clears: 0 } };
+    return { next: "turn", state: { ...s, clears: 0, sinceRead: s.sinceRead + 1, sawOtherFace: s.sawOtherFace || !dateFace } };
+  }
+  if (!s.ready) return { next: "next", state: { ...s, clears: 0 } };
+  if (!dateFace) return { next: "turn", state: { ...s, clears: 0 } };
+  // The same view the cloud could not read a moment ago is not sent again.
+  return { next: changed ? "read" : "again", state: { ...s, clears: 0 } };
+}
+
+/**
+ * The watch state after a read came back (null: the read failed and nothing is known).
+ * `laptopOnly`: the laptop itself said "turn it" and nothing was sent, so the face it saw is
+ * known to have no date, and the first date face after it is already another face.
+ */
+export function afterRead(s: WatchState, step: Step | null, laptopOnly = false): WatchState {
+  if (!step || step.kind === "no_item") return s;
+  if (step.kind === "need_date_photo") {
+    return { ...s, ready: true, pending: step.want === "name" ? "name" : "date", sinceRead: 0, sawOtherFace: laptopOnly, tries: s.pending ? s.tries + 1 : 0 };
+  }
+  return { ...WATCH_START, ready: false };
 }
 
 const WORSE_THAN_NONE = new Set(["dent", "bulge", "rust", "leak", "open"]);
@@ -270,6 +326,16 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
     if (facts.date_text && !objectiveProblem(facts, ctx.today)) {
       return confirmDiscard(settle(reads, ctx.today, ctx.policy, routed(`${first.source}: photos together give the row and the date`)), models, jpegBase64, readContext, ctx.today);
     }
+  }
+
+  // A hands-free second look that does not settle the item leaves it waiting (see ItemContext).
+  if (secondLook && ctx.watching && first.read.next_action !== "set_aside") {
+    if (first.read.next_action === "no_item") {
+      return { kind: "need_date_photo", want: ctx.want, reads: ctx.previous!, route: routed("hands-free: nothing new in this look; still waiting") };
+    }
+    const facts = itemFacts(reads);
+    const want = facts.date_text && facts.category === "unclear" ? ("name" as const) : undefined;
+    return { kind: "need_date_photo", want, reads, route: routed(`hands-free: not settled yet; waiting for the ${want ?? "date"}`) };
   }
 
   const escalate = async (why: string): Promise<Step> => {
