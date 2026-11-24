@@ -157,7 +157,9 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                 // Asked of the phone, not guessed from the error text: in airplane mode the SDK's
                 // message named no network (Android 8 emulator, 2026-11-20), and the volunteer was
                 // told to hold the item steady.
-                _state.update { it.copy(prompt = if (!online()) OFFLINE else readFailure(e)) }
+                // The photo that could not be read is taken down, so it never sits above the previous
+                // item's answer as if that answer were its own.
+                _state.update { it.copy(prompt = if (!online()) OFFLINE else readFailure(e), still = null) }
             } finally {
                 _state.update { it.copy(reading = false) }
             }
