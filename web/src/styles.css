@@ -310,8 +310,15 @@ body:not(.started) .sheetline { visibility: hidden; }
 .sample { display: grid; gap: 8px; margin-top: 10px; padding-top: 18px; border-top: 1px solid var(--edge); }
 .sample-code { font-family: var(--dots); font-weight: 900; font-size: clamp(2.2rem, 4.6vw, var(--t5)); line-height: 1; letter-spacing: 0.02em; font-variant-numeric: normal; }
 .sample-note { color: var(--ink-3); font-size: var(--t-1); max-width: 40ch; }
-.try { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 14px; }
+.try { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: center; gap: 10px 14px; margin-top: 14px; }
+.try > .quiet { justify-self: start; }
+@media (max-width: 860px) { .try { grid-template-columns: 1fr; gap: 6px; } .try > .quiet:not(:first-child) { margin-top: 8px; } }
 .live .try { display: none; }
+.replay .try { display: none; }
+a.quiet { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); font-weight: 600; border-radius: 6px; }
+.speak { display: flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: var(--t-1); min-height: 44px; cursor: pointer; }
+.speak input { width: 22px; height: 22px; accent-color: var(--glove); }
+body:not(.started) .speak, .no-speech .speak { display: none; }
 .stamp-code {
   font-family: var(--dots);
   font-weight: 900;

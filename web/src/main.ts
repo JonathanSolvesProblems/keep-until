@@ -5,7 +5,7 @@ import { processItem, watchStep, type LoopModels, type Step } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
 import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
-import { renderAnswer, renderRow, renderTally } from "./view";
+import { renderAnswer, renderRow, renderTally, spokenAnswer } from "./view";
 import { checkRecallsAtShiftStart, makeRecallModel, settle, type Found, type Notice } from "./recall";
 import recallControl1 from "../../shared/recall-control.json";
 import recallControl2 from "../../shared/recall-control-2.json";
@@ -560,6 +560,7 @@ async function readCamera(given?: { frame: { b64: string; url: string }; small: 
       if (sheetUrl()) appendRow(logged.sheetRow).then((waiting) => showSheetStatus(waiting ? "" : "row added"));
     }
     render(step, frame.url, "camera");
+    say(spokenAnswer(step));
     return step;
   } catch (e) {
     promptEl.textContent = readFailure(e);
@@ -670,6 +671,7 @@ async function watchLoop(): Promise<void> {
     // The same view as the last read is not a new photo: a person turns it, or takes it away.
     if (next === "read" && !moved(sig, lastReadSig)) next = pendingTurn ? "turn" : "next";
     watchLog.push({ at: Math.round(video.currentTime * 10) / 10, saw: next, ms: tr.ms });
+    if (next !== "turn") saidTurn = false;
     if (next === "clear") {
       ready = true;
       lastReadSig = null;
@@ -679,6 +681,9 @@ async function watchLoop(): Promise<void> {
     } else if (next === "turn") {
       showWatching(`Turn it so the date faces the camera. Nothing sent yet. ${tally}`);
       promptEl.textContent = "Turn it so the date faces the camera.";
+      // Said once per item, not at every check while the volunteer is still turning it.
+      if (!saidTurn) say("Turn it, so the date faces the camera.");
+      saidTurn = true;
     } else {
       showWatching("Date in view. Reading it in the cloud.");
       watchCounts.cloudReads++;
@@ -693,8 +698,26 @@ async function watchLoop(): Promise<void> {
   watching.hidden = true;
 }
 
+// Said aloud, for a volunteer looking at the item and not the screen. Hands-free turns it on
+// (the click is the gesture browsers ask for before speaking); the box turns it off, and that
+// choice is remembered on this laptop.
+const speakBox = $<HTMLInputElement>("speak");
+let saidTurn = false;
+if (!("speechSynthesis" in window)) document.body.classList.add("no-speech");
+speakBox.checked = localStorageGet("speak") === "on";
+speakBox.addEventListener("change", () => localStorageSet("speak", speakBox.checked ? "on" : "off"));
+
+function say(words: string): void {
+  if (!words || !speakBox.checked || !("speechSynthesis" in window)) return;
+  speechSynthesis.cancel(); // the newest answer wins; an old one is never read out late
+  const u = new SpeechSynthesisUtterance(words);
+  u.lang = "en-CA";
+  speechSynthesis.speak(u);
+}
+
 handsBtn.addEventListener("click", () => {
   handsFree = !handsFree;
+  if (handsFree && localStorageGet("speak") !== "off") speakBox.checked = true;
   handsBtn.setAttribute("aria-pressed", String(handsFree));
   handsBtn.textContent = handsFree ? "Hands-free on" : "Hands-free";
   readBtn.disabled = handsFree;
@@ -775,7 +798,7 @@ if (new URLSearchParams(location.search).has("replay")) {
       steps: { at: number; step: Step }[];
     };
     const day = new Date(run.recorded).toLocaleDateString("en-CA", { day: "numeric", month: "long", year: "numeric" });
-    document.body.classList.add("started");
+    document.body.classList.add("started", "replay");
     readBtn.disabled = true;
     handsBtn.disabled = true;
     sheetBtn.hidden = true;

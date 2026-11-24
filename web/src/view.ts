@@ -164,6 +164,21 @@ export function viewOf(step: Step): View {
   };
 }
 
+/**
+ * The answer as one short sentence to say aloud, for a volunteer looking at the item and not at
+ * the screen. Built only from what the screen shows (the word, the keep-until date, the reason),
+ * so nothing is spoken that is not on it. "Nothing in view" is never spoken: it would talk over
+ * an empty table all shift.
+ */
+export function spokenAnswer(step: Step): string {
+  const v = viewOf(step);
+  if (v.cls === "NONE") return "";
+  if (v.cls === "TURN") return `${v.word}, ${v.sub}.`;
+  if (v.cls === "KEEP") return v.until ? `Keep. Until ${longDate(v.until)}.` : "Keep.";
+  if (v.cls === "DISCARD") return "Discard. Two reads agreed it is past its keep-until date.";
+  return `Set aside for the lead. ${v.reason}`;
+}
+
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string): HTMLElementTagNameMap[K] {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
