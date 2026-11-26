@@ -224,7 +224,25 @@ async function readSample(): Promise<void> {
     : "Real photos from my pantry. Samples are never added to a food bank's log.";
 }
 sampleBtn.addEventListener("click", readSample);
-if (new URLSearchParams(location.search).has("sample")) readSample();
+// ?sample=1 reads the first sample on load. ?sample=all reads all three in turn (the carton's
+// front, its top, the yogurt) and puts the three answers in the window title: the check that the
+// public path works end to end, run five times before submitting.
+const sampleParam = new URLSearchParams(location.search).get("sample");
+if (sampleParam === "all") {
+  (async () => {
+    const answers: string[] = [];
+    for (let i = 0; i < SAMPLES.length; i++) {
+      const before = results.length;
+      await readSample();
+      if (results.length === before) {
+        answers.push("read failed");
+        break;
+      }
+      answers.push(document.title.replace("Keep Until: ", ""));
+    }
+    document.title = `Keep Until samples: ${answers.join(" | ")}`;
+  })();
+} else if (sampleParam !== null) readSample();
 
 const recallNote = $("recallNote");
 const recallControlBtn = $<HTMLButtonElement>("recallControl");
