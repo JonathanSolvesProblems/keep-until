@@ -377,3 +377,15 @@ describe("hands-free second looks leave an unsettled item waiting", () => {
     expect(step.kind === "verdict" && step.verdict.decision).toBe("SET_ASIDE");
   });
 });
+
+describe("while the laptop's check is still warming up", () => {
+  it("the read goes to the cloud, never to the laptop's own full read", async () => {
+    const { m, h, c } = models([{ text: read({ next_action: "set_aside", why: "guess" }), source: "on_device" }], [{ text: read({ date_text: "", date_kind: "none_visible", next_action: "show_me_the_date" }), source: "in_cloud" }]);
+    m.triage = null; // not warm yet
+    m.readInCloud = true;
+    const step = await processItem(m, "img", { today: TODAY });
+    expect(step.kind).toBe("need_date_photo");
+    expect(h.calls).toBe(0);
+    expect(c!.calls).toBe(1);
+  });
+});

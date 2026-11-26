@@ -79,6 +79,8 @@ let warming: Promise<void> | null = null;
 
 function liveModels(mode: Mode, cloudModel: string): LoopModels {
   const m = buildModels(mode, cloudModel);
+  // In the product the laptop only checks; the full read is the cloud's, warm or not.
+  m.readInCloud = mode === InferenceMode.PREFER_ON_DEVICE;
   const triage = m.triage;
   if (triage && !laptopWarm) {
     m.triage = null;

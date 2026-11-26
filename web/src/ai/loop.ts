@@ -23,6 +23,13 @@ export interface LoopModels {
    * itself, and only photos with a date in view, or that may need the fridge, go to the cloud.
    */
   triage?: { model: GenerativeModel } | null;
+  /**
+   * The product's rule: the full read of an item is the cloud's job, always. Without this, a read
+   * made while the laptop's check was still warming up went to Gemini Nano's own full read, the
+   * job it does badly (4 of 15), while the screen said "read in the cloud" (found 2026-11-26: the
+   * live site answered the sample carton's front "Set aside" five times out of five).
+   */
+  readInCloud?: boolean;
 }
 
 export interface ItemContext {
@@ -298,7 +305,7 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
       fallback = `on-device triage failed (${(e as Error).message}) → `;
     }
   }
-  const primary = useTriage ? models.cloud! : models.hybrid;
+  const primary = useTriage || (models.readInCloud && models.cloud) ? models.cloud! : models.hybrid;
 
   // The SDK falls back to the cloud only when the on-device model is unavailable, not when an
   // on-device call fails (a context-window overflow, a crash) or returns something that is not
