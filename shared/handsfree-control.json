@@ -1,0 +1,77 @@
+{
+  "set": "handsfree-control-1",
+  "registered": "2026-11-26, committed before the clip was first played to the app",
+  "about": "Hands-free on all 16 photos of the pantry set, in the order a volunteer would show them: 8 real products, each face held up in turn, a blank frame between items standing in for the empty table. The photos and their hand labels are from 2026-11-15 (results/labels/pantry-2026-11-15.json), made before any model run. scripts/make_clip.py builds the clip from this file, and scripts/grade_handsfree.py grades a run against it.",
+  "clip": "web/public/testset/handsfree-clip-long.webm",
+  "photos": "web/public/testset/pantry-2026-11-15",
+  "table_seconds": { "start": 6, "between": 7, "end": 8 },
+  "rule": "An item's answer is the last answer the app gives between the moment the item's first face appears and the moment the next item's first face appears. It is right when it is the expected one. 'turn_it' means the app asked for the item to be turned and did not keep, discard or set it aside: no photo of that item shows a date, so nothing else is right. A 'keep' with a registered keep_until is right only with that date. The corn is played and reported but not graded: the stamps on its lids could not be read by hand from the photo.",
+  "items": [
+    {
+      "item": "Campbell's chicken broth, 900 mL carton",
+      "faces": [
+        { "file": "20261115_112419.jpg", "shows": "front, no date", "seconds": 10 },
+        { "file": "20261115_112421.jpg", "shows": "side, no date", "seconds": 10 },
+        { "file": "20261115_112427.jpg", "shows": "top, BEST BEFORE 2027 FE 14", "seconds": 14 }
+      ],
+      "expected": "keep",
+      "keep_until": "2029-02-14"
+    },
+    {
+      "item": "Green Giant cream style corn, two cans",
+      "faces": [
+        { "file": "20261115_112247.jpg", "shows": "fronts, no date", "seconds": 10 },
+        { "file": "20261115_112242.jpg", "shows": "lids, stamps smudged and upside down", "seconds": 14 }
+      ],
+      "expected": "not graded"
+    },
+    {
+      "item": "Liberte Greek yogurt tub",
+      "faces": [
+        { "file": "20261115_112441.jpg", "shows": "side, no date, says keep refrigerated", "seconds": 10 },
+        { "file": "20261115_112446.jpg", "shows": "lid, BEST BEFORE 2026 DE 07", "seconds": 14 }
+      ],
+      "expected": "set_aside"
+    },
+    {
+      "item": "Hershey's Chipits milk chocolate chips",
+      "faces": [
+        { "file": "20261115_112410.jpg", "shows": "front, no date", "seconds": 10 },
+        { "file": "20261115_112406.jpg", "shows": "back, BB/MA 2027 MA with the day cut off", "seconds": 14 }
+      ],
+      "expected": "keep",
+      "note": "The stamp gives May 2027 with no day, and the label set does not fix a chart row for chocolate chips, so only the decision is registered."
+    },
+    {
+      "item": "Gallo extra virgin olive oil",
+      "faces": [
+        { "file": "20261115_112311.jpg", "shows": "front, no date", "seconds": 10 },
+        { "file": "20261115_112303.jpg", "shows": "back label, no date", "seconds": 10 }
+      ],
+      "expected": "turn_it"
+    },
+    {
+      "item": "No Name baking powder",
+      "faces": [
+        { "file": "20261115_112326.jpg", "shows": "front, no date", "seconds": 10 },
+        { "file": "20261115_112323.jpg", "shows": "back, says the date is on the bottom", "seconds": 10 }
+      ],
+      "expected": "turn_it"
+    },
+    {
+      "item": "PC shredded parmesan",
+      "faces": [
+        { "file": "20261115_112452.jpg", "shows": "back, no date", "seconds": 10 },
+        { "file": "20261115_112458.jpg", "shows": "front, BEST BEFORE 2026 NO 30, keep refrigerated", "seconds": 14 }
+      ],
+      "expected": "set_aside"
+    },
+    {
+      "item": "Arm & Hammer baking soda",
+      "faces": [
+        { "file": "20261115_112402.jpg", "shows": "side panel, no date", "seconds": 10 }
+      ],
+      "expected": "turn_it"
+    }
+  ]
+}

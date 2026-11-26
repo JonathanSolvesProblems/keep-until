@@ -6,6 +6,7 @@ import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
 import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
 import { renderAnswer, renderRow, renderTally, spokenAnswer } from "./view";
+import { fixedLine, type Spoken } from "./voice";
 import { checkRecallsAtShiftStart, makeRecallModel, settle, type Found, type Notice } from "./recall";
 import recallControl1 from "../../shared/recall-control.json";
 import recallControl2 from "../../shared/recall-control-2.json";
@@ -445,13 +446,16 @@ function localStorageSet(key: string, value: string): void {
 // ?clip=1: a 70-second recording of real pantry photos (an empty table, a carton's front, its
 // top, the table again, a yogurt lid) plays in the camera's place, so hands-free can be tried
 // with no item and no webcam. Like the samples, nothing read from it is written to a food bank's log.
-const clipMode = new URLSearchParams(location.search).has("clip");
+// ?clip=long plays the longer one: all 16 pantry photos, 8 items, as shared/handsfree-control.json lists them.
+const clipParam = new URLSearchParams(location.search).get("clip");
+const clipMode = clipParam !== null;
+const clipFile = clipParam === "long" ? "/testset/handsfree-clip-long.webm" : "/testset/handsfree-clip.webm";
 
 async function openCamera(deviceId?: string): Promise<void> {
   (video.srcObject as MediaStream | null)?.getTracks().forEach((t) => t.stop());
   if (clipMode) {
     video.srcObject = null;
-    video.src = "/testset/handsfree-clip.webm";
+    video.src = clipFile;
     video.muted = true;
     video.autoplay = false;
     await new Promise((r) => video.addEventListener("loadeddata", r, { once: true }));
@@ -712,7 +716,7 @@ function finishClip(): void {
     browser: navigator.userAgent,
     cloudModel: settings?.cloudModel,
     onDevice: shiftInfo?.onDevice,
-    clip: "/testset/handsfree-clip.webm",
+    clip: clipFile,
     checks: watchLog,
     steps: clipSteps,
   };
@@ -773,7 +777,7 @@ async function watchLoop(run: number): Promise<void> {
         promptEl.textContent = battery
           ? "This laptop is on battery, which slows its reader too much for hands-free. Plug it in and press Hands-free again, or press Read item."
           : "This laptop is too busy to watch the camera right now, so hands-free is off. Press Read item.";
-        say(battery ? "Plug the laptop in for hands-free. Until then, press Read item." : "Hands-free is off. Press Read item.");
+        say(fixedLine(battery ? "plug-in" : "hands-free-off"));
         return;
       }
       showWatching(battery ? "On battery this laptop's reader is slow, so that check came too late. Plug it in." : "This laptop is busy, so that check came too late. Checking again.");
@@ -825,19 +829,39 @@ async function watchLoop(run: number): Promise<void> {
 }
 
 // Said aloud, for a volunteer looking at the item and not the screen. Hands-free turns it on
-// (the click is the gesture browsers ask for before speaking); the box turns it off, and that
-// choice is remembered on this laptop.
+// (the click is the gesture browsers ask for before playing sound); the box turns it off, and
+// that choice is remembered on this laptop. Every line is a recording shipped with the app
+// (voice.ts), so nothing is sent anywhere to be spoken. If a recording cannot be played (first
+// use with no connection), the browser's own voice says the same words.
 const speakBox = $<HTMLInputElement>("speak");
-if (!("speechSynthesis" in window)) document.body.classList.add("no-speech");
 speakBox.checked = localStorageGet("speak") === "on";
-speakBox.addEventListener("change", () => localStorageSet("speak", speakBox.checked ? "on" : "off"));
+speakBox.addEventListener("change", () => {
+  localStorageSet("speak", speakBox.checked ? "on" : "off");
+  if (!speakBox.checked) hush();
+});
+const recordings = new Map<string, HTMLAudioElement>();
+let speaking: HTMLAudioElement | null = null;
 
-function say(words: string): void {
-  if (!words || !speakBox.checked || !("speechSynthesis" in window)) return;
-  speechSynthesis.cancel(); // the newest answer wins; an old one is never read out late
-  const u = new SpeechSynthesisUtterance(words);
-  u.lang = "en-CA";
-  speechSynthesis.speak(u);
+function hush(): void {
+  speaking?.pause();
+  speaking = null;
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+}
+
+function say(line: Spoken | null): void {
+  if (!line || !speakBox.checked) return;
+  hush(); // the newest answer wins; an old one is never said late
+  let audio = recordings.get(line.key);
+  if (!audio) recordings.set(line.key, (audio = new Audio(`/voice/${line.key}.mp3`)));
+  const mine = audio;
+  speaking = mine;
+  mine.currentTime = 0;
+  mine.play().catch(() => {
+    if (speaking !== mine || !("speechSynthesis" in window)) return; // hushed by a newer answer
+    const u = new SpeechSynthesisUtterance(line.words);
+    u.lang = "en-CA";
+    speechSynthesis.speak(u);
+  });
 }
 
 handsBtn.addEventListener("click", () => {

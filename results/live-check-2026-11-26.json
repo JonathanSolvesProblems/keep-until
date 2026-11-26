@@ -1,5 +1,5 @@
 {
-  "ran": "2026-11-26T09:42:58+00:00",
+  "ran": "2026-11-26T15:13:41+00:00",
   "results": [
     {
       "check": "live site serves the current build",
@@ -14,7 +14,7 @@
     {
       "check": "recall feed up, control notices still published",
       "ok": true,
-      "detail": "34,418 notices, 5,353 from the CFIA; control notices missing: none"
+      "detail": "34,423 notices, 5,354 from the CFIA; control notices missing: none"
     },
     {
       "check": "item log refuses an unsigned write",

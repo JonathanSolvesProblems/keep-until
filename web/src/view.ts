@@ -3,6 +3,7 @@
 
 import { itemFacts, type Step } from "./ai/loop";
 import type { ReadResult } from "./ai/reader";
+import { asideLine, fixedLine, keepLine, type Spoken } from "./voice";
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -172,17 +173,17 @@ export function viewOf(step: Step, handsFree = false): View {
 
 /**
  * The answer as one short sentence to say aloud, for a volunteer looking at the item and not at
- * the screen. Built only from what the screen shows (the word, the keep-until date, the reason),
- * so nothing is spoken that is not on it. "Nothing in view" is never spoken: it would talk over
- * an empty table all shift.
+ * the screen. It is always one of the recorded lines in voice.ts, and it says only what the
+ * screen shows (the word, the keep-until month, the reason): a reason with no recording is left
+ * to the screen. "Nothing in view" is never spoken: it would talk over an empty table all shift.
  */
-export function spokenAnswer(step: Step): string {
+export function spokenAnswer(step: Step): Spoken | null {
   const v = viewOf(step);
-  if (v.cls === "NONE") return "";
-  if (v.cls === "TURN") return `${v.word}, ${v.sub}.`;
-  if (v.cls === "KEEP") return v.until ? `Keep. Until ${longDate(v.until)}.` : "Keep.";
-  if (v.cls === "DISCARD") return "Discard. Two reads agreed it is past its keep-until date.";
-  return `Set aside for the lead. ${v.reason}`;
+  if (v.cls === "NONE") return null;
+  if (v.cls === "TURN") return fixedLine(step.kind === "need_date_photo" && step.want === "name" ? "turn-name" : "turn-date");
+  if (v.cls === "KEEP") return keepLine(v.until);
+  if (v.cls === "DISCARD") return fixedLine("discard");
+  return asideLine(v.reason);
 }
 
 function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: string): HTMLElementTagNameMap[K] {
