@@ -1,277 +1,249 @@
 {
-  "recorded": "2026-11-22T19:12:25.833Z",
-  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "recorded": "2026-11-26T09:40:05.118Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
   "cloudModel": "gemini-3.5-flash-lite",
   "onDevice": "on-device: available",
   "clip": "/testset/handsfree-clip.webm",
   "checks": [
     {
-      "at": 3.4,
+      "at": 2,
       "saw": "clear",
-      "ms": 3412
+      "ms": 1921,
+      "hidden": false
     },
     {
-      "at": 5.1,
+      "at": 4.1,
       "saw": "clear",
-      "ms": 1634
+      "ms": 2085,
+      "hidden": false
     },
     {
-      "at": 6.8,
+      "at": 6,
       "saw": "clear",
-      "ms": 1716
+      "ms": 1898,
+      "hidden": false
     },
     {
-      "at": 8.7,
-      "saw": "read",
-      "ms": 1884
+      "at": 7.9,
+      "saw": "clear",
+      "ms": 1852,
+      "hidden": false
     },
     {
-      "at": 12.5,
+      "at": 9.8,
       "saw": "turn",
-      "ms": 1811
+      "ms": 1952,
+      "hidden": false
     },
     {
-      "at": 14.3,
+      "at": 11.8,
       "saw": "turn",
-      "ms": 1805
+      "ms": 1966,
+      "hidden": false
     },
     {
-      "at": 16.1,
+      "at": 13.8,
       "saw": "turn",
-      "ms": 1769
+      "ms": 1976,
+      "hidden": false
     },
     {
-      "at": 17.9,
+      "at": 15.7,
       "saw": "turn",
-      "ms": 1799
+      "ms": 1912,
+      "hidden": false
+    },
+    {
+      "at": 17.8,
+      "saw": "turn",
+      "ms": 2041,
+      "hidden": false
     },
     {
       "at": 19.8,
       "saw": "turn",
-      "ms": 1878
+      "ms": 1960,
+      "hidden": false
     },
     {
       "at": 21.7,
       "saw": "turn",
-      "ms": 1876
+      "ms": 1908,
+      "hidden": false
     },
     {
-      "at": 23.6,
+      "at": 23.9,
       "saw": "read",
-      "ms": 1929
+      "ms": 2153,
+      "hidden": false
     },
     {
-      "at": 27.1,
+      "at": 27.6,
       "saw": "next",
-      "ms": 2064
+      "ms": 2311,
+      "hidden": false
     },
     {
-      "at": 29.1,
+      "at": 29.8,
       "saw": "next",
-      "ms": 1941
+      "ms": 2182,
+      "hidden": false
     },
     {
-      "at": 31.1,
+      "at": 32.6,
       "saw": "next",
-      "ms": 2036
+      "ms": 2763,
+      "hidden": false
     },
     {
-      "at": 33.2,
+      "at": 35.2,
       "saw": "next",
-      "ms": 2079
+      "ms": 2549,
+      "hidden": false
     },
     {
-      "at": 35.1,
+      "at": 37.5,
       "saw": "next",
-      "ms": 1940
+      "ms": 2340,
+      "hidden": false
     },
     {
-      "at": 37.2,
-      "saw": "next",
-      "ms": 2016
-    },
-    {
-      "at": 38.8,
+      "at": 39.8,
       "saw": "clear",
-      "ms": 1670
+      "ms": 2265,
+      "hidden": false
     },
     {
-      "at": 40.5,
+      "at": 42.3,
       "saw": "clear",
-      "ms": 1603
+      "ms": 2435,
+      "hidden": false
     },
     {
-      "at": 42.1,
+      "at": 44.6,
       "saw": "clear",
-      "ms": 1653
+      "ms": 2254,
+      "hidden": false
     },
     {
-      "at": 43.8,
+      "at": 46.8,
       "saw": "clear",
-      "ms": 1654
+      "ms": 2242,
+      "hidden": false
     },
     {
-      "at": 45.4,
-      "saw": "clear",
-      "ms": 1660
-    },
-    {
-      "at": 47,
-      "saw": "clear",
-      "ms": 1592
-    },
-    {
-      "at": 48.8,
+      "at": 49,
       "saw": "read",
-      "ms": 1762
+      "ms": 2168,
+      "hidden": false
     },
     {
-      "at": 52,
+      "at": 52.5,
       "saw": "next",
-      "ms": 1730
+      "ms": 2252,
+      "hidden": false
     },
     {
-      "at": 53.9,
+      "at": 55.2,
       "saw": "next",
-      "ms": 1800
+      "ms": 2636,
+      "hidden": false
     },
     {
-      "at": 55.7,
+      "at": 57.6,
       "saw": "next",
-      "ms": 1802
+      "ms": 2434,
+      "hidden": false
     },
     {
-      "at": 57.4,
+      "at": 60,
       "saw": "next",
-      "ms": 1704
+      "ms": 2355,
+      "hidden": false
     },
     {
-      "at": 59.1,
+      "at": 62.4,
       "saw": "next",
-      "ms": 1754
+      "ms": 2387,
+      "hidden": false
     },
     {
-      "at": 60.9,
-      "saw": "next",
-      "ms": 1738
-    },
-    {
-      "at": 62.6,
-      "saw": "next",
-      "ms": 1707
-    },
-    {
-      "at": 64.2,
+      "at": 64.6,
       "saw": "clear",
-      "ms": 1637
+      "ms": 2211,
+      "hidden": false
     },
     {
-      "at": 66,
+      "at": 66.8,
       "saw": "clear",
-      "ms": 1723
+      "ms": 2151,
+      "hidden": false
     },
     {
-      "at": 67.6,
+      "at": 68.9,
       "saw": "clear",
-      "ms": 1621
-    },
-    {
-      "at": 69.2,
-      "saw": "clear",
-      "ms": 1606
+      "ms": 2071,
+      "hidden": false
     },
     {
       "at": 70,
       "saw": "clear",
-      "ms": 1713
+      "ms": 2272,
+      "hidden": false
     }
   ],
   "steps": [
     {
-      "at": 10.7,
+      "at": 9.8,
       "step": {
         "kind": "need_date_photo",
         "reads": [
           {
             "read": {
-              "product": "Campbell's CHICKEN • POULET BROTH - BOUILLON",
+              "product": "Campbell's Chicken Poulet Poulet-Roullon",
               "brand": "",
               "category": "unclear",
               "date_text": "",
               "date_kind": "none_visible",
               "damage": "none",
               "confidence": "low",
-              "next_action": "ask_cloud",
-              "why": "triage: package yes, date in view no, fridge yes"
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
             },
             "source": "on_device",
-            "ms": 1884,
+            "ms": 1952,
             "mode": "only_on_device",
-            "valid": true
-          },
-          {
-            "read": {
-              "product": "Chicken Broth",
-              "brand": "Campbell's",
-              "category": "canned_prepared_meals",
-              "date_text": "",
-              "date_kind": "none_visible",
-              "damage": "none",
-              "confidence": "low",
-              "next_action": "show_me_the_date",
-              "why": "The date is not visible on the front of the package, so please show me the top or bottom."
-            },
-            "source": "in_cloud",
-            "ms": 2004,
-            "mode": "only_in_cloud",
             "valid": true
           }
         ],
-        "route": "on_device triage: may need the fridge → in_cloud: model asked to see the date"
+        "route": "on_device triage: no date in view; no cloud call"
       }
     },
     {
-      "at": 25,
+      "at": 25.3,
       "step": {
         "kind": "verdict",
         "reads": [
           {
             "read": {
-              "product": "Campbell's CHICKEN • POULET BROTH - BOUILLON",
+              "product": "Campbell's Chicken Poulet Poulet-Roullon",
               "brand": "",
               "category": "unclear",
               "date_text": "",
               "date_kind": "none_visible",
               "damage": "none",
               "confidence": "low",
-              "next_action": "ask_cloud",
-              "why": "triage: package yes, date in view no, fridge yes"
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
             },
             "source": "on_device",
-            "ms": 1884,
+            "ms": 1952,
             "mode": "only_on_device",
             "valid": true
           },
           {
             "read": {
-              "product": "Chicken Broth",
-              "brand": "Campbell's",
-              "category": "canned_prepared_meals",
-              "date_text": "",
-              "date_kind": "none_visible",
-              "damage": "none",
-              "confidence": "low",
-              "next_action": "show_me_the_date",
-              "why": "The date is not visible on the front of the package, so please show me the top or bottom."
-            },
-            "source": "in_cloud",
-            "ms": 2004,
-            "mode": "only_in_cloud",
-            "valid": true
-          },
-          {
-            "read": {
-              "product": "Campbell's Chicken Broth",
+              "product": "Campbell's Chicken Poulet Poulet-Roullon",
               "brand": "Campbell's",
               "category": "canned_prepared_meals",
               "date_text": "2027 FE 14",
@@ -279,10 +251,10 @@
               "damage": "none",
               "confidence": "high",
               "next_action": "log",
-              "why": "The product name, category, and a clear best before date are all visible."
+              "why": "The product, category, and clearly legible best before date are fully visible."
             },
             "source": "in_cloud",
-            "ms": 1372,
+            "ms": 1390,
             "mode": "only_in_cloud",
             "valid": true
           }
@@ -307,13 +279,13 @@
       }
     },
     {
-      "at": 50.3,
+      "at": 50.2,
       "step": {
         "kind": "verdict",
         "reads": [
           {
             "read": {
-              "product": "LIBERTÉ GREC-GREEK",
+              "product": "LIBERTÉ GREC-GREEK®",
               "brand": "",
               "category": "unclear",
               "date_text": "",
@@ -321,10 +293,10 @@
               "damage": "none",
               "confidence": "low",
               "next_action": "ask_cloud",
-              "why": "triage: package yes, date in view yes, fridge yes"
+              "why": "triage: package yes, date in view yes, fridge no"
             },
             "source": "on_device",
-            "ms": 1762,
+            "ms": 2168,
             "mode": "only_on_device",
             "valid": true
           },
@@ -341,7 +313,7 @@
               "why": "This is yogurt, which requires refrigeration."
             },
             "source": "in_cloud",
-            "ms": 1455,
+            "ms": 1198,
             "mode": "only_in_cloud",
             "valid": true
           }

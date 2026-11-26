@@ -1,0 +1,205 @@
+{
+  "recorded": "2026-11-26T09:38:30.945Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip.webm",
+  "checks": [
+    {
+      "at": 6,
+      "saw": "clear",
+      "ms": 5921,
+      "hidden": false
+    },
+    {
+      "at": 11.8,
+      "saw": "clear",
+      "ms": 5815,
+      "hidden": false
+    },
+    {
+      "at": 18.6,
+      "saw": "read",
+      "ms": 6696,
+      "hidden": false
+    },
+    {
+      "at": 28.8,
+      "saw": "slow",
+      "ms": 8412,
+      "hidden": false
+    },
+    {
+      "at": 38.6,
+      "saw": "slow",
+      "ms": 9732,
+      "hidden": false
+    },
+    {
+      "at": 45,
+      "saw": "clear",
+      "ms": 6363,
+      "hidden": false
+    },
+    {
+      "at": 47.3,
+      "saw": "clear",
+      "ms": 2243,
+      "hidden": false
+    },
+    {
+      "at": 49.5,
+      "saw": "read",
+      "ms": 2245,
+      "hidden": false
+    },
+    {
+      "at": 53.5,
+      "saw": "next",
+      "ms": 2224,
+      "hidden": false
+    },
+    {
+      "at": 55.8,
+      "saw": "next",
+      "ms": 2287,
+      "hidden": false
+    },
+    {
+      "at": 58.2,
+      "saw": "next",
+      "ms": 2355,
+      "hidden": false
+    },
+    {
+      "at": 60.5,
+      "saw": "next",
+      "ms": 2259,
+      "hidden": false
+    },
+    {
+      "at": 62.7,
+      "saw": "next",
+      "ms": 2203,
+      "hidden": false
+    },
+    {
+      "at": 65.6,
+      "saw": "clear",
+      "ms": 2858,
+      "hidden": false
+    },
+    {
+      "at": 67.6,
+      "saw": "clear",
+      "ms": 1940,
+      "hidden": false
+    },
+    {
+      "at": 69.5,
+      "saw": "clear",
+      "ms": 1927,
+      "hidden": false
+    },
+    {
+      "at": 70,
+      "saw": "clear",
+      "ms": 1860,
+      "hidden": false
+    }
+  ],
+  "steps": [
+    {
+      "at": 20.3,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's CHICKEN • POULET",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view no, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 6696,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chicken Broth",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The date is not visible on the front of the carton, so please show me the top or back."
+            },
+            "source": "in_cloud",
+            "ms": 1738,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: may need the fridge → in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "at": 51.3,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LIBERTÉ GREC-GREEK®",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view yes, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 2245,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Liberté Grec Greek",
+              "brand": "Liberté",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 DE 07",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This yogurt product requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1735,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This yogurt product requires refrigeration."
+        },
+        "route": "on_device triage: date in view → in_cloud: model chose set_aside"
+      }
+    }
+  ]
+}

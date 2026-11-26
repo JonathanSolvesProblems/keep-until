@@ -11,7 +11,7 @@ Keep Until
 ## Tagline
 
 ```
-Hold up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop at no cost and calls the cloud only for dates: 36 checks on the laptop, 3 calls to the cloud.
+Hold up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop at no cost and calls the cloud only for dates: 31 checks on the laptop, 2 calls to the cloud.
 ```
 
 ## Platforms
@@ -70,7 +70,7 @@ The screen is built to be read from a metre away with an item in your hand: the 
 
 ## Results
 
-Hands-free, on real Gemini Nano in my Chrome: a 70-second clip of pantry photos (empty table, a carton's front, its top, the table, a yogurt lid) played in the camera's place, and nobody touched the laptop. 36 checks on the laptop, 3 calls to the cloud, and both items got the right answers: turn it, then keep, for the carton; set aside for the yogurt. Once an item was answered, the laptop kept checking and sent nothing until the table was clear (`results/handsfree-clip-2026-11-22.md`). You can watch the recorded run, every check and answer as the app made them, at https://keep-until-hybrid.web.app/?replay=1 in any browser. One run of two items shows the loop working on the real model; accuracy needs many more dated items.
+Hands-free, on real Gemini Nano in my Chrome: a 70-second clip of pantry photos (empty table, a carton's front, its top, the table, a yogurt lid) played in the camera's place, and nobody touched the laptop. 31 checks on the laptop, 2 calls to the cloud, and both items got the right answers. The laptop told me to turn the carton by itself, with nothing sent; one cloud read of the top gave keep until 14 FEB 2029; one more set the yogurt aside. Once an item was answered, the laptop kept checking and sent nothing until the table was clear (`results/handsfree-clip-2026-11-26-plugged.md`). You can watch the recorded run, every check and answer as the app made them, at https://keep-until-hybrid.web.app/?replay=1 in any browser. One run of two items shows the loop working on the real model; accuracy needs many more dated items.
 
 Sixteen photos of eight real products from my pantry, labelled by hand before any model run, graded by a script:
 
@@ -96,8 +96,8 @@ A script fails the build if any number on this page or in the README stops match
 - Gemini Nano's first call after Chrome starts can take minutes (6.5 on 2026-11-22; on 2026-11-24 it had not answered after 15). The laptop check warms up in the background, items go to the cloud with Read item until it is ready, and hands-free starts by itself when it is.
 - No Android phone has run Gemini Nano for this app yet. Firebase Test Lab's Pixel 10, Pixel 11 and Galaxy S26 carry a stub AICore, Android emulators have no AICore at all, and my own phone is a Galaxy S24, which is not on Google's list. On those phones the app takes the cloud path and says so on the screen.
 - Hands-free needs Gemini Nano, so it is on the laptop in Chrome only. Everywhere else the volunteer presses Read item, and the app says why.
-- Hands-free does not work on battery on my laptop. On battery its GPU drew 5 to 21 watts, Gemini Nano wrote about 4.5 tokens a second, and a check took 8 to 9 seconds, where it took about 2 on 2026-11-22 (`results/handsfree-clip-2026-11-26.md`). A check slower than 8 seconds is never acted on, and after two in a row hands-free switches itself off and says to plug the laptop in or press Read item.
-- The run the page quotes and the replay plays was recorded on 2026-11-22. On 2026-11-24 a code review led me to rewrite the hands-free rules (an item could be read twice, or left unread). In the re-runs since, the rewritten rules answered the carton right each time it was read, once with a single cloud call where the old rules needed two; the yogurt was answered in one run and missed in the others, because those checks came late on battery. A full recording with the rewritten rules and the laptop plugged in is still to be made.
+- Hands-free needs the laptop plugged in. On battery mine throttles its GPU: Gemini Nano wrote about 4.5 tokens a second and a check took 6 to 10 seconds. In one run I plugged it in partway through, and the checks dropped to about 2 seconds on the spot (`results/handsfree-clip-2026-11-26-plugged.md`). A check slower than 8 seconds is never acted on, and after two in a row hands-free switches itself off and says to plug the laptop in or press Read item.
+- The hands-free rules were rewritten on 2026-11-24, after a code review found that an item could be read twice or left unread. The run quoted here and played by the replay was made with the rewritten rules. It is a clip of still photos; a hand-held item moves in ways a still does not, and that is tested only by the unit tests so far.
 
 ## What's next
 

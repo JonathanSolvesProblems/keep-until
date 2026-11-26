@@ -58,7 +58,7 @@ def gate():
 
 
 def handsfree():
-    t = read("results/handsfree-clip-2026-11-22.md")
+    t = read("results/handsfree-clip-2026-11-26-plugged.md")
     m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", t)
     line = re.search(r"```\n([\d.]+s \w+.*?)\n```", t, re.S)[1].replace("\n", " ")
     looks = [(float(a), b) for a, b in re.findall(r"([\d.]+)s (\w+)", line)]
@@ -85,7 +85,7 @@ GATE = gate()
 H = handsfree()
 CLAIMS_OUT = claims_output()
 
-# The clip's scenes, as committed in results/handsfree-clip-2026-11-22.md.
+# The clip's scenes, as committed in results/handsfree-clip-2026-11-26-plugged.md.
 SCENES = [(0, 6, "empty table", None), (6, 20, "carton front", "clip-13.png"), (20, 36, "carton top", "clip-28.png"),
           (36, 46, "empty table", None), (46, 62, "yogurt lid", "clip-54.png"), (62, 70, "empty table", None)]
 LOOK_COLOUR = {"clear": "#8a8780", "turn": "#151515", "next": "#5a5955", "read": "#2553c6"}
@@ -190,7 +190,7 @@ SLIDES = [
     {
         "name": "hands-free",
         "headline": f"Hands-free: {H['looks']} checks on the laptop, {H['calls']} calls to the cloud",
-        "badge": "results/handsfree-clip-2026-11-22.md, real Gemini Nano in Chrome; replay at ?replay=1",
+        "badge": "results/handsfree-clip-2026-11-26-plugged.md, real Gemini Nano in Chrome; replay at ?replay=1",
         "body": timeline_html(),
         "caption": f"Nobody touched the laptop. Gemini Nano watched a 70-second clip: {H['looks']} checks on the laptop, {H['calls']} calls to the cloud, both items right.",
     },

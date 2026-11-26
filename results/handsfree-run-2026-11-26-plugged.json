@@ -1,0 +1,331 @@
+{
+  "recorded": "2026-11-26T09:40:05.118Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip.webm",
+  "checks": [
+    {
+      "at": 2,
+      "saw": "clear",
+      "ms": 1921,
+      "hidden": false
+    },
+    {
+      "at": 4.1,
+      "saw": "clear",
+      "ms": 2085,
+      "hidden": false
+    },
+    {
+      "at": 6,
+      "saw": "clear",
+      "ms": 1898,
+      "hidden": false
+    },
+    {
+      "at": 7.9,
+      "saw": "clear",
+      "ms": 1852,
+      "hidden": false
+    },
+    {
+      "at": 9.8,
+      "saw": "turn",
+      "ms": 1952,
+      "hidden": false
+    },
+    {
+      "at": 11.8,
+      "saw": "turn",
+      "ms": 1966,
+      "hidden": false
+    },
+    {
+      "at": 13.8,
+      "saw": "turn",
+      "ms": 1976,
+      "hidden": false
+    },
+    {
+      "at": 15.7,
+      "saw": "turn",
+      "ms": 1912,
+      "hidden": false
+    },
+    {
+      "at": 17.8,
+      "saw": "turn",
+      "ms": 2041,
+      "hidden": false
+    },
+    {
+      "at": 19.8,
+      "saw": "turn",
+      "ms": 1960,
+      "hidden": false
+    },
+    {
+      "at": 21.7,
+      "saw": "turn",
+      "ms": 1908,
+      "hidden": false
+    },
+    {
+      "at": 23.9,
+      "saw": "read",
+      "ms": 2153,
+      "hidden": false
+    },
+    {
+      "at": 27.6,
+      "saw": "next",
+      "ms": 2311,
+      "hidden": false
+    },
+    {
+      "at": 29.8,
+      "saw": "next",
+      "ms": 2182,
+      "hidden": false
+    },
+    {
+      "at": 32.6,
+      "saw": "next",
+      "ms": 2763,
+      "hidden": false
+    },
+    {
+      "at": 35.2,
+      "saw": "next",
+      "ms": 2549,
+      "hidden": false
+    },
+    {
+      "at": 37.5,
+      "saw": "next",
+      "ms": 2340,
+      "hidden": false
+    },
+    {
+      "at": 39.8,
+      "saw": "clear",
+      "ms": 2265,
+      "hidden": false
+    },
+    {
+      "at": 42.3,
+      "saw": "clear",
+      "ms": 2435,
+      "hidden": false
+    },
+    {
+      "at": 44.6,
+      "saw": "clear",
+      "ms": 2254,
+      "hidden": false
+    },
+    {
+      "at": 46.8,
+      "saw": "clear",
+      "ms": 2242,
+      "hidden": false
+    },
+    {
+      "at": 49,
+      "saw": "read",
+      "ms": 2168,
+      "hidden": false
+    },
+    {
+      "at": 52.5,
+      "saw": "next",
+      "ms": 2252,
+      "hidden": false
+    },
+    {
+      "at": 55.2,
+      "saw": "next",
+      "ms": 2636,
+      "hidden": false
+    },
+    {
+      "at": 57.6,
+      "saw": "next",
+      "ms": 2434,
+      "hidden": false
+    },
+    {
+      "at": 60,
+      "saw": "next",
+      "ms": 2355,
+      "hidden": false
+    },
+    {
+      "at": 62.4,
+      "saw": "next",
+      "ms": 2387,
+      "hidden": false
+    },
+    {
+      "at": 64.6,
+      "saw": "clear",
+      "ms": 2211,
+      "hidden": false
+    },
+    {
+      "at": 66.8,
+      "saw": "clear",
+      "ms": 2151,
+      "hidden": false
+    },
+    {
+      "at": 68.9,
+      "saw": "clear",
+      "ms": 2071,
+      "hidden": false
+    },
+    {
+      "at": 70,
+      "saw": "clear",
+      "ms": 2272,
+      "hidden": false
+    }
+  ],
+  "steps": [
+    {
+      "at": 9.8,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Poulet-Roullon",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 1952,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 25.3,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Poulet-Roullon",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 1952,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Poulet-Roullon",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "2027 FE 14",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and clearly legible best before date are fully visible."
+            },
+            "source": "in_cloud",
+            "ms": 1390,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2027-02-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "2029-02-14",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: 24 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: photos together give the row and the date"
+      }
+    },
+    {
+      "at": 50.2,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LIBERTÉ GREC-GREEK®",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view yes, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2168,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Liberté",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 DE 07",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is yogurt, which requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1198,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is yogurt, which requires refrigeration."
+        },
+        "route": "on_device triage: date in view → in_cloud: model chose set_aside"
+      }
+    }
+  ]
+}

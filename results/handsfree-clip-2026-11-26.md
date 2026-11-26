@@ -3,7 +3,8 @@
 On 2026-11-24 two hands-free runs slowed down badly and I put it down to other programs using the
 laptop's GPU (`results/handsfree-clip-2026-11-24.md`). On 2026-11-26 the same slowness came back
 with the GPU idle, so I measured where the time goes. The laptop was running on battery, and that
-is the most likely cause; the plugged-in run that would confirm it is still to be made.
+is the cause: later the same day the laptop was plugged in partway through a run and the checks
+dropped from 6 to 10 s to about 2 s on the spot (`results/handsfree-clip-2026-11-26-plugged.md`).
 
 ## What was measured
 
