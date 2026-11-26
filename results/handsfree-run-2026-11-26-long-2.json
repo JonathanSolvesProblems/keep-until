@@ -1,0 +1,1605 @@
+{
+  "recorded": "2026-11-26T16:26:01.405Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip-long.webm",
+  "checks": [
+    {
+      "at": 2.2,
+      "saw": "clear",
+      "ms": 2209,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 4.3,
+      "saw": "clear",
+      "ms": 2008,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 6.4,
+      "saw": "clear",
+      "ms": 2082,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 8.9,
+      "saw": "turn",
+      "ms": 2519,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 12.8,
+      "saw": "turn",
+      "ms": 3892,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 17.2,
+      "saw": "turn",
+      "ms": 4365,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 20.7,
+      "saw": "turn",
+      "ms": 3392,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 24.2,
+      "saw": "turn",
+      "ms": 3476,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 28.1,
+      "saw": "turn",
+      "ms": 3882,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 31.9,
+      "saw": "read",
+      "ms": 3771,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": false
+      }
+    },
+    {
+      "at": 35.9,
+      "saw": "next",
+      "ms": 2327,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": false
+      }
+    },
+    {
+      "at": 38.1,
+      "saw": "next",
+      "ms": 2219,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 43.1,
+      "saw": "next",
+      "ms": 5011,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": false
+      }
+    },
+    {
+      "at": 47,
+      "saw": "clear",
+      "ms": 3819,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 49.1,
+      "saw": "clear",
+      "ms": 2068,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 51.3,
+      "saw": "turn",
+      "ms": 2227,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 53.5,
+      "saw": "turn",
+      "ms": 2137,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 55.6,
+      "saw": "turn",
+      "ms": 2053,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 57.8,
+      "saw": "turn",
+      "ms": 2240,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 59.8,
+      "saw": "turn",
+      "ms": 1904,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 61.8,
+      "saw": "turn",
+      "ms": 2049,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 63.8,
+      "saw": "turn",
+      "ms": 1919,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 65.8,
+      "saw": "turn",
+      "ms": 1984,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 67.9,
+      "saw": "turn",
+      "ms": 2103,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 70.1,
+      "saw": "turn",
+      "ms": 2188,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 72.2,
+      "saw": "read",
+      "ms": 2051,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 76.1,
+      "saw": "clear",
+      "ms": 2182,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 78.4,
+      "saw": "clear",
+      "ms": 2230,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 80.7,
+      "saw": "turn",
+      "ms": 2257,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 82.7,
+      "saw": "turn",
+      "ms": 2006,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 84.8,
+      "saw": "turn",
+      "ms": 2032,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 86.9,
+      "saw": "turn",
+      "ms": 2133,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 89.2,
+      "saw": "turn",
+      "ms": 2234,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 91.7,
+      "saw": "read",
+      "ms": 2480,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": false
+      }
+    },
+    {
+      "at": 95.7,
+      "saw": "next",
+      "ms": 2462,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": true
+      }
+    },
+    {
+      "at": 98.1,
+      "saw": "next",
+      "ms": 2379,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": false
+      }
+    },
+    {
+      "at": 100.5,
+      "saw": "next",
+      "ms": 2280,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": true
+      }
+    },
+    {
+      "at": 102.6,
+      "saw": "next",
+      "ms": 2174,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": false
+      }
+    },
+    {
+      "at": 104.9,
+      "saw": "clear",
+      "ms": 2255,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 107.2,
+      "saw": "clear",
+      "ms": 2268,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 109.2,
+      "saw": "clear",
+      "ms": 2014,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 111.5,
+      "saw": "turn",
+      "ms": 2179,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 113.6,
+      "saw": "turn",
+      "ms": 2143,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 115.8,
+      "saw": "turn",
+      "ms": 2127,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 118,
+      "saw": "turn",
+      "ms": 2213,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 120.2,
+      "saw": "turn",
+      "ms": 2198,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 122.4,
+      "saw": "turn",
+      "ms": 2130,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 124.6,
+      "saw": "turn",
+      "ms": 2189,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 127,
+      "saw": "turn",
+      "ms": 2346,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 129.4,
+      "saw": "turn",
+      "ms": 2400,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 131.5,
+      "saw": "turn",
+      "ms": 2086,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 133.6,
+      "saw": "read",
+      "ms": 2066,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": true
+      }
+    },
+    {
+      "at": 137.4,
+      "saw": "clear",
+      "ms": 2073,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 139.5,
+      "saw": "clear",
+      "ms": 2044,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 141.6,
+      "saw": "clear",
+      "ms": 2104,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 144,
+      "saw": "turn",
+      "ms": 2359,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 146.3,
+      "saw": "turn",
+      "ms": 2282,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 148.6,
+      "saw": "turn",
+      "ms": 2267,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 150.8,
+      "saw": "turn",
+      "ms": 2188,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 152.9,
+      "saw": "turn",
+      "ms": 2076,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 155.1,
+      "saw": "turn",
+      "ms": 2186,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 157.3,
+      "saw": "read",
+      "ms": 2185,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 161.2,
+      "saw": "turn",
+      "ms": 2098,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 163.3,
+      "saw": "clear",
+      "ms": 2112,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 165.5,
+      "saw": "clear",
+      "ms": 2162,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 167.7,
+      "saw": "clear",
+      "ms": 2147,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 170,
+      "saw": "turn",
+      "ms": 2261,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 172.2,
+      "saw": "turn",
+      "ms": 2210,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 174.4,
+      "saw": "turn",
+      "ms": 2122,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": true,
+        "fridge": false
+      }
+    },
+    {
+      "at": 176.7,
+      "saw": "turn",
+      "ms": 2317,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 179,
+      "saw": "turn",
+      "ms": 2278,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 181.1,
+      "saw": "turn",
+      "ms": 2058,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 183.1,
+      "saw": "turn",
+      "ms": 1966,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 185.1,
+      "saw": "turn",
+      "ms": 2004,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 187.1,
+      "saw": "turn",
+      "ms": 2019,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 189.2,
+      "saw": "clear",
+      "ms": 2008,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 191.4,
+      "saw": "clear",
+      "ms": 2226,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 193.8,
+      "saw": "clear",
+      "ms": 2348,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 196,
+      "saw": "clear",
+      "ms": 2209,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 198.4,
+      "saw": "turn",
+      "ms": 2322,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 200.4,
+      "saw": "turn",
+      "ms": 2005,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 202.4,
+      "saw": "turn",
+      "ms": 1992,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 204.6,
+      "saw": "turn",
+      "ms": 2113,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 207.1,
+      "saw": "read",
+      "ms": 2447,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 211.6,
+      "saw": "next",
+      "ms": 2343,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 214,
+      "saw": "next",
+      "ms": 2430,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 216.3,
+      "saw": "next",
+      "ms": 2240,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 218.6,
+      "saw": "next",
+      "ms": 2330,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": true
+      }
+    },
+    {
+      "at": 220.6,
+      "saw": "clear",
+      "ms": 1970,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 222.8,
+      "saw": "clear",
+      "ms": 2121,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 224.8,
+      "saw": "clear",
+      "ms": 2053,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 226.9,
+      "saw": "clear",
+      "ms": 2025,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 229,
+      "saw": "turn",
+      "ms": 2081,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 231.2,
+      "saw": "turn",
+      "ms": 2146,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 233.2,
+      "saw": "turn",
+      "ms": 1959,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 235.3,
+      "saw": "turn",
+      "ms": 2142,
+      "hidden": false,
+      "sees": {
+        "package": true,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 237.3,
+      "saw": "clear",
+      "ms": 1977,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 239.5,
+      "saw": "clear",
+      "ms": 2105,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 241.6,
+      "saw": "clear",
+      "ms": 2122,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    },
+    {
+      "at": 243,
+      "saw": "clear",
+      "ms": 2410,
+      "hidden": false,
+      "sees": {
+        "package": false,
+        "date": false,
+        "fridge": false
+      }
+    }
+  ],
+  "steps": [
+    {
+      "at": 8.9,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Broth - Bouillon",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2519,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 33.5,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Broth - Bouillon",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2519,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Campbell's Chicken Poulet Broth - Bouillon",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "2027 FE 14 02146",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible."
+            },
+            "source": "in_cloud",
+            "ms": 1654,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2027-02-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "2029-02-14",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: 24 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: photos together give the row and the date"
+      }
+    },
+    {
+      "at": 51.3,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Géant Vert Maïs crème",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2227,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 73.9,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Géant Vert Maïs crème",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2227,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Géant Vert Maïs crème",
+              "brand": "Géant Vert",
+              "category": "canned_fruit_veg",
+              "date_text": "25 OC 2029FYF",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and a clear best before date are all visible."
+            },
+            "source": "in_cloud",
+            "ms": 1741,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "hands-free: not settled yet; waiting for the date"
+      }
+    },
+    {
+      "at": 80.7,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "LIBERTAD",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2257,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 93.3,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LIBERTAD",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2257,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "LIBERTÉ GREC GREEK",
+              "brand": "LIBERTÉ",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 DE 07",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This yogurt product requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1567,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This yogurt product requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "at": 111.5,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Chocolates",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2179,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 135.3,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Chocolates",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2179,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chocolates",
+              "brand": "",
+              "category": "crackers_cookies",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the package."
+            },
+            "source": "in_cloud",
+            "ms": 1708,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "hands-free: not settled yet; waiting for the date"
+      }
+    },
+    {
+      "at": 144,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Gallo Extra Virgin Olive Oil Extra Virgin Olive Oil Extra Large",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2359,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 159.1,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Gallo Extra Virgin Olive Oil Extra Virgin Olive Oil Extra Large",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2359,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Gallo Extra Virgin Olive Oil Extra Virgin Olive Oil Extra Large",
+              "brand": "Gallo",
+              "category": "olive_oil",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the olive oil bottle."
+            },
+            "source": "in_cloud",
+            "ms": 1742,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "hands-free: not settled yet; waiting for the date"
+      }
+    },
+    {
+      "at": 170,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "baking powder poudre à pâte",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2261,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 198.4,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Vanvaer Nutritive",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2322,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 209.2,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Vanvaer Nutritive",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2322,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Parmesan Shredded Cheese Fromage Râpé",
+              "brand": "",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 NO 30",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is shredded cheese which requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 2125,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is shredded cheese which requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "at": 229,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "THE ARM & HAMMER Honey Rack Cantos",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 2081,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    }
+  ]
+}

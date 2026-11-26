@@ -8,13 +8,15 @@ kept against new Government of Canada food recalls.
 
 Gemini Nano checks each photo on the laptop first. Only photos with a date worth reading go to
 the cloud. With **Hands-free** on, Nano watches the camera itself and calls the cloud only when a
-date or a fridge item faces it, so the volunteer has nothing to press. It can also say each answer
-aloud. Built for #BuildHybridAI 2026 with Firebase AI Logic, on Web (Chrome) and Android (the
+date or a fridge item faces it, so the volunteer has nothing to press. It says each answer aloud
+from recordings shipped with the app, so nothing is synthesized or sent anywhere to be spoken.
+Built for #BuildHybridAI 2026 with Firebase AI Logic, on Web (Chrome) and Android (the
 Android app has the same read loop and chart gate, with a Read item button and no hands-free).
 
 To watch hands-free with no item and no webcam, open the app with `?clip=1` in Chrome with Gemini
 Nano: a 70-second clip of real pantry photos plays in the camera's place, and nothing from it is
-logged. To watch a recorded run in any browser, with no on-device model, open `?replay=1`.
+logged. `?clip=long` plays the 8-item clip (all 16 pantry photos, 243 seconds). To watch a
+recorded run in any browser, with no on-device model, open `?replay=1`.
 
 **Try it:** https://keep-until-hybrid.web.app. No item to hand or no webcam? Press **Try a sample
 photo**: it reads a real carton from my pantry the same way, front first, then the top.
@@ -67,7 +69,8 @@ the 16 pantry photos three ways and downloads one file; grade it with
 
 | What | Result | File |
 |---|---|---|
-| Hands-free on real Gemini Nano, 70-second clip, nobody touching the laptop | 31 checks on the laptop, 2 calls to the cloud, both items answered right | [hands-free run](results/handsfree-clip-2026-11-26-plugged.md) |
+| Hands-free on real Gemini Nano, 8 items and 16 photos, nobody touching the laptop, expected answers registered before the run | 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right | [8-item run](results/handsfree-long-2026-11-26.md) |
+| Hands-free, the 70-second clip the replay plays | 31 checks on the laptop, 2 calls to the cloud, both items answered right | [70-second run](results/handsfree-clip-2026-11-26-plugged.md) |
 | Hybrid: Nano checks every photo on the laptop, the cloud reads dates | 13 of 15 handled right, 6 cloud calls for 16 photos | [ablation](results/ablation-inference-mode.md) |
 | Cloud only | 14 of 15, 16 cloud calls | [ablation](results/ablation-inference-mode.md) |
 | Gemini Nano alone on the laptop | 4 of 15 | [ablation](results/ablation-inference-mode.md) |
@@ -87,8 +90,10 @@ only 2 show a date to log (both modes read 1 of them right). Date reading has it
 What it cannot do yet:
 
 - Nobody at a food bank has used it. Everything here was measured on my own pantry and on public photos.
-- Hands-free has run on a clip of still photos, on one laptop, plugged in. On battery my laptop
-  throttles its GPU, a check takes 6 to 10 seconds, and hands-free switches itself off and says so.
+- Hands-free has run on clips of still photos, on one laptop, plugged in. In the 8-item run it
+  never found the small, upside-down date on a bag of chocolate chips and kept asking for it to be
+  turned. On battery my laptop throttles its GPU, a check takes 6 to 10 seconds, and hands-free
+  switches itself off and says so. Two tabs watching at once halve its speed.
   Gemini Nano's first start after Chrome opens has taken about 8 minutes; items are read in the
   cloud until it is ready.
 - An Android on-device result needs a phone on Google's Nano list (Pixel 9 or later, Galaxy S25 or
@@ -111,6 +116,10 @@ drops), Crashlytics on Android (failed reads, with whether the phone was online)
 
 Every published source the app uses, and the results file behind each number on this page, is listed in [devpost/sources.md](devpost/sources.md).
 The build, decision by decision, is in [devpost/build-log.md](devpost/build-log.md).
+
+The voice: the spoken answers are 124 short recordings made once with ElevenLabs text to speech
+(`scripts/make_voice.mjs`), listed word for word in `web/public/voice/lines.json`. The app plays
+the files and never calls ElevenLabs; a test fails when a line has no recording of the same words.
 
 ## License
 

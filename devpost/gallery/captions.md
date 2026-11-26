@@ -9,7 +9,7 @@ Nobody pressed anything. The laptop saw the date, the cloud read it, and Food Ba
 ## 02-hands-free.png
 
 ```
-Nobody touched the laptop. Gemini Nano watched a 70-second clip: 31 checks on the laptop, 2 calls to the cloud, both items right.
+Nobody touched the laptop. 8 items, 16 photos: 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right.
 ```
 
 ## 03-problem.png

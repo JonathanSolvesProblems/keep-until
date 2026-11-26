@@ -1,0 +1,544 @@
+{
+  "recorded": "2026-11-26T16:19:21.289Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip-long.webm",
+  "checks": [
+    {
+      "at": 12.3,
+      "saw": "slow",
+      "ms": 12220,
+      "hidden": false
+    },
+    {
+      "at": 21.8,
+      "saw": "slow",
+      "ms": 9502,
+      "hidden": false
+    },
+    {
+      "at": 28,
+      "saw": "read",
+      "ms": 6207,
+      "hidden": false
+    },
+    {
+      "at": 32.8,
+      "saw": "turn",
+      "ms": 3425,
+      "hidden": false
+    },
+    {
+      "at": 43.2,
+      "saw": "slow",
+      "ms": 10312,
+      "hidden": false
+    },
+    {
+      "at": 50.7,
+      "saw": "clear",
+      "ms": 7529,
+      "hidden": false
+    },
+    {
+      "at": 59.3,
+      "saw": "slow",
+      "ms": 8591,
+      "hidden": false
+    },
+    {
+      "at": 66,
+      "saw": "turn",
+      "ms": 6617,
+      "hidden": false
+    },
+    {
+      "at": 74.5,
+      "saw": "slow",
+      "ms": 8465,
+      "hidden": false
+    },
+    {
+      "at": 78.8,
+      "saw": "clear",
+      "ms": 4262,
+      "hidden": false
+    },
+    {
+      "at": 83.3,
+      "saw": "turn",
+      "ms": 4507,
+      "hidden": false
+    },
+    {
+      "at": 87.7,
+      "saw": "turn",
+      "ms": 4405,
+      "hidden": false
+    },
+    {
+      "at": 92,
+      "saw": "turn",
+      "ms": 4229,
+      "hidden": false
+    },
+    {
+      "at": 96.2,
+      "saw": "read",
+      "ms": 4183,
+      "hidden": false
+    },
+    {
+      "at": 100.4,
+      "saw": "next",
+      "ms": 2369,
+      "hidden": false
+    },
+    {
+      "at": 104.5,
+      "saw": "next",
+      "ms": 4115,
+      "hidden": false
+    },
+    {
+      "at": 108.9,
+      "saw": "clear",
+      "ms": 4384,
+      "hidden": false
+    },
+    {
+      "at": 113.3,
+      "saw": "clear",
+      "ms": 4345,
+      "hidden": false
+    },
+    {
+      "at": 117.2,
+      "saw": "turn",
+      "ms": 3885,
+      "hidden": false
+    },
+    {
+      "at": 121.1,
+      "saw": "turn",
+      "ms": 3856,
+      "hidden": false
+    },
+    {
+      "at": 125.2,
+      "saw": "turn",
+      "ms": 4122,
+      "hidden": false
+    },
+    {
+      "at": 129.7,
+      "saw": "turn",
+      "ms": 4471,
+      "hidden": false
+    },
+    {
+      "at": 134.2,
+      "saw": "read",
+      "ms": 4429,
+      "hidden": false
+    },
+    {
+      "at": 138.1,
+      "saw": "clear",
+      "ms": 2110,
+      "hidden": false
+    },
+    {
+      "at": 142.3,
+      "saw": "clear",
+      "ms": 4190,
+      "hidden": false
+    },
+    {
+      "at": 186.5,
+      "saw": "slow",
+      "ms": 44142,
+      "hidden": false
+    },
+    {
+      "at": 191.2,
+      "saw": "turn",
+      "ms": 4662,
+      "hidden": false
+    },
+    {
+      "at": 195.3,
+      "saw": "clear",
+      "ms": 4103,
+      "hidden": false
+    },
+    {
+      "at": 199.1,
+      "saw": "turn",
+      "ms": 3798,
+      "hidden": false
+    },
+    {
+      "at": 203.4,
+      "saw": "turn",
+      "ms": 4294,
+      "hidden": false
+    },
+    {
+      "at": 207.9,
+      "saw": "turn",
+      "ms": 4486,
+      "hidden": false
+    },
+    {
+      "at": 212.2,
+      "saw": "read",
+      "ms": 4245,
+      "hidden": false
+    },
+    {
+      "at": 216.6,
+      "saw": "next",
+      "ms": 2513,
+      "hidden": false
+    },
+    {
+      "at": 220.7,
+      "saw": "next",
+      "ms": 4115,
+      "hidden": false
+    },
+    {
+      "at": 224.9,
+      "saw": "clear",
+      "ms": 4181,
+      "hidden": false
+    },
+    {
+      "at": 229.1,
+      "saw": "clear",
+      "ms": 4167,
+      "hidden": false
+    },
+    {
+      "at": 233.4,
+      "saw": "turn",
+      "ms": 4344,
+      "hidden": false
+    },
+    {
+      "at": 237.6,
+      "saw": "turn",
+      "ms": 4161,
+      "hidden": false
+    },
+    {
+      "at": 241.5,
+      "saw": "clear",
+      "ms": 3881,
+      "hidden": false
+    },
+    {
+      "at": 243,
+      "saw": "clear",
+      "ms": 2147,
+      "hidden": false
+    }
+  ],
+  "steps": [
+    {
+      "at": 29.4,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "MENU with refrigerated citrus and flowers",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view no, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 6207,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the package, so the item needs to be turned to find the date."
+            },
+            "source": "in_cloud",
+            "ms": 1357,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: may need the fridge → in_cloud: model asked to see the date"
+      }
+    },
+    {
+      "at": 98,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MENU with refrigerated citrus and flowers",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view no, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 6207,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the package, so the item needs to be turned to find the date."
+            },
+            "source": "in_cloud",
+            "ms": 1357,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "LIBERTÉ",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 DE 07",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This yogurt requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1792,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This yogurt requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "at": 117.2,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Chippers",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3885,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 136,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Chippers",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3885,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chippers",
+              "brand": "",
+              "category": "crackers_cookies",
+              "date_text": "56BBGW16AK",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The text shown is a lot code, not a valid best before date."
+            },
+            "source": "in_cloud",
+            "ms": 1754,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "no month and no separated date parts (likely a lot code)"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "crackers_cookies",
+            "label": "Dry crackers and cookies, rice cakes",
+            "page": 6
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "in_cloud: photos together give the row and the date"
+      }
+    },
+    {
+      "at": 191.2,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Simple Creamy Freeze-Dried Yogurt",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 4662,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 214,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Simple Creamy Freeze-Dried Yogurt",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 4662,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Parmesan Shredded Cheese",
+              "brand": "",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 NO 30",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is shredded cheese which requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1799,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is shredded cheese which requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "at": 233.5,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "THE ARM & HAMMER MONEY BACK GARANTIE",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 4344,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    }
+  ]
+}

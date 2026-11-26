@@ -1,7 +1,7 @@
 """Builds the long hands-free clip from shared/handsfree-control.json.
 
 Each photo is fitted into a 1280x960 frame on the same grey as the blank frames that stand in for
-the empty table, and held for the seconds the control file gives it. Needs ffmpeg.
+the empty table, and held for the seconds the control file gives it. Needs ffmpeg and Pillow.
 
     python scripts/make_clip.py            writes the clip and prints its timeline
     python scripts/make_clip.py --timeline prints the timeline only
@@ -11,6 +11,8 @@ import pathlib
 import subprocess
 import sys
 import tempfile
+
+from PIL import Image, ImageOps
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 GREY = "0x89847c"
@@ -42,23 +44,23 @@ def main():
         return
     photos = ROOT / control["photos"]
     out = ROOT / control["clip"]
-    w, h = SIZE
+    grey = tuple(int(GREY[i : i + 2], 16) for i in (2, 4, 6))
     with tempfile.TemporaryDirectory() as tmp:
-        parts = []
+        # Every frame is drawn at the clip's size first, and the whole clip is encoded in one pass.
+        # (Joining separately encoded segments made a file Chrome stopped playing at the first join.)
+        inputs, labels = [], []
         for n, (start, end, what, _) in enumerate(rows):
-            part = pathlib.Path(tmp) / f"{n:02d}.webm"
-            seconds = end - start
-            if what == "table":
-                source = ["-f", "lavfi", "-i", f"color=c={GREY}:s={w}x{h}:r={FPS}"]
-                fit = "format=yuv420p"
-            else:
-                source = ["-loop", "1", "-framerate", str(FPS), "-i", str(photos / what)]
-                fit = f"scale={w}:{h}:force_original_aspect_ratio=decrease,pad={w}:{h}:(ow-iw)/2:(oh-ih)/2:color={GREY},format=yuv420p"
-            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *source, "-t", str(seconds), "-vf", fit, "-r", str(FPS), "-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "30", "-g", "600", str(part)], check=True)
-            parts.append(part)
-        listing = pathlib.Path(tmp) / "parts.txt"
-        listing.write_text("".join(f"file '{p.as_posix()}'\n" for p in parts), encoding="utf-8")
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", str(out)], check=True)
+            frame = Image.new("RGB", SIZE, grey)
+            if what != "table":
+                photo = ImageOps.exif_transpose(Image.open(photos / what)).convert("RGB")
+                photo.thumbnail(SIZE, Image.LANCZOS)
+                frame.paste(photo, ((SIZE[0] - photo.width) // 2, (SIZE[1] - photo.height) // 2))
+            png = pathlib.Path(tmp) / f"{n:02d}.png"
+            frame.save(png)
+            inputs += ["-loop", "1", "-framerate", str(FPS), "-t", str(end - start), "-i", str(png)]
+            labels.append(f"[{n}:v]")
+        graph = "".join(labels) + f"concat=n={len(rows)}:v=1:a=0,format=yuv420p[v]"
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", graph, "-map", "[v]", "-r", str(FPS), "-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "30", "-g", "100", str(out)], check=True)
     print(f"wrote {out.relative_to(ROOT)}, {rows[-1][1]:.0f} s")
 
 

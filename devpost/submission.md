@@ -11,7 +11,7 @@ Keep Until
 ## Tagline
 
 ```
-A food bank volunteer holds up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop: 31 checks on the laptop, 2 calls to the cloud.
+A food bank volunteer holds up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop: for 8 items, 100 checks on the laptop, 6 calls to the cloud.
 ```
 
 ## Platforms
@@ -51,7 +51,7 @@ A volunteer at a food bank sort table picks up a donated carton of broth. The to
 
 The volunteer holds the item up to a laptop camera and does not touch anything.
 
-- **The laptop watches.** Gemini Nano runs in Chrome on the laptop and checks the camera every couple of seconds: is a package in view, is its date facing the camera, does it need the fridge. It says "turn it" itself, and it calls the cloud only when a date or a fridge item faces the camera. Watching all the time is something only the on-device model can afford. In the cloud it would be a paid call, and a picture of the sort table leaving the building, every few seconds.
+- **The laptop watches.** Gemini Nano runs in Chrome on the laptop and checks the camera every couple of seconds: is a package in view, is its date facing the camera, does it need the fridge. It says "turn it" itself, aloud, and it calls the cloud only when a date or a fridge item faces the camera. Watching all the time is something only the on-device model can afford. In the cloud it would be a paid call, and a picture of the sort table leaving the building, every few seconds.
 - **The cloud reads.** Gemini reads the stamp exactly as printed (Canadian stamps put the year first and use bilingual months: `2027 FE 14`) and names the kind of food.
 - **The chart decides.** Code looks up Food Banks Canada's row for that kind of food and answers **keep until** a date, **set aside** for the sort lead, or **discard**. A discard needs a second, independent read that finds the same date; the second read is never told what the first one found.
 - **One item is often two photos.** The front shows the name and no date, the top shows the date and no name. Keep Until asks for the side it is missing and settles from both.
@@ -68,10 +68,11 @@ A new project: the first commit is from November 14, 2026.
 - **I chose the split by measuring it.** My first design read everything on Nano. On real Gemini Nano that handled 4 of 15 photos. As a checker (is a package in view, is a date facing the camera) Nano was right on 10 of 15. So Nano checks and the cloud reads.
 - **App Check** (reCAPTCHA Enterprise on web, debug provider on Android), **Authentication** (anonymous for volunteers, Google with Drive file access for the coordinator's sheet), **Firestore** (offline persistence, append-only rules), **Remote Config** (the cloud model and each food bank's own policy over the chart), **Performance Monitoring** (a trace around every read, tagged on-device or cloud), **Cloud Functions with Cloud Scheduler** (the daily recall pull), **Crashlytics** on Android and **Hosting**.
 - **Android** (Kotlin, `firebase-ai` with `firebase-ai-ondevice`) has the same read loop and the same chart gate, with a Read item button and no hands-free. The two gates agree on 294 date stamps and 2,580 chart decisions written by the TypeScript and replayed by a Kotlin test.
+- **The voice** is 124 short recordings made once with ElevenLabs and shipped with the app. Nothing is synthesized while it runs, so no text leaves the laptop to be spoken, and it cannot say a sentence that is not on the list.
 
 ## Results
 
-**Hands-free on real Gemini Nano.** A 70-second clip of my pantry photos played in the camera's place (an empty table, a carton's front, its top, a yogurt lid) and nobody touched the laptop: 31 checks on the laptop, 2 calls to the cloud, both items answered right. The laptop told me to turn the carton by itself, with nothing sent. Watch that run, check by check, in any browser: https://keep-until-hybrid.web.app/?replay=1
+**Hands-free on real Gemini Nano.** A clip of all 16 of my pantry photos played in the camera's place: 8 items, held up face by face, with the expected answer for each committed before the run. Nobody touched the laptop: 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right. On the first face of every item the laptop said "turn it" by itself, with nothing sent. The miss: it never found the small, upside-down date on a bag of chocolate chips, and kept asking for it to be turned. A shorter run (31 checks on the laptop, 2 calls to the cloud) replays check by check in any browser: https://keep-until-hybrid.web.app/?replay=1
 
 **Routing, against cloud only.** Sixteen pantry photos, labelled by hand before any run:
 
@@ -92,7 +93,7 @@ Every figure above is read from a file in `results/`, and a script in CI fails w
 ## Limits
 
 - **Nobody at a food bank has used it yet.** Everything here was measured on my own pantry and on public photos.
-- **Hands-free has run on a clip of still photos, on one laptop, plugged in.** On battery my laptop throttles its GPU, a check takes 6 to 10 seconds, and hands-free switches itself off and says to plug it in. Gemini Nano's first start after Chrome opens has taken about 8 minutes (458 and 503 seconds on two days), during which items are read in the cloud.
+- **Hands-free has run on clips of still photos, on one laptop, plugged in.** On battery my laptop throttles its GPU, a check takes 6 to 10 seconds, and hands-free switches itself off and says to plug it in. Gemini Nano's first start after Chrome opens has taken about 8 minutes (458 and 503 seconds on two days), during which items are read in the cloud.
 - **No Android phone has run Gemini Nano for this app.** My Galaxy S24, the emulators and Firebase Test Lab's phones have no working on-device model, so Android has only run its cloud path, and says so on the screen.
 - **The model picks the chart row, and nothing grades that choice yet.** The broth carton is filed under canned prepared foods, because the chart has no row for cartons.
 - **Lot codes are not read,** so a recall limited to certain lots always goes to the sort lead. All 16 recall cases ran in the cloud; the on-device fallback is not measured.
@@ -108,7 +109,7 @@ Between November 15 and 22 I wrote to Food Banks Canada, Feed Ontario, North Yor
 ## Why it fits
 
 - **Technological implementation.** Three Firebase AI Logic modes, one per job, with the on-device job picked by measurement (`results/ablation-inference-mode.md`) and guarded so it cannot fall through to the cloud.
-- **Design.** Open the live link and press "Try a sample photo", or "Watch a hands-free run". The answer fills the screen in its colour with the word, and the stamp is shown large, as it is printed on the package.
+- **Design.** Open the live link and press "Try a sample photo", or "Watch a hands-free run". The answer fills the screen in its colour with the word and is said aloud, for a volunteer looking at the item, and the stamp is shown large, as it is printed on the package.
 - **Potential impact.** A sort table decides, item by item, whether a donation is food or waste. Keep Until gives the volunteer Food Banks Canada's own answer and logs it where the food bank already works.
 - **Quality of the idea.** The laptop watches because watching has to cost nothing and stay in the building, and the cloud is asked only when there is a date to read. The model reads; a published chart, in code, makes the call.
 ```

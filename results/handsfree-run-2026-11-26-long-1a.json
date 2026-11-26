@@ -1,0 +1,635 @@
+{
+  "recorded": "2026-11-26T16:19:17.132Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip-long.webm",
+  "checks": [
+    {
+      "at": 5.7,
+      "saw": "clear",
+      "ms": 5638,
+      "hidden": false
+    },
+    {
+      "at": 10.9,
+      "saw": "clear",
+      "ms": 5179,
+      "hidden": false
+    },
+    {
+      "at": 14.9,
+      "saw": "turn",
+      "ms": 3974,
+      "hidden": false
+    },
+    {
+      "at": 21.1,
+      "saw": "turn",
+      "ms": 6215,
+      "hidden": false
+    },
+    {
+      "at": 24.5,
+      "saw": "read",
+      "ms": 3314,
+      "hidden": false
+    },
+    {
+      "at": 30.7,
+      "saw": "turn",
+      "ms": 4318,
+      "hidden": false
+    },
+    {
+      "at": 35.6,
+      "saw": "turn",
+      "ms": 4911,
+      "hidden": false
+    },
+    {
+      "at": 41.9,
+      "saw": "turn",
+      "ms": 6257,
+      "hidden": false
+    },
+    {
+      "at": 45.4,
+      "saw": "clear",
+      "ms": 3423,
+      "hidden": false
+    },
+    {
+      "at": 50.2,
+      "saw": "clear",
+      "ms": 4847,
+      "hidden": false
+    },
+    {
+      "at": 53.6,
+      "saw": "turn",
+      "ms": 3332,
+      "hidden": false
+    },
+    {
+      "at": 57.9,
+      "saw": "turn",
+      "ms": 4288,
+      "hidden": false
+    },
+    {
+      "at": 62.3,
+      "saw": "read",
+      "ms": 4323,
+      "hidden": false
+    },
+    {
+      "at": 68.8,
+      "saw": "turn",
+      "ms": 3932,
+      "hidden": false
+    },
+    {
+      "at": 73.1,
+      "saw": "turn",
+      "ms": 4245,
+      "hidden": false
+    },
+    {
+      "at": 77.2,
+      "saw": "clear",
+      "ms": 4080,
+      "hidden": false
+    },
+    {
+      "at": 81.5,
+      "saw": "clear",
+      "ms": 4296,
+      "hidden": false
+    },
+    {
+      "at": 86.1,
+      "saw": "read",
+      "ms": 4506,
+      "hidden": false
+    },
+    {
+      "at": 90.5,
+      "saw": "next",
+      "ms": 2800,
+      "hidden": false
+    },
+    {
+      "at": 94.8,
+      "saw": "next",
+      "ms": 4264,
+      "hidden": false
+    },
+    {
+      "at": 99.1,
+      "saw": "next",
+      "ms": 4311,
+      "hidden": false
+    },
+    {
+      "at": 103.3,
+      "saw": "next",
+      "ms": 4131,
+      "hidden": false
+    },
+    {
+      "at": 107.3,
+      "saw": "clear",
+      "ms": 4021,
+      "hidden": false
+    },
+    {
+      "at": 111.6,
+      "saw": "clear",
+      "ms": 4328,
+      "hidden": false
+    },
+    {
+      "at": 116.1,
+      "saw": "turn",
+      "ms": 4413,
+      "hidden": false
+    },
+    {
+      "at": 120.2,
+      "saw": "turn",
+      "ms": 4074,
+      "hidden": false
+    },
+    {
+      "at": 124.1,
+      "saw": "turn",
+      "ms": 3887,
+      "hidden": false
+    },
+    {
+      "at": 128.1,
+      "saw": "turn",
+      "ms": 4023,
+      "hidden": false
+    },
+    {
+      "at": 132.5,
+      "saw": "turn",
+      "ms": 4326,
+      "hidden": false
+    },
+    {
+      "at": 136.9,
+      "saw": "read",
+      "ms": 4356,
+      "hidden": false
+    },
+    {
+      "at": 141.1,
+      "saw": "clear",
+      "ms": 2259,
+      "hidden": false
+    },
+    {
+      "at": 145.3,
+      "saw": "turn",
+      "ms": 4193,
+      "hidden": false
+    },
+    {
+      "at": 149.6,
+      "saw": "turn",
+      "ms": 4259,
+      "hidden": false
+    },
+    {
+      "at": 193.8,
+      "saw": "slow",
+      "ms": 44144,
+      "hidden": false
+    },
+    {
+      "at": 198.2,
+      "saw": "clear",
+      "ms": 4388,
+      "hidden": false
+    },
+    {
+      "at": 202.2,
+      "saw": "turn",
+      "ms": 4043,
+      "hidden": false
+    },
+    {
+      "at": 206.2,
+      "saw": "turn",
+      "ms": 3897,
+      "hidden": false
+    },
+    {
+      "at": 210.9,
+      "saw": "read",
+      "ms": 4711,
+      "hidden": false
+    },
+    {
+      "at": 215.1,
+      "saw": "next",
+      "ms": 2336,
+      "hidden": false
+    },
+    {
+      "at": 219.3,
+      "saw": "next",
+      "ms": 4219,
+      "hidden": false
+    },
+    {
+      "at": 223.6,
+      "saw": "clear",
+      "ms": 4251,
+      "hidden": false
+    },
+    {
+      "at": 227.9,
+      "saw": "clear",
+      "ms": 4246,
+      "hidden": false
+    },
+    {
+      "at": 231.8,
+      "saw": "turn",
+      "ms": 3938,
+      "hidden": false
+    },
+    {
+      "at": 236.1,
+      "saw": "turn",
+      "ms": 4265,
+      "hidden": false
+    },
+    {
+      "at": 240.6,
+      "saw": "clear",
+      "ms": 4410,
+      "hidden": false
+    },
+    {
+      "at": 243,
+      "saw": "clear",
+      "ms": 3963,
+      "hidden": false
+    }
+  ],
+  "steps": [
+    {
+      "at": 14.9,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken • Poulet",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3974,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 26.4,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's Chicken • Poulet",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3974,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Campbell's Chicken • Poulet",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "The nutrition facts and ingredients are shown, but no date is visible on this side of the carton."
+            },
+            "source": "in_cloud",
+            "ms": 1884,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "hands-free: not settled yet; waiting for the date"
+      }
+    },
+    {
+      "at": 53.6,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Géant Vert Maïs crème",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3332,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 64.9,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Géant Vert Maïs crème",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3332,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Géant Vert Maïs crème",
+              "brand": "Géant Vert",
+              "category": "canned_fruit_veg",
+              "date_text": "2029FYPF 0310 12 13",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and date are fully visible and readable."
+            },
+            "source": "in_cloud",
+            "ms": 2603,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "hands-free: not settled yet; waiting for the date"
+      }
+    },
+    {
+      "at": 87.6,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Liberté Canada",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "triage: package yes, date in view no, fridge yes"
+            },
+            "source": "on_device",
+            "ms": 4506,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "",
+              "brand": "Liberté",
+              "category": "chilled_or_frozen",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "set_aside",
+              "why": "This is yogurt which requires refrigeration and cannot be accepted at this food bank."
+            },
+            "source": "in_cloud",
+            "ms": 1569,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is yogurt which requires refrigeration and cannot be accepted at this food bank."
+        },
+        "route": "on_device triage: may need the fridge → in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "at": 116.1,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Chinits",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 4413,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 138.8,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Chinits",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 4413,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chinits",
+              "brand": "",
+              "category": "crackers_cookies",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the package, so the item needs to be turned to find the date."
+            },
+            "source": "in_cloud",
+            "ms": 1950,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "route": "hands-free: not settled yet; waiting for the date"
+      }
+    },
+    {
+      "at": 212.7,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Chinits",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 4413,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chinits",
+              "brand": "",
+              "category": "crackers_cookies",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "No date is visible on this side of the package, so the item needs to be turned to find the date."
+            },
+            "source": "in_cloud",
+            "ms": 1950,
+            "mode": "only_in_cloud",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "PARMESAN SHREDDED CHEESE",
+              "brand": "",
+              "category": "chilled_or_frozen",
+              "date_text": "2026 NO 30",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "set_aside",
+              "why": "This is a shredded cheese product which requires refrigeration."
+            },
+            "source": "in_cloud",
+            "ms": 1835,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "This is a shredded cheese product which requires refrigeration."
+        },
+        "route": "in_cloud: model chose set_aside"
+      }
+    },
+    {
+      "at": 231.8,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3938,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    }
+  ]
+}

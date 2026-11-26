@@ -632,7 +632,8 @@ const STALE_CHECK_MS = 8000;
 const watchCounts = { looks: 0, cloudReads: 0 };
 const lookMs: number[] = [];
 // `hidden`: the page was covered or in the background during this check (Chrome slows such pages).
-const watchLog: { at: number; saw: string; ms: number; hidden?: boolean }[] = [];
+// `sees`: what the laptop's check said about the frame (package, date in view, needs the fridge).
+const watchLog: { at: number; saw: string; ms: number; hidden?: boolean; sees?: { package: boolean; date: boolean; fridge: boolean } }[] = [];
 // Every answer of a clip run, with the clip time it landed at: the record ?replay=1 plays back.
 const clipSteps: { at: number; step: Step }[] = [];
 const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -769,8 +770,9 @@ async function watchLoop(run: number): Promise<void> {
     // Measured 2026-11-26: on battery the laptop's GPU is throttled, Gemini Nano writes about
     // 4.5 tokens a second, and a check takes 8 to 9 s (it took about 2 s on 2026-11-22). Two late
     // checks in a row, and hands-free hands the job back to the Read item button and says why.
+    const sees = { package: tr.triage.package_in_view, date: tr.triage.date_in_view, fridge: tr.triage.needs_refrigeration };
     if (tr.ms > STALE_CHECK_MS) {
-      watchLog.push({ at: clipTime(), saw: "slow", ms: tr.ms, hidden: document.hidden });
+      watchLog.push({ at: clipTime(), saw: "slow", ms: tr.ms, hidden: document.hidden, sees });
       const battery = await onBattery();
       if (++slowChecks >= 2 && !clipMode) {
         stopHandsFree();
@@ -789,7 +791,7 @@ async function watchLoop(run: number): Promise<void> {
     watch = state;
     if (!watch.pending) pendingTurn = null; // the table cleared: the next item is a new item
     if (watch.clears >= 2) lastReadSig = null;
-    watchLog.push({ at: clipTime(), saw: next, ms: tr.ms, hidden: document.hidden });
+    watchLog.push({ at: clipTime(), saw: next, ms: tr.ms, hidden: document.hidden, sees });
     if (next === "clear") {
       showWatching(`Watching on this laptop. Hold up the next item. ${tally}`);
     } else if (next === "next") {
@@ -886,16 +888,34 @@ handsBtn.addEventListener("click", () => {
 });
 
 // ?clip=1 runs the whole thing with no hands: start the shift, then watch the clip hands-free.
+// It starts only in a tab that is in view: a clip tab left open in the background would run this
+// laptop's reader against the tab being watched, and slow both.
 if (clipMode) {
-  $("start").click();
-  let tries = 0;
-  const go = setInterval(() => {
-    if (++tries > 120) clearInterval(go); // no laptop reader here: the button says why
-    else if (!handsBtn.disabled) {
-      clearInterval(go);
-      handsBtn.click();
-    }
-  }, 500);
+  const begin = (): void => {
+    if (document.hidden) return;
+    document.removeEventListener("visibilitychange", begin);
+    // One clip tab at a time. Two played it together on 2026-11-26, shared the laptop's reader,
+    // and each check took twice as long.
+    void navigator.locks.request("keep-until-clip", { ifAvailable: true }, (lock) => {
+      if (!lock) {
+        document.title = "Keep Until: the clip is playing in another tab";
+        promptEl.textContent = "The clip is already playing in another tab. Close that tab, then reload this one.";
+        return;
+      }
+      $("start").click();
+      let tries = 0;
+      const go = setInterval(() => {
+        if (++tries > 600) clearInterval(go); // no laptop reader here: the button says why
+        else if (!handsBtn.disabled) {
+          clearInterval(go);
+          handsBtn.click();
+        }
+      }, 500);
+      return new Promise<void>(() => undefined); // held until this tab closes or reloads
+    });
+  };
+  document.addEventListener("visibilitychange", begin);
+  begin();
 }
 
 async function loadImage(file: File): Promise<HTMLImageElement> {

@@ -65,6 +65,21 @@ def handsfree():
     return {"looks": m[1], "median": m[2], "calls": m[3], "timeline": looks}
 
 
+def handsfree_long():
+    """The registered 8-item run: its figures, its checks, and each item's mark, from the results file."""
+    import json, sys
+    sys.path.insert(0, str(ROOT / "scripts"))
+    from make_clip import timeline
+    t = read("results/handsfree-long-2026-11-26.md")
+    m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud, (\d+ of \d+) graded items right", t)
+    line = re.search(r"```\n([\d.]+s \w+.*?)\n```", t, re.S)[1].replace("\n", " ")
+    looks = [(float(a), b) for a, b in re.findall(r"([\d.]+)s (\w+)", line)]
+    control = json.loads(read("shared/handsfree-control.json"))
+    marks = dict(re.findall(r"^\| ([^|]+?) \| \d+ \|.*\| (yes|\*\*no\*\*|not graded) \|$", t, re.M))
+    return {"looks": m[1], "median": m[2], "calls": m[3], "items": m[4], "timeline": looks, "control": control,
+            "rows": timeline(control), "marks": [marks[i["item"]] for i in control["items"]]}
+
+
 def claims_output():
     import subprocess, sys
     r = subprocess.run([sys.executable, str(ROOT / "scripts" / "check_claims.py")], capture_output=True, text=True)
@@ -83,6 +98,7 @@ D = dates()
 R = recall()
 GATE = gate()
 H = handsfree()
+HL = handsfree_long()
 CLAIMS_OUT = claims_output()
 
 # The clip's scenes, as committed in results/handsfree-clip-2026-11-26-plugged.md.
@@ -104,6 +120,34 @@ def timeline_html():
     )
     key = " ".join(f'<span class="key"><i style="background:{c}"></i>{k}</span>' for k, c in LOOK_COLOUR.items())
     return f'<div class="tl"><div class="scenes">{scenes}</div><div class="marks">{marks}</div><div class="axis"><span>0 s</span><span>70 s</span></div><p class="keys">{key} <span class="keynote">Each dot is one Gemini Nano check on the laptop. Blue dots went to the cloud.</span></p></div>'
+
+ITEM_NAMES = ["broth", "corn", "yogurt", "chocolate chips", "olive oil", "baking powder", "parmesan", "baking soda"]
+
+
+def long_timeline_html():
+    rows = HL["rows"]
+    total = rows[-1][1]
+    px = 1360 / total
+    photos = (ROOT / HL["control"]["photos"]).as_uri()
+    scenes = "".join(
+        f'<div class="scene" style="left:{a * px}px;width:{(b - a) * px}px"><img src="{photos}/{what}"></div>'
+        for a, b, what, i in rows if i is not None
+    )
+    marks = "".join(
+        f'<div class="look" style="left:{t * px - 5}px;background:{LOOK_COLOUR[k]}" title="{k}"></div>' for t, k in HL["timeline"]
+    )
+    items = ""
+    for i, name in enumerate(ITEM_NAMES):
+        faces = [(a, b) for a, b, _, j in rows if j == i]
+        a, b = faces[0][0], faces[-1][1]
+        mark = HL["marks"][i]
+        word = {"yes": "right", "**no**": "missed", "not graded": "not graded"}[mark]
+        cls = {"yes": "", "**no**": " miss", "not graded": " ungraded"}[mark]
+        items += f'<div class="item{cls}" style="left:{a * px}px;width:{(b - a) * px}px">{html.escape(name)}<small>{word}</small></div>'
+    key = " ".join(f'<span class="key"><i style="background:{c}"></i>{k}</span>' for k, c in LOOK_COLOUR.items())
+    return (f'<div class="tl long"><div class="scenes">{scenes}</div><div class="marks">{marks}</div><div class="items">{items}</div>'
+            f'<div class="axis"><span>0 s</span><span>{total:.0f} s</span></div><p class="keys">{key} <span class="keynote">Each dot is one Gemini Nano check on the laptop. The {HL["calls"]} blue dots went to the cloud.</span></p></div>')
+
 
 SLIDES = [
     {
@@ -190,10 +234,10 @@ SLIDES = [
     },
     {
         "name": "hands-free",
-        "headline": f"Hands-free: {H['looks']} checks on the laptop, {H['calls']} calls to the cloud",
-        "badge": "results/handsfree-clip-2026-11-26-plugged.md, real Gemini Nano in Chrome; replay at ?replay=1",
-        "body": timeline_html(),
-        "caption": f"Nobody touched the laptop. Gemini Nano watched a 70-second clip: {H['looks']} checks on the laptop, {H['calls']} calls to the cloud, both items right.",
+        "headline": f"Hands-free, 8 items: {HL['looks']} checks on the laptop, {HL['calls']} calls to the cloud",
+        "badge": "results/handsfree-long-2026-11-26.md, real Gemini Nano in Chrome; expected answers registered first",
+        "body": long_timeline_html(),
+        "caption": f"Nobody touched the laptop. 8 items, 16 photos: {HL['looks']} checks on the laptop, {HL['calls']} calls to the cloud, {HL['items']} graded items right.",
     },
     {
         "name": "offline",
@@ -309,6 +353,16 @@ code {{ font-family: D; font-weight: 800; letter-spacing: .03em; }}
 .axis {{ display: flex; justify-content: space-between; font-size: 18px; color: #3a3936; margin-top: 4px; }}
 .keys {{ font-size: 26px; margin: 14px 0 0; }} .key {{ margin-right: 22px; }} .key i {{ display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 6px; }}
 .keynote {{ color: #3a3936; }}
+.tl.long .scenes, .tl.long .scene {{ height: 500px; }}
+.tl.long .scene {{ border-left: 1px solid #f2f2ef; }}
+.tl.long .marks {{ height: 26px; }}
+.tl.long .look {{ width: 10px; height: 10px; top: 6px; }}
+.tl.long .keys {{ font-size: 23px; }}
+.items {{ position: relative; height: 62px; margin-top: 10px; }}
+.item {{ position: absolute; top: 0; text-align: center; font-size: 17px; font-weight: 700; line-height: 1.2; border-top: 4px solid #151515; padding-top: 5px; white-space: nowrap; display: flex; flex-direction: column; align-items: center; }}
+.item small {{ font-size: 15px; font-weight: 400; }}
+.item.miss {{ border-color: #a12a1c; color: #a12a1c; }}
+.item.ungraded {{ border-color: #8a8780; color: #5a5955; }}
 .tiny {{ font-size: 22px; }} table.tiny td, table.tiny th {{ padding: 10px 16px; }}
 .bigline {{ margin: 0; align-self: flex-end; font-size: 28px; font-weight: 800; background: #151515; color: #f2f2ef; padding: 10px 18px; border-radius: 8px; }}
 .flow {{ display: grid; grid-template-columns: 1fr 150px 1fr 150px 1fr; gap: 0; align-items: stretch; width: 100%; }}
@@ -346,5 +400,6 @@ with sync_playwright() as p:
         f.unlink()
         caps.append(f"## {i:02d}-{s['name']}.png\n\n```\n{s['caption']}\n```\n")
         print(f"ok {out.name} caption {len(s['caption'])} chars")
+    # Written before the browser closes: on a busy laptop the close has hung.
+    (OUT / "captions.md").write_text("# Gallery captions, in upload order\n\n" + "\n".join(caps), encoding="utf-8")
     b.close()
-(OUT / "captions.md").write_text("# Gallery captions, in upload order\n\n" + "\n".join(caps), encoding="utf-8")

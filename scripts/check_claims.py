@@ -29,16 +29,20 @@ def recall():
     return {"model": m[1], "keyword": m[2], "rule": m[3]}
 
 
-def handsfree():
-    m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud", read("results/handsfree-clip-2026-11-26-plugged.md"))
-    return {"looks": m[1], "median": m[2], "calls": m[3]}
+def handsfree(rel):
+    m = re.search(r"\*\*(\d+) checks on the laptop \(median ([\d.]+) s each\), (\d+) calls to the cloud(?:, (\d+ of \d+) graded items right)?", read(rel))
+    return {"looks": m[1], "median": m[2], "calls": m[3], "items": m[4]}
 
 
 def date_reading():
     return re.search(r"\*\*Dates read right: (\d+ of \d+)\.\*\*", read("results/date-control-off-ca-2026-11-22.md"))[1]
 
 
-A, R, H, D = ablation(), recall(), handsfree(), date_reading()
+A, R, D = ablation(), recall(), date_reading()
+# Two hands-free runs are quoted: the 70-second clip the replay plays, and the 8-item run.
+H = handsfree("results/handsfree-clip-2026-11-26-plugged.md")
+L = handsfree("results/handsfree-long-2026-11-26.md")
+RUNS = {f"{H['looks']} checks, {H['calls']} calls", f"{L['looks']} checks, {L['calls']} calls"}
 
 # (pattern with one group, expected value, what it is). Every match in every document must equal it.
 CLAIMS = [
@@ -51,8 +55,8 @@ CLAIMS = [
     (r"Nano alone on the laptop \| (\d+ of \d+)", A["device"], "on-device-only score"),
     (r"(\d+) of 16 photos never left the laptop", str(16 - int(A["hybrid_calls"])), "photos kept on the laptop"),
     (r"read (?:the same date on |right on )?(\d+ of 100)", D, "date reading on the outside set"),
-    (r"(\d+) checks on the laptop", H["looks"], "hands-free checks on the laptop"),
-    (r"\d+ checks on the laptop[^.]*?(\d+) (?:calls to|sent to) the cloud", H["calls"], "hands-free cloud calls"),
+    (r"(\d+ of \d+) (?:graded )?items (?:answered )?right", L["items"], "hands-free items right, 8-item run"),
+    (r"(\d+) of the 100 frames", str(int(L["looks"]) - int(L["calls"])), "frames that never left the laptop, 8-item run"),
 ]
 
 # Claims that were true once and are not now. Each entry says why it was retired.
@@ -75,6 +79,15 @@ for rel in DOCS:
             checked += 1
             if m[1] != expected:
                 failures.append(f"{rel}: {what} says {m[1]!r}, results say {expected!r}")
+    # A hands-free figure must be one of the two runs, checks and cloud calls together.
+    for m in re.finditer(r"(\d+) checks on the laptop(?: \([^)]*\))?(?:,| and) (\d+) (?:calls to|sent to) the cloud", text):
+        checked += 1
+        if f"{m[1]} checks, {m[2]} calls" not in RUNS:
+            failures.append(f"{rel}: hands-free says {m[1]} checks and {m[2]} cloud calls, results say one of {sorted(RUNS)}")
+    for m in re.finditer(r"(\d+) checks on the laptop", text):
+        checked += 1
+        if m[1] not in (H["looks"], L["looks"]):
+            failures.append(f"{rel}: hands-free says {m[1]} checks, results say {H['looks']} or {L['looks']}")
     for pattern, why in RETIRED:
         for m in re.finditer(pattern, text):
             line = text[: m.start()].count("\n") + 1
