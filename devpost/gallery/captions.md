@@ -3,7 +3,7 @@
 ## 01-keep.png
 
 ```
-A volunteer holds up a donation. Keep Until reads the date stamp and says keep it, and until when, from Food Banks Canada's chart.
+Nobody pressed anything. The laptop saw the date, the cloud read it, and Food Banks Canada's chart said keep it until 2029.
 ```
 
 ## 02-hands-free.png
@@ -15,13 +15,13 @@ Nobody touched the laptop. Gemini Nano watched a 70-second clip: 31 checks on th
 ## 03-problem.png
 
 ```
-A guest post on Food Banks Canada's blog: people throw out good food once it reaches its best-before date. Sort tables decide item by item.
+From a guest post on Food Banks Canada's blog, about households. A sort table makes the same call on every donated item.
 ```
 
 ## 04-two-photos.png
 
 ```
-The front shows the name and no date, so it asks to turn the item. The top shows the date. Both photos settle it together.
+The front has no date, so the laptop says turn it and sends nothing. The top has the date. Both photos settle the item together.
 ```
 
 ## 05-hybrid.png
@@ -60,37 +60,31 @@ Fridge items, damaged packages and dates two reads disagree on are set aside for
 Each morning a function lists same-brand recalls; Gemini settles them at shift start. Gemini 16 of 16; brand plus a product word 11 of 16.
 ```
 
-## 11-offline.png
+## 11-android.png
 
 ```
-Found on an Android 8 emulator: offline, the app told volunteers to hold still. Now it asks the phone and says the read waits for Wi-Fi.
+Android has the same read loop and chart, matching the web on 2,580 decisions. My Galaxy S24 has no Nano, so it reads in the cloud.
 ```
 
-## 12-android.png
+## 12-phone.png
 
 ```
-The Android app runs the same loop and chart, matching the web on 2,580 decisions. On a phone without Nano it says it reads in the cloud.
+The decision fills the screen in its colour and always carries the word. The date is shown the way it is stamped on the package.
 ```
 
-## 13-phone.png
+## 13-honesty.png
 
 ```
-The decision fills the screen in its colour and always carries the word. Dates are re-printed the way the coder stamped them.
+The headline figures are checked against the results files they came from, on every push. A stale or retired claim fails the build.
 ```
 
-## 14-honesty.png
+## 14-limits.png
 
 ```
-Every number on the page is checked against the results file it came from, on every push. A stale or retired claim fails the build.
+Not yet used at a food bank; hands-free shown on a clip, plugged in; no Android Nano run; the chart row is the model's pick; no lot codes.
 ```
 
-## 15-limits.png
-
-```
-No Android Nano run yet, no lot codes, few year-first stamps tested, and hands-free only with Nano. Each limit is stated where it applies.
-```
-
-## 16-sources.png
+## 15-sources.png
 
 ```
 The chart, the stamp format, the recalls and the quote are all published sources. Every score comes from a results file in the repo.

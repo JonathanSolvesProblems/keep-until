@@ -109,23 +109,24 @@ SLIDES = [
     {
         "name": "keep",
         "headline": "Best before 2027. The chart says keep it until 2029.",
-        "badge": "The live app reading a real carton from my pantry",
-        "body": f'<img class="cap" src="{img("keep.png")}">',
-        "caption": "A volunteer holds up a donation. Keep Until reads the date stamp and says keep it, and until when, from Food Banks Canada's chart.",
+        "badge": "A real run on Gemini Nano, 2026-11-26, as the app replays it",
+        "body": f'<img class="cap wide" src="{img("replay-keep.png")}">',
+        "caption": "Nobody pressed anything. The laptop saw the date, the cloud read it, and Food Banks Canada's chart said keep it until 2029.",
     },
     {
         "name": "problem",
-        "headline": "Good food gets binned because of the date on it",
+        "headline": "People bin good food because of the date on it",
         "badge": "Brita Ball, PhD, Food Banks Canada guest blog, May 2019",
         "body": f'<blockquote>&ldquo;{html.escape(quote())}&rdquo;</blockquote><img class="art" src="{ART}/hands-can.webp">',
-        "caption": "A guest post on Food Banks Canada's blog: people throw out good food once it reaches its best-before date. Sort tables decide item by item.",
+        "caption": "From a guest post on Food Banks Canada's blog, about households. A sort table makes the same call on every donated item.",
     },
     {
         "name": "two-photos",
         "headline": "Front for the name, top for the date: one item",
-        "badge": "Real photos, the same carton turned",
-        "body": f'<div class="pair"><img class="cap" src="{img("turn-for-date.png")}"><img class="cap" src="{img("keep.png")}"></div>',
-        "caption": "The front shows the name and no date, so it asks to turn the item. The top shows the date. Both photos settle it together.",
+        "badge": "The same run: the laptop said turn it by itself, nothing sent",
+        "body": f'<div class="stack" style="width:100%"><div class="pair"><img class="cap" src="{img("replay-turn.png")}"><img class="cap" src="{img("replay-keep.png")}"></div>'
+        '<p class="under" style="max-width:none">Left: the front has a name and no date, so Gemini Nano on the laptop says turn it, and nothing goes to the cloud. Right: the top has the date, so one cloud read settles the item from both photos.</p></div>',
+        "caption": "The front has no date, so the laptop says turn it and sends nothing. The top has the date. Both photos settle the item together.",
     },
     {
         "name": "hybrid",
@@ -156,8 +157,8 @@ SLIDES = [
     {
         "name": "aside",
         "headline": "Chilled food goes to the sort lead",
-        "badge": "The live app reading a real yogurt lid",
-        "body": f'<img class="cap" src="{img("aside.png")}">',
+        "badge": "The same run: a real yogurt lid",
+        "body": f'<img class="cap wide" src="{img("replay-aside.png")}">',
         "caption": "Fridge items, damaged packages and dates two reads disagree on are set aside for the sort lead, in plain words.",
     },
     {
@@ -176,16 +177,16 @@ SLIDES = [
         "name": "phone",
         "headline": "Read from a metre away, on a laptop or a phone",
         "badge": "The live app at phone width, dark",
-        "body": f'<img class="phone" src="{img("phone-keep.png")}"><div class="note">The verdict fills the panel in its colour, with the word. Dates print in the coder\'s dot matrix, the way they are stamped on the package.</div>',
-        "caption": "The decision fills the screen in its colour and always carries the word. Dates are re-printed the way the coder stamped them.",
+        "body": f'<img class="phone" src="{img("phone-keep.png")}"><div class="note">The verdict fills the panel in its colour, with the word. The date is shown in dot matrix, the way it is stamped on the package.</div>',
+        "caption": "The decision fills the screen in its colour and always carries the word. The date is shown the way it is stamped on the package.",
     },
     {
         "name": "android",
         "headline": "The same sort table on Android",
         "badge": "Galaxy S24, a real phone; results/android-s24-2026-11-19.md",
         "body": f'<img class="phone" src="{img("android-s24-turn.png")}"><img class="phone" src="{img("android-s24-keep.png")}">'
-        f'<div class="note">Same loop, same chart. The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. On this Galaxy S24, with no on-device model, it reads in the cloud and says so: the front of the carton, then the top.</div>',
-        "caption": f"The Android app runs the same loop and chart, matching the web on {GATE['decisions']} decisions. On a phone without Nano it says it reads in the cloud.",
+        f'<div class="note">Same read loop, same chart, with a Read item button (hands-free is on the laptop only). The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. On this Galaxy S24, with no on-device model, it reads in the cloud and says so: the front of the carton, then the top.</div>',
+        "caption": f"Android has the same read loop and chart, matching the web on {GATE['decisions']} decisions. My Galaxy S24 has no Nano, so it reads in the cloud.",
     },
     {
         "name": "hands-free",
@@ -206,13 +207,13 @@ SLIDES = [
         "name": "honesty",
         "headline": "A script fails the build when a number drifts",
         "badge": "scripts/check_claims.py, run in GitHub Actions on every push",
-        "body": '<pre class="term">$ python scripts/check_claims.py\n' + html.escape("\n".join(CLAIMS_OUT)) + "</pre>"
-        '<div class="note">Every number on the project page, the README and these captions is read from its results file at run time. A retired claim coming back fails it too.</div>',
-        "caption": "Every number on the page is checked against the results file it came from, on every push. A stale or retired claim fails the build.",
+        "body": '<div class="stack" style="width:100%"><pre class="term">$ python scripts/check_claims.py\n' + html.escape("\n".join(CLAIMS_OUT)) + "</pre>"
+        '<p class="under">The headline figures on the project page, the README and these captions are read from their results files at run time and compared. A retired claim coming back fails it too.</p></div>',
+        "caption": "The headline figures are checked against the results files they came from, on every push. A stale or retired claim fails the build.",
     },
     {
         "name": "dates",
-        "headline": f"Read right on {D['right']} photos that are not mine",
+        "headline": f"{D['right']} dates read right on outside photos",
         "badge": "Open Food Facts photos of products sold in Canada, dates confirmed by volunteers; CC BY-SA",
         "body": "<div class=\"stack\" style=\"width:100%\"><table class=\"small\"><tr><th>The 29 misses, looked at one by one</th><th>Photos</th></tr>"
         + "".join(f"<tr><td>{html.escape(a)}</td><td>{b}</td></tr>" for a, b in D["rows"])
@@ -221,7 +222,7 @@ SLIDES = [
     },
     {
         "name": "built",
-        "headline": "Which job runs where, and why",
+        "headline": "The laptop watches, the cloud reads, the chart decides",
         "badge": "Firebase AI Logic on Web and Android; one Firebase project",
         "body": """<div class="flow">
 <div class="lane"><h3>On the laptop</h3><p><b>Gemini Nano</b>, ONLY_ON_DEVICE</p><p>Watches the camera: item in view? date facing? fridge?</p><p class="why">A check every few seconds, at no cost. These frames never leave the laptop.</p></div>
@@ -238,13 +239,13 @@ SLIDES = [
         "headline": "What it does not do yet",
         "badge": "Stated on the project page and, where it applies, on the screen",
         "body": """<ul class="limits">
-<li><b>No Android phone has run Gemini Nano for it yet.</b> Test Lab phones and emulators have no working on-device model, and my Galaxy S24 is not on Google's list. On those phones it reads in the cloud and says so.</li>
-<li><b>Lot codes are not read.</b> A recall limited to certain lots always goes to the sort lead as "check the lot code".</li>
-<li><b>Year-first Canadian stamps are tested on few photos.</b> The 100-photo outside test is numeric dates (31/01/2023); stamps like 2027 FE 14 are only in my own pantry set.</li>
-<li><b>Hands-free needs Nano on the laptop.</b> Elsewhere the volunteer presses Read item, and the app says why.</li>
-<li><b>A store-brand short form not on the matcher's list is missed</b> before the model sees it.</li>
+<li><b>Nobody at a food bank has used it yet.</b> Everything was measured on my own pantry and on public photos.</li>
+<li><b>Hands-free has run on a clip of still photos, on one laptop, plugged in.</b> On battery the laptop is too slow for it, and the app says to plug it in. Gemini Nano's first start has taken about 8 minutes.</li>
+<li><b>No Android phone has run Gemini Nano for it.</b> My Galaxy S24, emulators and Test Lab phones have no working on-device model, so Android has only run its cloud path.</li>
+<li><b>The model picks the chart row,</b> and nothing grades that choice yet.</li>
+<li><b>Lot codes are not read.</b> A recall limited to certain lots always goes to the sort lead.</li>
 </ul>""",
-        "caption": "No Android Nano run yet, no lot codes, few year-first stamps tested, and hands-free only with Nano. Each limit is stated where it applies.",
+        "caption": "Not yet used at a food bank; hands-free shown on a clip, plugged in; no Android Nano run; the chart row is the model's pick; no lot codes.",
     },
     {
         "name": "sources",
@@ -257,15 +258,16 @@ SLIDES = [
 <tr><td>Food recalls checked every morning</td><td>Government of Canada, Recalls and Safety Alerts open data</td></tr>
 <tr><td>Why good food gets binned</td><td>Brita Ball, PhD, guest post on Food Banks Canada's blog, 2019</td></tr>
 <tr><td>A food bank's own longer limit (Remote Config)</td><td>Calgary Food Bank, Best Before Date</td></tr>
-<tr><td>Every score on this page</td><td>results/, graded by script against hand labels made before the runs</td></tr>
+<tr><td>Date-reading test photos and their dates</td><td>Open Food Facts contributors and volunteers, CC BY-SA</td></tr>
+<tr><td>Every score on this page</td><td>results/ in the repo: labels or expected answers fixed before each run</td></tr>
 </table>""",
         "caption": "The chart, the stamp format, the recalls and the quote are all published sources. Every score comes from a results file in the repo.",
     },
 ]
 
 # Upload order: the hero, then the on-device moment, then the story.
-ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "dates", "built", "refusal", "aside", "recall", "offline", "android", "phone", "honesty", "limits", "sources"]
-SLIDES = sorted(SLIDES, key=lambda s: ORDER.index(s["name"]))
+ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "dates", "built", "refusal", "aside", "recall", "android", "phone", "honesty", "limits", "sources"]
+SLIDES = sorted([s for s in SLIDES if s["name"] in ORDER], key=lambda s: ORDER.index(s["name"]))
 for old in OUT.glob("[0-9][0-9]-*.png"):
     old.unlink()
 
@@ -280,6 +282,8 @@ body {{ margin: 0; width: 1500px; height: 1000px; background: #d0cec8; font-fami
 .badge {{ font-size: 18px; color: #3a3936; border: 1.5px solid rgb(21 21 21 / .25); border-radius: 6px; padding: 6px 12px; }}
 h1 {{ margin: 0; font-size: 62px; line-height: 1.02; font-weight: 800; letter-spacing: -.02em; max-width: 24ch; }}
 .body {{ position: relative; min-height: 0; display: flex; gap: 28px; align-items: flex-start; }}
+.cap.wide {{ width: 100%; max-height: none; }}
+.under {{ margin: 14px 0 0; font-size: 30px; line-height: 1.35; max-width: 60ch; }}
 .cap {{ max-width: 100%; max-height: 720px; border-radius: 8px; border: 1px solid rgb(21 21 21 / .14); box-shadow: 0 1px 0 rgb(21 21 21 / .06); }}
 .pair {{ display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }} .pair .cap {{ width: 100%; }}
 blockquote {{ margin: 0; font-size: 48px; line-height: 1.2; max-width: 22ch; background: #f2f2ef; padding: 36px 40px; border-radius: 8px; }}

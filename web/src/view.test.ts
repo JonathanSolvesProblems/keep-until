@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("./firebase", () => ({ ai: {}, perf: {}, db: {} }));
 vi.mock("firebase/performance", () => ({ trace: () => ({ start() {}, stop() {}, putAttribute() {}, putMetric() {} }) }));
 
-import { plainReason, spokenAnswer } from "./view";
+import { plainReason, readBy, spokenAnswer, viewOf } from "./view";
 import type { Step } from "./ai/loop";
 
 describe("plainReason: the gate's reasons in the sort lead's words", () => {
@@ -48,5 +48,21 @@ describe("spokenAnswer: the answer said aloud says only what the screen shows", 
   it("asks for the item to be turned, and stays silent over an empty table", () => {
     expect(spokenAnswer({ kind: "need_date_photo", reads: [], route: "" })).toBe("Turn it, so the date faces the camera.");
     expect(spokenAnswer({ kind: "no_item", reads: [], route: "" })).toBe("");
+  });
+});
+
+describe("the read-by badge says only what happened", () => {
+  const r = (source: string, why: string, date_text = "") => ({ read: { why, date_text }, source, ms: 1000 }) as never;
+  it("says nothing was sent when the laptop's check settled it", () => {
+    expect(readBy([r("on_device", "triage: package yes, date in view no, fridge no")]).rest).toBe(", nothing sent to the cloud");
+  });
+  it("says 'date read' only when the cloud read a date", () => {
+    expect(readBy([r("on_device", "triage: x"), r("in_cloud", "", "2027 FE 14")]).rest).toBe(", date read in the cloud");
+    expect(readBy([r("on_device", "triage: x"), r("in_cloud", "yogurt")]).rest).toBe(", read in the cloud");
+  });
+  it("never tells a hands-free volunteer to press a button", () => {
+    const turn = { kind: "need_date_photo", reads: [], route: "" } as never;
+    expect(viewOf(turn, true).reason).toBe("Show the side with the date stamp.");
+    expect(viewOf(turn).reason).toContain("press Read item again");
   });
 });

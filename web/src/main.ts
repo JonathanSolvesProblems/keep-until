@@ -132,7 +132,11 @@ describeOnDevice().then((s) => (status.textContent = s.endsWith("available") ? "
 if (!browserHasOnDeviceModel()) {
   const note = $("browserNote");
   note.textContent =
-    "This browser has no on-device model, so every read here goes to the cloud. To read on this laptop instead, open this page in Chrome with Gemini Nano turned on.";
+    "This browser has no on-device model, so every read here goes to the cloud. To read on this laptop instead, open this page in Chrome with Gemini Nano turned on. To see the laptop's half now: ";
+  const watch = document.createElement("a");
+  watch.href = "?replay=1";
+  watch.textContent = "watch a hands-free run recorded on Gemini Nano";
+  note.append(watch, ".");
   note.hidden = false;
   const onlyOnDevice = modeSel.querySelector<HTMLOptionElement>('option[value="only_on_device"]');
   if (onlyOnDevice) {
@@ -532,8 +536,8 @@ function toJpegBase64(source: CanvasImageSource, w: number, h: number, maxSide =
 const narrow = window.matchMedia("(max-width: 860px)");
 const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-function render(step: Step, thumb: string, _label: string): void {
-  renderAnswer(answer, step);
+function render(step: Step, thumb: string, label: string): void {
+  renderAnswer(answer, step, handsFree || label === "replay");
   // The tab title carries the last answer, so it reads out and shows in the tab strip.
   document.title = `Keep Until: ${[...(answer.querySelector(".band")?.children ?? [])].map((c) => c.textContent).join(" ")}`;
   // Without a live camera (saved photos), the item just read stays in the camera's place.
@@ -956,7 +960,16 @@ if (new URLSearchParams(location.search).has("replay")) {
         render(step, toJpegBase64(video, video.videoWidth, video.videoHeight, 320).url, "replay");
       }
     });
-    video.addEventListener("ended", () => (promptEl.textContent += " Replay finished."));
+    video.addEventListener("ended", () => {
+      // The run in one line, and the next thing to try.
+      const items = run.steps.filter((x) => x.step.kind === "verdict").length;
+      promptEl.textContent = `Replay finished: ${checks} checks on the laptop, ${sent} sent to the cloud, ${items} items answered. `;
+      const next = document.createElement("a");
+      next.href = "?sample=1";
+      next.textContent = "Now read a sample photo yourself";
+      promptEl.append(next, ". No sign-in needed.");
+      showWatching(`Replay finished. ${checks} checks on the laptop, ${sent} sent to the cloud`);
+    });
     await video.play().catch(() => (promptEl.textContent += " Press play: this browser blocked autoplay."));
   })();
 }

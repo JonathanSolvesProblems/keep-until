@@ -4,7 +4,7 @@ The app at `http://localhost:5173/?clip=1` in my own Chrome 157 on my laptop, on
 
 Nobody touched the laptop. Each check is one Gemini Nano call on the laptop (`InferenceMode.ONLY_ON_DEVICE`); the cloud is called only when a check says a date faces the camera (or the item needs the fridge) and the view has changed since the last read.
 
-The full record, every check and every answer as the app made them, is `results/handsfree-run-2026-11-22.json`. The live app replays it at `?replay=1`, in any browser.
+The full record, every check and every answer as the app made them, is `results/handsfree-run-2026-11-22.json`. (Until 2026-11-26 the live app replayed this run at `?replay=1`; it now replays the run in `results/handsfree-clip-2026-11-26-plugged.md`, made with the rewritten rules.)
 
 ## Result
 

@@ -20,7 +20,18 @@ published source, or the measurement in `results/` that produced it.
 
 ## Measurements
 
-Filled as each `results/` file is produced.
+Every number on the project page, the README and the gallery comes from one of these files. `scripts/check_claims.py` reads the figures from them and fails in CI when a page disagrees.
 
 | Number | File | Date |
 |---|---|---|
+| Routing on 16 pantry photos: hybrid 13 of 15 with 6 cloud calls, cloud only 14 of 15, Gemini Nano alone 4 of 15; the always-turn-it baseline, 9 of 15 | `results/ablation-inference-mode.md`, graded by `scripts/grade_run.py` against `results/labels/pantry-2026-11-15.json` | 2026-11-15, re-graded 2026-11-20 |
+| Gemini Nano as a checker, 10 of 15 | `results/ondevice-experiment-2026-11-15.md` | 2026-11-15 |
+| Hands-free: 31 checks on the laptop, 2 calls to the cloud, both items right | `results/handsfree-clip-2026-11-26-plugged.md`, record in `results/handsfree-run-2026-11-26-plugged.json` | 2026-11-26 |
+| On battery a check takes 6 to 10 seconds; Gemini Nano at about 4.5 tokens a second | `results/handsfree-clip-2026-11-26.md`, `results/handsfree-clip-2026-11-26-plugged.md` | 2026-11-26 |
+| Gemini Nano's first start, 458 and 503 seconds | `results/ablation-inference-mode.md` (503 s), `devpost/build-log.md` (457.9 s on the live site) | 2026-11-15, 2026-11-19 |
+| Date reading, 71 of 100 outside photos; the 29 misses one by one | `results/date-control-off-ca-2026-11-22.md`, `results/date-control-off-ca-2026-11-22-audit.md`, graded by `scripts/grade_dates.py` | 2026-11-22, corrected 2026-11-24 |
+| The Chipits bag read as `26MA14` in one run and `2027 MA 17` in the next | `results/pantry-2026-11-15-cloud-repeatability.md` | 2026-11-15 |
+| Recalls: Gemini 16 of 16, brand plus a product word 11 of 16, brand alone 6 of 16 | `results/recall-control-2026-11-22.md`, written by `scripts/recall_report.py` | 2026-11-22 |
+| The Android and web gates agree on 294 date stamps and 2,580 chart decisions | `shared/gate-vectors.json`, replayed by the Kotlin test `GateVectorsTest` | 2026-11-19 |
+| Android on a Galaxy S24, and on Android 8 and 16 emulators | `results/android-s24-2026-11-19.md`, `results/android-emulator-2026-11-20.md`, `results/android-testlab-2026-11-19.md` | 2026-11-19 to 2026-11-24 |
+| The public sample path, 5 of 5 on the deployed build | `results/public-path-2026-11-26.md` | 2026-11-26 |

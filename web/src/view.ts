@@ -49,7 +49,12 @@ export function readBy(reads: ReadResult[], route = ""): { lead: string; rest: s
   const seconds = (reads.reduce((s, r) => s + r.ms, 0) / 1000).toFixed(1) + " s";
   const cloudReads = reads.filter((r) => r.source === "in_cloud").length;
   const where = cloudReads > 1 ? "read twice in the cloud" : "read in the cloud";
-  if (device && cloud) return { lead: "Checked on this laptop", rest: `, date ${where}`, icons: ["laptop", "cloud"], seconds };
+  // "date read" only when a cloud read did read a date: a yogurt set aside for the fridge was read
+  // in the cloud, and no date came into it.
+  const dated = reads.some((r) => r.source === "in_cloud" && r.read.date_text);
+  if (device && cloud) return { lead: "Checked on this laptop", rest: `, ${dated ? "date " : ""}${where}`, icons: ["laptop", "cloud"], seconds };
+  // The laptop's own check settled it ("turn it", "nothing in view"): say that nothing was sent.
+  if (device && reads.every((r) => r.read.why.startsWith("triage:"))) return { lead: "Checked on this laptop", rest: ", nothing sent to the cloud", icons: ["laptop"], seconds };
   if (device) return { lead: reads.length > 1 ? "Read twice on this laptop" : "Read on this laptop", rest: "", icons: ["laptop"], seconds };
   // Said on the screen when this laptop was meant to check the photo and could not (charter law 12).
   const after = /on-device triage failed/.test(route) ? ". This laptop could not check it." : undefined;
@@ -125,7 +130,8 @@ function stampOf(step: Step): View["stamp"] {
   return { code: code.toUpperCase(), plain: `${kind} ${longDate(step.parsed.iso)}` };
 }
 
-export function viewOf(step: Step): View {
+/** `handsFree`: nobody presses anything, so the answer never says to press Read item. */
+export function viewOf(step: Step, handsFree = false): View {
   if (step.kind === "no_item")
     return {
       cls: "NONE",
@@ -137,14 +143,14 @@ export function viewOf(step: Step): View {
       cls: "TURN",
       word: "Turn it",
       sub: "so the name faces the camera",
-      reason: "The date is read. Show the front of the package, then press Read item again.",
+      reason: handsFree ? "The date is read. Show the front of the package." : "The date is read. Show the front of the package, then press Read item again.",
     };
   if (step.kind === "need_date_photo")
     return {
       cls: "TURN",
       word: "Turn it",
       sub: "so the date faces the camera",
-      reason: "Show the side with the date stamp, then press Read item again.",
+      reason: handsFree ? "Show the side with the date stamp." : "Show the side with the date stamp, then press Read item again.",
     };
   const { reason, source } = plainReason(step.verdict.reason);
   const stamp = stampOf(step);
@@ -186,8 +192,8 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, cls?: string, text?: 
   return e;
 }
 
-export function renderAnswer(container: HTMLElement, step: Step): void {
-  const v = viewOf(step);
+export function renderAnswer(container: HTMLElement, step: Step, handsFree = false): void {
+  const v = viewOf(step, handsFree);
   const root = el("div", `verdict verdict--${v.cls}`);
   // The decision first and largest, then the stamp it was read from (charter law 3).
   const band = el("div", "band");

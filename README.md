@@ -8,9 +8,9 @@ kept against new Government of Canada food recalls.
 
 Gemini Nano checks each photo on the laptop first. Only photos with a date worth reading go to
 the cloud. With **Hands-free** on, Nano watches the camera itself and calls the cloud only when a
-date faces it, and says each answer aloud, so the volunteer never touches the keyboard or looks
-away from the item. Built for #BuildHybridAI 2026 with
-Firebase AI Logic, on Web (Chrome) and Android.
+date or a fridge item faces it, so the volunteer has nothing to press. It can also say each answer
+aloud. Built for #BuildHybridAI 2026 with Firebase AI Logic, on Web (Chrome) and Android (the
+Android app has the same read loop and chart gate, with a Read item button and no hands-free).
 
 To watch hands-free with no item and no webcam, open the app with `?clip=1` in Chrome with Gemini
 Nano: a 70-second clip of real pantry photos plays in the camera's place, and nothing from it is
@@ -84,10 +84,18 @@ scored photos should get "turn it", so an app that always said "turn it" would s
 only 2 show a date to log (both modes read 1 of them right). Date reading has its own test on
 100 outside photos (below).
 
-What it cannot do yet: read lot codes, so a recall limited to certain lots is always "check the
-lot code" for the lead. An Android on-device result needs a phone on Google's Nano list (Pixel 9
-or later, Galaxy S25 or later); Test Lab's phones and my own Galaxy S24 run the cloud path and
-say so.
+What it cannot do yet:
+
+- Nobody at a food bank has used it. Everything here was measured on my own pantry and on public photos.
+- Hands-free has run on a clip of still photos, on one laptop, plugged in. On battery my laptop
+  throttles its GPU, a check takes 6 to 10 seconds, and hands-free switches itself off and says so.
+  Gemini Nano's first start after Chrome opens has taken about 8 minutes; items are read in the
+  cloud until it is ready.
+- An Android on-device result needs a phone on Google's Nano list (Pixel 9 or later, Galaxy S25 or
+  later); Test Lab's phones, the emulators and my own Galaxy S24 run the cloud path and say so.
+- The model picks the chart row, and nothing grades that choice yet.
+- Lot codes are not read, so a recall limited to certain lots is always "check the lot code" for
+  the lead.
 
 ## Built on Firebase
 
@@ -101,7 +109,7 @@ drops), Crashlytics on Android (failed reads, with whether the phone was online)
 
 ## Sources
 
-Every number the app uses or this page states is traced in [devpost/sources.md](devpost/sources.md).
+Every published source the app uses, and the results file behind each number on this page, is listed in [devpost/sources.md](devpost/sources.md).
 The build, decision by decision, is in [devpost/build-log.md](devpost/build-log.md).
 
 ## License
