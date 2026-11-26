@@ -1,5 +1,9 @@
 # Hands-free after the code review: two runs on a busy laptop, 2026-11-24
 
+Correction, 2026-11-26: the slow checks below were measured again with the GPU idle and traced to the
+laptop running on battery (`results/handsfree-clip-2026-11-26.md`). Whether it was on battery during
+these two runs was not recorded, so the explanation given below (other programs on the GPU) is unproven.
+
 A code review on 2026-11-24 found that the hands-free rules could leave an item unread, read one
 twice, or carry a half-turned item's name to the next one. The rules were rewritten as a small
 state machine (`watchStep` and `afterRead` in `web/src/ai/loop.ts`, with tests for each case), and

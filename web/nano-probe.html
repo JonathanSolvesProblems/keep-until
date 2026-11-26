@@ -1,0 +1,56 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>probe: starting</title>
+<pre id="out"></pre>
+<script type="module">
+  // Times Gemini Nano's steps separately, to find where a slow check spends its time.
+  // Dev only (served by Vite from the web root, not part of the build). Result lands in the title.
+  const out = document.getElementById("out");
+  const log = (s) => ((out.textContent += s + "\n"), (document.title = "probe: " + out.textContent.replace(/\n/g, " | ")));
+  const t = async (name, fn) => {
+    const t0 = performance.now();
+    try {
+      const v = await fn();
+      log(`${name} ${((performance.now() - t0) / 1000).toFixed(2)}s`);
+      return v;
+    } catch (e) {
+      log(`${name} FAILED ${String(e).slice(0, 80)}`);
+      throw e;
+    }
+  };
+  const opts = { expectedInputs: [{ type: "image" }, { type: "text", languages: ["en"] }], expectedOutputs: [{ type: "text", languages: ["en"] }] };
+  const canvas = new OffscreenCanvas(512, 384);
+  const g = canvas.getContext("2d");
+  g.fillStyle = "#8a8780";
+  g.fillRect(0, 0, 512, 384);
+  g.fillStyle = "#fff";
+  g.fillRect(180, 80, 150, 220);
+  const blob = await canvas.convertToBlob({ type: "image/jpeg" });
+  const ask = (s) => s.prompt([{ role: "user", content: [{ type: "image", value: blob }, { type: "text", value: "Is there a package in this photo? Answer yes or no." }] }]);
+  try {
+    log("avail " + (await LanguageModel.availability(opts)));
+    const s1 = await t("create1", () => LanguageModel.create(opts));
+    await t("prompt1", () => ask(s1));
+    await t("prompt1b", () => ask(s1));
+    const s2 = await t("clone", () => s1.clone());
+    await t("prompt2", () => ask(s2));
+    const s3 = await t("create2", () => LanguageModel.create(opts));
+    await t("prompt3", () => ask(s3));
+    const s4 = await t("createText", () => LanguageModel.create());
+    await t("textPrompt", () => s4.prompt("Answer with one word: ready"));
+    const schema = { type: "object", properties: { package_in_view: { type: "boolean" }, date_in_view: { type: "boolean" }, needs_refrigeration: { type: "boolean" }, product: { type: "string" } }, required: ["package_in_view", "date_in_view", "needs_refrigeration", "product"] };
+    const askJson = (s, extra) => s.prompt([{ role: "user", content: [{ type: "image", value: blob }, { type: "text", value: "Look at the photo. Is a food package in view? Is a date stamp in view? Does it need refrigeration? Name the product in a few words. Answer as JSON." }] }], extra);
+    const s5 = await t("create5", () => LanguageModel.create(opts));
+    const j1 = await t("jsonConstrained", () => askJson(s5, { responseConstraint: schema }));
+    log("len " + j1.length);
+    const s6 = await t("create6", () => LanguageModel.create(opts));
+    const j2 = await t("jsonFree", () => askJson(s6));
+    log("len " + j2.length);
+    const s7 = await LanguageModel.create();
+    const w = await t("text60words", () => s7.prompt("Write exactly three sentences about canned soup."));
+    log("chars " + w.length);
+    log("hidden " + document.hidden + " done");
+  } catch (e) {
+    log("stopped");
+  }
+</script>

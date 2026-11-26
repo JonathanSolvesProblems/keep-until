@@ -96,12 +96,17 @@ A script fails the build if any number on this page or in the README stops match
 - Gemini Nano's first call after Chrome starts can take minutes (6.5 on 2026-11-22; on 2026-11-24 it had not answered after 15). The laptop check warms up in the background, items go to the cloud with Read item until it is ready, and hands-free starts by itself when it is.
 - No Android phone has run Gemini Nano for this app yet. Firebase Test Lab's Pixel 10, Pixel 11 and Galaxy S26 carry a stub AICore, Android emulators have no AICore at all, and my own phone is a Galaxy S24, which is not on Google's list. On those phones the app takes the cloud path and says so on the screen.
 - Hands-free needs Gemini Nano, so it is on the laptop in Chrome only. Everywhere else the volunteer presses Read item, and the app says why.
-- Hands-free needs the laptop's GPU to itself. With other GPU work running on mine, checks took up to 52 seconds and one item passed unseen (`results/handsfree-clip-2026-11-24.md`). A check slower than 8 seconds is now ignored, and after two in a row hands-free switches itself off and says to press Read item.
-- The run the page quotes and the replay plays was recorded on 2026-11-22. On 2026-11-24 a code review led me to rewrite the hands-free rules (an item could be read twice, or left unread); in two re-runs the rewritten rules gave the same answers on the carton (the busy laptop above cost the yogurt in one), and a clean recording with them on an idle laptop is still to be made.
+- Hands-free does not work on battery on my laptop. On battery its GPU drew 5 to 21 watts, Gemini Nano wrote about 4.5 tokens a second, and a check took 8 to 9 seconds, where it took about 2 on 2026-11-22 (`results/handsfree-clip-2026-11-26.md`). A check slower than 8 seconds is never acted on, and after two in a row hands-free switches itself off and says to plug the laptop in or press Read item.
+- The run the page quotes and the replay plays was recorded on 2026-11-22. On 2026-11-24 a code review led me to rewrite the hands-free rules (an item could be read twice, or left unread). In the re-runs since, the rewritten rules answered the carton right each time it was read, once with a single cloud call where the old rules needed two; the yogurt was answered in one run and missed in the others, because those checks came late on battery. A full recording with the rewritten rules and the laptop plugged in is still to be made.
 
 ## What's next
 
-[X: the sort shift at North York Harvest, and what the lead said to change]
+Nobody at a food bank has used Keep Until yet, and that is the first thing to change. Between November 15 and 22 I wrote to Food Banks Canada, Feed Ontario, North York Harvest Food Bank, Food Banks Mississauga and Daily Bread Food Bank, asking how their volunteers decide what to keep past the date and whether I could try this at a sort shift. No shift happened before the deadline, so everything on this page was measured on my own pantry and on public photos.
+
+- **A sort shift.** One morning at a real table gives the number this page does not have: how many items the chart says to keep that would otherwise have been binned.
+- **Canadian stamps at scale.** The 100-photo test is numeric dates. Year-first stamps like `2027 FE 14` need their own set of a few hundred.
+- **Lot codes,** so a recall limited to certain lots can be settled without the sort lead.
+- **A phone that runs Gemini Nano,** to check the Android app's on-device path on real hardware.
 
 ## How to check each judging criterion
 

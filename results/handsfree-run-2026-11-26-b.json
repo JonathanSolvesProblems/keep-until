@@ -1,0 +1,58 @@
+{
+  "recorded": "2026-11-26T09:16:42.529Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip.webm",
+  "checks": [
+    {
+      "at": 8,
+      "saw": "clear",
+      "ms": 7917,
+      "hidden": true
+    },
+    {
+      "at": 17,
+      "saw": "slow",
+      "ms": 8954,
+      "hidden": true
+    },
+    {
+      "at": 25.1,
+      "saw": "slow",
+      "ms": 8357,
+      "hidden": true
+    },
+    {
+      "at": 37.4,
+      "saw": "slow",
+      "ms": 12097,
+      "hidden": true
+    },
+    {
+      "at": 47.1,
+      "saw": "slow",
+      "ms": 9619,
+      "hidden": true
+    },
+    {
+      "at": 56.4,
+      "saw": "slow",
+      "ms": 9308,
+      "hidden": true
+    },
+    {
+      "at": 65.2,
+      "saw": "slow",
+      "ms": 8688,
+      "hidden": true
+    },
+    {
+      "at": 70,
+      "saw": "slow",
+      "ms": 9135,
+      "hidden": true
+    }
+  ],
+  "steps": []
+}

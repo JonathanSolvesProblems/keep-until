@@ -603,10 +603,21 @@ let slowChecks = 0;
 const STALE_CHECK_MS = 8000;
 const watchCounts = { looks: 0, cloudReads: 0 };
 const lookMs: number[] = [];
-const watchLog: { at: number; saw: string; ms: number }[] = [];
+// `hidden`: the page was covered or in the background during this check (Chrome slows such pages).
+const watchLog: { at: number; saw: string; ms: number; hidden?: boolean }[] = [];
 // Every answer of a clip run, with the clip time it landed at: the record ?replay=1 plays back.
 const clipSteps: { at: number; step: Step }[] = [];
 const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** True when the laptop says it is running on battery. Unknown (no Battery API) counts as plugged in. */
+async function onBattery(): Promise<boolean> {
+  try {
+    const b = await (navigator as unknown as { getBattery?: () => Promise<{ charging: boolean }> }).getBattery?.();
+    return b ? !b.charging : false;
+  } catch {
+    return false;
+  }
+}
 
 /** A 32x24 grey thumbnail: enough to tell whether the item in front of the camera has moved. */
 function signature(): Uint8Array {
@@ -727,17 +738,21 @@ async function watchLoop(run: number): Promise<void> {
     }
     if (!live()) return;
     // A check that took this long describes a table that has moved on: it is never acted on.
-    // (On 2026-11-24, with the laptop's GPU shared with other work, checks took up to 52 s and an
-    // item passed unseen.) Two in a row, and hands-free hands the job back to the Read item button.
+    // Measured 2026-11-26: on battery the laptop's GPU is throttled, Gemini Nano writes about
+    // 4.5 tokens a second, and a check takes 8 to 9 s (it took about 2 s on 2026-11-22). Two late
+    // checks in a row, and hands-free hands the job back to the Read item button and says why.
     if (tr.ms > STALE_CHECK_MS) {
-      watchLog.push({ at: clipTime(), saw: "slow", ms: tr.ms });
+      watchLog.push({ at: clipTime(), saw: "slow", ms: tr.ms, hidden: document.hidden });
+      const battery = await onBattery();
       if (++slowChecks >= 2 && !clipMode) {
         stopHandsFree();
-        promptEl.textContent = "This laptop is too busy to watch the camera right now, so hands-free is off. Press Read item.";
-        say("Hands-free is off. Press Read item.");
+        promptEl.textContent = battery
+          ? "This laptop is on battery, which slows its reader too much for hands-free. Plug it in and press Hands-free again, or press Read item."
+          : "This laptop is too busy to watch the camera right now, so hands-free is off. Press Read item.";
+        say(battery ? "Plug the laptop in for hands-free. Until then, press Read item." : "Hands-free is off. Press Read item.");
         return;
       }
-      showWatching("This laptop is busy, so that check came too late. Checking again.");
+      showWatching(battery ? "On battery this laptop's reader is slow, so that check came too late. Plug it in." : "This laptop is busy, so that check came too late. Checking again.");
       continue;
     }
     slowChecks = 0;
@@ -746,7 +761,7 @@ async function watchLoop(run: number): Promise<void> {
     watch = state;
     if (!watch.pending) pendingTurn = null; // the table cleared: the next item is a new item
     if (watch.clears >= 2) lastReadSig = null;
-    watchLog.push({ at: clipTime(), saw: next, ms: tr.ms });
+    watchLog.push({ at: clipTime(), saw: next, ms: tr.ms, hidden: document.hidden });
     if (next === "clear") {
       showWatching(`Watching on this laptop. Hold up the next item. ${tally}`);
     } else if (next === "next") {
@@ -815,6 +830,10 @@ handsBtn.addEventListener("click", () => {
   failures = 0;
   slowChecks = 0;
   if (clipMode && video.ended) video.currentTime = 0;
+  // Said before the first late check, not after it.
+  onBattery().then((b) => {
+    if (b && handsFree) promptEl.textContent = "This laptop is on battery, which slows its reader. Plug it in for hands-free.";
+  });
   watchLoop(run);
 });
 

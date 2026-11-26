@@ -1,0 +1,146 @@
+{
+  "recorded": "2026-11-26T09:10:40.761Z",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "onDevice": "on-device: available",
+  "clip": "/testset/handsfree-clip.webm",
+  "checks": [
+    {
+      "at": 5.7,
+      "saw": "clear",
+      "ms": 5743
+    },
+    {
+      "at": 10.3,
+      "saw": "clear",
+      "ms": 4535
+    },
+    {
+      "at": 14.3,
+      "saw": "turn",
+      "ms": 3983
+    },
+    {
+      "at": 17.3,
+      "saw": "turn",
+      "ms": 2979
+    },
+    {
+      "at": 23.3,
+      "saw": "turn",
+      "ms": 5892
+    },
+    {
+      "at": 30.9,
+      "saw": "read",
+      "ms": 7527
+    },
+    {
+      "at": 44,
+      "saw": "slow",
+      "ms": 11141
+    },
+    {
+      "at": 52.5,
+      "saw": "slow",
+      "ms": 8390
+    },
+    {
+      "at": 61.8,
+      "saw": "slow",
+      "ms": 9193
+    },
+    {
+      "at": 70,
+      "saw": "slow",
+      "ms": 9067
+    }
+  ],
+  "steps": [
+    {
+      "at": 14.3,
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's CHICKEN • POULET BROTH • BOULION",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3983,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device triage: no date in view; no cloud call"
+      }
+    },
+    {
+      "at": 32.8,
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Campbell's CHICKEN • POULET BROTH • BOULION",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "show_me_the_date",
+              "why": "triage: package yes, date in view no, fridge no"
+            },
+            "source": "on_device",
+            "ms": 3983,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Campbell's CHICKEN • POULET BROTH • BOULION",
+              "brand": "Campbell's",
+              "category": "canned_prepared_meals",
+              "date_text": "2027 FE 14 02146",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product, category, and best before date are clearly visible and readable."
+            },
+            "source": "in_cloud",
+            "ms": 1907,
+            "mode": "only_in_cloud",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2027-02-14",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "KEEP",
+          "keepUntil": "2029-02-14",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: 24 months past best before (chart p.8)"
+        },
+        "route": "in_cloud: photos together give the row and the date"
+      }
+    }
+  ]
+}
