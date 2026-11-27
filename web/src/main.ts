@@ -968,10 +968,13 @@ async function loadImage(file: File): Promise<HTMLImageElement> {
 
 // The batch run is the measurement run. Its results go to the exported file only, never
 // into a food bank's live item log.
-batchBtn.addEventListener("click", async () => {
-  if (!models || !settings || !files.files?.length) return;
+batchBtn.addEventListener("click", () => {
+  if (files.files?.length) void runBatch([...files.files]);
+});
+
+async function runBatch(list: File[]): Promise<void> {
+  if (!models || !settings || !list.length) return;
   batchBtn.disabled = true;
-  const list = [...files.files];
   let failure = "";
   for (const [i, file] of list.entries()) {
     toolStatus.textContent = `Reading photo ${i + 1} of ${list.length}`;
@@ -989,7 +992,31 @@ batchBtn.addEventListener("click", async () => {
   }
   toolStatus.textContent = `Done: ${list.length} ${list.length === 1 ? "photo" : "photos"} read ${MODE_WORDS[models.hybrid.mode] ?? ""}${failure ? `. ${failure}` : ""}`;
   batchBtn.disabled = false;
-});
+}
+
+// Dev server only (never in the built site): ?batch=<list.json>&mode=<mode>&today=<date> runs a
+// measurement batch in this Chrome with no clicks, then downloads the results file. The list is a
+// JSON array of photo URLs on the dev server. It is how Gemini Nano's own reads are measured, which
+// needs a real Chrome: automated browsers have no real on-device model.
+if (import.meta.env.DEV && new URLSearchParams(location.search).has("batch")) {
+  (async () => {
+    const q = new URLSearchParams(location.search);
+    modeSel.value = q.get("mode") ?? modeSel.value;
+    if (q.get("today")) todayInput.value = q.get("today")!;
+    document.title = "Keep Until batch: starting";
+    await prepare();
+    const urls = (await (await fetch(q.get("batch")!)).json()) as string[];
+    const list = await Promise.all(
+      urls.map(async (u) => new File([await (await fetch(u)).blob()], u.split("/").pop()!, { type: "image/jpeg" })),
+    );
+    const t0 = performance.now();
+    const tick = setInterval(() => (document.title = `Keep Until batch: ${toolStatus.textContent}`), 2000);
+    await runBatch(list);
+    clearInterval(tick);
+    $("export").click();
+    document.title = `Keep Until batch: done ${list.length} in ${Math.round((performance.now() - t0) / 1000)} s`;
+  })().catch((e) => (document.title = `Keep Until batch: failed ${(e as Error).message}`));
+}
 
 $("export").addEventListener("click", () => {
   const blob = new Blob(

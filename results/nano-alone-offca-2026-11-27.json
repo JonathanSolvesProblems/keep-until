@@ -1,0 +1,3893 @@
+{
+  "exported": "2026-11-27T14:51:34.976Z",
+  "cloudModel": "gemini-3.5-flash-lite",
+  "policy": {
+    "bound": "min",
+    "overrides": {}
+  },
+  "results": [
+    {
+      "file": "8004476001068-1.jpg",
+      "at": "2026-11-27T14:44:22.947Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "OLIO CORVINO BIOLOGIQUE HUILE D'OLIVE EXTRA BIOLOGIQUE",
+              "brand": "BIOLOGIQUE",
+              "category": "olive_oil",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package is an olive oil and has no date visible information."
+            },
+            "source": "on_device",
+            "ms": 4607,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "olive_oil",
+            "label": "Olive oil",
+            "page": 7
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0872214008666-2.jpg",
+      "at": "2026-11-27T14:44:26.118Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "EXP:0410102023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package contains nutrition facts and an expiration date."
+            },
+            "source": "on_device",
+            "ms": 2972,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "0621001001645-1.jpg",
+      "at": "2026-11-27T14:44:29.232Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MILLET",
+              "brand": "",
+              "category": "white_rice_barley",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a grain product and I have logged the item."
+            },
+            "source": "on_device",
+            "ms": 3069,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "white_rice_barley",
+            "label": "Other grains and cereals: white rice, whole barley, low fat grains",
+            "page": 6
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0883204017216-1.jpg",
+      "at": "2026-11-27T14:44:36.445Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "SAUCE AU PIMENT FORSICHA",
+              "brand": "HO-YA",
+              "category": "hot_pepper_sauce",
+              "date_text": "BB/26/12/2013",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has a best before date visible on the packaging, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3839,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "SAUCE AU PIMENT FOR SCRIRACHA",
+              "brand": "HO-YA",
+              "category": "hot_pepper_sauce",
+              "date_text": "BB/MA",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package contains a sauce, and there is a date visible."
+            },
+            "source": "on_device",
+            "ms": 3339,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2013-12-26",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "hot_pepper_sauce",
+            "label": "Hot pepper sauce",
+            "page": 8
+          },
+          "reason": "two reads disagree on the date (2013-12-26 vs unreadable), so a person checks it before anything is binned"
+        },
+        "route": "on_device: model chose log → second read (on_device) disagreed → set aside"
+      }
+    },
+    {
+      "file": "5904637025410-1.jpg",
+      "at": "2026-11-27T14:44:43.977Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Christmas ChoCo 122 PK Hazelnut, Caramel, Vanilla - SEASONAL",
+              "brand": "MAGNAT",
+              "category": "general_grocery_canned",
+              "date_text": "08.08.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a packaged food item with a best before date visible on the front."
+            },
+            "source": "on_device",
+            "ms": 3871,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Christmas Chico 122 PK Hazelnut, Caramel, Vanilla - SEASONAL",
+              "brand": "MAGNATMAIT",
+              "category": "general_grocery_canned",
+              "date_text": "08.08.202023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "I have successfully read the product information and logged it."
+            },
+            "source": "on_device",
+            "ms": 3597,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-08-08",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "two reads disagree on the date (2023-08-08 vs unreadable), so a person checks it before anything is binned"
+        },
+        "route": "on_device: model chose log → second read (on_device) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0621001003946-1.jpg",
+      "at": "2026-11-27T14:44:47.097Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "ROSETTES",
+              "brand": "",
+              "category": "dry_pasta_noodles",
+              "date_text": "1301023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name is visible and the date is present, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3057,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"1301023\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"1301023\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0621001003953-1.jpg",
+      "at": "2026-11-27T14:44:50.395Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MACARACORNS",
+              "brand": " ",
+              "category": "dry_pudding_mix",
+              "date_text": "03/1023",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a macaroni and cheese dinner mix box, and the date is visible."
+            },
+            "source": "on_device",
+            "ms": 3248,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "year 1023 is not a plausible date stamp"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dry_pudding_mix",
+            "label": "Dry pudding mix",
+            "page": 12
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0061308210195-1.jpg",
+      "at": "2026-11-27T14:44:53.886Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Bites / Bouchées",
+              "brand": "Pilaros",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a pastry, which falls under general grocery items, and no date information is visible on the package."
+            },
+            "source": "on_device",
+            "ms": 3436,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0069529050064-2.jpg",
+      "at": "2026-11-27T14:44:56.931Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "KIM Rice Sticks with chicken",
+              "brand": "KIM",
+              "category": "dry_pasta_noodles",
+              "date_text": "30/1010",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is dry noodles and the best before date is visible."
+            },
+            "source": "on_device",
+            "ms": 2993,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"30/1010\" does not parse (numeric year and month)"
+        },
+        "route": "on_device: date \"30/1010\" does not parse (numeric year and month); cloud switched off"
+      }
+    },
+    {
+      "file": "0797059859573-1.jpg",
+      "at": "2026-11-27T14:44:59.952Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Fig Balsamic cream",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has no visible date on the package is a jarred or bottled orfallback when no specific row fits (e.g. canned condiments)."
+            },
+            "source": "on_device",
+            "ms": 2968,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0069694014878-1.jpg",
+      "at": "2026-11-27T14:45:03.275Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mini Fruit Flavoured Candies",
+              "brand": "Mini",
+              "category": "dessert_topping_mix_dry",
+              "date_text": "255.111.2024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is identifiable and the best before date is readable on the package."
+            },
+            "source": "on_device",
+            "ms": 3272,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"255.111.2024\" does not parse (no valid calendar date in numeric day and month in an unknown order)"
+        },
+        "route": "on_device: date \"255.111.2024\" does not parse (no valid calendar date in numeric day and month in an unknown order); cloud switched off"
+      }
+    },
+    {
+      "file": "3700311812176-5.jpg",
+      "at": "2026-11-27T14:45:06.768Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Madeleines Lungues",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "2304C 0235",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name and a date are clearly visible on the package."
+            },
+            "source": "on_device",
+            "ms": 3354,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "3256540002364-11.jpg",
+      "at": "2026-11-27T14:45:10.268Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BRIOCHE TRESSÉE TRANÉE TRANCHÉE au beurre SLICED BRAIDED BRIOCHE with butter",
+              "brand": "Gabriel",
+              "category": "bread_commercial",
+              "date_text": "--:no date",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is packaged bread, and no date is visible on the front."
+            },
+            "source": "on_device",
+            "ms": 3438,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "month with 0 numbers around it"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0066019200251-4.jpg",
+      "at": "2026-11-27T14:45:13.403Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Sardines",
+              "brand": "Pèche-Océan",
+              "category": "canned_meat_fish",
+              "date_text": "E2222/1206",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a can of sardines, and the expiry date is visible."
+            },
+            "source": "on_device",
+            "ms": 3100,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"E2222/1206\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"E2222/1206\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "3245412891168-9.jpg",
+      "at": "2026-11-27T14:45:16.682Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Sans sucres ajoutés*",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "J 0167 011.206.20",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a sweetened fruit product, and the date is visible."
+            },
+            "source": "on_device",
+            "ms": 3184,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "no month and no separated date parts (likely a lot code)"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "8025202001220-2.jpg",
+      "at": "2026-11-27T14:46:48.799Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "need_date_photo",
+        "reads": [],
+        "route": "error: The response size exceeded the remaining available context."
+      }
+    },
+    {
+      "file": "0083747003657-2.jpg",
+      "at": "2026-11-27T14:46:51.906Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutritional Facts",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "0701/0123",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product does not have a recognizable product name printed on the label, so I am logging the visible nutrition facts and a placeholder name."
+            },
+            "source": "on_device",
+            "ms": 3091,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "0689466018479-1.jpg",
+      "at": "2026-11-27T14:46:54.845Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "RASPEMBERRY BLACK PEPPER VINAIGARETTE",
+              "brand": "",
+              "category": "vinaigrette",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "This is a vinaigrette dressing and there is no visible date printed."
+            },
+            "source": "on_device",
+            "ms": 2895,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "vinaigrette",
+            "label": "Vinaigrette dressings",
+            "page": 7
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0889842103557-1.jpg",
+      "at": "2026-11-27T14:46:57.988Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MINECRAFT XBOX ONE EDITION INCLUDES FAVORITES PACK",
+              "brand": "MINECRAFT",
+              "category": "general_grocery_boxed",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "No date is visible on the package, so I will log the product information."
+            },
+            "source": "on_device",
+            "ms": 3072,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_boxed",
+            "label": "General grocery, shelf stable, boxed or bagged (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "6253001010378-1.jpg",
+      "at": "2026-11-27T14:47:01.139Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "HALVAHA طحينة",
+              "brand": "",
+              "category": "dessert_topping_mix_dry",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a halva, which falls under the dessert topping mix category, and no date is visible."
+            },
+            "source": "on_device",
+            "ms": 3105,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dessert_topping_mix_dry",
+            "label": "Dessert topping mix, dry powdered",
+            "page": 7
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0814574001307-2.jpg",
+      "at": "2026-11-27T14:47:04.826Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Chicken Burgers with Fire-Roasted Vegetables Burriers de poulet",
+              "brand": "Furet and Greta's",
+              "category": "canned_prepared_meals",
+              "date_text": "306-18",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product package is clearly visible and contains a product name and date information, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3594,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "no month and no separated date parts (likely a lot code)"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "no readable date; 2 years after the best before date; 5 years after manufacture date if no best before date (p.8 footnote)"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0872632120193-2.jpg",
+      "at": "2026-11-27T14:47:07.894Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "no_item",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "no_item",
+              "why": "There is no recognizable food product name on the package."
+            },
+            "source": "on_device",
+            "ms": 3020,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "route": "on_device: model saw no item"
+      }
+    },
+    {
+      "file": "0697658692383-2.jpg",
+      "at": "2026-11-27T14:47:10.655Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Chocolat",
+              "brand": "",
+              "category": "sweet_spreads",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a chocolate/sweet, and no date is visible, so I am logging."
+            },
+            "source": "on_device",
+            "ms": 2728,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "sweet_spreads",
+            "label": "Sweet spreads (Nutella)",
+            "page": 12
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0665081004622-3.jpg",
+      "at": "2026-11-27T14:47:14.054Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "DARK CHOCOLATE SUPERFOOD SUPERFOOD SUPERALIMENTS AU CHOCOLAT NOIR",
+              "brand": "Healthy",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package is a food product, and there is no visible date."
+            },
+            "source": "on_device",
+            "ms": 3365,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "0064420100818-3.jpg",
+      "at": "2026-11-27T14:47:17.250Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LAIT PARTIELLEÉCRÈME 2% M.G.",
+              "brand": "Sealtest",
+              "category": "evaporated_milk_lowfat",
+              "date_text": "BB/MA",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is milk with a best before date stamp visible on the package."
+            },
+            "source": "on_device",
+            "ms": 3126,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"BB/MA\" does not parse (month with 0 numbers around it)"
+        },
+        "route": "on_device: date \"BB/MA\" does not parse (month with 0 numbers around it); cloud switched off"
+      }
+    },
+    {
+      "file": "0056932604045-1.jpg",
+      "at": "2026-11-27T14:47:20.293Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "NEAL BROTHERS HONEY MOUTARD ET MIEL PRETZELS BRETZELS",
+              "brand": "NEAL BROTHERS",
+              "category": "mustard_relish_pickles_bouillon",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item is a jar or bag of mustard and is categorized as mustard relish pickles bouillon."
+            },
+            "source": "on_device",
+            "ms": 3004,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "mustard_relish_pickles_bouillon",
+            "label": "Mustard, relish, pickles, bouillon cubes or granules",
+            "page": 8
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "5425010833151-2.jpg",
+      "at": "2026-11-27T14:47:23.266Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Minstrestroep/Soupe,",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "18/07/2019",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is identified as a canned food item, and the date has been read."
+            },
+            "source": "on_device",
+            "ms": 2929,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2019-07-18",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "8076809507110-9.jpg",
+      "at": "2026-11-27T14:47:29.928Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Biscotti troellini con panna fresca",
+              "brand": "Macine",
+              "category": "general_grocery_canned",
+              "date_text": "02/01/2020",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is listed under general grocery and the date is visible."
+            },
+            "source": "on_device",
+            "ms": 3343,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Biscotti frollini con panna fresca",
+              "brand": "Panna Fresca",
+              "category": "flour_based_mixes",
+              "date_text": "02/01/2020",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name and date are readable, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3187,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2020-01-02",
+            "2020-02-01"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "two reads disagree on the date (2020-01-02 or 2020-02-01 vs 2020-01-02 or 2020-02-01), so a person checks it before anything is binned"
+        },
+        "route": "on_device: model chose log → second read (on_device) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0041508963985-3.jpg",
+      "at": "2026-11-27T14:47:33.145Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product label contains nutrition facts but no specific food item name or date is visible, so I will log the general_grocery_canned."
+            },
+            "source": "on_device",
+            "ms": 3092,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0753519473840-1.jpg",
+      "at": "2026-11-27T14:47:36.805Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Imperial Nuts PROTEIN NUTS MÉLANGE DE PROTÉINES",
+              "brand": "Imperial",
+              "category": "nuts_seeds",
+              "date_text": "BEST BY:04/05/20204",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "I have read the label and the best before date."
+            },
+            "source": "on_device",
+            "ms": 3613,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"BEST BY:04/05/20204\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"BEST BY:04/05/20204\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0068200859118-4.jpg",
+      "at": "2026-11-27T14:47:39.669Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "206-27-216",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package has no visible date, so I will log it as the product information."
+            },
+            "source": "on_device",
+            "ms": 2820,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "6281036281203-4.jpg",
+      "at": "2026-11-27T14:47:42.393Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Calories",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item is a nutrition label, and the package has no expiry or best before date visible."
+            },
+            "source": "on_device",
+            "ms": 2619,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "0037695503486-2.jpg",
+      "at": "2026-11-27T14:47:45.564Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Chickpeas 40 mL",
+              "brand": "",
+              "category": "dried_legumes",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "I have logged the item under the dried legumes category. No date was visible on the package."
+            },
+            "source": "on_device",
+            "ms": 3040,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dried_legumes",
+            "label": "Dried beans, peas and lentils",
+            "page": 6
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0056664013115-2.jpg",
+      "at": "2026-11-27T14:47:48.386Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Beurre d'arachide Peanut Butter",
+              "brand": "yum Nature",
+              "category": "peanut_butter",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a jar of peanut butter and no date information is visible."
+            },
+            "source": "on_device",
+            "ms": 2770,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "peanut_butter",
+            "label": "Peanut butter and nut butters",
+            "page": 12
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0815442005021-1.jpg",
+      "at": "2026-11-27T14:47:51.390Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MIXED SEASONING ASSAISONNEMENT COMPLET",
+              "brand": "TRIGUISAR",
+              "category": "dry_sauce_mix",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name is visible, and the date is not visible."
+            },
+            "source": "on_device",
+            "ms": 2960,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dry_sauce_mix",
+            "label": "Dry packaged sauce mixes",
+            "page": 8
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0185782000223-1.jpg",
+      "at": "2026-11-27T14:47:54.789Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Huile d'Olive Extra-Vierge",
+              "brand": "BioharvestAgriculture",
+              "category": "olive_oil",
+              "date_text": "03/08/2023",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is an olive oil, and the package has a date printed lot code."
+            },
+            "source": "on_device",
+            "ms": 3360,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-03-08",
+            "2023-08-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "olive_oil",
+            "label": "Olive oil",
+            "page": 7
+          },
+          "reason": "packaged-on date: the chart counts from best-before dates, so the lead decides; the stamp reads 2023-03-08 or 2023-08-03 and both give the same call"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0272928908991-1.jpg",
+      "at": "2026-11-27T14:47:58.017Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "GATEALI OBLE CHOC 350G DBLE CHOC CAKE 355OG",
+              "brand": "",
+              "category": "flour_based_mixes",
+              "date_text": "2029.293.2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is clearly identified, and the date is legible according to the Canadian format."
+            },
+            "source": "on_device",
+            "ms": 3180,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"2029.293.2023\" does not parse (no valid calendar date in year-month-day)"
+        },
+        "route": "on_device: date \"2029.293.2023\" does not parse (no valid calendar date in year-month-day); cloud switched off"
+      }
+    },
+    {
+      "file": "0666872160435-1.jpg",
+      "at": "2026-11-27T14:48:01.339Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "CREAM CUSTARD Buns",
+              "brand": "VANWORLD INTERNATIONAL",
+              "category": "general_grocery_canned",
+              "date_text": "13029F",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name is visible on the package, and the date is partially readable."
+            },
+            "source": "on_device",
+            "ms": 3244,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"13029F\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"13029F\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "8160550018510-1.jpg",
+      "at": "2026-11-27T14:48:04.225Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "PIZITZA TRADITIONELLE AUX TOMATES",
+              "brand": "Tomate",
+              "category": "pasta_sauce_tomato",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "No date is visible on the package, so logging the item details."
+            },
+            "source": "on_device",
+            "ms": 2842,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "pasta_sauce_tomato",
+            "label": "Tomato based pasta sauce",
+            "page": 8
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0678432504047-1.jpg",
+      "at": "2026-11-27T14:48:07.377Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Flat Bread Pain Plat",
+              "brand": "Gloux",
+              "category": "bread_commercial",
+              "date_text": "19/10/2228/1/23",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package is clearly a bread product with a date stamp visible on it."
+            },
+            "source": "on_device",
+            "ms": 3098,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"19/10/2228/1/23\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"19/10/2228/1/23\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "2100001048860-1.jpg",
+      "at": "2026-11-27T14:48:11.887Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "oat",
+              "brand": "KIRKLAND",
+              "category": "oatmeal_instant_plain",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "{\"point\": \"There is no date visible on the package, so I will log the product and state that no date is visible.\"}}]} ```json{{"
+            },
+            "source": "on_device",
+            "ms": 4459,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "oatmeal_instant_plain",
+            "label": "Instant oatmeal (plain)",
+            "page": 6
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "5027738016191-1.jpg",
+      "at": "2026-11-27T14:48:15.192Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Thick Savian",
+              "brand": "Regal Snacks",
+              "category": "general_grocery_canned",
+              "date_text": "MFG DATE 03/01/2023 BEST BEFORE 03/JAN/202024",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "Date information is visible on the package."
+            },
+            "source": "on_device",
+            "ms": 3266,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"MFG DATE 03/01/2023 BEST BEFORE 03/JAN/202024\" does not parse (no valid calendar date in two-digit numbers on both sides of the month)"
+        },
+        "route": "on_device: date \"MFG DATE 03/01/2023 BEST BEFORE 03/JAN/202024\" does not parse (no valid calendar date in two-digit numbers on both sides of the month); cloud switched off"
+      }
+    },
+    {
+      "file": "0069288001987-1.jpg",
+      "at": "2026-11-27T14:48:17.996Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "shorcake au caramel",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "There is no date visible on the package, so I will log this as general grocery canned."
+            },
+            "source": "on_device",
+            "ms": 2744,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0773619030064-1.jpg",
+      "at": "2026-11-27T14:48:21.234Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "GÂTEAU A BASE DE PLANTES\nPLANT BASED CAKE",
+              "brand": "MAISONAIBELLE",
+              "category": "flour_based_mixes",
+              "date_text": "1010/1012",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a cake mix and the best-before date is visible."
+            },
+            "source": "on_device",
+            "ms": 3165,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"1010/1012\" does not parse (numeric year and month)"
+        },
+        "route": "on_device: date \"1010/1012\" does not parse (numeric year and month); cloud switched off"
+      }
+    },
+    {
+      "file": "0850033079791-3.jpg",
+      "at": "2026-11-27T14:48:24.028Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Jordan's Skinny Syrups",
+              "brand": "Jordan's",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name and label are clear, so I can log the item."
+            },
+            "source": "on_device",
+            "ms": 2749,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0067400017922-1.jpg",
+      "at": "2026-11-27T14:48:27.332Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "RACLETTE RACLETTE DELIC TASTING 3 Sauvons",
+              "brand": "RACLETTE",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product display has no visible date printed on its packaging, so I will log this item."
+            },
+            "source": "on_device",
+            "ms": 3265,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "0710228339935-1.jpg",
+      "at": "2026-11-27T14:48:30.572Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "FARMERGER CHEESE DESSERT",
+              "brand": "BANDI FOODS",
+              "category": "dessert_topping_mix_dry",
+              "date_text": "144.02.202023.1.4.4.0.06",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The date is visible and the product belongs to the dessert topping mix category."
+            },
+            "source": "on_device",
+            "ms": 3186,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "no month and no separated date parts (likely a lot code)"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dessert_topping_mix_dry",
+            "label": "Dessert topping mix, dry powdered",
+            "page": 7
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0667888082179-2.jpg",
+      "at": "2026-11-27T14:48:33.716Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "canned_prepared_meals",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package is a nutrition facts label, and no date is visible, so I will log the category."
+            },
+            "source": "on_device",
+            "ms": 3083,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "no readable date; 2 years after the best before date; 5 years after manufacture date if no best before date (p.8 footnote)"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "8681630323015-2.jpg",
+      "at": "2026-11-27T14:48:36.855Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "ZÜBER LOKMA",
+              "brand": " ",
+              "category": "dry_hard_meats",
+              "date_text": "09111323",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a chocolate bar and no date is visible, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3073,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "unreadable",
+          "why": "no month and no separated date parts (likely a lot code)"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dry_hard_meats",
+            "label": "Dry, hard meats (dry salami, pepperoni, jerky)",
+            "page": 10
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0638031612178-19.jpg",
+      "at": "2026-11-27T14:48:43.029Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "05/03/25",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package is unclear, but I can identify it as a general grocery canned food item. I have logged it as seen no specific date."
+            },
+            "source": "on_device",
+            "ms": 3242,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Chickpeas 40.40 mL",
+              "brand": "",
+              "category": "canned_fruit_veg",
+              "date_text": "05/03/25",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a canned vegetable and there is a date visible on the package."
+            },
+            "source": "on_device",
+            "ms": 2866,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2025-03-05",
+            "2025-05-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "two reads disagree on the date (2025-03-05 or 2025-05-03 vs 2025-03-05 or 2025-05-03), so a person checks it before anything is binned"
+        },
+        "route": "on_device: model chose log → second read (on_device) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0817670010204-2.jpg",
+      "at": "2026-11-27T14:48:45.939Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Indulgentle, enlightened",
+              "brand": "N/A",
+              "category": "unclear",
+              "date_text": "033/12121",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "ask_cloud",
+              "why": "The date is not clearly legible."
+            },
+            "source": "on_device",
+            "ms": 2861,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: The date is not clearly legible."
+        },
+        "route": "on_device: The date is not clearly legible.; cloud switched off"
+      }
+    },
+    {
+      "file": "0256760916956-1.jpg",
+      "at": "2026-11-27T14:48:49.119Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "QUICHE PROVENALE",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package contains text identifying it as some kind of preserved food item, and it is general grocery canned."
+            },
+            "source": "on_device",
+            "ms": 3138,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0037466041339-12.jpg",
+      "at": "2026-11-27T14:48:52.186Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts ValueError",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "30-119-203",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package contains nutrition facts and a date is visible."
+            },
+            "source": "on_device",
+            "ms": 2965,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"30-119-203\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"30-119-203\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0628451526308-4.jpg",
+      "at": "2026-11-27T14:48:55.279Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Valeur nutritive Nutrition Facts",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "111/12020",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package contains nutrition facts and an expiry date is visible."
+            },
+            "source": "on_device",
+            "ms": 3051,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"111/12020\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"111/12020\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0065244133204-10.jpg",
+      "at": "2026-11-27T14:48:58.738Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BS-N8526-0-K-30",
+              "brand": "",
+              "category": "canned_prepared_meals",
+              "date_text": "228-08-2222",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a canned prepared meal and the expiration date is visible."
+            },
+            "source": "on_device",
+            "ms": 3356,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"228-08-2222\" does not parse (no valid calendar date in numeric day and month in an unknown order)"
+        },
+        "route": "on_device: date \"228-08-2222\" does not parse (no valid calendar date in numeric day and month in an unknown order); cloud switched off"
+      }
+    },
+    {
+      "file": "0833280000046-1.jpg",
+      "at": "2026-11-27T14:49:01.754Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Vegan Pesto Végé",
+              "brand": "Marcello",
+              "category": "general_grocery_canned",
+              "date_text": "2887-Since 1987",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has a year visible date stamp."
+            },
+            "source": "on_device",
+            "ms": 2970,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"2887-Since 1987\" does not parse (numeric year and month)"
+        },
+        "route": "on_device: date \"2887-Since 1987\" does not parse (numeric year and month); cloud switched off"
+      }
+    },
+    {
+      "file": "0856303004951-1.jpg",
+      "at": "2026-11-27T14:49:04.874Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Condensed Milk",
+              "brand": " , ",
+              "category": "shelf_stable_milk",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package is a shelf-stable milk product and there is no date visible."
+            },
+            "source": "on_device",
+            "ms": 3070,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "shelf_stable_milk",
+            "label": "Shelf-stable UHT milk and non-dairy beverages (Tetra Pak or pouch)",
+            "page": 5
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "3547130101070-2.jpg",
+      "at": "2026-11-27T14:49:08.368Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "huile d'olive vierge extra / extra virgin olive oil / extra virgin olive oil / Extra Virgin Olive Oil / Extra Extra / Cold Extraction / Cold Pressed. Fruit oil / extraction / fruit extraction.",
+              "brand": "None",
+              "category": "olive_oil",
+              "date_text": "1/5/08/23\n15/08/02023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package has a best before information visible, and the product is olive oil."
+            },
+            "source": "on_device",
+            "ms": 3453,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"1/5/08/23\n15/08/02023\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"1/5/08/23\n15/08/02023\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "8941100291351-1.jpg",
+      "at": "2026-11-27T14:49:14.204Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "HEALTHYSOUPSThai",
+              "brand": "Maggi",
+              "category": "canned_prepared_meals",
+              "date_text": "30/06/23",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The date is visible and readable on the package."
+            },
+            "source": "on_device",
+            "ms": 2774,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "HEALTHY SAUPS Thai",
+              "brand": "Maggi",
+              "category": "canned_prepared_meals",
+              "date_text": "30/06/23",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a packet of Thai soup and the expiry date is visible."
+            },
+            "source": "on_device",
+            "ms": 3027,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-06-30",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2025-06-30",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "Mixed commercially canned prepared foods: more than 24 months past best before (chart p.8)"
+        },
+        "route": "on_device: model chose log → discard confirmed by a second read (on_device)"
+      }
+    },
+    {
+      "file": "3800500043715-3.jpg",
+      "at": "2026-11-27T14:49:17.439Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Benjamissimo pembikolla cokoldsome",
+              "brand": "Benjamissimo",
+              "category": "general_grocery_canned",
+              "date_text": "BB/MA",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has a 'BB/MA' which indicates a best before, and I will log this information."
+            },
+            "source": "on_device",
+            "ms": 3096,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"BB/MA\" does not parse (month with 0 numbers around it)"
+        },
+        "route": "on_device: date \"BB/MA\" does not parse (month with 0 numbers around it); cloud switched off"
+      }
+    },
+    {
+      "file": "0083747003978-2.jpg",
+      "at": "2026-11-27T14:49:20.296Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "muffin",
+              "brand": "",
+              "category": "bread_commercial",
+              "date_text": "07/06/24",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The date is visible and the product is a muffin, which falls under bread commercial."
+            },
+            "source": "on_device",
+            "ms": 2815,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2024-06-07",
+            "2024-07-06"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "bread_commercial",
+            "label": "Commercially packaged loaves, rolls, bagels, muffins",
+            "page": 6
+          },
+          "reason": "packaged-on date: the chart counts from best-before dates, so the lead decides; the stamp reads 2024-06-07 or 2024-07-06 and both give the same call"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "7622201686994-1.jpg",
+      "at": "2026-11-27T14:49:23.194Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "MANGO TANG",
+              "brand": "TANG",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a powdered drink mix, so logging the product name is the best description."
+            },
+            "source": "on_device",
+            "ms": 2852,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "8413575000900-1.jpg",
+      "at": "2026-11-27T14:49:26.394Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "PATATAS PAJA CON KETCHUP",
+              "brand": "VIDASANA",
+              "category": "ketchup_bbq",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name is visible, and it belongs to the ketchup category, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3145,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "ketchup_bbq",
+            "label": "Ketchup, BBQ sauce, shelf-stable horseradish, cocktail or seafood sauce",
+            "page": 8
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0827896001306-1.jpg",
+      "at": "2026-11-27T14:49:29.701Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BAKLAW ASSORTIS / ASSORT",
+              "brand": "",
+              "category": "unclear",
+              "date_text": "23111120202233/s/100023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "low",
+              "next_action": "log",
+              "why": "The product is a packaged snack mix, and I have identified a date information."
+            },
+            "source": "on_device",
+            "ms": 3252,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "8801073142312-6.jpg",
+      "at": "2026-11-27T14:49:32.862Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Buldak Carbonara HOT Chicken Flavor Ramen",
+              "brand": "",
+              "category": "dry_pasta_noodles",
+              "date_text": "EXP.15.207.2023",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The date is visible on the package, so I will log it."
+            },
+            "source": "on_device",
+            "ms": 3037,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"EXP.15.207.2023\" does not parse (no valid calendar date in numeric day and month in an unknown order)"
+        },
+        "route": "on_device: date \"EXP.15.207.2023\" does not parse (no valid calendar date in numeric day and month in an unknown order); cloud switched off"
+      }
+    },
+    {
+      "file": "0764718447952-1.jpg",
+      "at": "2026-11-27T14:49:35.810Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Barley Grass Juice Powder",
+              "brand": "",
+              "category": "white_rice_barley",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is barley grass juice powder."
+            },
+            "source": "on_device",
+            "ms": 2910,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "white_rice_barley",
+            "label": "Other grains and cereals: white rice, whole barley, low fat grains",
+            "page": 6
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0057391100031-1.jpg",
+      "at": "2026-11-27T14:49:39.395Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "ORGANIC TORTILLAS BIOLOGIQUES",
+              "brand": "BAKESTONE BROTHERS",
+              "category": "white_flour",
+              "date_text": "12/06/222222",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product package is clear enough to read for category and a date."
+            },
+            "source": "on_device",
+            "ms": 3528,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"12/06/222222\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"12/06/222222\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0716519089985-1.jpg",
+      "at": "2026-11-27T14:49:42.459Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BETTER GREEN LEAF",
+              "brand": "MANN's",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name is visible, and no date information is present to log."
+            },
+            "source": "on_device",
+            "ms": 3006,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0048107199128-1.jpg",
+      "at": "2026-11-27T14:49:45.276Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "WHEY ISO BURST",
+              "brand": "GNC",
+              "category": "meal_replacement_powder",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a whey isolate powder protein supplement, and no date is visible on the package."
+            },
+            "source": "on_device",
+            "ms": 2774,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "meal_replacement_powder",
+            "label": "Complete meal replacement powders",
+            "page": 11
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0036632077653-3.jpg",
+      "at": "2026-11-27T14:49:48.313Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "There is no specific product name or date visible, so I will log this as a general grocery item."
+            },
+            "source": "on_device",
+            "ms": 2929,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0065244133129-7.jpg",
+      "at": "2026-11-27T14:49:51.724Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "GT97904-EL-K10-black",
+              "brand": "ELO",
+              "category": "general_grocery_canned",
+              "date_text": "220-20-200",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package has a date visible, and the product is a general grocery item."
+            },
+            "source": "on_device",
+            "ms": 3296,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"220-20-200\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"220-20-200\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0628451668336-1.jpg",
+      "at": "2026-11-27T14:49:54.453Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mini Tortillas Street Tacos",
+              "brand": "",
+              "category": "general_grocery_boxed",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "This is a general grocery item without a visible date stamp."
+            },
+            "source": "on_device",
+            "ms": 2689,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_boxed",
+            "label": "General grocery, shelf stable, boxed or bagged (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "2000001105320-4.jpg",
+      "at": "2026-11-27T14:49:57.772Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BLEU D'ELIZABETH",
+              "brand": "",
+              "category": "ghee_coconut_oil",
+              "date_text": "Feb:2111112",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is identifiable as a type of oil and the best before date is visible on the label."
+            },
+            "source": "on_device",
+            "ms": 3188,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"Feb:2111112\" does not parse (no valid calendar date in month and day with no year)"
+        },
+        "route": "on_device: date \"Feb:2111112\" does not parse (no valid calendar date in month and day with no year); cloud switched off"
+      }
+    },
+    {
+      "file": "0627843476740-1.jpg",
+      "at": "2026-11-27T14:50:00.705Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Soft Beef Jerky",
+              "brand": "MHMT",
+              "category": "dry_hard_meats",
+              "date_text": "15/12023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has a best-before date information printed on the package."
+            },
+            "source": "on_device",
+            "ms": 2872,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"15/12023\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"15/12023\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0890142001719-1.jpg",
+      "at": "2026-11-27T14:50:03.892Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "HOCOLATE FRAISES DE PLANTES PLANTB-BASED",
+              "brand": "",
+              "category": "dessert_topping_mix_dry",
+              "date_text": "072/09/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name is visible and the best before date is readable."
+            },
+            "source": "on_device",
+            "ms": 3142,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"072/09/23\" does not parse (no valid calendar date in numeric day and month in an unknown order)"
+        },
+        "route": "on_device: date \"072/09/23\" does not parse (no valid calendar date in numeric day and month in an unknown order); cloud switched off"
+      }
+    },
+    {
+      "file": "0209311212991-1.jpg",
+      "at": "2026-11-27T14:50:06.955Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "POULET 888050G",
+              "brand": "POULE",
+              "category": "canned_prepared_meals",
+              "date_text": "16.01.2020",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product category and date are clearly visible on the package."
+            },
+            "source": "on_device",
+            "ms": 2992,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2020-01-16",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "canned_prepared_meals",
+            "label": "Mixed commercially canned prepared foods",
+            "page": 8
+          },
+          "reason": "packaged-on date: the chart counts from best-before dates, so the lead decides"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "8690997135506-1.jpg",
+      "at": "2026-11-27T14:50:09.839Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Orient Special",
+              "brand": "tayash",
+              "category": "general_grocery_canned",
+              "date_text": "EXP: 23 104 202",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a packaged chocolate bar with an expiry date visible."
+            },
+            "source": "on_device",
+            "ms": 2827,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"EXP: 23 104 202\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"EXP: 23 104 202\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0841161096057-1.jpg",
+      "at": "2026-11-27T14:50:15.989Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "16 Mini Blini",
+              "brand": "Cool&Simple®",
+              "category": "white_flour",
+              "date_text": "26/01/23",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package has an expiry date visible on the bottom right."
+            },
+            "source": "on_device",
+            "ms": 3070,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "16 Mini Blini",
+              "brand": "Cool&Simple",
+              "category": "general_grocery_canned",
+              "date_text": "26/01/23",
+              "date_kind": "expiry",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a snack mix and the date is visible."
+            },
+            "source": "on_device",
+            "ms": 3027,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-01-26",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2023-07-26",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "white_flour",
+            "label": "White and rice flour",
+            "page": 6
+          },
+          "reason": "White and rice flour: more than 6 months past best before (chart p.6)"
+        },
+        "route": "on_device: model chose log → discard confirmed by a second read (on_device)"
+      }
+    },
+    {
+      "file": "0062229089334-1.jpg",
+      "at": "2026-11-27T14:50:19.060Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Kawartha Cookies Cream",
+              "brand": "Kawartha",
+              "category": "crackers_cookies",
+              "date_text": "14/04/202022 18:39",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name and a date are visible on the package."
+            },
+            "source": "on_device",
+            "ms": 2992,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"14/04/202022 18:39\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"14/04/202022 18:39\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0211650203998-1.jpg",
+      "at": "2026-11-27T14:50:22.506Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BRORIDORISSAINT10X620",
+              "brand": " ",
+              "category": "general_grocery_canned",
+              "date_text": "09.05.2091",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The category is general_grocery_canned and the date_text is visible, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3400,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"09.05.2091\" does not parse (no plausible year among 2091-05-09, 2091-09-05)"
+        },
+        "route": "on_device: date \"09.05.2091\" does not parse (no plausible year among 2091-05-09, 2091-09-05); cloud switched off"
+      }
+    },
+    {
+      "file": "0067400825602-1.jpg",
+      "at": "2026-11-27T14:50:25.679Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Raclette platter",
+              "brand": "MONSIEUR",
+              "category": "general_grocery_canned",
+              "date_text": "212222222C",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "I have logged the product information as the 'Raclette' is a platter, which fits under general grocery_canned."
+            },
+            "source": "on_device",
+            "ms": 3129,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"212222222C\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"212222222C\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0200036004427-1.jpg",
+      "at": "2026-11-27T14:50:28.704Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LABNEH VACHE ET CHEURE",
+              "brand": "",
+              "category": "shelf_stable_milk",
+              "date_text": "255.03.20202",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a milk product. I am logging the information."
+            },
+            "source": "on_device",
+            "ms": 2973,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"255.03.20202\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"255.03.20202\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0073996001238-1.jpg",
+      "at": "2026-11-27T14:50:31.907Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BEIGNE AUG MIEL",
+              "brand": "Boulangerie",
+              "category": "sweet_spreads",
+              "date_text": "BB/MA",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package has a best before date visible."
+            },
+            "source": "on_device",
+            "ms": 3160,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"BB/MA\" does not parse (month with 0 numbers around it)"
+        },
+        "route": "on_device: date \"BB/MA\" does not parse (month with 0 numbers around it); cloud switched off"
+      }
+    },
+    {
+      "file": "0065244125216-7.jpg",
+      "at": "2026-11-27T14:50:35.150Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BS-N85200-K-10-K",
+              "brand": "ELOPAK",
+              "category": "unclear",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package contains a product identifier but no date or expiry information is visible."
+            },
+            "source": "on_device",
+            "ms": 3195,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "0621147300916-2.jpg",
+      "at": "2026-11-27T14:50:41.001Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "DRIED MANGO SLICES",
+              "brand": "",
+              "category": "dried_fruit",
+              "date_text": "23/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a dried mango slice and the best before date is visible."
+            },
+            "source": "on_device",
+            "ms": 3032,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "DRIED MANGO SLICES",
+              "brand": "",
+              "category": "dried_fruit",
+              "date_text": "BEST BEFORE 23/10/23",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a dried mango slice and a date information is visible."
+            },
+            "source": "on_device",
+            "ms": 2774,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-10-23",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2024-04-23",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "dried_fruit",
+            "label": "Dried fruit",
+            "page": 4
+          },
+          "reason": "Dried fruit: more than 6 months past best before (chart p.4)"
+        },
+        "route": "on_device: model chose log → discard confirmed by a second read (on_device)"
+      }
+    },
+    {
+      "file": "0810175007335-1.jpg",
+      "at": "2026-11-27T14:50:44.165Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "GÂGEAU AU FROMAJE, AU YOGOURT & AUX FRAMBOISES",
+              "brand": "",
+              "category": "ghee_coconut_oil",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a cheesecake/yogurt cake, and based on the visible text, it fits into a general 'grocery' category, and there is no date visible."
+            },
+            "source": "on_device",
+            "ms": 3114,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "ghee_coconut_oil",
+            "label": "Ghee, coconut oil",
+            "page": 7
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0850013716807-3.jpg",
+      "at": "2026-11-27T14:50:47.237Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Ingredients: Apples, Blueberries. May contain occasional stem, seed or pit fragments. Ingredients : Pommes, Bl.",
+              "brand": "Poe",
+              "category": "dried_fruit",
+              "date_text": "BB/MA",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has a best before date visible on the package."
+            },
+            "source": "on_device",
+            "ms": 2945,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"BB/MA\" does not parse (month with 0 numbers around it)"
+        },
+        "route": "on_device: date \"BB/MA\" does not parse (month with 0 numbers around it); cloud switched off"
+      }
+    },
+    {
+      "file": "0743434000337-4.jpg",
+      "at": "2026-11-27T14:50:50.710Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "LINDT & SPRUNGLI",
+              "brand": "LINDT & SPRÜNGLI",
+              "category": "general_grocery_canned",
+              "date_text": "30119/203",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package has a date visible, and is a food item, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3358,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"30119/203\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"30119/203\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "2000000145943-3.jpg",
+      "at": "2026-11-27T14:50:53.470Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "N/unknown",
+              "brand": "N/unknown",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "No specific product name or date was visible on the packaging, so logging the attributes."
+            },
+            "source": "on_device",
+            "ms": 2731,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0624823101043-1.jpg",
+      "at": "2026-11-27T14:50:56.535Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BUTTERSALT SELAuberry",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "03/09/2023",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The date is visible and I will log the item."
+            },
+            "source": "on_device",
+            "ms": 3032,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2023-03-09",
+            "2023-09-03"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "packaged-on date: the chart counts from best-before dates, so the lead decides; the stamp reads 2023-03-09 or 2023-09-03 and both give the same call"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0876681002806-1.jpg",
+      "at": "2026-11-27T14:50:59.946Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Muffins au chocolat et caramel",
+              "brand": "",
+              "category": "flour_based_mixes",
+              "date_text": "06/10/202021\nEMBALLE LE 1110/1021\nMEILLEUR AVANT",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a muffin mix product and I have read the visible date stamp."
+            },
+            "source": "on_device",
+            "ms": 3359,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"06/10/202021\nEMBALLE LE 1110/1021\nMEILLEUR AVANT\" does not parse (no month and no separated date parts (likely a lot code))"
+        },
+        "route": "on_device: date \"06/10/202021\nEMBALLE LE 1110/1021\nMEILLEUR AVANT\" does not parse (no month and no separated date parts (likely a lot code)); cloud switched off"
+      }
+    },
+    {
+      "file": "0041800326006-11.jpg",
+      "at": "2026-11-27T14:51:06.283Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Cont Ne... 296 mL",
+              "brand": "Welch's",
+              "category": "general_grocery_canned",
+              "date_text": "28/03/2019",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has a best-before date visible and is a liquid, so I will log it."
+            },
+            "source": "on_device",
+            "ms": 3214,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "Cont Ne.. 296 mL",
+              "brand": "Welch's",
+              "category": "general_grocery_canned",
+              "date_text": "28/03/2019",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "I have identified the product and read the date visible information."
+            },
+            "source": "on_device",
+            "ms": 3082,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2019-03-28",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "DISCARD",
+          "keepUntil": "2020-03-28",
+          "pastPrintedDate": true,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits): more than 12 months past best before (chart p.3)"
+        },
+        "route": "on_device: model chose log → discard confirmed by a second read (on_device)"
+      }
+    },
+    {
+      "file": "0876131001199-1.jpg",
+      "at": "2026-11-27T14:51:12.870Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "SICILIAN RED PESTO",
+              "brand": "Martelli",
+              "category": "pasta_sauce_tomato",
+              "date_text": "22/10/2023",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a canned sauce, so I will log the category and date."
+            },
+            "source": "on_device",
+            "ms": 3226,
+            "mode": "only_on_device",
+            "valid": true
+          },
+          {
+            "read": {
+              "product": "SICILIAN RED PESTO ROUGE SICILEN",
+              "brand": "MARTELI",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product is a jarred pesto sauce, which fits best under general_grocery_canned as it does not fit any more specific food type."
+            },
+            "source": "on_device",
+            "ms": 3316,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "exact",
+          "iso": "2023-10-22",
+          "precision": "day"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "pasta_sauce_tomato",
+            "label": "Tomato based pasta sauce",
+            "page": 8
+          },
+          "reason": "two reads disagree on the date (2023-10-22 vs no date), so a person checks it before anything is binned"
+        },
+        "route": "on_device: model chose log → second read (on_device) disagreed → set aside"
+      }
+    },
+    {
+      "file": "0628176694061-1.jpg",
+      "at": "2026-11-27T14:51:15.953Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Bratwurst\u0019s Select",
+              "brand": "THE VERY GOOD BUTCHERS™",
+              "category": "dry_hard_meats",
+              "date_text": "10/07/21",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The date is visible and read on the packaging."
+            },
+            "source": "on_device",
+            "ms": 3024,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": {
+          "kind": "ambiguous",
+          "candidates": [
+            "2021-07-10",
+            "2021-10-07"
+          ],
+          "why": "numeric day and month in an unknown order"
+        },
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "dry_hard_meats",
+            "label": "Dry, hard meats (dry salami, pepperoni, jerky)",
+            "page": 10
+          },
+          "reason": "packaged-on date: the chart counts from best-before dates, so the lead decides; the stamp reads 2021-07-10 or 2021-10-07 and both give the same call"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0621001012634-1.jpg",
+      "at": "2026-11-27T14:51:19.195Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "BÂTONS SÉSAMES",
+              "brand": "VRC ALIMENTAIRE",
+              "category": "dessert_topping_mix_dry",
+              "date_text": "12/07/2222",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product has a best-before date printed on the package."
+            },
+            "source": "on_device",
+            "ms": 3129,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"12/07/2222\" does not parse (no plausible year among 2222-07-12, 2222-12-07)"
+        },
+        "route": "on_device: date \"12/07/2222\" does not parse (no plausible year among 2222-07-12, 2222-12-07); cloud switched off"
+      }
+    },
+    {
+      "file": "0014100280132-1.jpg",
+      "at": "2026-11-27T14:51:22.652Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "VEGGIE LÉGUMES CRACKERS + CRAQUELINS",
+              "brand": "Goldfish",
+              "category": "crackers_cookies",
+              "date_text": "0202/05/2222 DD",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The item is a package of crackers and the best before date is visible on the packaging."
+            },
+            "source": "on_device",
+            "ms": 3397,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"0202/05/2222 DD\" does not parse (no valid calendar date in year-month-day)"
+        },
+        "route": "on_device: date \"0202/05/2222 DD\" does not parse (no valid calendar date in year-month-day); cloud switched off"
+      }
+    },
+    {
+      "file": "4897053640538-2.jpg",
+      "at": "2026-11-27T14:51:25.845Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Information",
+              "brand": "None, ",
+              "category": "unclear",
+              "date_text": "19.04.20222 10:220",
+              "date_kind": "packaged_on",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The date is visible on the package, so I will log the information."
+            },
+            "source": "on_device",
+            "ms": 3152,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: no chart category"
+        },
+        "route": "on_device: no chart category; cloud switched off"
+      }
+    },
+    {
+      "file": "0814153001834-1.jpg",
+      "at": "2026-11-27T14:51:28.992Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Mini Muffins au Sacré Chocolat\n    Devil's Chocolate Mini Muffins\n    Poids Net Weight 2227g (8 oz.)",
+              "brand": "Pâtchèrie",
+              "category": "flour_based_mixes",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The product name is printed, and no date is visible."
+            },
+            "source": "on_device",
+            "ms": 3071,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "flour_based_mixes",
+            "label": "Cake, cookie, brownie, muffin, biscuit, pancake or waffle mixes",
+            "page": 6
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0875405005468-2.jpg",
+      "at": "2026-11-27T14:51:31.772Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "Nutrition Facts",
+              "brand": "",
+              "category": "general_grocery_canned",
+              "date_text": "",
+              "date_kind": "none_visible",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package provides nutritional information but no specific food product name or expiry/best before date is visible. "
+            },
+            "source": "on_device",
+            "ms": 2746,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "chart": {
+            "id": "general_grocery_canned",
+            "label": "General grocery, shelf stable, canned, jarred or bottled (fallback when no specific row fits)",
+            "page": 3
+          },
+          "reason": "no readable date, so the chart cannot be applied"
+        },
+        "route": "on_device: model chose log"
+      }
+    },
+    {
+      "file": "0058449172192-4.jpg",
+      "at": "2026-11-27T14:51:34.972Z",
+      "mode": "only_on_device",
+      "step": {
+        "kind": "verdict",
+        "reads": [
+          {
+            "read": {
+              "product": "ORGANIC COCONUT & CASHEW BUTTER GRANOLA",
+              "brand": "N/A",
+              "category": "ghee_coconut_oil",
+              "date_text": "15FEB202222",
+              "date_kind": "best_before",
+              "damage": "none",
+              "confidence": "high",
+              "next_action": "log",
+              "why": "The package has a best before date written on it is a food product."
+            },
+            "source": "on_device",
+            "ms": 3093,
+            "mode": "only_on_device",
+            "valid": true
+          }
+        ],
+        "parsed": null,
+        "verdict": {
+          "decision": "SET_ASIDE",
+          "pastPrintedDate": false,
+          "reason": "on-device could not settle it and the cloud is off: date \"15FEB202222\" does not parse (no valid calendar date in two-digit numbers on both sides of the month)"
+        },
+        "route": "on_device: date \"15FEB202222\" does not parse (no valid calendar date in two-digit numbers on both sides of the month); cloud switched off"
+      }
+    }
+  ]
+}

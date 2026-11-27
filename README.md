@@ -76,6 +76,7 @@ the 16 pantry photos three ways and downloads one file; grade it with
 | Hybrid: Nano checks every photo on the laptop, the cloud reads dates | 13 of 15 handled right, 6 cloud calls for 16 photos | [ablation](results/ablation-inference-mode.md) |
 | Cloud only | 14 of 15, 16 cloud calls | [ablation](results/ablation-inference-mode.md) |
 | Gemini Nano alone on the laptop | 4 of 15 | [ablation](results/ablation-inference-mode.md) |
+| Gemini Nano alone, re-measured on Chrome's newer on-device model | 4 of 15 pantry photos; 13 of 100 outside dates read right (the cloud: 71) | [Nano alone](results/nano-alone-2026-11-27.md) |
 | Date reading, 100 photos of products sold in Canada, dates confirmed by Open Food Facts volunteers, registered before the run | 71 of 100 read right; of the 29 misses, 14 read the best-before where the confirmed date was the packed-on date, 2 clear misreads | [date control](results/date-control-off-ca-2026-11-22.md) |
 | Were the discards right? The same 100 photos, the chart re-run with each volunteer-confirmed date | 32 discards, 0 wrong discards; 26 times the second read disagreed and the item went to the lead | [discard check](results/discard-check-2026-11-27.md) |
 | Recall check, 16 real notice and item pairs in two sets, answers registered before each run | Gemini 16 of 16, brand plus a product word 11 of 16, brand alone 6 of 16 | [recall control](results/recall-control-2026-11-22.md) |

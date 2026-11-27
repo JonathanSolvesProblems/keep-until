@@ -26,6 +26,7 @@ Every number on the project page, the README and the gallery comes from one of t
 | Number | File | Date |
 |---|---|---|
 | Routing on 16 pantry photos: hybrid 13 of 15 with 6 cloud calls, cloud only 14 of 15, Gemini Nano alone 4 of 15; the always-turn-it baseline, 9 of 15 | `results/ablation-inference-mode.md`, graded by `scripts/grade_run.py` against `results/labels/pantry-2026-11-15.json` | 2026-11-15, re-graded 2026-11-20 |
+| Gemini Nano reading alone, re-measured: 4 of 15 pantry photos, 13 of 100 outside dates (the cloud: 71) | `results/nano-alone-2026-11-27.md`, records `results/nano-alone-pantry-2026-11-27.json` and `results/nano-alone-offca-2026-11-27.json` | 2026-11-27 |
 | Gemini Nano as a checker, 10 of 15 | `results/ondevice-experiment-2026-11-15.md` | 2026-11-15 |
 | Hands-free, 8 items and 16 photos: 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right | `results/handsfree-long-2026-11-26.md`; expected answers in `shared/handsfree-control.json`, committed before the run (`840d412`); graded by `scripts/grade_handsfree.py`; record in `results/handsfree-run-2026-11-26-long-2.json` | 2026-11-26 |
 | The same 8-item test run again with the voice on: 104 checks on the laptop, 6 calls to the cloud, the same 6 of 7 | `results/handsfree-long-2026-11-27.md`, record in `results/handsfree-run-2026-11-27-long-voice.json` | 2026-11-27 |

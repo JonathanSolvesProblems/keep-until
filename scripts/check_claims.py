@@ -46,6 +46,7 @@ def discards():
 
 
 A, R, D, X = ablation(), recall(), date_reading(), discards()
+NANO = re.search(r"Gemini Nano read (\d+ of 100) dates right", read("results/nano-alone-2026-11-27.md"))[1]
 # Two hands-free runs are quoted: the 70-second clip the replay plays, and the 8-item run.
 H = handsfree("results/handsfree-clip-2026-11-26-plugged.md")
 L = handsfree("results/handsfree-long-2026-11-26.md")
@@ -67,6 +68,7 @@ CLAIMS = [
     (r"(\d+) of 100 frames went to the cloud", L["calls"], "frames sent to the cloud, 8-item run"),
     (r"settles (\d+) of 100 frames", str(int(L["looks"]) - int(L["calls"])), "frames settled on the laptop, 8-item run"),
     (r"none of its (\d+) discards", X["discarded"], "discards on the outside set"),
+    (r"(\d+ of 100) outside dates", NANO, "Nano alone, outside dates"),
     (r"(\d+) discards", X["discarded"], "discards on the outside set"),
     (r"(\d+) (?:short )?recordings", str(len(json.loads(read("web/public/voice/lines.json"))["lines"])), "voice recordings shipped"),
     (r"Cloud only \| (\d+ of \d+)", A["cloud"], "cloud-only score"),
