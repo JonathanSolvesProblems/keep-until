@@ -5,6 +5,7 @@ matches the results file it came from, or when a retired claim comes back.
 
 Each claim is read from its results file at run time, never typed here, so the check follows the
 data. Standard library only."""
+import json
 import pathlib
 import re
 import sys
@@ -59,8 +60,15 @@ CLAIMS = [
     (r"Gemini (\d+ of \d+)", R["model"], "recall control, model"),
     (r"[Bb]rand alone:? (\d+ of \d+)", R["rule"], "recall control, brand rule"),
     (r"product word:? (\d+ of \d+)", R["keyword"], "recall control, brand plus product word rule"),
-    (r"(\d+ of \d+) handled right, \d+ cloud calls", A["hybrid"], "hybrid score"),
-    (r"\d+ of \d+ handled right, (\d+) cloud calls", A["hybrid_calls"], "hybrid cloud calls"),
+    (r"(\d+ of \d+) handled right(?:,| with) \d+ cloud calls", A["hybrid"], "hybrid score"),
+    (r"\d+ of \d+ handled right(?:,| with) (\d+) cloud calls", A["hybrid_calls"], "hybrid cloud calls"),
+    (r"Nano checks every photo, the cloud reads \| (\d+ of \d+) \|", A["hybrid"], "hybrid score, page table"),
+    (r"Nano checks every photo, the cloud reads \| \d+ of \d+ \| (\d+) \|", A["hybrid_calls"], "hybrid cloud calls, page table"),
+    (r"(\d+) of 100 frames went to the cloud", L["calls"], "frames sent to the cloud, 8-item run"),
+    (r"settles (\d+) of 100 frames", str(int(L["looks"]) - int(L["calls"])), "frames settled on the laptop, 8-item run"),
+    (r"none of its (\d+) discards", X["discarded"], "discards on the outside set"),
+    (r"(\d+) discards", X["discarded"], "discards on the outside set"),
+    (r"(\d+) (?:short )?recordings", str(len(json.loads(read("web/public/voice/lines.json"))["lines"])), "voice recordings shipped"),
     (r"Cloud only \| (\d+ of \d+)", A["cloud"], "cloud-only score"),
     (r"Nano alone on the laptop \| (\d+ of \d+)", A["device"], "on-device-only score"),
     (r"(\d+) of 16 photos never left the laptop", str(16 - int(A["hybrid_calls"])), "photos kept on the laptop"),

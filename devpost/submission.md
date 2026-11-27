@@ -11,7 +11,7 @@ Keep Until
 ## Tagline
 
 ```
-A food bank volunteer holds up a donated item and it says keep until when. Gemini Nano watches the camera on the laptop: for 8 items, 100 checks on the laptop, 6 calls to the cloud.
+Hold up a donated item and it says keep until when, set aside or discard, by Food Banks Canada's chart. Gemini Nano watches on the laptop: 6 of 100 frames went to the cloud.
 ```
 
 ## Platforms
@@ -41,9 +41,11 @@ https://github.com/JonathanSolvesProblems/keep-until
 ## Story
 
 ```markdown
+**Try it, no install:** https://keep-until-hybrid.web.app. Press **Try a sample photo** four times (a carton that has to be turned, its top, a yogurt, a jar of peanut butter dated 2021), or **Watch a hands-free run**.
+
 ## Inspiration
 
-A volunteer at a food bank sort table picks up a donated carton of broth. The top says `2027 FE 14 02146`. Is that a date? Is it past? Food Banks Canada publishes a chart of how long each kind of food stays good past its best-before date, and nobody looks a row up in it with an item in each hand. A 2019 guest post on Food Banks Canada's blog says what people tend to do with a date instead: "Many people incorrectly say food has 'expired' if it reaches its best before date, so they throw it out."
+A volunteer at a food bank sort table picks up a donated carton of broth. The top says `2027 FE 14 02146`. Is that a date? Is it past? Food Banks Canada publishes a chart of how long each kind of food stays good past its best-before date, but a volunteer with an item in each hand has no time to look a row up. A 2019 guest post on Food Banks Canada's blog, written about households, says what people tend to do with a date instead: "Many people incorrectly say food has 'expired' if it reaches its best before date, so they throw it out." A sort table makes that call on every donated item.
 
 [X: one sentence from the sort lead, with their name and role]
 
@@ -51,11 +53,10 @@ A volunteer at a food bank sort table picks up a donated carton of broth. The to
 
 The volunteer holds the item up to a laptop camera and does not touch anything.
 
-- **The laptop watches.** Gemini Nano runs in Chrome on the laptop and checks the camera every couple of seconds: is a package in view, is its date facing the camera, does it need the fridge. It says "turn it" itself, aloud, and it calls the cloud only when a date or a fridge item faces the camera. Watching all the time is something only the on-device model can afford. In the cloud it would be a paid call, and a picture of the sort table leaving the building, every few seconds.
-- **The cloud reads.** Gemini reads the stamp exactly as printed (Canadian stamps put the year first and use bilingual months: `2027 FE 14`) and names the kind of food.
-- **The chart decides.** Code looks up Food Banks Canada's row for that kind of food and answers **keep until** a date, **set aside** for the sort lead, or **discard**. A discard needs a second, independent read that finds the same date; the second read is never told what the first one found.
+- **Gemini Nano watches, on the laptop.** It runs in Chrome and checks the camera every couple of seconds: is a package in view, is its date facing the camera, does it need the fridge. It says "turn it" itself, aloud. It calls the cloud only when there is something to read: a date, a fridge item, or the name once the date is known. Watching all the time costs nothing on the laptop's own model. In the cloud it would be a paid call every couple of seconds, and a picture of the sort table leaving the building each time.
+- **The date is read in the cloud, and a published chart makes the call.** That one frame goes to Gemini, which is asked to copy the stamp as printed (Canadian stamps put the year first and use bilingual months: `2027 FE 14`) and to name the kind of food. Code parses the stamp, looks up Food Banks Canada's row and answers **keep until** a date, **set aside** for the sort lead, or **discard**. A discard needs a second, independent read that finds the same date; the second read is never told what the first one found.
 - **One item is often two photos.** The front shows the name and no date, the top shows the date and no name. Keep Until asks for the side it is missing and settles from both.
-- **It lands where the food bank works.** Every item becomes a row in the food bank's own Google Sheet, and in Firestore.
+- **It lands where the food bank works.** Every item becomes a row in the Google Sheet the coordinator connects (Drive file access only), and in Firestore.
 - **It keeps working after the shift.** Every morning a Cloud Function pulls the Government of Canada recall feed and lists kept items that share a brand with a food recall. At the next shift start Gemini settles each one: pull it, check the lot code, or no match.
 
 Without Gemini Nano (another browser, or the Android app on a phone that cannot run it) the volunteer presses **Read item**, every read goes to the cloud, and the screen says so.
@@ -64,7 +65,7 @@ Without Gemini Nano (another browser, or the Android app on a phone that cannot 
 
 A new project: the first commit is from November 14, 2026.
 
-- **Firebase AI Logic, one mode per job.** Watching the camera is `InferenceMode.ONLY_ON_DEVICE` (Gemini Nano through Chrome's Prompt API, with a JSON schema), and the code refuses any answer whose `inferenceSource` is not `on_device`, so a camera frame can never fall through to the cloud by accident. Reading the date is cloud only (`gemini-3.5-flash-lite`, minimal thinking, `responseJsonSchema`). The recall check is `PREFER_IN_CLOUD`. Every answer records `inferenceSource`, and the screen says where each read happened and how long it took.
+- **Firebase AI Logic, one mode per job.** Watching the camera is `InferenceMode.ONLY_ON_DEVICE` (Gemini Nano through Chrome's Prompt API, with a JSON schema), Before each check the code confirms the browser has an on-device model, and it throws away any answer whose `inferenceSource` is not `on_device`. Reading the date is cloud only (`gemini-3.5-flash-lite`, minimal thinking, `responseJsonSchema`). The recall check is `PREFER_IN_CLOUD`. Every answer records `inferenceSource`, and the screen says where each read happened and how long it took.
 - **I chose the split by measuring it.** My first design read everything on Nano. On real Gemini Nano that handled 4 of 15 photos. As a checker (is a package in view, is a date facing the camera) Nano was right on 10 of 15. So Nano checks and the cloud reads.
 - **App Check** (reCAPTCHA Enterprise on web, debug provider on Android), **Authentication** (anonymous for volunteers, Google with Drive file access for the coordinator's sheet), **Firestore** (offline persistence, append-only rules), **Remote Config** (the cloud model and each food bank's own policy over the chart), **Performance Monitoring** (a trace around every read, tagged on-device or cloud), **Cloud Functions with Cloud Scheduler** (the daily recall pull), **Crashlytics** on Android and **Hosting**.
 - **Android** (Kotlin, `firebase-ai` with `firebase-ai-ondevice`) has the same read loop and the same chart gate, with a Read item button and no hands-free. The two gates agree on 294 date stamps and 2,580 chart decisions written by the TypeScript and replayed by a Kotlin test.
@@ -72,7 +73,7 @@ A new project: the first commit is from November 14, 2026.
 
 ## Results
 
-**Hands-free on real Gemini Nano.** A clip of all 16 of my pantry photos played in the camera's place: 8 items, held up face by face, with the expected answer for each committed before the run. Nobody touched the laptop: 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right. On the first face of every item the laptop said "turn it" by itself, with nothing sent. The miss: it never found the small, upside-down date on a bag of chocolate chips, and kept asking for it to be turned. Run again the next morning with the voice on, for the video: 104 checks on the laptop, 6 calls to the cloud, the same 6 of 7 and the same miss. A shorter run (31 checks on the laptop, 2 calls to the cloud) replays check by check in any browser: https://keep-until-hybrid.web.app/?replay=1
+**Hands-free on real Gemini Nano.** A clip of all 16 of my pantry photos played in the camera's place: 8 items, held up face by face, with the expected answer for each committed before the run. 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right. Nano settled 94 of the 100 frames by itself ("turn it", "put it down", nothing in view). Of the 4 items with a date to read, 3 were settled right (the broth kept until February 2029, the yogurt and the parmesan set aside for the fridge). The 3 with no date in any photo were asked to be turned, which is right. The miss: it never found the small, upside-down date on a bag of chocolate chips, and kept asking for it to be turned. Run again the next morning with the voice on, for the video: 104 checks on the laptop, 6 calls to the cloud, the same 6 of 7 and the same miss. A shorter run (31 checks on the laptop, 2 calls to the cloud) replays check by check in any browser: https://keep-until-hybrid.web.app/?replay=1
 
 **Routing, against cloud only.** Sixteen pantry photos, labelled by hand before any run:
 
@@ -86,7 +87,7 @@ The hybrid gives up one photo, and neither of its misses is a wrong keep or disc
 
 **Date reading, on outside photos.** 100 products sold in Canada whose expiry date an Open Food Facts volunteer confirmed, registered before the run: the app read the same date on 71 of 100. A reviewer then looked at each of the 29 misses. On 14 the package prints two dates and the app read the best-before while the confirmed one was the packed-on date; 2 were clear misreads by the app.
 
-**Discards: 32, and none wrong.** Most of those photos are years old, so most dates are long past. The app discarded 32 items, each after two independent reads found the same date, and every one is still a discard when the chart is given the date the Open Food Facts volunteer confirmed (`scripts/discard_check.ts`). The second-read rule has a cost too: 26 times the second read did not find the same date, the item went to the sort lead, and the first read alone would have been right. I keep that trade on purpose. A person checks an item before good food is binned on one read.
+**Discards: 32, and none wrong.** Most of those photos are years old, so most dates are long past. The app discarded 32 items, each after two independent reads found the same date, and every one is still a discard when the chart is given the date the Open Food Facts volunteer confirmed (`scripts/discard_check.ts`). The second-read rule has a cost: 26 times the second read did not find the same date, so the item went to the sort lead, and the first read alone would have been right. That set cannot test the other side, binning good food, because only 1 of its 100 items is still good by the chart (the app kept it). That side is the chocolate chips: one cloud read took their 2027 stamp for 2026 and said discard, which is why the second read exists.
 
 **Recalls.** 16 pairs of a real Government of Canada recall notice and a same-brand item, expected answers committed before each run: Gemini 16 of 16, brand plus a product word 11 of 16, brand alone 6 of 16. The second set of 8 is the hard cases on purpose (chocolate chip cookies against a recall of the same brand's gingersnaps).
 
@@ -110,8 +111,8 @@ Between November 15 and 22 I wrote to Food Banks Canada, Feed Ontario, North Yor
 
 ## Why it fits
 
-- **Technological implementation.** Three Firebase AI Logic modes, one per job, with the on-device job picked by measurement (`results/ablation-inference-mode.md`) and guarded so it cannot fall through to the cloud.
-- **Design.** Open the live link and press "Try a sample photo" four times: a carton that has to be turned, its top (keep until February 2029), a yogurt for the lead, and a jar of peanut butter dated 2021 (discard). Or press "Watch a hands-free run". The answer fills the screen in its colour with the word and is said aloud, for a volunteer looking at the item, and the stamp is shown large, as it is printed on the package.
-- **Potential impact.** A sort table decides, item by item, whether a donation is food or waste. Keep Until gives the volunteer Food Banks Canada's own answer and logs it where the food bank already works.
-- **Quality of the idea.** The laptop watches because watching has to cost nothing and stay in the building, and the cloud is asked only when there is a date to read. The model reads; a published chart, in code, makes the call.
+- **Technological implementation.** Three Firebase AI Logic modes, one per job, chosen by measuring them (`results/ablation-inference-mode.md`): Gemini Nano settles 94 of 100 frames on the laptop, and the cloud reads the 6 that have a date.
+- **Design.** A volunteer with full hands gets the answer three ways at once: the word and its colour fill the screen, the stamp is shown large as it is printed, and the answer is said aloud. The same flow runs on Android and with no camera at all, from sample photos.
+- **Potential impact.** A sort table decides, item by item, whether a donation is food or waste. Keep Until gives the volunteer Food Banks Canada's own answer, and on 100 outside photos none of its 32 discards was wrong.
+- **Quality of the idea.** Watching a sort table all day only makes sense on the laptop's own model, and a best-before date only means something next to a published chart. Keep Until joins the two: the model reads, the chart decides in code, and a second read stands between any item and the bin.
 ```

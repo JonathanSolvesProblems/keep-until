@@ -8,7 +8,8 @@ vi.mock("firebase/performance", () => ({
 }));
 
 import type { GenerativeModel } from "firebase/ai";
-import { afterRead, processItem, watchStep, WATCH_START, type LoopModels, type Step } from "./loop";
+import { afterRead, itemFacts, processItem, watchStep, WATCH_START, type LoopModels, type Step } from "./loop";
+import { readBy } from "../view";
 
 const TODAY = "2026-11-15";
 
@@ -369,6 +370,15 @@ describe("hands-free second looks leave an unsettled item waiting", () => {
     const { m } = models([], [{ text: read({ date_text: "", date_kind: "none_visible", next_action: "show_me_the_date" }), source: "in_cloud" }]);
     const step = await processItem(m, "img", { today: TODAY, previous: first, watching: true, want: "name" });
     expect(step.kind === "verdict" && step.verdict.decision).toBe("KEEP");
+  });
+
+  it("a cloud look that finds nothing keeps the item, and the screen still says it went to the cloud", async () => {
+    const { m } = models([], [{ text: read({ product: "", brand: "", category: "unclear", date_text: "", date_kind: "none_visible", next_action: "no_item" }), source: "in_cloud" }]);
+    const step = await processItem(m, "img", { today: TODAY, previous: first, watching: true, want: "name" });
+    expect(step.kind).toBe("need_date_photo");
+    expect(itemFacts(step.reads).date_text).toBe("2027 FE 14");
+    expect(step.reads.filter((r) => r.source === "in_cloud")).toHaveLength(2);
+    expect(readBy(step.reads, step.route).rest).not.toContain("nothing sent");
   });
 
   it("a person pressing Read item a second time still gets a decision", async () => {

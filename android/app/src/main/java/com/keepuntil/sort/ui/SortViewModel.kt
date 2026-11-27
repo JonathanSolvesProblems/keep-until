@@ -80,10 +80,14 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
     )
     private var nextSample = 0
     private var lastSample = 0
+    // The sample carton's half-read is its own: a real item is never read as the back of a sample,
+    // and a sample never uses up a real item's turn (as on the web).
+    private var samplePending: Step.NeedDatePhoto? = null
 
     fun readSample() {
         if (loop == null || _state.value.reading) return
-        lastSample = nextSample++ % samples.size
+        // Moved on only after a read goes through (readItem), so a failed read tries the same photo.
+        lastSample = nextSample % samples.size
         val photo = getApplication<Application>().assets.open(samples[lastSample].asset).use { BitmapFactory.decodeStream(it) }
         _state.update { it.copy(still = photo.asImageBitmap()) }
         readItem(photo.scaledTo(1024), photo.scaledTo(512), sample = true)
@@ -129,9 +133,19 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
         _state.update { it.copy(reading = true, prompt = "", still = if (sample) it.still else null) }
         viewModelScope.launch {
             try {
-                val previous = (pendingTurn as? Step.NeedDatePhoto)?.reads ?: emptyList()
+                // Only the carton's top (the second sample) is read together with its front.
+                val previous = if (sample) {
+                    if (lastSample == 1) samplePending?.reads ?: emptyList() else emptyList()
+                } else {
+                    (pendingTurn as? Step.NeedDatePhoto)?.reads ?: emptyList()
+                }
                 val step = l.processItem(photo, small, LocalDate.now().toString(), s.policy, previous)
-                pendingTurn = if (step is Step.NeedDatePhoto) step else null
+                if (sample) {
+                    nextSample++
+                    samplePending = if (lastSample == 0 && step is Step.NeedDatePhoto) step else null
+                } else {
+                    pendingTurn = if (step is Step.NeedDatePhoto) step else null
+                }
                 // A sample is turned with its own button, not Read item.
                 val answer = answerOf(step).let {
                     if (sample && step is Step.NeedDatePhoto) it.copy(reason = it.reason.replace("press Read item again", "press Turn the sample item")) else it
@@ -146,7 +160,7 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                     }
                     log = listOf(LoggedRow(if (sample) "${itemName(step)} (sample)" else itemName(step), answer)) + log
                 }
-                val turnSample = sample && step is Step.NeedDatePhoto
+                val turnSample = sample && samplePending != null
                 _state.update {
                     it.copy(
                         answer = answer,

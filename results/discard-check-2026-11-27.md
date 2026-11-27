@@ -17,6 +17,11 @@ on the dates already read.
 | wrong discards | **0** |
 | The second read disagreed, so the item went to the sort lead | 26 |
 | of which the first read alone would have been a right discard | 26 |
+| Still good by the chart with the confirmed date | 1 |
+| of which the app kept | 1 |
+
+The chart row is the one the model chose, and the date kind (best-before or expiry) is the one it
+read, so the confirmed date is the only thing changed.
 
 ## What it shows
 
@@ -29,11 +34,16 @@ on the dates already read.
   second read did not find the same date, the item went to the sort lead, and in all 26 the first
   read alone would have been right. The wrong discard the rule exists for happened on my own pantry
   photos (a 2027 stamp read as 2026 on a bag of chocolate chips, `devpost/gallery/08-refusal.png`).
-  It is the trade the rule makes on purpose: a person checks an item rather than good food being
-  binned on one read.
+  The rule trades a person's check for the chance of good food binned on one read.
 
 ## Limits
 
+- **This set tests discards, not keeps.** Only 1 of the 100 items is still good by the chart with the
+  confirmed date (the app kept it), so it cannot show whether the app would bin good food. That side
+  is the pantry set (the broth kept until 2029, the chocolate chips misread in
+  `results/pantry-2026-11-15-cloud-repeatability.md`) and the hands-free runs.
+- 26 of the 58 items whose first read pointed to a discard went to the sort lead instead. That is
+  work for the lead, and it is the rule's price.
 - The grader is the date an Open Food Facts volunteer confirmed for the product, not a person at a
   sort table. The model picked the chart row (the kind of food), and nothing grades that choice.
 - One run, cloud reads only (`gemini-3.5-flash-lite`), as in the 2026-11-22 run.

@@ -214,18 +214,23 @@ async function readSample(): Promise<void> {
   try {
     if (!models || !settings) await prepare();
     const img = new Image();
-    sample = SAMPLES[nextSample++ % SAMPLES.length];
+    const index = nextSample % SAMPLES.length;
+    sample = SAMPLES[index];
     img.src = sample.src;
     await img.decode();
     const frame = toJpegBase64(img, img.naturalWidth, img.naturalHeight);
     const small = toJpegBase64(img, img.naturalWidth, img.naturalHeight, 512).b64;
+    // Only the carton's top (the second photo) is read together with its front. Matched by
+    // position, not by the last answer: the yogurt is never read as the back of the carton.
     const step = await processItem(models!, frame.b64, {
       today: todayInput.value,
       policy: settings!.policy,
       smallJpeg: small,
-      previous: samplePending ? samplePending.reads : undefined,
+      previous: index === 1 && samplePending ? samplePending.reads : undefined,
     });
-    samplePending = step.kind === "need_date_photo" ? step : null;
+    // A failed read throws above and the same photo is tried again on the next press.
+    nextSample++;
+    samplePending = index === 0 && step.kind === "need_date_photo" ? step : null;
     results.push({ file: "sample", at: new Date().toISOString(), mode: models!.hybrid.mode, step });
     render(step, frame.url, "sample");
     // Said aloud as at the sort table, unless the volunteer turned the voice off: the one way to
@@ -764,6 +769,12 @@ async function watchLoop(run: number): Promise<void> {
       await pause(1500);
       continue;
     }
+    // A Read item pressed while the reader was warming may still be running: let it finish
+    // first, so the two never read at once or overwrite each other's item.
+    if (reading) {
+      await pause(500);
+      continue;
+    }
     readBtn.disabled = true;
     // The clip starts once the laptop's reader is warm, like a volunteer starting on the first item.
     if (clipMode && video.paused && !video.ended) await video.play().catch(() => undefined);
@@ -860,8 +871,12 @@ speakBox.addEventListener("change", () => {
 });
 const recordings = new Map<string, HTMLAudioElement>();
 let speaking: HTMLAudioElement | null = null;
+// Counts every answer said and every hush, so a late failure from an older answer is never
+// mistaken for the current one (the same line twice shares one recording).
+let sayTurn = 0;
 
 function hush(): void {
+  sayTurn++;
   speaking?.pause();
   speaking = null;
   if ("speechSynthesis" in window) speechSynthesis.cancel();
@@ -870,13 +885,18 @@ function hush(): void {
 function say(line: Spoken | null): void {
   if (!line || !speakBox.checked) return;
   hush(); // the newest answer wins; an old one is never said late
+  const turn = ++sayTurn;
   let audio = recordings.get(line.key);
   if (!audio) recordings.set(line.key, (audio = new Audio(`/voice/${line.key}.mp3`)));
   const mine = audio;
   speaking = mine;
   mine.currentTime = 0;
-  mine.play().catch(() => {
-    if (speaking !== mine || !("speechSynthesis" in window)) return; // hushed by a newer answer
+  mine.play().catch((e: unknown) => {
+    // Paused by a newer answer (AbortError), or hushed: nothing more to say.
+    if (turn !== sayTurn || (e instanceof DOMException && e.name === "AbortError")) return;
+    // A recording that could not load is fetched again next time, once the connection is back.
+    if (!(e instanceof DOMException && e.name === "NotAllowedError")) recordings.delete(line.key);
+    if (!("speechSynthesis" in window)) return;
     const u = new SpeechSynthesisUtterance(line.words);
     u.lang = "en-CA";
     speechSynthesis.speak(u);
@@ -911,24 +931,28 @@ if (clipMode) {
   const begin = (): void => {
     if (document.hidden) return;
     document.removeEventListener("visibilitychange", begin);
-    // One clip tab at a time. Two played it together on 2026-11-26, shared the laptop's reader,
-    // and each check took twice as long.
-    void navigator.locks.request("keep-until-clip", { ifAvailable: true }, (lock) => {
-      if (!lock) {
-        document.title = "Keep Until: the clip is playing in another tab";
-        promptEl.textContent = "The clip is already playing in another tab. Close that tab, then reload this one.";
-        return;
-      }
+    const play = (): Promise<void> => {
       $("start").click();
       let tries = 0;
       const go = setInterval(() => {
         if (++tries > 600) clearInterval(go); // no laptop reader here: the button says why
         else if (!handsBtn.disabled) {
           clearInterval(go);
-          handsBtn.click();
+          if (!handsFree) handsBtn.click(); // pressed by hand meanwhile: leave it on
         }
       }, 500);
       return new Promise<void>(() => undefined); // held until this tab closes or reloads
+    };
+    // One clip tab at a time. Two played it together on 2026-11-26, shared the laptop's reader,
+    // and each check took twice as long. (Web Locks exist only on https and localhost.)
+    if (!navigator.locks) return void play();
+    void navigator.locks.request("keep-until-clip", { ifAvailable: true }, (lock) => {
+      if (!lock) {
+        document.title = "Keep Until: the clip is playing in another tab";
+        promptEl.textContent = "The clip is already playing in another tab. Close that tab, then reload this one.";
+        return;
+      }
+      return play();
     });
   };
   document.addEventListener("visibilitychange", begin);

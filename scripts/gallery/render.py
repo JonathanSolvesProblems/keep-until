@@ -184,7 +184,7 @@ SLIDES = [
     },
     {
         "name": "hybrid",
-        "headline": f"{A['photos'] - A['hybrid_calls']} of {A['photos']} photos never left the laptop",
+        "headline": f"{A['hybrid_calls']} of {A['photos']} photos sent to the cloud, not {A['photos']}",
         "badge": "results/ablation-inference-mode.md, graded against hand labels",
         "body": f"""<table>
 <tr><th>How the 16 photos are read</th><th>Handled right (15 scored)</th><th>Cloud calls (16)</th></tr>
@@ -260,7 +260,7 @@ SLIDES = [
         "headline": f"Hands-free, 8 items: {HL['looks']} checks on the laptop, {HL['calls']} calls to the cloud",
         "badge": "results/handsfree-long-2026-11-26.md, real Gemini Nano in Chrome; expected answers registered first",
         "body": long_timeline_html(),
-        "caption": f"Nobody touched the laptop. 8 items, 16 photos: {HL['looks']} checks on the laptop, {HL['calls']} calls to the cloud, {HL['items']} graded items right.",
+        "caption": f"8 items, 16 photos played to the camera: {HL['looks']} checks on the laptop, {HL['calls']} calls to the cloud, {HL['items']} graded items right.",
     },
     {
         "name": "offline",
@@ -289,12 +289,12 @@ SLIDES = [
     },
     {
         "name": "built",
-        "headline": "The laptop watches, the cloud reads, the chart decides",
+        "headline": "What runs where, on Firebase",
         "badge": "Firebase AI Logic on Web and Android; one Firebase project",
         "body": """<div class="flow">
 <div class="lane"><h3>On the laptop</h3><p><b>Gemini Nano</b>, ONLY_ON_DEVICE</p><p>Watches the camera: item in view? date facing? fridge?</p><p class="why">A check every few seconds, at no cost. These frames never leave the laptop.</p></div>
 <div class="arrow">date faces the camera</div>
-<div class="lane"><h3>In the cloud</h3><p><b>Gemini Flash-Lite</b>, JSON schema</p><p>Reads the stamp exactly as printed: <code>2027 FE 14</code></p><p class="why">Only for photos worth reading. A discard needs a second, independent read.</p></div>
+<div class="lane"><h3>In the cloud</h3><p><b>Gemini Flash-Lite</b>, JSON schema</p><p>Asked to copy the stamp as printed: <code>2027 FE 14</code></p><p class="why">Only for photos worth reading. A discard needs a second, independent read.</p></div>
 <div class="arrow">date and food type</div>
 <div class="lane"><h3>In code</h3><p><b>Food Banks Canada's chart</b></p><p>Keep until, set aside, or discard</p><p class="why">Gemini reads the stamp; the chart makes the call. Same gate on Web and Android.</p></div>
 </div>
@@ -333,7 +333,7 @@ SLIDES = [
 ]
 
 # Upload order: the hero, then the on-device moment, then the story.
-ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "dates", "built", "refusal", "discard", "aside", "recall", "android", "phone", "honesty", "limits", "sources"]
+ORDER = ["keep", "hands-free", "refusal", "discard", "problem", "two-photos", "hybrid", "dates", "built", "aside", "recall", "android", "honesty", "limits", "sources"]
 SLIDES = sorted([s for s in SLIDES if s["name"] in ORDER], key=lambda s: ORDER.index(s["name"]))
 for old in OUT.glob("[0-9][0-9]-*.png"):
     old.unlink()

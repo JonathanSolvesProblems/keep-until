@@ -338,7 +338,11 @@ export async function processItem(models: LoopModels, jpegBase64: string, ctx: I
   // A hands-free second look that does not settle the item leaves it waiting (see ItemContext).
   if (secondLook && ctx.watching && first.read.next_action !== "set_aside") {
     if (first.read.next_action === "no_item") {
-      return { kind: "need_date_photo", want: ctx.want, reads: ctx.previous!, route: routed("hands-free: nothing new in this look; still waiting") };
+      // The look found nothing, but it did go to the cloud, and the screen must say so. It goes
+      // first in the list: the item is still what the earlier photos showed (itemFacts reads the
+      // newest reads first, and takes the last one whole).
+      const looked = first.source === "in_cloud" ? [first, ...ctx.previous!] : ctx.previous!;
+      return { kind: "need_date_photo", want: ctx.want, reads: looked, route: routed("hands-free: nothing new in this look; still waiting") };
     }
     const facts = itemFacts(reads);
     const want = facts.date_text && facts.category === "unclear" ? ("name" as const) : undefined;
