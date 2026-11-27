@@ -68,13 +68,23 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     // The first two are one item: a broth carton's front (name, no date), then its top (date, no
-    // name). The third is a yogurt lid.
-    private val samples = listOf("samples/carton-front.jpg", "samples/carton-top.jpg", "samples/yogurt-lid.jpg")
+    // name). The third is a yogurt lid. The fourth is a jar of peanut butter dated 2021, someone
+    // else's photo from Open Food Facts, which the chart says to discard. Each has the line shown
+    // under the button once it has been read.
+    private class Sample(val asset: String, val after: String)
+    private val samples = listOf(
+        Sample("samples/carton-front.jpg", "The next sample is the same carton, turned."),
+        Sample("samples/carton-top.jpg", "Real photos from my pantry. Samples are never added to a food bank's log."),
+        Sample("samples/yogurt-lid.jpg", "Next: a jar of peanut butter dated 2021, from Open Food Facts."),
+        Sample("samples/peanut-butter-2021.jpg", "Peanut butter photo: Open Food Facts contributors, CC BY-SA 4.0. Samples are never added to a food bank's log."),
+    )
     private var nextSample = 0
+    private var lastSample = 0
 
     fun readSample() {
         if (loop == null || _state.value.reading) return
-        val photo = getApplication<Application>().assets.open(samples[nextSample++ % samples.size]).use { BitmapFactory.decodeStream(it) }
+        lastSample = nextSample++ % samples.size
+        val photo = getApplication<Application>().assets.open(samples[lastSample].asset).use { BitmapFactory.decodeStream(it) }
         _state.update { it.copy(still = photo.asImageBitmap()) }
         readItem(photo.scaledTo(1024), photo.scaledTo(512), sample = true)
     }
@@ -122,7 +132,10 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                 val previous = (pendingTurn as? Step.NeedDatePhoto)?.reads ?: emptyList()
                 val step = l.processItem(photo, small, LocalDate.now().toString(), s.policy, previous)
                 pendingTurn = if (step is Step.NeedDatePhoto) step else null
-                val answer = answerOf(step)
+                // A sample is turned with its own button, not Read item.
+                val answer = answerOf(step).let {
+                    if (sample && step is Step.NeedDatePhoto) it.copy(reason = it.reason.replace("press Read item again", "press Turn the sample item")) else it
+                }
                 val phoneHasModel = readers?.onDevice?.ready == true
                 var log = _state.value.log
                 if (step is Step.Decided) {
@@ -140,7 +153,7 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                         readBy = readBy(step, phoneHasModel),
                         log = log,
                         sampleLabel = if (turnSample) "Turn the sample item" else if (sample) "Try another sample photo" else it.sampleLabel,
-                        sampleNote = if (turnSample) "The next sample is the same carton, turned." else if (sample) "Real photos from my pantry. Samples are never added to a food bank's log." else it.sampleNote,
+                        sampleNote = if (sample) samples[lastSample].after else it.sampleNote,
                     )
                 }
             } catch (e: kotlinx.coroutines.CancellationException) {

@@ -9,7 +9,7 @@ kept against new Government of Canada food recalls.
 Gemini Nano checks each photo on the laptop first. Only photos with a date worth reading go to
 the cloud. With **Hands-free** on, Nano watches the camera itself and calls the cloud only when a
 date or a fridge item faces it, so the volunteer has nothing to press. It says each answer aloud
-from recordings shipped with the app, so nothing is synthesized or sent anywhere to be spoken.
+from recordings shipped with the app (Chrome's own voice only if a recording cannot play).
 Built for #BuildHybridAI 2026 with Firebase AI Logic, on Web (Chrome) and Android (the
 Android app has the same read loop and chart gate, with a Read item button and no hands-free).
 
@@ -19,7 +19,8 @@ logged. `?clip=long` plays the 8-item clip (all 16 pantry photos, 243 seconds). 
 recorded run in any browser, with no on-device model, open `?replay=1`.
 
 **Try it:** https://keep-until-hybrid.web.app. No item to hand or no webcam? Press **Try a sample
-photo**: it reads a real carton from my pantry the same way, front first, then the top.
+photo**: it reads a real carton from my pantry the same way, front first, then the top, then a
+yogurt lid, then a jar of peanut butter dated 2021 that the chart says to discard.
 
 ## How to run it
 
@@ -70,11 +71,13 @@ the 16 pantry photos three ways and downloads one file; grade it with
 | What | Result | File |
 |---|---|---|
 | Hands-free on real Gemini Nano, 8 items and 16 photos, nobody touching the laptop, expected answers registered before the run | 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right | [8-item run](results/handsfree-long-2026-11-26.md) |
+| The same 8-item test run again the next morning, voice on, recorded for the video | 104 checks on the laptop, 6 calls to the cloud, the same 6 of 7 | [second run](results/handsfree-long-2026-11-27.md) |
 | Hands-free, the 70-second clip the replay plays | 31 checks on the laptop, 2 calls to the cloud, both items answered right | [70-second run](results/handsfree-clip-2026-11-26-plugged.md) |
 | Hybrid: Nano checks every photo on the laptop, the cloud reads dates | 13 of 15 handled right, 6 cloud calls for 16 photos | [ablation](results/ablation-inference-mode.md) |
 | Cloud only | 14 of 15, 16 cloud calls | [ablation](results/ablation-inference-mode.md) |
 | Gemini Nano alone on the laptop | 4 of 15 | [ablation](results/ablation-inference-mode.md) |
 | Date reading, 100 photos of products sold in Canada, dates confirmed by Open Food Facts volunteers, registered before the run | 71 of 100 read right; of the 29 misses, 14 read the best-before where the confirmed date was the packed-on date, 2 clear misreads | [date control](results/date-control-off-ca-2026-11-22.md) |
+| Were the discards right? The same 100 photos, the chart re-run with each volunteer-confirmed date | 32 discards, 0 wrong discards; 26 times the second read disagreed and the item went to the lead | [discard check](results/discard-check-2026-11-27.md) |
 | Recall check, 16 real notice and item pairs in two sets, answers registered before each run | Gemini 16 of 16, brand plus a product word 11 of 16, brand alone 6 of 16 | [recall control](results/recall-control-2026-11-22.md) |
 | Android gate against the web gate | identical on 294 stamps and 2,580 chart decisions | `shared/gate-vectors.json` |
 | Android on Firebase Test Lab (Pixel 10, Pixel 11, Galaxy S26) | 14 of 15 on the cloud path; on-device unavailable (stub AICore) | [Test Lab](results/android-testlab-2026-11-19.md) |
@@ -123,7 +126,9 @@ the files and never calls ElevenLabs; a test fails when a line has no recording 
 
 ## License
 
-Apache-2.0. See [LICENSE](LICENSE).
+Apache-2.0. See [LICENSE](LICENSE). One exception: the peanut butter sample photo
+(`web/public/testset/off/0056664013115-2.jpg` and its Android copy) is by Open Food Facts
+contributors, CC BY-SA 4.0 ([credits](web/public/testset/off/CREDITS.md)).
 
 Built by Jonathan Andrei for food bank sort tables. More of what I build at
 [jonathansolvesproblems.com](https://jonathansolvesproblems.com).

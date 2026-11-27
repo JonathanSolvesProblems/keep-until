@@ -48,43 +48,49 @@ Nano watches on the laptop, the cloud reads dates, Food Banks Canada's chart dec
 One cloud read took a 2027 stamp for May 2026 and said discard. Now nothing is binned unless a second, independent read agrees.
 ```
 
-## 09-aside.png
+## 09-discard.png
+
+```
+On 100 outside photos the app discarded 32 items, each after two reads agreed. 0 were wrong by the volunteer-confirmed date.
+```
+
+## 10-aside.png
 
 ```
 Fridge items, damaged packages and dates two reads disagree on are set aside for the sort lead, in plain words.
 ```
 
-## 10-recall.png
+## 11-recall.png
 
 ```
 Each morning a function lists same-brand recalls; Gemini settles them at shift start. Gemini 16 of 16; brand plus a product word 11 of 16.
 ```
 
-## 11-android.png
+## 12-android.png
 
 ```
 Android has the same read loop and chart, matching the web on 2,580 decisions. My Galaxy S24 has no Nano, so it reads in the cloud.
 ```
 
-## 12-phone.png
+## 13-phone.png
 
 ```
 The decision fills the screen in its colour and always carries the word. The date is shown the way it is stamped on the package.
 ```
 
-## 13-honesty.png
+## 14-honesty.png
 
 ```
 The headline figures are checked against the results files they came from, on every push. A stale or retired claim fails the build.
 ```
 
-## 14-limits.png
+## 15-limits.png
 
 ```
 Not yet used at a food bank; hands-free shown on a clip, plugged in; no Android Nano run; the chart row is the model's pick; no lot codes.
 ```
 
-## 15-sources.png
+## 16-sources.png
 
 ```
 The chart, the stamp format, the recalls and the quote are all published sources. Every score comes from a results file in the repo.

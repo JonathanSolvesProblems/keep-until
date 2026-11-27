@@ -68,11 +68,11 @@ A new project: the first commit is from November 14, 2026.
 - **I chose the split by measuring it.** My first design read everything on Nano. On real Gemini Nano that handled 4 of 15 photos. As a checker (is a package in view, is a date facing the camera) Nano was right on 10 of 15. So Nano checks and the cloud reads.
 - **App Check** (reCAPTCHA Enterprise on web, debug provider on Android), **Authentication** (anonymous for volunteers, Google with Drive file access for the coordinator's sheet), **Firestore** (offline persistence, append-only rules), **Remote Config** (the cloud model and each food bank's own policy over the chart), **Performance Monitoring** (a trace around every read, tagged on-device or cloud), **Cloud Functions with Cloud Scheduler** (the daily recall pull), **Crashlytics** on Android and **Hosting**.
 - **Android** (Kotlin, `firebase-ai` with `firebase-ai-ondevice`) has the same read loop and the same chart gate, with a Read item button and no hands-free. The two gates agree on 294 date stamps and 2,580 chart decisions written by the TypeScript and replayed by a Kotlin test.
-- **The voice** is 124 short recordings made once with ElevenLabs and shipped with the app. Nothing is synthesized while it runs, so no text leaves the laptop to be spoken, and it cannot say a sentence that is not on the list.
+- **The voice** is 124 short recordings made once with ElevenLabs and shipped with the app, so it cannot say a sentence that is not on the list. Only if a recording cannot play (the first use, offline) does Chrome's own voice say the same words.
 
 ## Results
 
-**Hands-free on real Gemini Nano.** A clip of all 16 of my pantry photos played in the camera's place: 8 items, held up face by face, with the expected answer for each committed before the run. Nobody touched the laptop: 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right. On the first face of every item the laptop said "turn it" by itself, with nothing sent. The miss: it never found the small, upside-down date on a bag of chocolate chips, and kept asking for it to be turned. A shorter run (31 checks on the laptop, 2 calls to the cloud) replays check by check in any browser: https://keep-until-hybrid.web.app/?replay=1
+**Hands-free on real Gemini Nano.** A clip of all 16 of my pantry photos played in the camera's place: 8 items, held up face by face, with the expected answer for each committed before the run. Nobody touched the laptop: 100 checks on the laptop, 6 calls to the cloud, 6 of 7 graded items right. On the first face of every item the laptop said "turn it" by itself, with nothing sent. The miss: it never found the small, upside-down date on a bag of chocolate chips, and kept asking for it to be turned. Run again the next morning with the voice on, for the video: 104 checks on the laptop, 6 calls to the cloud, the same 6 of 7 and the same miss. A shorter run (31 checks on the laptop, 2 calls to the cloud) replays check by check in any browser: https://keep-until-hybrid.web.app/?replay=1
 
 **Routing, against cloud only.** Sixteen pantry photos, labelled by hand before any run:
 
@@ -85,6 +85,8 @@ A new project: the first commit is from November 14, 2026.
 The hybrid gives up one photo, and neither of its misses is a wrong keep or discard: each asks for the item to be turned once more. This set mostly tests routing (an app that always said "turn it" would score 9 of 15), so date reading has its own test.
 
 **Date reading, on outside photos.** 100 products sold in Canada whose expiry date an Open Food Facts volunteer confirmed, registered before the run: the app read the same date on 71 of 100. A reviewer then looked at each of the 29 misses. On 14 the package prints two dates and the app read the best-before while the confirmed one was the packed-on date; 2 were clear misreads by the app.
+
+**Discards: 32, and none wrong.** Most of those photos are years old, so most dates are long past. The app discarded 32 items, each after two independent reads found the same date, and every one is still a discard when the chart is given the date the Open Food Facts volunteer confirmed (`scripts/discard_check.ts`). The second-read rule has a cost too: 26 times the second read did not find the same date, the item went to the sort lead, and the first read alone would have been right. I keep that trade on purpose. A person checks an item before good food is binned on one read.
 
 **Recalls.** 16 pairs of a real Government of Canada recall notice and a same-brand item, expected answers committed before each run: Gemini 16 of 16, brand plus a product word 11 of 16, brand alone 6 of 16. The second set of 8 is the hard cases on purpose (chocolate chip cookies against a recall of the same brand's gingersnaps).
 
@@ -109,7 +111,7 @@ Between November 15 and 22 I wrote to Food Banks Canada, Feed Ontario, North Yor
 ## Why it fits
 
 - **Technological implementation.** Three Firebase AI Logic modes, one per job, with the on-device job picked by measurement (`results/ablation-inference-mode.md`) and guarded so it cannot fall through to the cloud.
-- **Design.** Open the live link and press "Try a sample photo", or "Watch a hands-free run". The answer fills the screen in its colour with the word and is said aloud, for a volunteer looking at the item, and the stamp is shown large, as it is printed on the package.
+- **Design.** Open the live link and press "Try a sample photo" four times: a carton that has to be turned, its top (keep until February 2029), a yogurt for the lead, and a jar of peanut butter dated 2021 (discard). Or press "Watch a hands-free run". The answer fills the screen in its colour with the word and is said aloud, for a volunteer looking at the item, and the stamp is shown large, as it is printed on the package.
 - **Potential impact.** A sort table decides, item by item, whether a donation is food or waste. Keep Until gives the volunteer Food Banks Canada's own answer and logs it where the food bank already works.
 - **Quality of the idea.** The laptop watches because watching has to cost nothing and stay in the building, and the cloud is asked only when there is a date to read. The model reads; a published chart, in code, makes the call.
 ```

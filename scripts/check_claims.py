@@ -38,11 +38,21 @@ def date_reading():
     return re.search(r"\*\*Dates read right: (\d+ of \d+)\.\*\*", read("results/date-control-off-ca-2026-11-22.md"))[1]
 
 
-A, R, D = ablation(), recall(), date_reading()
+def discards():
+    t = read("results/discard-check-2026-11-27.md")
+    row = lambda label: re.search(rf"\| {label}[^|]*\| \**(\d+)\** \|", t)[1]
+    return {"discarded": row("Discarded"), "wrong": row("wrong discards"), "disagreed": row("The second read disagreed")}
+
+
+A, R, D, X = ablation(), recall(), date_reading(), discards()
 # Two hands-free runs are quoted: the 70-second clip the replay plays, and the 8-item run.
 H = handsfree("results/handsfree-clip-2026-11-26-plugged.md")
 L = handsfree("results/handsfree-long-2026-11-26.md")
-RUNS = {f"{H['looks']} checks, {H['calls']} calls", f"{L['looks']} checks, {L['calls']} calls"}
+# The 8-item test run a second time, with the voice on, for the video.
+L2 = handsfree("results/handsfree-long-2026-11-27.md")
+RUNS = {f"{r['looks']} checks, {r['calls']} calls" for r in (H, L, L2)}
+if L2["items"] != L["items"]:
+    sys.exit(f"the two 8-item runs differ ({L['items']} and {L2['items']}): say both, not 'the same'")
 
 # (pattern with one group, expected value, what it is). Every match in every document must equal it.
 CLAIMS = [
@@ -57,7 +67,14 @@ CLAIMS = [
     (r"read (?:the same date on |right on )?(\d+ of 100)", D, "date reading on the outside set"),
     (r"(\d+ of \d+) (?:graded )?items (?:answered )?right", L["items"], "hands-free items right, 8-item run"),
     (r"(\d+) of the 100 frames", str(int(L["looks"]) - int(L["calls"])), "frames that never left the laptop, 8-item run"),
+    (r"Discards: (\d+)", X["discarded"], "discards on the outside set"),
+    (r"app discarded (\d+) items", X["discarded"], "discards on the outside set"),
+    (r"(\d+) wrong discards", X["wrong"], "wrong discards on the outside set"),
+    (r"(\d+) times the second read", X["disagreed"], "second read disagreed, outside set"),
 ]
+# "none wrong" is a claim too: it holds only while the results file says 0.
+if X["wrong"] != "0":
+    CLAIMS.append((r"(none) wrong", X["wrong"], "wrong discards on the outside set"))
 
 # Claims that were true once and are not now. Each entry says why it was retired.
 RETIRED = [
@@ -86,8 +103,8 @@ for rel in DOCS:
             failures.append(f"{rel}: hands-free says {m[1]} checks and {m[2]} cloud calls, results say one of {sorted(RUNS)}")
     for m in re.finditer(r"(\d+) checks on the laptop", text):
         checked += 1
-        if m[1] not in (H["looks"], L["looks"]):
-            failures.append(f"{rel}: hands-free says {m[1]} checks, results say {H['looks']} or {L['looks']}")
+        if m[1] not in (H["looks"], L["looks"], L2["looks"]):
+            failures.append(f"{rel}: hands-free says {m[1]} checks, results say {H['looks']}, {L['looks']} or {L2['looks']}")
     for pattern, why in RETIRED:
         for m in re.finditer(pattern, text):
             line = text[: m.start()].count("\n") + 1

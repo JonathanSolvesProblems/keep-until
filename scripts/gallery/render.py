@@ -99,6 +99,16 @@ R = recall()
 GATE = gate()
 H = handsfree()
 HL = handsfree_long()
+
+
+def discard_check():
+    """The discard figures, from the results file scripts/discard_check.ts wrote up."""
+    t = read("results/discard-check-2026-11-27.md")
+    row = lambda label: re.search(rf"\| {label}[^|]*\| \**(\d+)\** \|", t)[1]
+    return {"discards": row("Discarded"), "still": row("still a discard"), "wrong": row("wrong discards"), "disagreed": row("The second read disagreed")}
+
+
+X = discard_check()
 CLAIMS_OUT = claims_output()
 
 # The clip's scenes, as committed in results/handsfree-clip-2026-11-26-plugged.md.
@@ -197,6 +207,19 @@ SLIDES = [
 <tr class="hi"><td>Now</td><td colspan="2">A discard needs a second, independent read of the same date. If they disagree, the sort lead checks it.</td></tr>
 </table>''',
         "caption": "One cloud read took a 2027 stamp for May 2026 and said discard. Now nothing is binned unless a second, independent read agrees.",
+    },
+    {
+        "name": "discard",
+        "headline": f"{X['discards']} discards, {X['wrong']} wrong",
+        "badge": "results/discard-check-2026-11-27.md; photo by Open Food Facts contributors, CC BY-SA 4.0",
+        "body": f'''<div class="stack"><img class="cap" src="{img("discard-peanut.png")}" style="width:860px"></div>
+<table class="small"><tr><th>100 photos of products sold in Canada</th><th>Items</th></tr>
+<tr><td>Discarded: two independent reads found the same date</td><td>{X['discards']}</td></tr>
+<tr><td>Still a discard with the date a volunteer confirmed</td><td>{X['still']}</td></tr>
+<tr><td>Second read disagreed, so the sort lead checks it</td><td>{X['disagreed']}</td></tr>
+<tr class="hi"><td colspan="2">The second read costs the lead {X['disagreed']} checks here. It is there so good food is never binned on one read.</td></tr>
+</table>''',
+        "caption": f"On 100 outside photos the app discarded {X['discards']} items, each after two reads agreed. {X['wrong']} were wrong by the volunteer-confirmed date.",
     },
     {
         "name": "aside",
@@ -310,7 +333,7 @@ SLIDES = [
 ]
 
 # Upload order: the hero, then the on-device moment, then the story.
-ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "dates", "built", "refusal", "aside", "recall", "android", "phone", "honesty", "limits", "sources"]
+ORDER = ["keep", "hands-free", "problem", "two-photos", "hybrid", "dates", "built", "refusal", "discard", "aside", "recall", "android", "phone", "honesty", "limits", "sources"]
 SLIDES = sorted([s for s in SLIDES if s["name"] in ORDER], key=lambda s: ORDER.index(s["name"]))
 for old in OUT.glob("[0-9][0-9]-*.png"):
     old.unlink()

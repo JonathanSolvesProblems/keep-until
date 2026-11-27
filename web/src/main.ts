@@ -187,8 +187,19 @@ $("start").addEventListener("click", async () => {
 // Sample photos: real pantry photos read through the same loop, for anyone with no item to
 // hand or no webcam. Like the batch, a sample is never written to a food bank's item log.
 // The first two are one item: the front of a broth carton (name, no date), then its top (date,
-// no name). The third is a yogurt tub lid.
-const SAMPLES = ["20261115_112419.jpg", "20261115_112427.jpg", "20261115_112446.jpg"];
+// no name). The third is a yogurt tub lid. The fourth is someone else's photo, from Open Food
+// Facts: a jar of peanut butter dated 2021, which the chart says to discard. Each sample has the
+// line shown under the button once it has been read.
+const PANTRY = "Real photos from my pantry. Samples are never added to a food bank's log.";
+const SAMPLES = [
+  { src: "/testset/pantry-2026-11-15/20261115_112419.jpg", after: "The next sample is the same carton, turned." },
+  { src: "/testset/pantry-2026-11-15/20261115_112427.jpg", after: PANTRY },
+  { src: "/testset/pantry-2026-11-15/20261115_112446.jpg", after: "Next: a jar of peanut butter dated 2021, from Open Food Facts." },
+  {
+    src: "/testset/off/0056664013115-2.jpg",
+    after: "Peanut butter photo: Open Food Facts contributors, CC BY-SA 4.0. Samples are never added to a food bank's log.",
+  },
+];
 let nextSample = 0;
 const sampleBtn = $<HTMLButtonElement>("sample");
 const sampleNote = $("sampleNote");
@@ -197,12 +208,14 @@ const sampleNote = $("sampleNote");
 let samplePending: Step | null = null;
 
 async function readSample(): Promise<void> {
+  let sample = SAMPLES[0];
   sampleBtn.disabled = true;
   sampleNote.textContent = "Reading a sample photo";
   try {
     if (!models || !settings) await prepare();
     const img = new Image();
-    img.src = `/testset/pantry-2026-11-15/${SAMPLES[nextSample++ % SAMPLES.length]}`;
+    sample = SAMPLES[nextSample++ % SAMPLES.length];
+    img.src = sample.src;
     await img.decode();
     const frame = toJpegBase64(img, img.naturalWidth, img.naturalHeight);
     const small = toJpegBase64(img, img.naturalWidth, img.naturalHeight, 512).b64;
@@ -215,6 +228,10 @@ async function readSample(): Promise<void> {
     samplePending = step.kind === "need_date_photo" ? step : null;
     results.push({ file: "sample", at: new Date().toISOString(), mode: models!.hybrid.mode, step });
     render(step, frame.url, "sample");
+    // Said aloud as at the sort table, unless the volunteer turned the voice off: the one way to
+    // hear it with no camera and no on-device model.
+    if (localStorageGet("speak") !== "off") speakBox.checked = true;
+    say(spokenAnswer(step));
   } catch (e) {
     sampleNote.textContent = readFailure(e);
     document.title = "Keep Until: read failed";
@@ -224,13 +241,11 @@ async function readSample(): Promise<void> {
     sampleBtn.disabled = false;
   }
   sampleBtn.textContent = samplePending ? "Turn the sample item" : "Try another sample photo";
-  sampleNote.textContent = samplePending
-    ? "The next sample is the same carton, turned."
-    : "Real photos from my pantry. Samples are never added to a food bank's log.";
+  sampleNote.textContent = sample.after;
 }
 sampleBtn.addEventListener("click", readSample);
-// ?sample=1 reads the first sample on load. ?sample=all reads all three in turn (the carton's
-// front, its top, the yogurt) and puts the three answers in the window title: the check that the
+// ?sample=1 reads the first sample on load. ?sample=all reads all four in turn (the carton's
+// front, its top, the yogurt, the peanut butter) and puts the answers in the window title: the check that the
 // public path works end to end, run five times before submitting.
 const sampleParam = new URLSearchParams(location.search).get("sample");
 if (sampleParam === "all") {
@@ -541,7 +556,9 @@ const narrow = window.matchMedia("(max-width: 860px)");
 const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function render(step: Step, thumb: string, label: string): void {
-  renderAnswer(answer, step, handsFree || label === "replay");
+  // Hands-free, the replay and the samples have no Read item press to ask for (a sample is turned
+  // with its own button), so their answers never say to press it.
+  renderAnswer(answer, step, handsFree || label === "replay" || label === "sample");
   // The tab title carries the last answer, so it reads out and shows in the tab strip.
   document.title = `Keep Until: ${[...(answer.querySelector(".band")?.children ?? [])].map((c) => c.textContent).join(" ")}`;
   // Without a live camera (saved photos), the item just read stays in the camera's place.
