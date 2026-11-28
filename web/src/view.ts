@@ -1,7 +1,7 @@
 // What the volunteer sees: the printed answer, the shift record and the read-by badge, in
 // plain words (charter law 14: internal strings never reach the screen).
 
-import { itemFacts, type Step } from "./ai/loop";
+import { itemFacts, printedName, type Step } from "./ai/loop";
 import type { ReadResult } from "./ai/reader";
 import { asideLine, fixedLine, keepLine, type Spoken } from "./voice";
 
@@ -239,12 +239,7 @@ export function renderRow(step: Step, thumb: string): HTMLLIElement | null {
   img.alt = "";
   const chip = el("span", "row-verdict", v.word);
   const what = el("div", "row-what");
-  // The read often repeats the brand inside the product name ("Liberté Liberté Grec").
-  const brand = last?.brand?.trim() ?? "";
-  const product = last?.product?.trim() ?? "";
-  // Letters and digits only, so "Campbell's" and "CAMPBELL’S" count as the same brand.
-  const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g, "");
-  const name = brand && plain(product).includes(plain(brand)) ? product : [brand, product].filter(Boolean).join(" ");
+  const name = printedName(last?.brand ?? "", last?.product ?? "");
   // With no name printed in view, the chart row the gate used names the item, and says so.
   const row = step.verdict.chart?.label;
   what.append(el("strong", "", name || row || "Item with no name in view"));

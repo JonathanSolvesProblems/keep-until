@@ -44,8 +44,19 @@ can read; Keep Until reads it and prints it again, large and clear, with what to
 14. **Internal words never reach the screen**: mode names, route strings, JSON, "model",
     "inference", "triage". Because the reader is a volunteer, not the developer.
 15. **One orchestrated moment: the stamp prints.** When a verdict arrives, the re-printed date
-    appears column by column, about 300 ms, stepped like an inkjet head. Nothing else animates on
-    arrival; nothing moves on exit; with reduced motion it appears at once.
+    appears column by column, about 300 ms, stepped like an inkjet head. Nothing moves on exit;
+    with reduced motion it appears at once. On Android (2026-11-27) the moment has its lead-in and
+    its run-out, all the coder's: while a read is out, seven dots step along Read item like the
+    head crossing a lid and the last answer dims; on arrival the verdict's colour wipes across the
+    panel from the left (never a blend: yellow into red passed through a muddy orange), the word
+    sets, the date prints, then the reason and badge fade up. New log rows slide in; the tallies
+    count. Nothing else moves.
+18. **The answer is also in the hand.** On a phone each verdict has its own pulse: one firm pulse
+    for keep, two light ticks for set aside, a long buzz for discard, a tick for turn it. Because the
+    volunteer is often looking at the item, not the screen.
+19. **Read item lives under the thumb.** On a phone the actions are pinned to the bottom edge and
+    the answer scrolls above them. Because a volunteer with an item in each hand cannot scroll back
+    up for every item.
 16. **Developer controls live in a drawer**, closed by default (batch, export, inference mode,
     comparison, experiment). Because a volunteer should see one button.
 17. **Never the word "expired" for a best-before date.** Only infant formula and meal

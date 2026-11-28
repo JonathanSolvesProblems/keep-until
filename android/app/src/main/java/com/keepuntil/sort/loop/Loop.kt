@@ -62,12 +62,32 @@ fun itemFacts(reads: List<ReadResult>): ItemRead {
     )
 }
 
+/**
+ * Brand and product as one name, with the brand said once. A read often repeats the brand inside
+ * the product ("Liberté" + "Liberté Grec"), and once the joined name went into the next photo's
+ * prompt, the model copied "Campbell's Campbell's Chicken Broth" back (Galaxy S24, 2026-11-27).
+ * The same as printedName in web/src/ai/loop.ts.
+ */
+fun printedName(brand: String, product: String): String {
+    val b = brand.trim()
+    val p = product.trim()
+    // Letters and digits only, so "Campbell's" and "CAMPBELL’S" count as the same brand.
+    val plain = { x: String -> java.text.Normalizer.normalize(x.lowercase(java.util.Locale.ROOT), java.text.Normalizer.Form.NFD).replace(Regex("[^a-z0-9]"), "") }
+    val name = if (b.isNotEmpty() && plain(p).contains(plain(b))) p else listOf(b, p).filter { it.isNotEmpty() }.joinToString(" ")
+    if (b.isEmpty()) return name
+    val words = name.split(Regex("\\s+")).toMutableList()
+    val n = b.split(Regex("\\s+")).size
+    fun brandAt(i: Int) = i + n <= words.size && plain(words.subList(i, i + n).joinToString(" ")) == plain(b)
+    while (words.size > n && brandAt(0) && brandAt(n)) repeat(n) { words.removeAt(0) }
+    return words.joinToString(" ")
+}
+
 /** What earlier photos showed, as one line for the next read's prompt. */
 fun seenSoFar(reads: List<ReadResult>): String? {
     if (reads.isEmpty()) return null
     val f = itemFacts(reads)
     val parts = listOfNotNull(
-        if (f.product.isNotEmpty() || f.brand.isNotEmpty()) "name \"${listOf(f.brand, f.product).filter { it.isNotEmpty() }.joinToString(" ")}\"" else null,
+        if (f.product.isNotEmpty() || f.brand.isNotEmpty()) "name \"${printedName(f.brand, f.product)}\"" else null,
         if (f.category != "unclear") "chart row ${f.category}" else null,
         if (f.dateText.isNotEmpty()) "date \"${f.dateText}\"" else null,
     )
@@ -116,8 +136,10 @@ class SortLoop<P>(private val chart: Chart, private val readers: Readers<P>) {
             readers.read(photo, secondLook, null)
         } catch (e: Exception) {
             return step.copy(
-                verdict = step.verdict.copy(decision = "SET_ASIDE", reason = "would discard, but the confirming read failed (${e.message}); a person checks it"),
-                route = step.route + " → confirming read failed → set aside",
+                // The SDK's own message ("Something unexpected happened.") means nothing at a sort
+                // table, so the screen says what happened and the record keeps the error.
+                verdict = step.verdict.copy(decision = "SET_ASIDE", reason = "would discard, but the second read did not come back, so a person checks it before anything is binned"),
+                route = step.route + " → confirming read failed (${e.javaClass.simpleName}: ${e.message}) → set aside",
             )
         }
         val reads = step.reads + check

@@ -38,10 +38,17 @@ export function makeModel(mode: Mode, cloudModel: string): GenerativeModel {
         // Reading a label is perception, not reasoning. Minimal thinking took the cloud
         // read from minutes to about two seconds (devpost/build-log.md, 2026-11-15).
         thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL as never },
+        // A read is about 150 tokens. A read stuck repeating digits once ran for 100 seconds on
+        // the Galaxy S24 before its JSON broke (2026-11-27); capped, it fails in seconds.
+        maxOutputTokens: READ_MAX_TOKENS,
       },
     },
-  });
+  }, { timeout: READ_TIMEOUT_MS });
 }
+
+/** Shared with the Android reader (PhoneReaders.kt). */
+export const READ_MAX_TOKENS = 1024;
+export const READ_TIMEOUT_MS = 30_000;
 
 /** The on-device triage model: Gemini Nano only, small schema, nothing leaves the laptop. */
 export function makeTriageModel(): GenerativeModel {

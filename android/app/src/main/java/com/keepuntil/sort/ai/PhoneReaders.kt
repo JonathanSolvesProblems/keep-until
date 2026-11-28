@@ -24,6 +24,7 @@ import com.google.firebase.ai.annotations.Guide
 import com.google.firebase.ai.type.GenerativeBackend
 import com.google.firebase.ai.type.JsonSchema
 import com.google.firebase.ai.type.PublicPreviewAPI
+import com.google.firebase.ai.type.RequestOptions
 import com.google.firebase.ai.type.ThinkingLevel
 import com.google.firebase.ai.type.content
 import com.google.firebase.ai.type.generationConfig
@@ -100,7 +101,11 @@ class PhoneReaders(private val chart: Chart, cloudModelName: String) : Readers<B
             // Reading a label is perception, not reasoning. Minimal thinking took the cloud read
             // from minutes to about two seconds on the web (devpost/build-log.md, 2026-11-15).
             thinkingConfig = thinkingConfig { thinkingLevel = ThinkingLevel.MINIMAL }
+            // A read is about 150 tokens. A model stuck repeating digits once ran for 100 seconds
+            // on the Galaxy S24 before its JSON broke (2026-11-27); capped, it fails in seconds.
+            maxOutputTokens = READ_MAX_TOKENS
         },
+        requestOptions = RequestOptions(timeoutInMillis = READ_TIMEOUT_MS),
         onDeviceConfig = OnDeviceConfig(mode = InferenceMode.ONLY_IN_CLOUD),
     )
 
@@ -181,6 +186,7 @@ class PhoneReaders(private val chart: Chart, cloudModelName: String) : Readers<B
                 val source = if (response.response.inferenceSource == InferenceSource.ON_DEVICE) "on_device" else "in_cloud"
                 return ReadResult(read, source, SystemClock.elapsedRealtime() - t0, "only_in_cloud", valid)
             } catch (e: Exception) {
+                android.util.Log.w("KeepUntil", "cloud read failed after ${SystemClock.elapsedRealtime() - t0} ms", e)
                 // A rate limit says how long to wait; one sort table can hit it, so wait it out twice.
                 val wait = retryDelayMs(e.message) ?: throw e
                 if (attempt++ >= 2) throw e
@@ -190,7 +196,11 @@ class PhoneReaders(private val chart: Chart, cloudModelName: String) : Readers<B
     }
 }
 
-private val RETRY_IN = Regex("retry in ([\\d.]+)s", RegexOption.IGNORE_CASE)
+/** Shared with the web reader (web/src/ai/reader.ts). */
+const val READ_MAX_TOKENS = 1024
+const val READ_TIMEOUT_MS = 30_000L
+
+private val RETRY_IN =Regex("retry in ([\\d.]+)s", RegexOption.IGNORE_CASE)
 
 fun retryDelayMs(message: String?): Long? {
     if (message == null || !message.contains("429")) return null

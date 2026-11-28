@@ -39,6 +39,7 @@ Every number on the project page, the README and the gallery comes from one of t
 | Recalls: Gemini 16 of 16, brand plus a product word 11 of 16, brand alone 6 of 16 | `results/recall-control-2026-11-22.md`, written by `scripts/recall_report.py` | 2026-11-22 |
 | The Android and web gates agree on 294 date stamps and 2,580 chart decisions | `shared/gate-vectors.json`, replayed by the Kotlin test `GateVectorsTest` | 2026-11-19 |
 | Android on a Galaxy S24, and on Android 8 and 16 emulators | `results/android-s24-2026-11-19.md`, `results/android-emulator-2026-11-20.md`, `results/android-testlab-2026-11-19.md` | 2026-11-19 to 2026-11-24 |
+| Android on the Galaxy S24, the four samples: 4 of 4 runs discarded the 2021 jar after two reads agreed, after one run where the confirming read failed | `results/android-s24-2026-11-27.md` | 2026-11-27 |
 | The public sample path, 5 of 5 on the deployed build | `results/public-path-2026-11-26.md` | 2026-11-26 |
 
 ## Voice

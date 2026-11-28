@@ -8,7 +8,7 @@ vi.mock("firebase/performance", () => ({
 }));
 
 import type { GenerativeModel } from "firebase/ai";
-import { afterRead, itemFacts, processItem, watchStep, WATCH_START, type LoopModels, type Step } from "./loop";
+import { afterRead, itemFacts, printedName, processItem, watchStep, WATCH_START, type LoopModels, type Step } from "./loop";
 import { readBy } from "../view";
 
 const TODAY = "2026-11-15";
@@ -397,5 +397,21 @@ describe("while the laptop's check is still warming up", () => {
     expect(step.kind).toBe("need_date_photo");
     expect(h.calls).toBe(0);
     expect(c!.calls).toBe(1);
+  });
+});
+
+describe("printedName: the brand said once", () => {
+  it("drops a brand the product already carries", () => {
+    expect(printedName("Campbell's", "Campbell's Chicken Broth")).toBe("Campbell's Chicken Broth");
+    expect(printedName("CAMPBELL’S", "Campbell's Chicken Broth")).toBe("Campbell's Chicken Broth");
+  });
+  it("collapses a brand the read doubled itself (Galaxy S24, 2026-11-27)", () => {
+    expect(printedName("Campbell's", "Campbell's Campbell's Chicken Broth")).toBe("Campbell's Chicken Broth");
+    expect(printedName("Liberté", "Liberté Liberté Grec")).toBe("Liberté Grec");
+  });
+  it("joins a brand the product does not carry, and keeps either one alone", () => {
+    expect(printedName("Yum", "Natural Peanut Butter")).toBe("Yum Natural Peanut Butter");
+    expect(printedName("", "Chipits")).toBe("Chipits");
+    expect(printedName("Chipits", "")).toBe("Chipits");
   });
 });

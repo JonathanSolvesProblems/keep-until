@@ -25,7 +25,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-data class LoggedRow(val name: String, val answer: Answer)
+/** One item in this shift's list. [id] keys the row, so a new row slides in and the rest stay put. */
+data class LoggedRow(val id: Int, val name: String, val answer: Answer)
 
 data class SortState(
     /** One line at the top: the food bank, the day, and how items are being read. */
@@ -33,6 +34,8 @@ data class SortState(
     val started: Boolean = false,
     val reading: Boolean = false,
     val answer: Answer? = null,
+    /** Counts answers, so the same answer twice in a row still prints again. */
+    val answerSeq: Int = 0,
     val readBy: String = "",
     val prompt: String = "",
     val log: List<LoggedRow> = emptyList(),
@@ -158,12 +161,13 @@ class SortViewModel(app: Application) : AndroidViewModel(app) {
                         val shift = shiftId ?: backend.startShift(s, uid!!, readers?.onDevice?.status ?: "unknown").also { shiftId = it }
                         backend.logItem(s, shift, uid!!, step)
                     }
-                    log = listOf(LoggedRow(if (sample) "${itemName(step)} (sample)" else itemName(step), answer)) + log
+                    log = listOf(LoggedRow(log.size + 1, if (sample) "${itemName(step)} (sample)" else itemName(step), answer)) + log
                 }
                 val turnSample = sample && samplePending != null
                 _state.update {
                     it.copy(
                         answer = answer,
+                        answerSeq = it.answerSeq + 1,
                         readBy = readBy(step, phoneHasModel),
                         log = log,
                         sampleLabel = if (turnSample) "Turn the sample item" else if (sample) "Try another sample photo" else it.sampleLabel,

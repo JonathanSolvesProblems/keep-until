@@ -148,12 +148,31 @@ export function itemFacts(reads: ReadResult[]): ItemRead {
   };
 }
 
+/**
+ * Brand and product as one name, with the brand said once. A read often repeats the brand inside
+ * the product ("Liberté" + "Liberté Grec"), and once the joined name went into the next photo's
+ * prompt, the model copied "Campbell's Campbell's Chicken Broth" back (Galaxy S24, 2026-11-27).
+ */
+export function printedName(brand: string, product: string): string {
+  const b = brand.trim();
+  const p = product.trim();
+  // Letters and digits only, so "Campbell's" and "CAMPBELL’S" count as the same brand.
+  const plain = (x: string) => x.toLowerCase().normalize("NFD").replace(/[^a-z0-9]/g, "");
+  const name = b && plain(p).includes(plain(b)) ? p : [b, p].filter(Boolean).join(" ");
+  if (!b) return name;
+  const words = name.split(/\s+/);
+  const n = b.split(/\s+/).length;
+  const brandAt = (i: number) => plain(words.slice(i, i + n).join(" ")) === plain(b);
+  while (words.length > n && brandAt(0) && brandAt(n)) words.splice(0, n);
+  return words.join(" ");
+}
+
 /** What earlier photos showed, as one line for the next read's prompt. */
 function seenSoFar(reads: ReadResult[]): string | undefined {
   if (!reads.length) return undefined;
   const f = itemFacts(reads);
   const parts = [
-    f.product || f.brand ? `name "${[f.brand, f.product].filter(Boolean).join(" ")}"` : "",
+    f.product || f.brand ? `name "${printedName(f.brand, f.product)}"` : "",
     f.category !== "unclear" ? `chart row ${f.category}` : "",
     f.date_text ? `date "${f.date_text}"` : "",
   ].filter(Boolean);
@@ -232,8 +251,10 @@ async function confirmDiscard(step: Step, models: LoopModels, jpegBase64: string
   } catch (e) {
     return {
       ...step,
-      verdict: { ...step.verdict, decision: "SET_ASIDE", reason: `would discard, but the confirming read failed (${(e as Error).message}); a person checks it` },
-      route: step.route + " → confirming read failed → set aside",
+      // The SDK's own message means nothing at a sort table: the screen says what happened and
+      // the record keeps the error.
+      verdict: { ...step.verdict, decision: "SET_ASIDE", reason: "would discard, but the second read did not come back, so a person checks it before anything is binned" },
+      route: step.route + ` → confirming read failed (${(e as Error).message}) → set aside`,
     };
   }
   const reads = [...step.reads, check];

@@ -250,9 +250,9 @@ SLIDES = [
     {
         "name": "android",
         "headline": "The same sort table on Android",
-        "badge": "Galaxy S24, a real phone; results/android-s24-2026-11-19.md",
-        "body": f'<img class="phone" src="{img("android-s24-turn.png")}"><img class="phone" src="{img("android-s24-keep.png")}">'
-        f'<div class="note">Same read loop, same chart, with a Read item button (hands-free is on the laptop only). The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. On this Galaxy S24, with no on-device model, it reads in the cloud and says so: the front of the carton, then the top.</div>',
+        "badge": "Galaxy S24, a real phone; results/android-s24-2026-11-27.md",
+        "body": f'<img class="phone" src="{img("android-s24-reading.png")}"><img class="phone" src="{img("android-s24-discard.png")}">'
+        f'<div class="note">Same read loop, same chart, with Read item pinned under the thumb (hands-free is on the laptop only). The two gates agree on {GATE["stamps"]} date stamps and {GATE["decisions"]} chart decisions. On this Galaxy S24, with no on-device model, it reads in the cloud and says so: a 2021 jar, discarded only after two reads agreed on the date.</div>',
         "caption": f"Android has the same read loop and chart, matching the web on {GATE['decisions']} decisions. My Galaxy S24 has no Nano, so it reads in the cloud.",
     },
     {

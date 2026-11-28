@@ -7,6 +7,7 @@ import com.keepuntil.sort.gate.ParsedDate
 import com.keepuntil.sort.loop.ReadResult
 import com.keepuntil.sort.loop.Step
 import com.keepuntil.sort.loop.itemFacts
+import com.keepuntil.sort.loop.printedName
 import java.util.Locale
 
 private val MONTHS = listOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
@@ -140,10 +141,6 @@ fun readBy(step: Step, phoneHasModel: Boolean): String {
 /** The name shown in the shift list: brand and product as printed, or the chart row the gate used. */
 fun itemName(step: Step.Decided): String {
     val last = if (step.reads.isEmpty()) null else itemFacts(step.reads)
-    val brand = last?.brand?.trim().orEmpty()
-    val product = last?.product?.trim().orEmpty()
-    // Letters and digits only, so "Campbell's" and "CAMPBELL’S" count as the same brand (as on the web).
-    val plain = { x: String -> java.text.Normalizer.normalize(x.lowercase(Locale.ROOT), java.text.Normalizer.Form.NFD).replace(Regex("[^a-z0-9]"), "") }
-    val name = if (brand.isNotEmpty() && plain(product).contains(plain(brand))) product else listOf(brand, product).filter { it.isNotEmpty() }.joinToString(" ")
+    val name = printedName(last?.brand.orEmpty(), last?.product.orEmpty())
     return name.ifEmpty { step.verdict.chart?.label ?: "Item with no name in view" }
 }

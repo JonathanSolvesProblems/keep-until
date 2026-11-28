@@ -1,7 +1,7 @@
 import "./styles.css";
 import { InferenceMode } from "firebase/ai";
 import { browserHasOnDeviceModel, makeModel, makeTriageModel, setRateLimitListener, triageItem, type Mode, type TriageResult } from "./ai/reader";
-import { afterRead, processItem, watchStep, WATCH_START, type LoopModels, type Step, type WatchState } from "./ai/loop";
+import { afterRead, printedName, processItem, watchStep, WATCH_START, type LoopModels, type Step, type WatchState } from "./ai/loop";
 import { ensureSignedIn, loadSettings, type Settings } from "./firebase";
 import { logItem, startShift } from "./store";
 import { appendRow, connectSheet, pendingRows, sheetUrl } from "./sheet";
@@ -211,6 +211,7 @@ async function readSample(): Promise<void> {
   let sample = SAMPLES[0];
   sampleBtn.disabled = true;
   sampleNote.textContent = "Reading a sample photo";
+  answer.classList.add("stale");
   try {
     if (!models || !settings) await prepare();
     const img = new Image();
@@ -244,6 +245,7 @@ async function readSample(): Promise<void> {
     return;
   } finally {
     sampleBtn.disabled = false;
+    answer.classList.remove("stale");
   }
   sampleBtn.textContent = samplePending ? "Turn the sample item" : "Try another sample photo";
   sampleNote.textContent = sample.after;
@@ -285,8 +287,8 @@ async function runRecallCheck(uid: string): Promise<void> {
   try {
     const r = await checkRecallsAtShiftStart(settings.foodBankId, uid, makeRecallModel(settings.cloudModel));
     const lines: string[] = [];
-    for (const f of r.toPull) lines.push(`Pull ${f.item.brand} ${f.item.product}: ${f.notice.title}.`);
-    for (const f of r.toCheck) lines.push(`Check the lot code on ${f.item.brand} ${f.item.product} against "${f.notice.title}".`);
+    for (const f of r.toPull) lines.push(`Pull ${printedName(f.item.brand, f.item.product)}: ${f.notice.title}.`);
+    for (const f of r.toCheck) lines.push(`Check the lot code on ${printedName(f.item.brand, f.item.product)} against "${f.notice.title}".`);
     const w = r.watch;
     const checked = w?.recallsInWindow !== undefined ? `${w.recallsInWindow} food recalls from the past year checked against ${w.itemsWatched ?? 0} kept items` : "Recall watch has not run yet";
     const cleared = r.cleared ? ` ${r.cleared} brand ${r.cleared === 1 ? "match was" : "matches were"} a different product.` : "";
@@ -597,6 +599,8 @@ async function readCamera(given?: { frame: { b64: string; url: string }; small: 
   if (reading || !models || !settings || !shiftInfo || !video.videoWidth) return null;
   reading = true;
   readBtn.disabled = true;
+  // The last answer steps back while the next item is read: it is about the item before.
+  answer.classList.add("stale");
   const frame = given?.frame ?? toJpegBase64(video, video.videoWidth, video.videoHeight);
   const small = given?.small ?? toJpegBase64(video, video.videoWidth, video.videoHeight, 512).b64;
   try {
@@ -634,6 +638,7 @@ async function readCamera(given?: { frame: { b64: string; url: string }; small: 
     return null;
   } finally {
     reading = false;
+    answer.classList.remove("stale");
     readBtn.disabled = handsFree && laptopWarm;
   }
 }

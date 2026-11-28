@@ -292,6 +292,11 @@ body:not(.started) .sheetline { visibility: hidden; }
   margin: auto -8px -28px auto;
 }
 
+/* While the next item is read, the last answer steps back: it is about the item before. */
+.answer { transition: opacity 180ms ease-out; }
+.answer.stale:not(:has(.answer-empty)) { opacity: 0.35; }
+@media (prefers-reduced-motion: reduce) { .answer { transition: none; } }
+
 /* A decision floods the answer panel with its colour (charter law 5); instructions do not. */
 .answer:has(.verdict--KEEP) { background: var(--keep); color: var(--keep-ink); border-color: transparent; }
 .answer:has(.verdict--SET_ASIDE) { background: var(--aside); color: var(--aside-ink); border-color: transparent; }
